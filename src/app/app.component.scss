@@ -1,0 +1,15 @@
+.fondoCool{
+  background-image:   linear-gradient(to right bottom,
+                      rgba(0, 0, 0, 0.5),
+                      rgba(0, 0, 0, 0.5)),
+                      url("/assets/cruz.png");
+  background-size: cover;
+  background-position: center center;
+  // -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 100%, 50% 86%, 0% 100%);
+  // clip-path: polygon(0% 0%, 100% 0, 100% 100%, 50% 86%, 0% 100%);
+}
+
+.logo{
+  margin-bottom: -190px !important;
+  z-index: 1 !important;
+}

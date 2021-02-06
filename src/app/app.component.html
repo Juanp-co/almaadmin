@@ -1,0 +1,36 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content >
+        <ion-row class="fondoCool ion-justify-content-end ion-padding ">
+          <ion-col size="8" class="ion-margin-top ion-padding-top">
+            <br><br><br><br>
+            <ion-text color="light" class="titulo1">Binevenido</ion-text> <br>
+            <ion-text color="light" class="titulo2">Usuario anonimo</ion-text>
+          </ion-col>
+          <ion-col size="4">
+            <img src="assets/logo.png" class="logo">
+          </ion-col>
+        </ion-row>
+        <br>
+        <br>
+        <br>
+        <ion-menu-toggle auto-hide="false" >
+          <ion-item *ngFor="let p of appPages; let i = index"  (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+            <ion-label>{{ p.title }}</ion-label>
+          </ion-item>
+          <ion-item button (click)="ingresar()" lines="none">
+            <ion-icon slot="start" name="log-in"></ion-icon>
+            <ion-label>Ingresar</ion-label>
+          </ion-item>
+          <ion-item button (click)="salir()" lines="none">
+            <ion-icon slot="start" name="log-out"></ion-icon>
+            <ion-label>Salir</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>
