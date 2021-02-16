@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CursoPage implements OnInit {
 
+  nombreCurso:string = "Nombre del Curso"
+
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

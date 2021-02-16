@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./views/cursos/cursos.module').then( m => m.CursosPageModule)
   },
   {
-    path: 'curso',
+    path: 'curso/:id',
     loadChildren: () => import('./views/curso/curso.module').then( m => m.CursoPageModule)
   },
   {

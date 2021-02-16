@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { ModalCursoPage } from '../modal-curso/modal-curso.page';
 
 @Component({
@@ -9,10 +9,11 @@ import { ModalCursoPage } from '../modal-curso/modal-curso.page';
 })
 export class CursosPage implements OnInit {
 
-  cursos:Array<any> = [{},{},{},{},{},{},{},{},{}]
+  cursos:Array<any> = [{},{},{},{},{},{},{},{}]
 
   constructor(
-    public modalController:ModalController
+    public modalController:ModalController,
+    public navCtrl:NavController
   ) { }
 
   ngOnInit() {
@@ -31,6 +32,9 @@ export class CursosPage implements OnInit {
     console.log(data);
   }
 
+  irCurso(id){
+    this.navCtrl.navigateForward(`curso/${id}`)
+  }
 
 
 }
