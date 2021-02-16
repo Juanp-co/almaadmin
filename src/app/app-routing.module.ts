@@ -50,6 +50,10 @@ const routes: Routes = [
   {
     path: 'miembros',
     loadChildren: () => import('./views/miembros/miembros.module').then( m => m.MiembrosPageModule)
+  },
+  {
+    path: 'modal-curso',
+    loadChildren: () => import('./views/modal-curso/modal-curso.module').then( m => m.ModalCursoPageModule)
   }
 ];
 
