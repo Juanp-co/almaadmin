@@ -1,9 +1,224 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>eventos</ion-title>
+    <ion-title>Eventos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="setShowForm({ id: null, edit: false, show: true, disable: false })" *ngIf="!showForm">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <ion-text>Agregar evento</ion-text>
+      </ion-button>
+      <ion-button color="primary" (click)="setShowForm({ id: null, edit: false, show: false })" *ngIf="showForm">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-text>Cerrar formularo</ion-text>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card *ngIf="showForm">
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="12">
+          <ion-card-title>{{ edit ? 'Editar evento' : 'Crear evento' }}</ion-card-title>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" color="medium">Título del evento *</ion-label>
+            <ion-input
+              [(ngModel)]="formData.title"
+              autocomplete="off"
+              maxlength="100"
+              class="ion-text-uppercase"
+              [disabled]="disableEdit"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" color="medium">Descripción:</ion-label>
+            <ion-textarea
+              [(ngModel)]="formData.description"
+              rows="4"
+              cols="20"
+              placeholder="Ingresa una descripción sobre el evento..."
+              class="ion-text-uppercase"
+              [disabled]="disableEdit"
+            >
+            </ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Fecha del evento:</ion-label>
+            <ion-datetime
+              [(ngModel)]="formData.date"
+              displayFormat="DD/MM/YYYY"
+              [min]="minDate"
+              [max]="maxDate"
+              doneText="Listo"
+              cancelText="Cancelar"
+              (ionChange)="setMinEndHour('date')"
+              [disabled]="disableEdit"
+            >
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Hora inicio:</ion-label>
+            <ion-datetime
+              [(ngModel)]="formData.initHour"
+              [min]="minInitHour"
+              displayFormat="HH:mm"
+              minuteValues="00,15,30,45,59"
+              doneText="Listo"
+              cancelText="Cancelar"
+              (ionChange)="setMinEndHour('initHour')"
+              [disabled]="disableEdit || !formData.date"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Hora fin:</ion-label>
+            <ion-datetime
+              [(ngModel)]="formData.endHour"
+              [min]="minEndHour"
+              displayFormat="HH:mm"
+              minuteValues="00,15,30,45"
+              doneText="Listo"
+              cancelText="Cancelar"
+              [disabled]="disableEdit || !formData.date"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" color="medium">Dirigido a:</ion-label>
+            <ion-input
+              [(ngModel)]="formData.rolesSelected"
+              [value]="formData.rolesSelected"
+              [readonly]="true"
+              autocomplete="off"
+              class="ion-text-uppercase"
+              (click)="!disableEdit ? showAlertRolesList(formData.toRoles) : null"
+              [disabled]="disableEdit"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top">
+        <ion-col size="6" class="ion-justify-content-center">
+          <ion-button class="ion-text-center" color="light" expand="full" (click)="setShowForm({ id: null, edit: false, show: false })">
+            <ion-icon name="close-outline"></ion-icon>
+            <ion-text>Cancelar</ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" class="ion-justify-content-center">
+          <ion-button
+            class="ion-text-center"
+            color="primary"
+            expand="full"
+            (click)="confirmAction({ update: edit, id: formData._id })"
+          >
+            <ion-icon name="checkmark-outline"></ion-icon>
+            <ion-text>Guardar</ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="{{ showForm ? 'ion-hide' : '' }}">
+
+    <div class="ion-margin">
+      <ion-button color="light" (click)="setShowFilter()">
+        <ion-icon name="filter-outline" slot="start" *ngIf="!showFilter"></ion-icon>
+        <ion-icon name="close-outline" slot="start" *ngIf="showFilter"></ion-icon>
+        <ion-text>Filtrar</ion-text>
+      </ion-button>
+    </div>
+
+    <ion-card *ngIf="showFilter">
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium">Ordenar por:</ion-label>
+              <ion-input
+                [readonly]="true"
+                [value]="queryParams.value === -1 ? 'Próximas primero' : 'Antíguas primero'"
+                (click)="setOrderData()"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium">A partir de:</ion-label>
+              <ion-datetime
+                [(ngModel)]="queryParams.initDate"
+                displayFormat="DD/MM/YYYY"
+                min="2020-01-01"
+                doneText="Listo"
+                cancelText="Cancelar"
+                onchange="setDate('initDate')"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium">Hasta:</ion-label>
+              <ion-datetime
+                [(ngModel)]="queryParams.endDate"
+                displayFormat="DD/MM/YYYY"
+                min="2020-01-01"
+                doneText="Listo"
+                cancelText="Cancelar"
+                onchange="setDate('endDate')"
+              >
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin-top">
+          <ion-col size="6" class="ion-justify-content-center">
+            <ion-button class="ion-text-center" color="light" expand="full" (click)="resetQueryParams()">
+              <ion-icon name="trash-outline"></ion-icon>
+              <ion-text>Limpiar</ion-text>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6" class="ion-justify-content-center">
+            <ion-button class="ion-text-center" color="primary" expand="full" (click)="getEventsList()">
+              <ion-icon name="checkmark-outline"></ion-icon>
+              <ion-text>Aplicar</ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <div *ngIf="events && events.length > 0; else noEvents">
+      <ion-row>
+        <ion-col size="12" size-sm="4" *ngFor='let e of events' (click)="showEvent(e._id)">
+          <app-eventcard
+            [data]="e"
+          >
+          </app-eventcard>
+        </ion-col>
+      </ion-row>
+      <!--<ion-list *ngFor='let e of events'>-->
+      <!--</ion-list>-->
+    </div>
+    <ng-template #noEvents>
+      <ion-card class="ion-no-padding">
+        <ion-text>
+          <p class="ion-text-center">No existen eventos registrados.</p>
+        </ion-text>
+      </ion-card>
+    </ng-template>
+  </div>
 
 </ion-content>

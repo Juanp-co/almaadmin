@@ -1,9 +1,84 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>miembros</ion-title>
+    <ion-title>Miembros</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="goToRegister()" *ngIf="showRegisterButton">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <ion-text>Registrar miembro</ion-text>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col size="12">
+        <ion-row>
+          <ion-col [size]="12" size-sm="7">
+            <ion-toolbar>
+              <ion-button color="light" (click)="queryParams.word = null; findData()" slot="start" *ngIf="queryParams.word">
+                <ion-icon name="backspace-outline"></ion-icon>
+              </ion-button>
+              <ion-item>
+                <ion-label position="floating" color="medium">Buscar</ion-label>
+                <ion-input
+                  [(ngModel)]="queryParams.word"
+                  autocomplete="off"
+                  class="ion-text-uppercase"
+                  (change)="!queryParams.word || queryParams.word === '' ? findData() : null"
+                ></ion-input>
+              </ion-item>
+              <ion-button color="light" (click)="findData()" slot="end">
+                <ion-icon name="search-outline"></ion-icon>
+              </ion-button>
+            </ion-toolbar>
+          </ion-col>
+          <ion-col [size]="12" size-sm="5">
+            <ion-toolbar>
+              <ion-button color="light" (click)="setSortOrder()">
+                <!--<ion-icon name="funnel-outline" slot="start"></ion-icon>-->
+                <ion-icon name="arrow-up-outline" *ngIf="queryParams.value === 1"></ion-icon>
+                <ion-icon name="arrow-down-outline" *ngIf="queryParams.value === -1"></ion-icon>&nbsp;
+                <ion-text>{{ queryParams.value === 1 ? 'ASC' : 'DES' }}</ion-text>
+              </ion-button>
+              <ion-button color="light" (click)="setQueryValues()">
+                <ion-icon name="filter-outline"></ion-icon>&nbsp;
+                <ion-text>{{ queryParams.limit }}</ion-text>
+              </ion-button>
+            </ion-toolbar>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
 
+    <ion-row *ngIf="users && users.length > 0">
+      <ion-col size="12" size-sm="4" *ngFor="let user of users">
+        <app-usercard [data]="user"></app-usercard>
+      </ion-col>
+    </ion-row>
+
+    <div *ngIf="users && users.length > 0 && pages > 0">
+      <app-paginator
+        [totalPages]="pages"
+        [currentPage]="queryParams.page"
+        [handlePage]="handlePage"
+      ></app-paginator>
+    </div>
+
+    <ion-row *ngIf="users !== null && users.length === 0">
+      <ion-col>
+        <ion-card>
+          <ion-card-content class="ion-text-center">
+            <ion-card-subtitle>
+              <ion-text>
+                <ion-icon name="alert-circle-outline"></ion-icon>&nbsp;
+                No se encontraron resultados.
+              </ion-text>
+            </ion-card-subtitle>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

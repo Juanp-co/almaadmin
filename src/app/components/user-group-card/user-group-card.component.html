@@ -1,0 +1,39 @@
+<ion-card class="ion-no-padding ion-no-margin ion-margin-bottom pointer custom-height" *ngIf="u">
+  <ion-card-content class="ion-no-margin ion-no-padding">
+    <ion-row>
+      <ion-col size="3">
+        <ion-avatar class="user-avatar ion-margin-top ion-margin-bottom">
+          <ion-img src="/assets/icon/{{u.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"></ion-img>
+        </ion-avatar>
+      </ion-col>
+      <ion-col>
+        <div class="ion-margin-top ion-margin-bottom">
+          <b>{{ u.fullName }}</b>
+          <br/>
+          <ion-text>
+            <ion-icon name="id-card-outline"></ion-icon>
+            {{ u.document || 'Error' }}
+          </ion-text><br>
+          <ion-text>
+            <ion-icon name="call-outline"></ion-icon>
+            {{ u.phone || 'No indicado.' }}
+          </ion-text>
+          <div *ngIf="showButtonDetails">
+            <ion-button color="primary" (click)="goToDetails(u._id)">
+              <ion-icon name="eye-outline"></ion-icon>
+            </ion-button>
+            <ion-button color="danger" (click)="handleDelete(u._id)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
+          <div *ngIf="!showButtonDetails">
+            <ion-button [color]="!added ? 'primary' : 'light'" (click)="!added ? handleAdd(u._id) : handleRemove(u._id)">
+              <ion-icon name="{{ !added ? 'add' : 'close' }}-outline"></ion-icon>
+              <ion-text>{{ !added ? 'Agregar' : 'Remover'}}</ion-text>
+            </ion-button>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { ModalCursoPage } from '../modal-curso/modal-curso.page';
+import {GlobalService} from '../../services/global.service';
+import {AxiosService} from '../../services/axios.service';
+import {CookiesService} from '../../services/cookies.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-cursos',
@@ -11,13 +15,25 @@ export class CursosPage implements OnInit {
 
   cursos:Array<any> = [{},{},{},{},{},{},{},{}]
 
-  constructor(
-    public modalController:ModalController,
-    public navCtrl:NavController
-  ) { }
-
   ngOnInit() {
 
+  }
+
+  constructor(
+    private axios: AxiosService,
+    private cookieService: CookiesService,
+    private globalSer: GlobalService,
+    private modalController: ModalController,
+    private navCtrl: NavController,
+    private router: Router,
+  ) {
+    // check if exist session
+    if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
+  }
+
+  async ionViewWillEnter() {
+    if (!this.globalSer.checkSession())
+      this.router.navigate(['/ingresar']);
   }
 
   async presentModal(curso?) {
@@ -29,12 +45,10 @@ export class CursosPage implements OnInit {
     });
     modal.present()
     const { data } = await modal.onWillDismiss();
-    console.log(data);
   }
 
   irCurso(id){
     this.navCtrl.navigateForward(`curso/${id}`)
   }
-
 
 }

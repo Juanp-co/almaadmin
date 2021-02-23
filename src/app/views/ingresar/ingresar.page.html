@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ingresar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row class="ion-justify-content-center ion-margin-top ion-padding-top" *ngIf="!session">
+    <ion-col [size]="8">
+      <div *ngIf="!login" class="ion-margin-top ion-padding-top">
+        <br><br><br>
+
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="auto">
+            <h4>
+              <ion-text color="primary">
+                Acceder al panel administrador
+              </ion-text>
+            </h4>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="8">
+            <ion-item>
+              <ion-label position="floating">Usuario</ion-label>
+              <ion-input [(ngModel)]="user" class="ion-text-uppercase" maxlength="12" placeholder="Ejm: CC12345678"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="8">
+            <ion-item>
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input type="password" [(ngModel)]="pass"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center ion-margin-top">
+          <ion-col size="auto">
+            <ion-button expand="block" color="primary" (click)="ingresar()">
+              Ingresar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

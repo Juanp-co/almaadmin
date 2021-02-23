@@ -7,7 +7,15 @@ const routes: Routes = [
   {
     path: '',
     component: MiembrosPage
-  }
+  },
+  {
+    path: 'registro',
+    loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
+    path: ':userid',
+    loadChildren: () => import('./detalles-miembro/detalles-miembro.module').then(m => m.DetallesMiembroPageModule)
+  },
 ];
 
 @NgModule({
