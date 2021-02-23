@@ -1,0 +1,8 @@
+//.my-custom-class {
+//  width: 480px !important;
+//}
+::ng-deep {
+  .max-width-640 {
+    --max-width: 640px;
+  }
+}

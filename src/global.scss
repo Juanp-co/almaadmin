@@ -55,3 +55,47 @@ ion-split-pane{
       }
   }
 }
+
+b {
+  font-weight: 600;
+  color: #4d4d4d;
+}
+
+.img-fluid{
+  width: 100% !important;
+  height: auto !important;
+}
+
+.toSmall { font-size: 0.8em !important; }
+
+.no-selected-text {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+/*
+  To Counters with Picture
+ */
+.numberTitle {
+  text-align: center !important;
+  font-size: 2em !important;
+  font-weight: 600 !important;
+}
+.pictureLogo {
+  width: 65px !important;
+  margin: 0 auto !important;
+}
+.pictureLogo2 {
+  width: 100px !important;
+  margin: 0 auto !important;
+}
+
+.user-avatar {
+  width: 100% !important;
+  height: auto !important;
+  margin: 1em auto !important;
+}
+

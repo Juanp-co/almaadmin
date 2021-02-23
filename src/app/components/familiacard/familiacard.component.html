@@ -1,0 +1,15 @@
+<ion-card class="ion-no-padding ion-no-margin ion-margin-start ion-margin-end ion-margin-bottom" *ngIf="group">
+  <ion-card-content class="ion-no-margin ion-no-padding">
+    <ion-row>
+      <ion-col size="3">
+        <ion-img class="pictureIcon" [src]="'/assets/icon/personas_boton.svg'"></ion-img>
+      </ion-col>
+      <ion-col size="9">
+        <ion-text color="primary" class="ion-margin-top ion-margin-bottom"><h3>{{ group.name }}</h3></ion-text>
+        <ion-text><b>COD:</b> {{ group.code }}</ion-text><br/>
+        <ion-text><b>Total de miembros:</b> {{ group.totalMembers }}</ion-text><br/>
+        <ion-text class="ion-margin-top"><i class="toSmall">Toca para más información.</i></ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

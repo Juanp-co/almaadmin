@@ -54,6 +54,10 @@ const routes: Routes = [
   {
     path: 'modal-curso',
     loadChildren: () => import('./views/modal-curso/modal-curso.module').then( m => m.ModalCursoPageModule)
+  },
+  {
+    path: 'ingresar',
+    loadChildren: () => import('./views/ingresar/ingresar.module').then( m => m.IngresarPageModule)
   }
 ];
 
