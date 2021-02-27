@@ -123,7 +123,7 @@ export class MiembrosPage implements OnInit {
     await this.getTotals();
   }
 
-  async setQueryValues(){
+  async setQueryValues() {
     const alert = await this.alertCtrl.create({
       header: 'Miembros por página',
       inputs: [

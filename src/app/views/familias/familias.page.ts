@@ -164,9 +164,9 @@ export class FamiliasPage implements OnInit {
     await this.getTotals();
   }
 
-  async setQueryValues(){
+  async setQueryValues() {
     const alert = await this.alertCtrl.create({
-      header: 'Miembros por página',
+      header: 'Cursos por página',
       inputs: [
         {
           name: `results-per-page`,

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 import {AxiosService} from './services/axios.service';
 import {CookiesService} from './services/cookies.service';
 import {Router} from '@angular/router';
@@ -12,13 +11,13 @@ import {GlobalService} from './services/global.service';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Inicio', url: '/inicio', icon: 'mail' },
-    { title: 'Miembros', url: '/miembros', icon: 'paper-plane' },
-    { title: 'Familiar', url: '/familias', icon: 'paper-plane' },
-    { title: 'Cursos', url: '/cursos', icon: 'heart' },
-    { title: 'Eventos', url: '/eventos', icon: 'archive' },
-    { title: 'Ofrendas', url: '/ofrendas', icon: 'trash' },
-    { title: 'Informes', url: '/informes', icon: 'warning' },
+    { title: 'Inicio', url: '/inicio', icon: 'home' },
+    { title: 'Miembros', url: '/miembros', icon: 'people' },
+    { title: 'Familiar', url: '/familias', icon: 'people-circle' },
+    { title: 'Cursos', url: '/cursos', icon: 'desktop' },
+    { title: 'Eventos', url: '/eventos', icon: 'calendar-number' },
+    { title: 'Ofrendas', url: '/ofrendas', icon: 'cash' },
+    { title: 'Informes', url: '/informes', icon: 'bar-chart' },
   ];
   session: any = null;
   userData: any = null;
@@ -60,7 +59,7 @@ export class AppComponent {
     }
   }
 
-  async salir(){
+  async salir() {
     await this.globalSer.presentLoading();
     await this.axios.deleteData('/logout');
     this.session = false;
