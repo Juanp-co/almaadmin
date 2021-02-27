@@ -18,30 +18,49 @@ export class AxiosService {
 
   axios: any = null;
 
-  static getErrorCatch(e: any) {
+  static getErrorCatch(error: any) {
     const ret = {
       error: 'Error desconocido.',
       status: null,
       extraData: null
     };
 
-    if (e) {
-      if (e.response && e.response.data) {
-        if (e.response.status) ret.status = e.response.status;
+    if (error) {
+      /*
+       * The request was made and the server responded with a
+       * status code that falls out of the range of 2xx
+       */
+      if (error.response) {
+        if (error.response.status) ret.status = error.response.status;
 
-        if (e.response.status && e.response.status === 401)
-          ret.error = e.response.data.msg ? e.response.data.msg : e.toString();
-        else if (e.response.data.errors && e.response.data.errors.length > 0)
-          ret.error = e.response.data.errors[0].msg;
-        else
-          ret.error = e.response.data.msg ? e.response.data.msg : e.toString();
+        if (error.response.data) {
+          const { data } = error.response;
 
-        if (e.response.data) {
-          ret.extraData = e.response.data;
+          if (ret.status === 401)
+            ret.error = data.msg ? data.msg : error.toString();
+          else if (data.errors && data.errors.length > 0)
+            ret.error = data.errors[0].msg || 'No se logró determinar el problema.';
+          else
+            ret.error = data.msg ? data.msg : error.toString();
+
+          ret.extraData = data; // if exist other data assignate;
           delete ret.extraData.msg;
         }
+      } else if (error.request) {
+        /*
+         * The request was made but no response was received, `error.request`
+         * is an instance of XMLHttpRequest in the browser and an instance
+         * of http.ClientRequest in Node.js
+         */
+        // console.log('Error msg', error.message);
+        ret.error = error.toString();
+      } else {
+        // Something happened in setting up the request and triggered an Error
+        // console.log('Error msg', error.message);
+        ret.error = error.toString();
       }
     }
+
     return ret;
   }
 

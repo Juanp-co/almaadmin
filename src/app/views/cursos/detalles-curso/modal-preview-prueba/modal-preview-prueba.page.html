@@ -1,0 +1,128 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="close()">
+          <ion-icon name="close-outline" color="dark"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-text class="ion-margin-top ion-margin-bottom">{{ titleModal }}</ion-text>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="questionsView">
+    <ion-list *ngFor="let item of questionsView">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ item.title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngIf="item.description" [innerHTML]="item.description"></div>
+          <div *ngIf="item.inputType === 'text'">
+            <ion-item>
+              <ion-label position="floating" color="medium">{{ item.placeholder || 'Indique su respuesta' }}</ion-label>
+              <ion-input [(ngModel)]="questionsModel[item._id]" [required]="item.require"></ion-input>
+            </ion-item>
+          </div>
+          <div *ngIf="item.inputType === 'textarea'">
+            <ion-item>
+              <ion-label position="floating" color="medium">{{ item.placeholder || 'Indique su respuesta' }}</ion-label>
+              <ion-textarea
+                rows="4"
+                cols="20"
+                [(ngModel)]="questionsModel[item._id]"
+                [required]="item.require"
+              ></ion-textarea>
+            </ion-item>
+          </div>
+          <div *ngIf="item.inputType === 'radio'">
+            <ion-radio-group [(ngModel)]="questionsModel[item._id]" value="{{questionsModel[item._id]}}">
+              <ion-list *ngFor="let value of item.values; let i=index">
+                <ion-item>
+                  <ion-label>{{ value }}</ion-label>
+                  <ion-radio slot="start" value="{{i}}"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-radio-group>
+          </div>
+          <div *ngIf="item.inputType === 'checkbox'">
+            <ion-list>
+              <ion-item *ngFor="let value of questionsModel[item._id]">
+                <ion-label>{{ value.val }}</ion-label>
+                <ion-checkbox
+                  slot="start"
+                  [(ngModel)]="value.isChecked"
+                ></ion-checkbox>
+              </ion-item>
+            </ion-list>
+          </div>
+        </ion-card-content>
+        <ion-card-content>
+          <ion-text *ngIf="item.require"><i>(*) Obligatoria </i></ion-text>
+          <div *ngIf="item.extra">
+            <div [innerHTML]="item.extra"></div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+    <ion-card>
+      <ion-card-content>
+        <div *ngIf="viewSelected === 0; else nextButtons">
+          <ion-row>
+            <ion-col size="6">
+              <ion-button
+                color="light"
+                expand="full"
+                (click)="dismiss()"
+              >
+                SALIR
+              </ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button
+                color="primary"
+                expand="full"
+                (click)="getQuestionsFromList(true)"
+              >
+                SIGUIENTE
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+        <ng-template #nextButtons>
+          <ion-row>
+            <ion-col size="6">
+              <ion-button
+                color="light"
+                expand="full"
+                (click)="getQuestionsFromList()"
+              >
+                ATRÁS {{viewSelected}} -  {{totalsViews}}
+              </ion-button>
+            </ion-col>
+            <ion-col size="6" *ngIf="viewSelected > 0 && viewSelected < totalsViews">
+              <ion-button
+                color="primary"
+                expand="full"
+                (click)="getQuestionsFromList(true)"
+              >
+                SIGUIENTE
+              </ion-button>
+            </ion-col>
+            <ion-col size="6" *ngIf="viewSelected === totalsViews">
+              <ion-button
+                color="primary"
+                expand="full"
+                (click)="close()"
+              >
+                FINALIZAR VISUALIZACIÓN
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ng-template>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>

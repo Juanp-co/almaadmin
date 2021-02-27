@@ -24,22 +24,6 @@ const routes: Routes = [
     loadChildren: () => import('./views/cursos/cursos.module').then( m => m.CursosPageModule)
   },
   {
-    path: 'curso/:id',
-    loadChildren: () => import('./views/curso/curso.module').then( m => m.CursoPageModule)
-  },
-  {
-    path: 'clasevideo',
-    loadChildren: () => import('./views/clasevideo/clasevideo.module').then( m => m.ClasevideoPageModule)
-  },
-  {
-    path: 'claseexamen',
-    loadChildren: () => import('./views/claseexamen/claseexamen.module').then( m => m.ClaseexamenPageModule)
-  },
-  {
-    path: 'clase',
-    loadChildren: () => import('./views/clase/clase.module').then( m => m.ClasePageModule)
-  },
-  {
     path: 'ofrendas',
     loadChildren: () => import('./views/ofrendas/ofrendas.module').then( m => m.OfrendasPageModule)
   },
@@ -50,10 +34,6 @@ const routes: Routes = [
   {
     path: 'miembros',
     loadChildren: () => import('./views/miembros/miembros.module').then( m => m.MiembrosPageModule)
-  },
-  {
-    path: 'modal-curso',
-    loadChildren: () => import('./views/modal-curso/modal-curso.module').then( m => m.ModalCursoPageModule)
   },
   {
     path: 'ingresar',

@@ -1,0 +1,338 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!views.info.edit && !editBanner">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end" *ngIf="staticData && !views.info.edit && !editBanner">
+      <ion-button color="danger" (click)="confirmCourseDelete()">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        <ion-text>Eliminar curso</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row *ngIf="staticData">
+    <ion-col [size]="12">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start" *ngIf="!views.info.edit && !editBanner">
+              <ion-button (click)="setShowView('info')">
+                <ion-icon name="chevron-{{views.info.show ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title *ngIf="!views.info.edit && !editBanner">{{ views.info.title }}</ion-title>
+            <ion-title *ngIf="!views.info.edit && editBanner">Cambiar imagen del curso</ion-title>
+            <ion-title *ngIf="views.info.edit && !editBanner">Editar datos principales del curso</ion-title>
+            <ion-buttons slot="end" *ngIf="views.info.show">
+              <ion-button (click)="setShowEdit('info')" *ngIf="!views.info.edit && !editBanner">
+                <ion-icon name="create-outline"></ion-icon>
+                <ion-text>Editar</ion-text>
+              </ion-button>
+              <ion-button (click)="setShowBannerEdit()" *ngIf="!views.info.edit && !editBanner">
+                <ion-icon name="image-outline" slot="start"></ion-icon>
+                <ion-text>Cambiar imagen</ion-text>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
+
+          <div *ngIf="!views.info.edit && !editBanner">
+            <ion-row>
+              <ion-col [size]="12">
+                <ion-row class="ion-align-items-center">
+                  <ion-col [size]="12" class="ion-text-center">
+                    <ion-img class="banner" [src]="banner || 'assets/icon/escuela.svg'"></ion-img>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col [size]="12" size-sm="6">
+                <ion-row>
+                  <ion-col [size]="12">
+                    <ion-text><b class="mini-title no-selected-text">Título curso</b></ion-text><br/>
+                    <ion-text class="title-or-description ion-margin-bottom">{{views.info.data.title}}</ion-text>
+                  </ion-col>
+                  <ion-col [size]="12">
+                    <ion-text><b class="mini-title no-selected-text">Dirigido a</b></ion-text><br/>
+                    <ion-text class="title-or-description ion-margin-bottom">{{views.info.data.toRoles ? this.getRoles(views.info.data.toRoles) : 'No especificado' }}</ion-text>
+                  </ion-col>
+                  <ion-col [size]="12">
+                    <ion-text><b class="mini-title no-selected-text">Ponente</b></ion-text><br/>
+                    <ion-text class="title-or-description ion-margin-bottom">{{views.info.data.speaker || 'No especificado'}}</ion-text>
+                  </ion-col>
+                  <ion-col [size]="12">
+                    <ion-text><b class="mini-title no-selected-text">Cargo o posición del ponente</b></ion-text><br/>
+                    <ion-text class="title-or-description ion-margin-bottom">{{views.info.data.speakerPosition || 'No especificado'}}</ion-text>
+                  </ion-col>
+                  <ion-col [size]="12">
+                    <ion-text><b class="mini-title no-selected-text">Usuarios actualimente con el curso</b></ion-text><br/>
+                    <ion-text class="title-or-description ion-margin-bottom">{{this.totalsUsers}}</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col [size]="12" size-sm="6">
+                <ion-row>
+                  <ion-col [size]="12">
+                    <ion-text><b class="mini-title no-selected-text">Descripción</b></ion-text><br/>
+                    <div class="min-height-description">
+                      <div [innerHTML]="views.info.data.description"></div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </div>
+
+          <div *ngIf="views.info.edit">
+            <ion-row>
+              <ion-col [size]="12" size-sm="12">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating" color="medium">Nombre del curso *</ion-label>
+                      <ion-input
+                        [(ngModel)]="formData.info.title"
+                        class="ion-text-uppercase"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating" color="medium">Descripcion del curso *</ion-label>
+                      <ion-textarea
+                        [(ngModel)]="formData.info.description"
+                        rows="6"
+                        placeholder="Escribe aqui..."
+                      ></ion-textarea>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating" color="medium">Nombre del ponente *</ion-label>
+                      <ion-input
+                        [(ngModel)]="formData.info.speaker"
+                        class="ion-text-uppercase"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating" color="medium">Cargo o posición del ponente *</ion-label>
+                      <ion-input
+                        [(ngModel)]="formData.info.speakerPosition"
+                        class="ion-text-uppercase"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating" color="medium">Roles a los que va dirigido *</ion-label>
+                      <ion-input
+                        [readonly]="true"
+                        [value]="getRoles(formData.info.toRoles)"
+                        autocomplete="off"
+                        (click)="showRoleListAlert(formData.info.toRoles)"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                <ion-button color="light" (click)="setShowEdit('info')">
+                  <ion-icon name="close-outline" slot="start"></ion-icon>
+                  <ion-text>Cancelar</ion-text>
+                </ion-button>
+                <ion-button color="primary" (click)="confirmEdit('info')">
+                  <ion-icon name="save-outline" slot="start"></ion-icon>
+                  <ion-text>Guardar</ion-text>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </div>
+
+          <div *ngIf="editBanner">
+            <ion-row class="ion-align-items-center">
+              <ion-col [size]="12" size-sm="6" class="ion-justify-content-center">
+
+                <ion-row class="ion-justify-content-center ion-margin">
+                  <ion-col size="12" class="ion-text-center ion-margin-top ion-padding-top">
+                    <img [src]="banner || 'assets/photo.png'" class="img-fluid">
+                  </ion-col>
+                  <ion-col size="12" class="ion-text-center">
+                    <ion-text><i class="toSmall">Imagen actual</i></ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+
+              <ion-col [size]="12" size-sm="6" class="ion-justify-content-center">
+                <ion-row class="ion-justify-content-center ion-margin">
+                  <ion-col size="12" class="ion-text-center">
+                    <label class="micursor ion-text-center w-100">
+                      <input type='file' accept="image/x-png,image/gif,image/jpeg,image/jpg" (change)='openFile($event)' hidden>
+                      <img [src]="formData.picture.banner || 'assets/photo.png'" class="img-fluid">
+                    </label>
+                  </ion-col>
+                  <ion-col size="12" class="ion-text-center">
+                    <ion-text><i class="toSmall">Clic para cargar una imagen</i></ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                <ion-button color="light" (click)="setShowBannerEdit()">
+                  <ion-icon name="close-outline" slot="start"></ion-icon>
+                  <ion-text>Cancelar</ion-text>
+                </ion-button>
+                <ion-button color="primary" (click)="confirmUpdateBanner()">
+                  <ion-icon name="save-outline" slot="start"></ion-icon>
+                  <ion-text>Guardar</ion-text>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </div>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col [size]="12" *ngIf="!views.info.edit && !editBanner">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-button (click)="setShowView('temary')">
+                <ion-icon name="chevron-{{views.temary.show ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>
+              {{ views.temary.title }}
+              <ion-badge color="light">{{ views.temary.data.length }}</ion-badge>
+            </ion-title>
+            <ion-buttons slot="end" *ngIf="views.temary.show">
+              <ion-button (click)="modalTheme()">
+                <ion-icon name="add-outline" slot="start"></ion-icon>
+                <ion-text>Agregar</ion-text>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.temary.show ? '' : 'ion-hide'}}">
+          <app-temarylist
+            [temary]="views.temary.data"
+            [handlePreview]="showPreviewModal"
+            [handleEditTheme]="showEditTheme"
+            [handleDeleteTheme]="showDeleteConfirmTheme"
+            [handleEditContent]="showEditContent"
+            [handleDeleteContent]="showDeleteConfirmContent"
+          ></app-temarylist>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col [size]="12" *ngIf="!views.info.edit && !editBanner">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-button (click)="setShowView('test')">
+                <ion-icon name="chevron-{{views.test.show ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>
+              {{ views.test.title }}
+              <ion-badge color="light">{{ views.test.data.length }}</ion-badge>
+            </ion-title>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.test.show ? '' : 'ion-hide'}}">
+          <app-test-list
+            [data]="views.test.data"
+            [handlePreview]="showPreviewTest"
+            [handleEditQuestion]="showEditQuestion"
+            [handleDeleteQuestion]="showDeleteConfirmQuestion"
+          ></app-test-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col [size]="12" *ngIf="!views.info.edit && !editBanner">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-button (click)="setShowView('levels')">
+                <ion-icon name="chevron-{{views.levels.show ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>{{ views.levels.title }}</ion-title>
+            <ion-buttons slot="end" *ngIf="views.levels.show">
+              <ion-button (click)="modalAddPreviousCourses()">
+                <ion-icon name="add-outline" slot="start"></ion-icon>
+                <ion-text>Agregar</ion-text>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.levels.show ? '' : 'ion-hide'}}">
+          <ion-row *ngIf="views.levels.data && views.levels.data.length > 0; else noLevels">
+            <ion-col [size]="12" size-sm="4" *ngFor="let d of views.levels.data">
+              <app-cursos-previos-card
+                [course]="d"
+                [handleDelete]="showDeleteConfirmLevel"
+              ></app-cursos-previos-card>
+            </ion-col>
+          </ion-row>
+
+          <ng-template #noLevels>
+            <ion-text>
+              <p class="ion-margin-top ion-padding-top ion-text-center">No existen niveles previos para visualizar este curso.</p>
+            </ion-text>
+          </ng-template>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col class="ion-margin-bottom ion-padding-bottom" [size]="12" *ngIf="!views.info.edit && !editBanner">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-button (click)="setShowView('publish')">
+                <ion-icon name="chevron-{{views.publish.show ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>{{ views.publish.title }}</ion-title>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.publish.show ? '' : 'ion-hide'}}">
+          <ion-row class="ion-align-items-center">
+            <ion-col class="ion-margin-top" size="12">
+              <ion-text>
+                <ul>
+                  <li>Haga que el curso sea visible para los usuarios con solo presionar el botón.</li>
+                  <li>Los cursos una vez publicados, <b>NO PUEDEN SER EDITADOS</b> en ninguna de las secciones.</li>
+                  <li>Si un curso no ha sido agregado por un usuario a su listado, este puede removerse de la lista pública y puede editarse.</li>
+                </ul>
+              </ion-text>
+              <ion-text>
+                <h3><b>NOTA:</b> ASEGÚRESE DE EDITAR Y VERIFICAR EL CONTENIDO DEL CURSO ANTES DE PUBLICARLO. UNA VEZ REALIZADA ESTA ACCIÓN Y ALGÚN USUARIO AGREGUE EL CURSO A SU LISTADO, NO PUEDE REVERTIRSE O EDITARSE.</h3>
+              </ion-text>
+            </ion-col>
+            <ion-col class="ion-margin-top ion-padding-top ion-text-center" size="12">
+              <ion-button [color]="views.publish.enable ? 'danger' : 'primary'" (click)="confirmPublish()">
+                <ion-icon name="alert-circle-outline" slot="start" *ngIf="views.publish.enable"></ion-icon>
+                <ion-icon name="earth-outline" slot="start" *ngIf="!views.publish.enable"></ion-icon>
+                <ion-text>{{ views.publish.enable ? 'Quitar curso de la sección pública' : 'Publicar curso' }}</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

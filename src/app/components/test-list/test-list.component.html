@@ -1,0 +1,58 @@
+<ion-card class="ion-margin-bottom ion-no-padding" *ngFor="let theme of data">
+  <ion-card-header class="ion-no-padding">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="viewsT[theme._id] = !viewsT[theme._id]">
+          <ion-icon name="chevron-{{viewsT[theme._id] ? 'up' : 'down' }}-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-text><b>{{ theme.title }}</b></ion-text>
+      <ion-buttons slot="end" class="theme.test && theme.test.length > 0">
+        <ion-button color="primary" (click)="handlePreview(theme._id)">
+          <ion-icon name="eye-outline" slot="start"></ion-icon>
+          <ion-text>Ver prueba</ion-text>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-card-header>
+
+  <ion-card-content *ngIf="viewsT[theme._id]">
+
+    <ion-toolbar class="ion-margin-start">
+      <ion-badge color="primary" slot="start">{{ theme.test ? theme.test.length : 0 }}</ion-badge>&nbsp;
+      <ion-text><b>PREGUNTAS</b></ion-text>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="handleEditQuestion(theme._id, null)">
+          <ion-icon name="add-outline"></ion-icon>&nbsp;
+          <ion-text>Agregar pregunta</ion-text>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-list *ngIf="theme.test && theme.test.length > 0; else noTests">
+      <ion-item *ngFor="let t of theme.test">
+        <ion-icon name="text-outline" slot="start" *ngIf="['text', 'textarea'].indexOf(t.inputType) > -1"></ion-icon>
+        <ion-icon name="radio-button-on-outline" slot="start" *ngIf="t.inputType === 'radio'"></ion-icon>
+        <ion-icon name="checkbox-outline" slot="start" *ngIf="t.inputType === 'checkbox'"></ion-icon>
+
+        <ion-text>{{ t.title }} {{ t.require ? '(*)' : '' }}</ion-text>
+
+        <ion-buttons slot="end">
+          <ion-button color="primary" (click)="handleEditQuestion(theme._id, t._id)">
+            <ion-icon name="pencil-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="primary" (click)="handleDeleteQuestion(theme._id, t._id)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noTests>
+      <ion-text>
+        <p class="ion-text-center">No existen preguntas para la prueba de este tema.</p>
+      </ion-text>
+    </ng-template>
+  </ion-card-content>
+
+</ion-card>

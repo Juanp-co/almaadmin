@@ -1,0 +1,193 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ titleModal }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="confirmEdit()">
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        <ion-text>Guardar</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col [size]="6">
+      <ion-row>
+        <ion-col [size]="12">
+          <ion-label>
+            <ion-icon name="settings-outline" slot="start"></ion-icon>&nbsp;
+            <ion-text><b>Generador de pregunta</b></ion-text>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-card class="ion-no-padding">
+        <ion-card-content class="ion-no-padding">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Título de la pregunta (*)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.title"
+                  maxlength="100"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Descripción</ion-label>
+                <ion-textarea
+                  [(ngModel)]="formData.description"
+                  rows="4"
+                  cols="20"
+                  placeholder="Ingresa alguna descripción para la pregunta (opcional)..."
+                  maxlength="150"
+                ></ion-textarea>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Tipo de campo (*)</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="getInputTypeLabel(formData.inputType)"
+                  autocomplete="off"
+                  (click)="showInputsListAlert()"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" *ngIf="formData.inputType && ['text', 'textarea'].indexOf(formData.inputType) > -1">
+              <ion-item>
+                <ion-label position="floating" color="medium">Mensaje de la caja (opcional)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.placeholder"
+                  maxlength="60"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" *ngIf="formData.inputType && ['text', 'textarea'].indexOf(formData.inputType) === -1">
+              <ion-row class="ion-align-items-center">
+                <ion-col [size]="9">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Listado de respuestas (*)</ion-label>
+                    <ion-input
+                      [(ngModel)]="word"
+                      maxlength="150"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col [size]="3">
+                  <ion-button color="light" size="small" (click)="addValuesInList()">
+                    <ion-icon name="add-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col [size]="12">
+                  <ion-item *ngFor="let value of formData.values; let i=index">
+                    <ion-label>{{ value }}</ion-label>
+                    <ion-button color="light" size="small" slot="end" (click)="removeValueOfList(i)">
+                      <ion-icon name="remove-outline"></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12" *ngIf="formData.inputType && ['text', 'textarea'].indexOf(formData.inputType) === -1">
+              <ion-item>
+                <ion-label position="floating" color="medium">Respuesta correcta (*)</ion-label>
+                <ion-select interface="alert" placeholder="Selecciona una" [(ngModel)]="formData.correctAnswer">
+                  <ion-select-option *ngFor="let value of formData.values; let i=index" [value]="i">{{ value }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">¿Respuesta obligatoria?</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="formData.require ? 'Si' : 'No'"
+                  autocomplete="off"
+                  (click)="showRequireAlert()"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col [size]="6" class="ion-align-items-center">
+
+      <ion-row class="ion-align-items-center">
+        <ion-col [size]="12">
+          <ion-label>
+            <ion-icon name="eye-outline" slot="start"></ion-icon>&nbsp;
+            <ion-text><b>Previsualización</b></ion-text>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ formData.title || 'Sin título' }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text class="toSmall" *ngIf="formData.description">{{formData.description}}</ion-text>
+
+          <div *ngIf="formData.inputType === 'text'">
+            <ion-item>
+              <ion-label position="floating" color="medium">{{ formData.placeholder || 'Indique su respuesta' }}</ion-label>
+              <ion-input [required]="formData.require"></ion-input>
+            </ion-item>
+          </div>
+          <div *ngIf="formData.inputType === 'textarea'">
+            <ion-item>
+              <ion-label position="floating" color="medium">{{ formData.placeholder || 'Indique su respuesta' }}</ion-label>
+              <ion-textarea
+                rows="4"
+                cols="20"
+                [required]="formData.require"
+              ></ion-textarea>
+            </ion-item>
+          </div>
+          <div *ngIf="formData.inputType === 'radio'">
+            <ion-radio-group>
+              <ion-list *ngFor="let value of formData.values; let i=index">
+                <ion-item>
+                  <ion-label>{{ value }}</ion-label>
+                  <ion-radio slot="start" value="{{i}}"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-radio-group>
+          </div>
+          <div *ngIf="formData.inputType === 'checkbox'">
+            <ion-list>
+              <ion-item *ngFor="let value of formData.values">
+                <ion-checkbox slot="start"></ion-checkbox>
+                <ion-label>{{ value }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <ion-text *ngIf="formData.require"><i>(*) Obligatoria </i></ion-text>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="auto" class="ion-margin-top ion-margin-bottom">
+      <ion-button color="light" (click)="closeModal()">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-text>Cancelar</ion-text>
+      </ion-button>
+      <ion-button (click)="confirmEdit()">
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        <ion-text>Guardar</ion-text>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -31,23 +31,14 @@ export class RegistroPage implements OnInit {
   documentTypes = [];
   successRegister = false;
   successData: any = null;
-  // formData: any = {
-  //   documentType: null,
-  //   document: null,
-  //   email: null,
-  //   phone: null,
-  //   names: null,
-  //   lastNames: null,
-  //   role: null,
-  // };
   formData: any = {
-    documentType: 'CC',
-    document: '24875206',
-    email: 'euka@example.com',
+    documentType: null,
+    document: null,
+    email: null,
     phone: null,
-    names: 'EUKARIS',
-    lastNames: 'ESPINOZA',
-    role: 0,
+    names: null,
+    lastNames: null,
+    role: null,
   };
 
   constructor(
@@ -81,8 +72,6 @@ export class RegistroPage implements OnInit {
 
     const data: any = {...this.formData};
     data.document = `${data.documentType}${data.document}`;
-
-    console.log('data', data);
 
     const res = await this.miembrosService.registerUser(data);
 
@@ -134,7 +123,7 @@ export class RegistroPage implements OnInit {
     }
 
     const alert = await this.alertCtrl.create({
-      header: 'Seleccione un role',
+      header: 'Seleccione un rol',
       inputs,
       buttons: [
         {
@@ -180,7 +169,6 @@ export class RegistroPage implements OnInit {
         {
           text: 'Ok',
           handler: (selectedValue) => {
-            console.log('selectedValue', selectedValue);
             this.formData.documentType = selectedValue;
           }
         }
@@ -250,7 +238,5 @@ export class RegistroPage implements OnInit {
     else {
       await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');
     }
-
-
   }
 }

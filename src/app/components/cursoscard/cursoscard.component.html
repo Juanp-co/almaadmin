@@ -1,0 +1,16 @@
+<ion-card *ngIf="course" (click)="goToDetails(course._id)">
+  <ion-img class="banner" [src]="course.banner || 'assets/icon/escuela.svg'"></ion-img>
+  <ion-card-header>
+    <ion-card-title>{{ course.title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-text class="no-selected-text" *ngIf="course.description">{{ course.description.length > 50 ? course.description.substr(0, 50) + '...' : course.description }}</ion-text>
+    <ion-text class="no-selected-text" *ngIf="!course.description">Sin descripción.</ion-text>
+    <br/>
+    <br/>
+    <ion-text class="no-selected-text ion-text-center" class="toSmall">
+      <ion-icon name="open-outline"></ion-icon>&nbsp;
+      <i>Haz clic para más detalles</i>
+    </ion-text>
+  </ion-card-content>
+</ion-card>

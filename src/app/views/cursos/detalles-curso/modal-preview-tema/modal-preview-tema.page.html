@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ titleModal }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="data">
+    <ion-card-content>
+      <ion-row>
+        <ion-col class="ion-margin-bottom" [size]="12" *ngIf="data.urlVideo">
+          <app-video-player urlVideo="{{data.urlVideo}}"></app-video-player>
+        </ion-col>
+
+        <ion-col [size]="12" *ngIf="data.description">
+          <div [innerHTML]="data.description"></div>
+        </ion-col>
+
+        <ion-col [size]="12"*ngIf="!infoToShow.contentView">
+          <ion-row>
+            <ion-col [size]="12" *ngIf="data.content && data.content.length > 0; else noTemary">
+              <ion-text class="ion-margin-top"><b>Lista de contenido:</b></ion-text>
+              <ion-list>
+                <ion-item *ngFor="let c of data.content">
+                  <ion-icon name="albums-outline"></ion-icon>&nbsp;
+                  <ion-text>{{c.title}}</ion-text>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+
+            <ng-template #noTemary>
+              <ion-col [size]="12">
+                <ion-text class="ion-margin-top ion-margin-bottom">
+                  <p class="ion-text-center">No se ha registado contenido para el tema.</p>
+                </ion-text>
+              </ion-col>
+            </ng-template>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -26,7 +26,6 @@
                   [(ngModel)]="queryParams.word"
                   autocomplete="off"
                   class="ion-text-uppercase"
-                  (change)="!queryParams.word || queryParams.word === '' ? findData() : null"
                 ></ion-input>
               </ion-item>
               <ion-button color="light" (click)="findData()" slot="end">

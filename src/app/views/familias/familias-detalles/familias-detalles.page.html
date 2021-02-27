@@ -125,7 +125,6 @@
                     autocomplete="off"
                     class="ion-text-uppercase"
                     maxlength="20"
-                    (change)="!queryParams.word || queryParams.word === '' ? findMembersList() : null"
                   ></ion-input>
                 </ion-item>
                 <ion-button color="light" (click)="findMembersList()" slot="end">

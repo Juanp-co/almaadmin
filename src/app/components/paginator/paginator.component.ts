@@ -31,13 +31,13 @@ export class PaginatorComponent implements OnInit {
   onChangePage(increment: boolean) {
     if (increment) {
       this.model.currentPage = this.model.currentPage + 1;
-      if (this.model.currentPage <= 0 || this.model.currentPage >= this.totalPages || Number.isNaN(this.model.currentPage)){
+      if (this.model.currentPage <= 0 || this.model.currentPage >= this.totalPages || Number.isNaN(this.model.currentPage)) {
         this.model.currentPage = this.model.totalPages;
       }
     }
     else {
       this.model.currentPage = this.model.currentPage - 1;
-      if (this.model.currentPage <= 0 || Number.isNaN(this.model.currentPage)){
+      if (this.model.currentPage <= 0 || Number.isNaN(this.model.currentPage)) {
         this.model.currentPage = 1;
       }
     }

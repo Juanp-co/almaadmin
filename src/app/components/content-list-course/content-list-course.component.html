@@ -1,0 +1,68 @@
+
+<ion-row *ngIf="content && content.length > 0; else noContent">
+  <ion-col [size]="12">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="handleBack()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-card-title>{{ theme.title }}</ion-card-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="handlePreviewModal(theme._id)">
+          <ion-icon name="eye-outline"></ion-icon>&nbsp;
+          <ion-text>Ver</ion-text>
+        </ion-button>
+        <ion-button color="primary" (click)="handleAddOrEditModal(theme._id)">
+          <ion-icon name="add-outline" slot="start"></ion-icon>&nbsp;
+          <ion-text>Agregar</ion-text>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-col>
+  <ion-col *ngFor="let c of content">
+
+  </ion-col>
+</ion-row>
+
+<ion-card *ngFor="let theme of temary">
+  <ion-card-header class="ion-no-padding">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="viewsT[theme._id] = !viewsT[theme._id]">
+          <ion-icon name="chevron-{{viewsT[theme._id] ? 'up' : 'down' }}-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-card-title>{{ theme.title }}</ion-card-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="handlePreviewModal(theme._id)">
+          <ion-icon name="eye-outline"></ion-icon>&nbsp;
+          <ion-text>Previsualizar</ion-text>
+        </ion-button>
+        <ion-button color="primary" (click)="handleEditModal(theme._id)">
+          <ion-icon name="pencil-outline" slot="start"></ion-icon>&nbsp;
+          <ion-text>Editar</ion-text>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content *ngIf="viewsT[theme._id]">
+    <ion-list *ngIf="theme.content && theme.content.length > 0; else noContent">
+      <ion-item *ngFor="let content of theme.content">
+        <ion-text><b>{{ content.title }}</b></ion-text>
+        <ion-buttons slot="end">
+          <ion-button color="primary" (click)="null">
+            <ion-icon name="pencil-outline" slot="start"></ion-icon>&nbsp;
+            <ion-text>Editar</ion-text>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noContent>
+      <ion-text class="ion-margin-top">
+        <p class="ion-text-center">No se ha registado contenido para el tema.</p>
+      </ion-text>
+    </ng-template>
+  </ion-card-content>
+</ion-card>
