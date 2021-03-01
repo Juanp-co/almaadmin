@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {setSaltLinesOrBr} from '../../../Utils/validations.functions';
+import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-cursoscard',

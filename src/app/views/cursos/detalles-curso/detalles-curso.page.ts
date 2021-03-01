@@ -50,29 +50,11 @@ export class DetallesCursoPage implements OnInit {
     publish: { show: false, title: 'Publicar curso', enable: false },
   };
   formData: any = {
-    info: {
-      title: null,
-      description: null,
-      toRoles: null,
-      speaker: null,
-      speakerPosition: null,
-    },
-    picture: { banner: null },
     temary: { show: false, title: 'Temas del curso' },
     test: { show: false, title: 'Pruebas' },
     levels: { show: false, title: 'Niveles previos al curso' },
   };
-
-  // handles to components
-  showPreviewModal = (themeId: string, contentId: string|null = null): void => { this.modalPreviewTheme(themeId, contentId); };
-  showEditTheme = (id: string): void => { this.modalTheme(id); };
-  showEditContent = (themeId: string, contentId: string|null = null): void => { this.modalEditContent(themeId, contentId); };
-  showDeleteConfirmTheme = (themeId: string): void => { this.deleteThemeConfirm(themeId); };
-  showDeleteConfirmContent = (themeId: string, contentId: string): void => { this.deleteContentConfirm(themeId, contentId); };
-  showPreviewTest = (themeId: string): void => { this.modalPreviewTest(themeId); };
-  showEditQuestion = (themeId: string, questionId: string|null = null): void => { this.modalEditQuestion(themeId, questionId); };
-  showDeleteConfirmQuestion = (themeId: string, questionId: string): void => { this.deleteQuestionConfirm(themeId, questionId); };
-  showDeleteConfirmLevel = (levelId: string): void => { this.deleteLevelConfirm(levelId); };
+  formDataInfo = null;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -127,16 +109,15 @@ export class DetallesCursoPage implements OnInit {
   }
 
   // actions services
-  async updateCourse(group: string) {
+  async updateCourse(data: any) {
     await this.globalSer.presentLoading();
-    const data = this.formData[group];
-    const updated: any = await this.cursosService.updateCourse(group, this.id, data);
+    const updated: any = await this.cursosService.updateCourse('info', this.id, data);
 
     if (updated && !updated.error) {
       this.staticData = {...this.staticData, ...updated};
       this.course = {...this.staticData};
-      this.setDataToView(group, updated);
-      this.views[group].edit = false;
+      this.setDataToView('info', updated);
+      this.views.info.edit = false;
       this.title = `Detalles: ${this.course.title}`;
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el curso exitosamente.');
@@ -164,16 +145,14 @@ export class DetallesCursoPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
-  async updateBanner() {
+  async updateBanner(banner: string) {
     await this.globalSer.presentLoading();
-    const data = this.formData.picture;
-    const updated: any = await this.cursosService.updateBannerCourse(this.id, data);
+    const updated: any = await this.cursosService.updateBannerCourse(this.id, { banner });
 
     if (updated && !updated.error) {
-      this.staticData.banner = this.formData.picture.banner;
-      this.course.banner = this.formData.picture.banner;
-      this.banner = this.formData.picture.banner;
-      this.formData.picture.banner = null;
+      this.staticData.banner = banner;
+      this.course.banner = banner;
+      this.banner = banner;
       this.editBanner = false;
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', updated || 'Se ha cambiado la imagen el curso exitosamente.');
@@ -213,7 +192,6 @@ export class DetallesCursoPage implements OnInit {
       this.staticData.temary[index1].content = this.staticData.temary[index1].content.filter(c => c._id !== contentId);
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha eliminado el contenido del tema exitosamente.');
-
     }
     else if (deleted && deleted.error) {
       await this.globalSer.dismissLoading();
@@ -269,9 +247,10 @@ export class DetallesCursoPage implements OnInit {
       this.course.enable = data.enable;
       this.views.publish.enable = data.enable;
       await this.globalSer.dismissLoading();
-      const msg = data.enable ? 'Se ha publicado el curso exitosamente.' : 'Se ha retirado el curso de la sección pública exitosamente.';
-      await this.globalSer.presentAlert('¡Éxito!', msg);
-
+      await this.globalSer.presentAlert(
+        '¡Éxito!',
+        data.enable ? 'Se ha publicado el curso exitosamente.' : 'Se ha retirado el curso de la sección pública exitosamente.'
+      );
     }
     else if (data && data.error) {
       await this.globalSer.dismissLoading();
@@ -285,48 +264,31 @@ export class DetallesCursoPage implements OnInit {
     this.views[input].show = !this.views[input].show;
   }
 
-  setShowEdit(group: string) {
+  setShowEditInfo(group: string) {
     if (this.views[group].edit) {
-      const keys = Object.keys(this.formData[group]);
-      keys.forEach(k => {
-        if (k !== 'banner') this.formData[group][k] = null;
-      });
+      this.formDataInfo = null;
       this.views[group].edit = false;
     }
     else {
-      const keys = Object.keys(this.formData[group]);
-      keys.forEach(k => {
-        if (k === 'description') this.formData[group][k] = setSaltLinesOrBr(this.views.info.data[k]);
-        else this.formData[group][k] = this.views.info.data[k];
-      });
+      this.formDataInfo = {...this.views.info.data};
       this.views[group].edit = true;
     }
   }
 
   setShowBannerEdit() {
-    if (this.editBanner) this.formData.picture.banner = null;
     this.editBanner = !this.editBanner;
   }
 
   // getters and setters
-  getRoles(rolesList: number[]): string {
-    let ret = '';
-    if (rolesList.length > 0) {
-      for (const v of rolesList) {
-        if (ret === '') ret = this.roles[v - 1];
-        else ret += `, ${this.roles[v - 1]}`;
-      }
-    }
-
-    return ret;
-  }
 
   setDataToView(group: string, data: any = []) {
     if (group === 'info') {
       const keys = Object.keys(this.views[group].data);
       keys.forEach(k => {
-        if (k === 'description') this.views[group].data[k] = setSaltLinesOrBr(data[k], true);
-        else this.views[group].data[k] = data[k];
+        if (k === 'description')
+          this.views[group].data[k] = setSaltLinesOrBr(data[k], true);
+        else
+          this.views[group].data[k] = data[k];
       });
     }
     else if (['levels', 'temary'].indexOf(group) > -1) {
@@ -343,63 +305,14 @@ export class DetallesCursoPage implements OnInit {
     }
   }
 
-  // actions form
-  openFile(event) {
-    const files = event.target.files;
-    if (typeof files[0] !== 'object') return false;
-    else {
-      this.dataService.resizePhoto(files[0], 900, 'dataURL',  (resizedFile) => {
-        this.formData.picture.banner = resizedFile;
-      });
-    }
-  }
-
-  async showRoleListAlert(selected: any = []) {
-    const inputs: any = [];
-    const updateData = (value: any) => this.formData.info.toRoles = value;
-    for (const [i, value] of this.roles.entries()) {
-      inputs.push({
-        name: `roles`,
-        type: 'checkbox',
-        label: value,
-        value: i + 1,
-        checked: selected.indexOf(i + 1) > -1,
-      });
-    }
-
-    await this.globalSer.alertWithList({
-      header: 'Seleccione los roles',
-      inputs,
-      confirmAction: updateData
-    });
+  // getters and setters
+  getRoles(roles: number[]): string {
+    return this.cursosService.getRoles(roles);
   }
 
   /*
    Information, banner and delete actions
     */
-  async confirmEdit(group: string) {
-    const validated = this.cursosService.validationEdit(group, this.formData[group]);
-
-    if (!validated) {
-      await this.globalSer.alertConfirm({
-        message: '¿Está seguro qué desea actualizar esta información?',
-        confirmAction: () => this.updateCourse(group)
-      });
-    }
-    else await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');
-  }
-
-  async confirmUpdateBanner() {
-    const validated = this.cursosService.validationEdit('banner', this.formData.picture);
-
-    if (!validated) {
-      await this.globalSer.alertConfirm({
-        message: '¿Está seguro qué desea cambiar la imagen del curso?',
-        confirmAction: () => this.updateBanner()
-      });
-    }
-    else await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe seleccionar la nueva imagen.');
-  }
 
   async confirmCourseDelete() {
     await this.globalSer.alertConfirm({
@@ -757,5 +670,20 @@ export class DetallesCursoPage implements OnInit {
 
     await this.globalSer.alertConfirm({ message, confirmAction: () => this.publishCourse() });
   }
+
+  // handles to components
+  cancelEditInfo = (): void => { this.setShowEditInfo('info'); };
+  saveEditInfo = (data: any): void => { this.updateCourse(data); };
+  cancelEditBanner = (): void => { this.setShowBannerEdit(); };
+  saveEditBanner = (data: string): void => { this.updateBanner(data); };
+  showPreviewModal = (themeId: string, contentId: string|null = null): void => { this.modalPreviewTheme(themeId, contentId); };
+  showEditTheme = (id: string): void => { this.modalTheme(id); };
+  showEditContent = (themeId: string, contentId: string|null = null): void => { this.modalEditContent(themeId, contentId); };
+  showDeleteConfirmTheme = (themeId: string): void => { this.deleteThemeConfirm(themeId); };
+  showDeleteConfirmContent = (themeId: string, contentId: string): void => { this.deleteContentConfirm(themeId, contentId); };
+  showPreviewTest = (themeId: string): void => { this.modalPreviewTest(themeId); };
+  showEditQuestion = (themeId: string, questionId: string|null = null): void => { this.modalEditQuestion(themeId, questionId); };
+  showDeleteConfirmQuestion = (themeId: string, questionId: string): void => { this.deleteQuestionConfirm(themeId, questionId); };
+  showDeleteConfirmLevel = (levelId: string): void => { this.deleteLevelConfirm(levelId); };
 
 }

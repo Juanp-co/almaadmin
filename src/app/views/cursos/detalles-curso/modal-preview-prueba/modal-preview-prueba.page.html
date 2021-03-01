@@ -1,15 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">
+        <ion-icon name="close-outline" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-text class="ion-margin-top ion-margin-bottom">{{ titleModal }}</ion-text>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button (click)="close()">
-          <ion-icon name="close-outline" color="dark"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-text class="ion-margin-top ion-margin-bottom">{{ titleModal }}</ion-text>
-    </ion-toolbar>
-  </ion-header>
-
   <div *ngIf="questionsView">
     <ion-list *ngFor="let item of questionsView">
       <ion-card>
@@ -73,9 +72,9 @@
               <ion-button
                 color="light"
                 expand="full"
-                (click)="dismiss()"
+                (click)="close()"
               >
-                SALIR
+                <ion-text>CERRAR</ion-text>
               </ion-button>
             </ion-col>
             <ion-col size="6">
@@ -84,7 +83,7 @@
                 expand="full"
                 (click)="getQuestionsFromList(true)"
               >
-                SIGUIENTE
+                <ion-text>SIGUIENTE</ion-text>
               </ion-button>
             </ion-col>
           </ion-row>
@@ -97,7 +96,7 @@
                 expand="full"
                 (click)="getQuestionsFromList()"
               >
-                ATRÁS {{viewSelected}} -  {{totalsViews}}
+                <ion-text>ATRÁS</ion-text>
               </ion-button>
             </ion-col>
             <ion-col size="6" *ngIf="viewSelected > 0 && viewSelected < totalsViews">
@@ -106,7 +105,7 @@
                 expand="full"
                 (click)="getQuestionsFromList(true)"
               >
-                SIGUIENTE
+                <ion-text>SIGUIENTE</ion-text>
               </ion-button>
             </ion-col>
             <ion-col size="6" *ngIf="viewSelected === totalsViews">
@@ -115,7 +114,7 @@
                 expand="full"
                 (click)="close()"
               >
-                FINALIZAR VISUALIZACIÓN
+                <ion-text>CERRAR</ion-text>
               </ion-button>
             </ion-col>
           </ion-row>

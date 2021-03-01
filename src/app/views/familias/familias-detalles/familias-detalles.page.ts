@@ -60,7 +60,7 @@ export class FamiliasDetallesPage implements OnInit {
     if (data && !data.error) {
       this.staticData = {...data};
       this.group = {...this.staticData};
-      this.title = `Detalles: ${this.group.name}`;
+      this.title = `Grupo: ${this.group.name}`;
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
@@ -86,6 +86,7 @@ export class FamiliasDetallesPage implements OnInit {
       this.group = {...this.group, ...updated};
       this.staticData = {...updated};
       await this.editEnable(true);
+      await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado los datos del grupo exitosamente.');
     }
     else if (updated && updated.error) {
@@ -133,8 +134,8 @@ export class FamiliasDetallesPage implements OnInit {
       else {
         this.staticData.members = this.group.members;
       }
-      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el listado de miembros exitosamente.');
       await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el listado de miembros exitosamente.');
     }
     else if (res && res.error) {
       await this.globalSer.dismissLoading();
@@ -218,7 +219,7 @@ export class FamiliasDetallesPage implements OnInit {
       this.title = `Editar datos de: ${this.formData.name}`;
     }
     else {
-      this.title = `Detalles: ${this.group.name}`;
+      this.title = `Grupo: ${this.group.name}`;
       this.formData = null;
     }
 

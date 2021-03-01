@@ -78,10 +78,8 @@ export class FamiliasPage implements OnInit {
       this.queryParams.page = 1;
       this.pages = 0;
       this.groups = [];
-      if (totals.status && totals.status === 401) {
-        await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no se encontró una sesión activa.');
-        this.router.navigate(['/ingresar']);
-      }
+      await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no se encontró una sesión activa.');
+      this.router.navigate(['/ingresar']);
     }
     else {
       this.queryParams.page = 1;
