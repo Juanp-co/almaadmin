@@ -33,6 +33,26 @@ export class CursosService {
     private globalSer: GlobalService
   ) { }
 
+  /*
+  Internal actions
+   */
+
+  getRoles(rolesList: number[]): string {
+    let ret = '';
+    if (rolesList.length > 0) {
+      for (const v of rolesList) {
+        if (ret === '') ret = this.roles[v - 1];
+        else ret += `, ${this.roles[v - 1]}`;
+      }
+    }
+
+    return ret;
+  }
+
+  /*
+    API services
+   */
+
   async getCoursesTotals(query = {}): Promise<any> {
     const res: any = await this.axios.getData('/admin/courses/counters', query);
 
@@ -195,7 +215,7 @@ export class CursosService {
 
   validationEdit(section: string, data: any): string|null {
     if (section === 'banner') {
-      if (!checkBase64(data.banner)) return 'Disculpe, pero debe seleccionar una imagen válida.';
+      if (!checkBase64(data)) return 'Disculpe, pero debe seleccionar una imagen válida.';
     }
     else if (section === 'content') {
       if (!checkTitlesOrDescriptions(data.title)) return 'Disculpe, pero debe indicar un título para el tema.';

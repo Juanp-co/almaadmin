@@ -124,8 +124,16 @@ export class MiembrosPage implements OnInit {
   }
 
   async setQueryValues() {
-    const alert = await this.alertCtrl.create({
-      header: 'Miembros por página',
+    const update = (selectedValue) => {
+      this.queryParams.limit = selectedValue;
+      this.queryParams.page = 1;
+      this.pages = this.globalSer.getPagination(this.totals, this.queryParams.limit);
+      this.users = null;
+      this.getData();
+    };
+
+    await this.globalSer.alertWithList({
+      header: 'Resultados por página',
       inputs: [
         {
           name: `results-per-page`,
@@ -149,26 +157,8 @@ export class MiembrosPage implements OnInit {
           checked: this.queryParams.limit === 50,
         },
       ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.queryParams.limit = selectedValue;
-            this.queryParams.page = 1;
-            this.pages = this.globalSer.getPagination(this.totals, this.queryParams.limit);
-            this.users = null;
-            this.getData();
-          }
-        }
-      ]
+      confirmAction: (data: any) => update(data)
     });
-    await alert.present();
   }
 
   async goToRegister() {

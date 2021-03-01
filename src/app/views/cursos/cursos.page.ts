@@ -44,9 +44,7 @@ export class CursosPage implements OnInit {
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   async ionViewWillEnter() {
     if (!this.globalSer.checkSession())
@@ -74,10 +72,8 @@ export class CursosPage implements OnInit {
       this.queryParams.page = 1;
       this.pages = 0;
       this.courses = [];
-      if (totals.status && totals.status === 401) {
-        await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no se encontró una sesión activa.');
-        this.router.navigate(['/ingresar']);
-      }
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
     }
     else {
       this.queryParams.page = 1;
@@ -118,16 +114,18 @@ export class CursosPage implements OnInit {
   }
 
   async setQueryValues() {
-    const alert = await this.alertCtrl.create({
-      header: 'Cursos por página',
+
+    const updated = (selectedValue: any) => {
+      this.queryParams.limit = selectedValue;
+      this.queryParams.page = 1;
+      this.pages = this.globalSer.getPagination(this.totals, this.queryParams.limit);
+      this.courses = null;
+      this.getCoursesList();
+    };
+
+    await this.globalSer.alertWithList({
+      header: 'Seleccione los roles',
       inputs: [
-        {
-          name: `results-per-page`,
-          type: 'radio',
-          label: `5`,
-          value: 5,
-          checked: this.queryParams.limit === 5,
-        },
         {
           name: `results-per-page`,
           type: 'radio',
@@ -150,26 +148,8 @@ export class CursosPage implements OnInit {
           checked: this.queryParams.limit === 50,
         },
       ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.queryParams.limit = selectedValue;
-            this.queryParams.page = 1;
-            this.pages = this.globalSer.getPagination(this.totals, this.queryParams.limit);
-            this.courses = null;
-            this.getCoursesList();
-          }
-        }
-      ]
+      confirmAction: updated
     });
-    await alert.present();
   }
 
   // others actions

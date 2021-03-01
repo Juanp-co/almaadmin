@@ -52,7 +52,7 @@
     </ion-row>
 
     <ion-row *ngIf="users && users.length > 0">
-      <ion-col size="12" size-sm="4" *ngFor="let user of users">
+      <ion-col size="12" size-sm="6" *ngFor="let user of users">
         <app-usercard [data]="user"></app-usercard>
       </ion-col>
     </ion-row>

@@ -30,7 +30,7 @@
             <ion-title *ngIf="!views.info.edit && editBanner">Cambiar imagen del curso</ion-title>
             <ion-title *ngIf="views.info.edit && !editBanner">Editar datos principales del curso</ion-title>
             <ion-buttons slot="end" *ngIf="views.info.show">
-              <ion-button (click)="setShowEdit('info')" *ngIf="!views.info.edit && !editBanner">
+              <ion-button (click)="setShowEditInfo('info')" *ngIf="!views.info.edit && !editBanner">
                 <ion-icon name="create-outline"></ion-icon>
                 <ion-text>Editar</ion-text>
               </ion-button>
@@ -89,111 +89,20 @@
             </ion-row>
           </div>
 
-          <div *ngIf="views.info.edit">
-            <ion-row>
-              <ion-col [size]="12" size-sm="12">
-                <ion-row>
-                  <ion-col size="12">
-                    <ion-item>
-                      <ion-label position="floating" color="medium">Nombre del curso *</ion-label>
-                      <ion-input
-                        [(ngModel)]="formData.info.title"
-                        class="ion-text-uppercase"
-                      ></ion-input>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-item>
-                      <ion-label position="floating" color="medium">Descripcion del curso *</ion-label>
-                      <ion-textarea
-                        [(ngModel)]="formData.info.description"
-                        rows="6"
-                        placeholder="Escribe aqui..."
-                      ></ion-textarea>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-item>
-                      <ion-label position="floating" color="medium">Nombre del ponente *</ion-label>
-                      <ion-input
-                        [(ngModel)]="formData.info.speaker"
-                        class="ion-text-uppercase"
-                      ></ion-input>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-item>
-                      <ion-label position="floating" color="medium">Cargo o posición del ponente *</ion-label>
-                      <ion-input
-                        [(ngModel)]="formData.info.speakerPosition"
-                        class="ion-text-uppercase"
-                      ></ion-input>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-item>
-                      <ion-label position="floating" color="medium">Roles a los que va dirigido *</ion-label>
-                      <ion-input
-                        [readonly]="true"
-                        [value]="getRoles(formData.info.toRoles)"
-                        autocomplete="off"
-                        (click)="showRoleListAlert(formData.info.toRoles)"
-                      ></ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-              <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
-                <ion-button color="light" (click)="setShowEdit('info')">
-                  <ion-icon name="close-outline" slot="start"></ion-icon>
-                  <ion-text>Cancelar</ion-text>
-                </ion-button>
-                <ion-button color="primary" (click)="confirmEdit('info')">
-                  <ion-icon name="save-outline" slot="start"></ion-icon>
-                  <ion-text>Guardar</ion-text>
-                </ion-button>
-              </ion-col>
-            </ion-row>
+          <div *ngIf="views.info.edit && formDataInfo">
+            <app-editar-info-curso
+              [data]="formDataInfo"
+              [handleCancel]="cancelEditInfo"
+              [handleSave]="saveEditInfo"
+            ></app-editar-info-curso>
           </div>
 
           <div *ngIf="editBanner">
-            <ion-row class="ion-align-items-center">
-              <ion-col [size]="12" size-sm="6" class="ion-justify-content-center">
-
-                <ion-row class="ion-justify-content-center ion-margin">
-                  <ion-col size="12" class="ion-text-center ion-margin-top ion-padding-top">
-                    <img [src]="banner || 'assets/photo.png'" class="img-fluid">
-                  </ion-col>
-                  <ion-col size="12" class="ion-text-center">
-                    <ion-text><i class="toSmall">Imagen actual</i></ion-text>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-
-              <ion-col [size]="12" size-sm="6" class="ion-justify-content-center">
-                <ion-row class="ion-justify-content-center ion-margin">
-                  <ion-col size="12" class="ion-text-center">
-                    <label class="micursor ion-text-center w-100">
-                      <input type='file' accept="image/x-png,image/gif,image/jpeg,image/jpg" (change)='openFile($event)' hidden>
-                      <img [src]="formData.picture.banner || 'assets/photo.png'" class="img-fluid">
-                    </label>
-                  </ion-col>
-                  <ion-col size="12" class="ion-text-center">
-                    <ion-text><i class="toSmall">Clic para cargar una imagen</i></ion-text>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-              <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
-                <ion-button color="light" (click)="setShowBannerEdit()">
-                  <ion-icon name="close-outline" slot="start"></ion-icon>
-                  <ion-text>Cancelar</ion-text>
-                </ion-button>
-                <ion-button color="primary" (click)="confirmUpdateBanner()">
-                  <ion-icon name="save-outline" slot="start"></ion-icon>
-                  <ion-text>Guardar</ion-text>
-                </ion-button>
-              </ion-col>
-            </ion-row>
+            <app-editar-banner-curso
+              [handleCancel]="cancelEditBanner"
+              [handleSave]="saveEditBanner"
+              [banner]="banner"
+            ></app-editar-banner-curso>
           </div>
 
         </ion-card-content>
