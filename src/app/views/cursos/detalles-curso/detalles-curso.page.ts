@@ -29,7 +29,7 @@ export class DetallesCursoPage implements OnInit {
 
   edit = false;
   editBanner = false;
-  banner = null;
+  banner: string|null = null;
   totalsUsers = 0;
   views: any = {
     info: {
@@ -83,6 +83,10 @@ export class DetallesCursoPage implements OnInit {
       this.staticData = {...data};
       this.course = {...this.staticData};
       this.banner = this.course.banner;
+      if (this.banner) {
+        this.staticData.banner = this.banner;
+        this.course.banner = this.course;
+      }
       this.views.publish.enable = this.course.enable;
       this.totalsUsers = this.course.totalsUsers || 0;
       this.setDataToView('info', this.course);
@@ -150,12 +154,14 @@ export class DetallesCursoPage implements OnInit {
     const updated: any = await this.cursosService.updateBannerCourse(this.id, { banner });
 
     if (updated && !updated.error) {
-      this.staticData.banner = banner;
-      this.course.banner = banner;
-      this.banner = banner;
+      this.banner = updated;
+      if (this.banner) {
+        this.staticData.banner = this.banner;
+        this.course.banner = this.banner;
+      }
       this.editBanner = false;
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', updated || 'Se ha cambiado la imagen el curso exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha cambiado la imagen el curso exitosamente.');
     }
     else if (updated && updated.error) {
       await this.globalSer.dismissLoading();
