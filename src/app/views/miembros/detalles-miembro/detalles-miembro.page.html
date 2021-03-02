@@ -6,14 +6,10 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{ title }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="primary" (click)="editEnable()">
-        <ion-icon name="{{ !edit ? 'create-outline' : 'close-outline' }}" slot="start"></ion-icon>
-        <ion-text>{{ !edit ? 'Editar' : 'Cancelar edición' }}</ion-text>
-      </ion-button>
-      <ion-button color="primary" *ngIf="!edit">
-        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
-        <ion-text>Reiniciar contraseña</ion-text>
+    <ion-buttons slot="end" *ngIf="user && enableActions">
+      <ion-button color="primary" (click)="editEnable()" *ngIf="edit">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-text>Cancelar edición</ion-text>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -29,7 +25,7 @@
               <ion-card>
                 <ion-card-content>
                   <ion-row>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Tipo de documento *</ion-label>
                         <ion-input
@@ -40,7 +36,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Número de documento *</ion-label>
                         <ion-input
@@ -53,45 +49,48 @@
                         </ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Nombre(s) *</ion-label>
                         <ion-input
                           [(ngModel)]="formData.names"
                           autocomplete="off"
-                          (keypress)="validateOnlyLetters($event)"
+                          maxlength="50"
+                          (keyup)="validateOnlyLetters($event)"
                           class="ion-text-uppercase"
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Apellidos(s) *</ion-label>
                         <ion-input
                           [(ngModel)]="formData.lastNames"
                           autocomplete="off"
-                          (keypress)="validateOnlyLetters($event)"
+                          maxlength="50"
+                          (keyup)="validateOnlyLetters($event)"
                           class="ion-text-uppercase"
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Correo electrónico *</ion-label>
                         <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Teléfono *</ion-label>
                         <ion-input
                           [(ngModel)]="formData.phone"
                           autocomplete="off"
+                          maxlength="13"
                           (keypress)="validateOnlyNumber($event)"
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating">Fecha de nacimiento *</ion-label>
                         <ion-datetime
@@ -106,7 +105,7 @@
                         </ion-datetime>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Sexo *</ion-label>
                         <ion-input
@@ -117,7 +116,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Tipo de sangre *</ion-label>
                         <ion-input
@@ -128,7 +127,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Estado civil *</ion-label>
                         <ion-input
@@ -139,7 +138,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Nivel educativo *</ion-label>
                         <ion-input
@@ -150,7 +149,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Profesión *</ion-label>
                         <ion-input
@@ -161,7 +160,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">¿Posee una empresa? *</ion-label>
                         <ion-input
@@ -184,7 +183,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">¿Estás bautizado?</ion-label>
                         <ion-input
@@ -195,7 +194,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Departamento *</ion-label>
                         <ion-input
@@ -207,7 +206,7 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Ciudad *</ion-label>
                         <ion-input
@@ -219,23 +218,25 @@
                         ></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Barrio ó localidad *</ion-label>
-                        <ion-input [(ngModel)]="formData.locality" autocomplete="off" class="ion-text-uppercase"></ion-input>
+                        <ion-input [(ngModel)]="formData.locality" autocomplete="off" maxlength="100" class="ion-text-uppercase"></ion-input>
                       </ion-item>
                     </ion-col>
-                    <ion-col size="6" size-sm="6">
+                    <ion-col size="12" size-sm="6">
                       <ion-item>
                         <ion-label position="floating" color="medium">Dirección *</ion-label>
-                        <ion-input [(ngModel)]="formData.direction" autocomplete="off" class="ion-text-uppercase"></ion-input>
+                        <ion-input [(ngModel)]="formData.direction" autocomplete="off" maxlength="250" class="ion-text-uppercase"></ion-input>
                       </ion-item>
                     </ion-col>
                     <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
                       <ion-button color="light" (click)="editEnable()">
+                        <ion-icon name="close-outline" slot="start"></ion-icon>
                         <ion-text>Cancelar</ion-text>
                       </ion-button>
                       <ion-button color="primary" (click)="confirmUpdate()">
+                        <ion-icon name="save-outline" slot="start"></ion-icon>
                         <ion-text>Guardar</ion-text>
                       </ion-button>
                     </ion-col>
@@ -355,40 +356,75 @@
               </ion-card>
             </ion-col>
 
-            <ion-col size="12" size-sm="6" *ngIf="!edit && (referred || totals)">
-              <ion-card>
-                <ion-card-content>
+            <ion-col size="12" size-sm="6" *ngIf="!edit">
+              <ion-row>
+                <ion-col [size]="12">
+                  <ion-card>
+                    <ion-card-content>
 
-                  <ion-row *ngIf="referred">
-                    <ion-col size="12">
-                      <ion-text><h5>Referido por:</h5></ion-text>
-                    </ion-col>
-                    <ion-col size="12" size-sm>
-                      <app-usercard [data]="referred"></app-usercard>
-                    </ion-col>
-                  </ion-row>
-                  <ion-row *ngIf="totals">
-                    <ion-col size="12" size-sm>
-                      <ion-row>
-                        <ion-col size="6">
-                          <ion-text color="dark">
-                            <h2 class="numberTitle">{{ totals.totalsCourses }}</h2>
-                          </ion-text>
-                          <ion-img class="pictureLogo" [src]="'/assets/icon/escuela.svg'"></ion-img>
-                          <p class="ion-text-center">Cursos</p>
+                      <ion-row *ngIf="referred">
+                        <ion-col size="12">
+                          <ion-text><h5>Referido por:</h5></ion-text>
                         </ion-col>
-                        <ion-col size="6">
-                          <ion-text color="dark">
-                            <h2 class="numberTitle">{{ totals.totalsReferrals }}</h2>
-                          </ion-text>
-                          <ion-img class="pictureLogo" [src]="'/assets/icon/padres_menu.svg'"></ion-img>
-                          <p class="ion-text-center">Hijos espirituales</p>
+                        <ion-col size="12">
+                          <app-usercard [data]="referred"></app-usercard>
                         </ion-col>
                       </ion-row>
-                    </ion-col>
-                  </ion-row>
-                </ion-card-content>
-              </ion-card>
+
+                      <ion-row *ngIf="totals">
+                        <ion-col size="12">
+                          <ion-row>
+                            <ion-col size="6">
+                              <ion-text color="dark">
+                                <h2 class="numberTitle">{{ totals.totalsCourses }}</h2>
+                              </ion-text>
+                              <ion-img class="pictureLogo" [src]="'/assets/icon/escuela.svg'"></ion-img>
+                              <p class="ion-text-center">Cursos</p>
+                            </ion-col>
+                            <ion-col size="6">
+                              <ion-text color="dark">
+                                <h2 class="numberTitle">{{ totals.totalsReferrals }}</h2>
+                              </ion-text>
+                              <ion-img class="pictureLogo" [src]="'/assets/icon/padres_menu.svg'"></ion-img>
+                              <p class="ion-text-center">Hijos espirituales</p>
+                            </ion-col>
+                          </ion-row>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="enableActions">
+                <ion-col size="12">
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-title>
+                        Acciones
+                      </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <ion-row >
+                        <ion-col size="12">
+                          <ion-button color="light" expand="full" (click)="editEnable()">
+                            <ion-icon name="create-outline" slot="start"></ion-icon>
+                            <ion-text>Editar</ion-text>
+                          </ion-button>
+                          <!--<ion-button color="light" expand="full" *ngIf="!edit">-->
+                            <!--<ion-icon name="lock-closed-outline" slot="start"></ion-icon>-->
+                            <!--<ion-text>Reiniciar contraseña</ion-text>-->
+                          <!--</ion-button>-->
+                          <ion-button color="danger" expand="full" (click)="confirmDelete()" *ngIf="!edit">
+                            <ion-icon name="trash-outline" slot="start"></ion-icon>
+                            <ion-text>Eliminar miembro</ion-text>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
             </ion-col>
           </ion-row>
         </ion-grid>

@@ -52,7 +52,7 @@ export class IngresarPage implements OnInit {
 
       const res: any = await this.axios.postData(
         '/login',
-        { document: this.user, password: this.pass }
+        { document: this.user, password: this.pass, admin: true }
       );
 
       if (res && res.success) {
