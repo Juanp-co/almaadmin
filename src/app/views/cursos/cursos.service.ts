@@ -91,7 +91,7 @@ export class CursosService {
   async updateBannerCourse(id: string, data: any): Promise<any> {
     const res: any = await this.axios.putData(`/admin/courses/${id}/banner`, data);
 
-    if (res && res.success) return res.data.msg;
+    if (res && res.success) return res.data.banner;
     return this.globalSer.altResponse(res);
   }
 
