@@ -61,7 +61,7 @@ export class RegistroPage implements OnInit {
   async ngOnInit() {
     // check if exist session
     if (!this.globalSer.checkSession()) await this.router.navigate(['/ingresar']);
-    else if (this.globalSer.getRole() !== 0) {
+    else if (!this.globalSer.checkRoleToEnableAddOrUpdate()) {
       await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no cuenta con privilegios para registrar nuevos miembros.');
       await this.navCtrl.back();
     }

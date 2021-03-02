@@ -19,16 +19,20 @@ export function onlyNumbersInputValidation(event: any) {
 
 export function onlyLettersInputValidation(event: any) {
   const pattern = /^([A-Z\u00C0-\u024F\u1E00-\u1EFF]?)+([[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+[,.]?[ ]?|[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+['-]]?)+$/;
-  const inputChar = String.fromCharCode(event.charCode);
+  const { value } = event.target;
 
-  if (!pattern.test(inputChar)) {
+  if (!pattern.test(value)) {
     // invalid character, prevent input
-    event.preventDefault();
+    event.target.value = value.substring(0, value.length - 1);
   }
 }
 
 export function checkRole(value: any): boolean {
   return value && /^[012345]{1}/.test(`${value}`);
+}
+
+export function checkRoleAdmin(value: any): boolean {
+  return value && /^[01]{1}/.test(`${value}`);
 }
 
 export function checkIfValueIsNumber(value: any): boolean {

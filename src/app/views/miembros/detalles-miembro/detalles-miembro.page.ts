@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import dayjs from 'dayjs';
 import {AxiosService} from '../../../services/axios.service';
-import {CookiesService} from '../../../services/cookies.service';
 import {GlobalService} from '../../../services/global.service';
 import {DetallesMiembroService} from './detalles-miembro.service';
 import {AlertController, NavController} from '@ionic/angular';
@@ -43,6 +42,8 @@ export class DetallesMiembroPage implements OnInit {
   totals: IDetallesMiembroTotals | null = null;
   referred: any = null;
   edit = false;
+  enableActions = false;
+  enableEdit = false;
   formData: IDetallesMiembroEdit | null = null;
 
   constructor(
@@ -66,6 +67,8 @@ export class DetallesMiembroPage implements OnInit {
       this.gender = detallesMiembroService.genderList;
       this.departments = detallesMiembroService.departmentsList.map(d => d.department);
       this.maxDate = dayjs().format('YYYY-MM-DD');
+
+      if (this.globalSer.checkRoleToEnableAddOrUpdate()) this.enableActions = true;
     }
   }
 
@@ -112,15 +115,31 @@ export class DetallesMiembroPage implements OnInit {
       this.staticData = {...updated} as IDetallesMiembro;
       await this.setUserParams();
       await this.editEnable(true);
+      await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
     }
     else if (updated && updated.error) {
       await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else {
+    else await this.globalSer.dismissLoading();
+  }
+
+  async deleteUser() {
+    await this.globalSer.presentLoading('Eliminando usuario, por favor espere ...');
+
+    const deleted = await this.detallesMiembroService.deleteUser(this.userid);
+
+    if (deleted && !deleted.error) {
       await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', deleted || 'Se ha eliminado los datos del usuario exitosamente.');
+      await this.back();
     }
+    else if (deleted && deleted.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
   }
 
   setUserParams() {
@@ -329,25 +348,20 @@ export class DetallesMiembroPage implements OnInit {
 
     if (validated) await this.globalSer.presentAlert('Alerta', validated);
     else {
-      const alert = await this.alertCtrl.create({
+      this.globalSer.alertConfirm({
         header: 'Confirme',
         message: '¿Está seguro qué desea actualizar información de este usuario?',
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {}
-          }, {
-            text: 'Sí',
-            handler: () => {
-              this.updateData();
-            }
-          }
-        ]
+        confirmAction: () => this.updateData()
       });
-      await alert.present();
     }
+  }
+
+  async confirmDelete() {
+    this.globalSer.alertConfirm({
+      header: 'Confirme',
+      message: '¿Está seguro qué desea eliminar toda la información de este usuario?',
+      confirmAction: () => this.deleteUser()
+    });
   }
 
 }

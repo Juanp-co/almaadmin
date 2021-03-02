@@ -36,4 +36,11 @@ export class DetallesMiembroService {
     if (res && res.success) return res.data.user;
     return this.globalSer.altResponse(res);
   }
+
+  async deleteUser(id: string): Promise<any | null> {
+    const res: any = await this.axios.deleteData(`/admin/users/${id}`);
+
+    if (res && res.success) return res.data.msg;
+    return this.globalSer.altResponse(res);
+  }
 }

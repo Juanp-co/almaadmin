@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AlertController, LoadingController, ModalController, NavController} from '@ionic/angular';
 import {CookiesService} from './cookies.service';
-import {ModalCursosPreviosPage} from '../views/cursos/detalles-curso/modal-cursos-previos/modal-cursos-previos.page';
 
 @Injectable({
   providedIn: 'root'
@@ -143,6 +142,11 @@ export class GlobalService {
   getRole() {
     const data = this.cookieService.getCookie('data');
     return data && data.role !== null && data.role !== undefined ? data.role : null;
+  }
+
+  checkRoleToEnableAddOrUpdate() {
+    const limits = ['0', '1'];
+    return limits.indexOf(`${this.getRole()}`) > -1;
   }
 
   clearAllData() {
