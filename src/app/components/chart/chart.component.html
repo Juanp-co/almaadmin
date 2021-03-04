@@ -1,0 +1,24 @@
+<ion-card class="ion-no-padding" *ngIf="data">
+  <ion-card-header class="ion-no-padding">
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button (click)="setShowView()">
+          <ion-icon name="chevron-{{view.show ? 'up' : 'down' }}-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{title}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="downloadPicture()">
+          <ion-icon name="image-outline" slot="start"></ion-icon>
+          <ion-text class="{{ sizeElem < 6 ? 'ion-hide' : ''}}">Guardar</ion-text>
+        </ion-button>
+        <ion-button (click)="changeChartType()">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content class="{{ view.show ? '' : 'ion-hide'}} ion-no-padding">
+    <canvas class="ion-padding-horizontal ion-padding-vertical" #chartElem ></canvas>
+  </ion-card-content>
+</ion-card>

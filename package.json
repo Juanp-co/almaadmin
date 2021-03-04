@@ -24,6 +24,7 @@
     "@ionic/angular": "^5.5.2",
     "axios": "^0.21.1",
     "capacitor-youtube-player": "^1.0.0-alpha.1-58",
+    "chart.js": "^2.9.4",
     "dayjs": "^1.10.4",
     "js-cookie": "^2.2.1",
     "rxjs": "~6.6.0",

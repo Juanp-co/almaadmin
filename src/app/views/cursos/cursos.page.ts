@@ -124,7 +124,7 @@ export class CursosPage implements OnInit {
     };
 
     await this.globalSer.alertWithList({
-      header: 'Seleccione los roles',
+      header: 'Resultados por página',
       inputs: [
         {
           name: `results-per-page`,

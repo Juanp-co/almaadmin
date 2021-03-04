@@ -151,7 +151,7 @@ export class EventosPage implements OnInit {
   }
 
   async setOrderData() {
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Seleccione',
       inputs: [
         {
@@ -169,23 +169,10 @@ export class EventosPage implements OnInit {
           checked: this.queryParams.value === -1,
         }
       ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.queryParams.value = selectedValue;
-          }
-        }
-      ]
+      confirmAction: (selectedValue) => {
+        this.queryParams.value = selectedValue;
+      }
     });
-
-    await alert.present();
   }
 
   setDate(input: string) {
@@ -328,28 +315,14 @@ export class EventosPage implements OnInit {
         checked: selected.indexOf(i) > -1,
       });
     }
-
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Seleccione',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.formData.toRoles = selectedValue;
-            this.formData.rolesSelected = this.getRoles(selectedValue);
-          }
-        }
-      ]
+      confirmAction: (selectedValue) => {
+        this.formData.toRoles = selectedValue;
+        this.formData.rolesSelected = this.getRoles(selectedValue);
+      }
     });
-
-    await alert.present();
   }
 
   async showEvent(id: string) {
