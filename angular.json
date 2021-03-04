@@ -18,7 +18,8 @@
               "axios",
               "js-cookie",
               "dayjs",
-              "dayjs/locale/es"
+              "dayjs/locale/es",
+              "chart.js"
             ],
             "outputPath": "www",
             "index": "src/index.html",
