@@ -27,10 +27,10 @@ const routes: Routes = [
     path: 'ofrendas',
     loadChildren: () => import('./views/ofrendas/ofrendas.module').then( m => m.OfrendasPageModule)
   },
-  {
-    path: 'informes',
-    loadChildren: () => import('./views/informes/informes.module').then( m => m.InformesPageModule)
-  },
+  // {
+  //   path: 'informes',
+  //   loadChildren: () => import('./views/informes/informes.module').then( m => m.InformesPageModule)
+  // },
   {
     path: 'miembros',
     loadChildren: () => import('./views/miembros/miembros.module').then( m => m.MiembrosPageModule)

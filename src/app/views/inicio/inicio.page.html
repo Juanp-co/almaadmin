@@ -1,9 +1,134 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>inicio</ion-title>
+    <ion-title>Inicio</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showListResizeAlert()">
+        <ion-icon name="resize-outline" slot="start"></ion-icon>
+        <ion-text>Visualización</ion-text>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-row class="ion-no-padding ion-margin-start ion-margin-end ion-margin-top">
+    <ion-col size="12">
+      <div class="ion-margin-bottom">
+        <ion-button color="light" (click)="setShowFilter()">
+          <ion-icon name="filter-outline" slot="start" *ngIf="!showFilter"></ion-icon>
+          <ion-icon name="close-outline" slot="start" *ngIf="showFilter"></ion-icon>
+          <ion-text>Filtrar</ion-text>
+        </ion-button>
+      </div>
+    </ion-col>
+    <ion-col size="12" *ngIf="showFilter">
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">A partir de:</ion-label>
+                <ion-datetime
+                  [(ngModel)]="queryParams.initDate"
+                  displayFormat="DD/MM/YYYY"
+                  [min]="minInitDate"
+                  [max]="maxInitDate"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Hasta:</ion-label>
+                <ion-datetime
+                  [(ngModel)]="queryParams.endDate"
+                  displayFormat="DD/MM/YYYY"
+                  [min]="minEndDate"
+                  [max]="maxEndDate"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-margin-top">
+            <ion-col size="6" class="ion-justify-content-center">
+              <ion-button class="ion-text-center" color="light" expand="full" (click)="resetQueryParams()">
+                <ion-icon name="trash-outline"></ion-icon>
+                <ion-text>Limpiar</ion-text>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6" class="ion-justify-content-center">
+              <ion-button class="ion-text-center" color="primary" expand="full" (click)="findData()">
+                <ion-icon name="checkmark-outline"></ion-icon>
+                <ion-text>Aplicar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
 
+  <ion-row class="ion-justify-content-center ion-margin-bottom ion-padding-bottom" *ngIf="data">
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.users && data.users.gender">
+      <app-chart
+        [data]="data.users.gender"
+        [sizeElem]="sizeElems"
+        title="Miembros"
+        typeChart="bar"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.users && data.users.families">
+      <app-chart
+        [data]="data.users.families"
+        [sizeElem]="sizeElems"
+        title="Miembros en un grupo"
+        typeChart="bar"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.users && data.users.roles">
+      <app-chart
+        [data]="data.users.roles"
+        [sizeElem]="sizeElems"
+        title="Roles"
+        typeChart="bar"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.users && data.users.ages">
+      <app-chart
+        [data]="data.users.ages"
+        [sizeElem]="sizeElems"
+        title="Edades"
+        typeChart="bar"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.courses && data.courses">
+      <app-chart
+        [data]="data.courses"
+        [sizeElem]="sizeElems"
+        title="Cursos"
+        typeChart="pie"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.groups && data.groups">
+      <app-chart
+        [data]="data.groups"
+        [sizeElem]="sizeElems"
+        title="Grupos familiares"
+        typeChart="bar"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.events && data.events">
+      <app-chart
+        [data]="data.events"
+        [sizeElem]="sizeElems"
+        title="Eventos"
+        typeChart="bar"
+      ></app-chart>
+    </ion-col>
+  </ion-row>
 </ion-content>
