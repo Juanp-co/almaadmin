@@ -17,7 +17,7 @@ export class AppComponent {
     { title: 'Cursos', url: '/cursos', icon: 'desktop' },
     { title: 'Eventos', url: '/eventos', icon: 'calendar-number' },
     { title: 'Ofrendas', url: '/ofrendas', icon: 'cash' },
-    { title: 'Informes', url: '/informes', icon: 'bar-chart' },
+    // { title: 'Informes', url: '/informes', icon: 'bar-chart' },
   ];
   session: any = null;
   userData: any = null;

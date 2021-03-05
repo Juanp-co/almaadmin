@@ -12,8 +12,6 @@ import {InformesService} from './informes.service';
   styleUrls: ['./informes.page.scss'],
 })
 export class InformesPage implements OnInit {
-  colors: any = ['#009e28', '#3dc2ff', '#5260ff', '#2dd36f', '#ffc409', '#eb445a', '#222428', '#92949c', '#f4f5f8'];
-
   data: any = null;
   sizeElems = 6;
   showFilter = false;
