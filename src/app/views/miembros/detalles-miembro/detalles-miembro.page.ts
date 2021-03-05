@@ -36,15 +36,32 @@ export class DetallesMiembroPage implements OnInit {
 
   // info profile
   title = 'Cargando...';
-  userid: any = null;
+  id: string|null = null;
   user: IDetallesMiembro | null = null;
   staticData: IDetallesMiembro | null = null;
   totals: IDetallesMiembroTotals | null = null;
-  referred: any = null;
-  edit = false;
   enableActions = false;
-  enableEdit = false;
   formData: IDetallesMiembroEdit | null = null;
+
+  views: any = {
+    data: {
+      label: 'Datos del usuario',
+      show: true,
+      edit: false,
+      data: null,
+    },
+    courses: {
+      label: 'Cursos',
+      show: false,
+      data: [],
+    },
+    referrals: {
+      label: 'Referidos',
+      show: false,
+      referred: null,
+      data: [],
+    }
+  };
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -73,16 +90,19 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.userid = this.activateRoute.snapshot.paramMap.get('userid');
+    this.id = this.activateRoute.snapshot.paramMap.get('userid');
     await this.globalSer.presentLoading();
-    const data: any = await this.detallesMiembroService.getUserDetails(this.userid);
+    const data: any = await this.detallesMiembroService.getUserDetails(this.id);
 
     if (data && !data.error) {
       this.staticData = {...data} as IDetallesMiembro;
-      this.referred = this.staticData.referred;
+      this.views.data.data = this.staticData;
+      this.views.referrals.referred = this.staticData.referred;
       this.totals = this.staticData.totals;
 
       this.setUserParams();
+      this.getCourses();
+      this.getReferrals();
       await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
@@ -108,7 +128,7 @@ export class DetallesMiembroPage implements OnInit {
     data.baptized = data.baptized === 'Si';
     data.birthday = dayjs(data.birthday).format('YYYY-MM-DD');
 
-    const updated = await this.detallesMiembroService.updateDataUser(this.userid, data);
+    const updated = await this.detallesMiembroService.updateDataUser(this.id, data);
 
     if (updated && !updated.error) {
       this.user = {...updated} as IDetallesMiembro;
@@ -128,7 +148,7 @@ export class DetallesMiembroPage implements OnInit {
   async deleteUser() {
     await this.globalSer.presentLoading('Eliminando usuario, por favor espere ...');
 
-    const deleted = await this.detallesMiembroService.deleteUser(this.userid);
+    const deleted = await this.detallesMiembroService.deleteUser(this.id);
 
     if (deleted && !deleted.error) {
       await this.globalSer.dismissLoading();
@@ -139,6 +159,22 @@ export class DetallesMiembroPage implements OnInit {
       await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
+    else await this.globalSer.dismissLoading();
+  }
+
+  async getCourses() {
+    const data: any = await this.detallesMiembroService.getUsersCourses(this.id);
+
+    if (data && !data.error) this.views.courses.data = data;
+    else if (data && data.error) await this.globalSer.errorSession();
+    else await this.globalSer.dismissLoading();
+  }
+
+  async getReferrals() {
+    const data: any = await this.detallesMiembroService.getUsersReferrals(this.id);
+
+    if (data && !data.error) this.views.referrals.data = data;
+    else if (data && data.error) await this.globalSer.errorSession();
     else await this.globalSer.dismissLoading();
   }
 
@@ -164,6 +200,14 @@ export class DetallesMiembroPage implements OnInit {
 
   async back() {
     await this.navCtrl.back();
+  }
+
+  // actions views
+  async setShowView(input: string) {
+    this.views[input].show = !this.views[input].show;
+    if (this.views[input].edit) {
+      await this.editEnable();
+    }
   }
 
   // getters and setters
@@ -198,9 +242,9 @@ export class DetallesMiembroPage implements OnInit {
   async editEnable(edited = false) {
     if (!edited) await this.globalSer.presentLoading();
 
-    this.edit = !this.edit;
+    this.views.data.edit = !this.views.data.edit;
 
-    if (this.edit) {
+    if (this.views.data.edit ) {
       this.formData = {documentType: null, ...this.staticData} as IDetallesMiembroEdit;
       this.title = `Editar datos de: ${this.formData.names} ${this.formData.lastNames}`;
       this.formData.documentType = this.formData.document ? this.formData.document.replace(/[0-9]{5,12}/, '') : null;

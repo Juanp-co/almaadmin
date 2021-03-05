@@ -43,4 +43,18 @@ export class DetallesMiembroService {
     if (res && res.success) return res.data.msg;
     return this.globalSer.altResponse(res);
   }
+
+  async getUsersCourses(id: string): Promise<any> {
+    const res: any = await this.axios.getData(`/admin/users/${id}/courses`);
+
+    if (res && res.success) return res.data.courses || [];
+    return this.globalSer.altResponse(res);
+  }
+
+  async getUsersReferrals(id: string): Promise<any> {
+    const res: any = await this.axios.getData(`/admin/users/${id}/referrals`);
+
+    if (res && res.success) return res.data.referrals || [];
+    return this.globalSer.altResponse(res);
+  }
 }
