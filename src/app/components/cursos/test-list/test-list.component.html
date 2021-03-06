@@ -6,7 +6,7 @@
           <ion-icon name="chevron-{{viewsT[theme._id] ? 'up' : 'down' }}-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
-      <ion-text><b>{{ theme.title }}</b></ion-text>
+      <ion-text><b>{{ theme.title }} ({{ theme.test ? theme.test.length : 0 }})</b></ion-text>
       <ion-buttons slot="end" class="theme.test && theme.test.length > 0">
         <ion-button color="primary" (click)="handlePreview(theme._id)">
           <ion-icon name="eye-outline" slot="start"></ion-icon>
@@ -18,9 +18,7 @@
 
   <ion-card-content *ngIf="viewsT[theme._id]">
 
-    <ion-toolbar class="ion-margin-start">
-      <ion-badge color="primary" slot="start">{{ theme.test ? theme.test.length : 0 }}</ion-badge>&nbsp;
-      <ion-text><b>PREGUNTAS</b></ion-text>
+    <ion-toolbar class="ion-margin-start" *ngIf="enableActions">
       <ion-buttons slot="end">
         <ion-button color="primary" (click)="handleEditQuestion(theme._id, null)">
           <ion-icon name="add-outline"></ion-icon>&nbsp;
@@ -37,7 +35,7 @@
 
         <ion-text>{{ t.title }} {{ t.require ? '(*)' : '' }}</ion-text>
 
-        <ion-buttons slot="end">
+        <ion-buttons slot="end" *ngIf="enableActions">
           <ion-button color="primary" (click)="handleEditQuestion(theme._id, t._id)">
             <ion-icon name="pencil-outline"></ion-icon>
           </ion-button>
@@ -49,9 +47,15 @@
     </ion-list>
 
     <ng-template #noTests>
-      <ion-text>
-        <p class="ion-text-center">No existen preguntas para la prueba de este tema.</p>
-      </ion-text>
+      <ion-row>
+        <ion-col [size]="12" class="ion-text-center">
+          <ion-text>
+            <p class="ion-margin-top ion-padding-top ion-text-center no-selected-text">
+              <ion-icon name="alert-circle-outline"></ion-icon> No existen preguntas para la prueba de este tema.
+            </p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
     </ng-template>
   </ion-card-content>
 

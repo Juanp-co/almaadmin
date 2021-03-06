@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class TestListComponent implements OnInit {
 
   @Input() data: any = [];
+  @Input() enableActions = false;
   @Input() handlePreview: (themeId: string) => void;
   @Input() handleEditQuestion: (themeId: string, questionId: string) => void;
   @Input() handleDeleteQuestion: (themeId: string, questionId: string) => void;

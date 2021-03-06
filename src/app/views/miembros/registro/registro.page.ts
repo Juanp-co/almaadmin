@@ -5,12 +5,12 @@ import {AlertController, NavController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DetallesMiembroService} from '../detalles-miembro/detalles-miembro.service';
 import {
+  checkDocument,
   checkEmail, checkIfValueIsNumber,
-  checkNameOrLastName, checkPhone, checkTitlesOrDescriptions,
+  checkNameOrLastName, checkPhone,
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
-import {IDetallesMiembro} from '../detalles-miembro/detalles-miembro.model';
 import {MiembrosService} from '../miembros.service';
 
 @Component({
@@ -39,6 +39,7 @@ export class RegistroPage implements OnInit {
     names: null,
     lastNames: null,
     role: null,
+    referred: null,
   };
 
   constructor(
@@ -122,26 +123,13 @@ export class RegistroPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Seleccione un rol',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.formData.role = selectedValue;
-          }
-        }
-      ]
+      confirmAction: (selectedValue) => {
+        this.formData.role = selectedValue;
+      }
     });
-
-    await alert.present();
   }
 
   async showAlertDocumentList(selected: any = null) {
@@ -156,58 +144,53 @@ export class RegistroPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Seleccione',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.formData.documentType = selectedValue;
-          }
-        }
-      ]
+      confirmAction: (selectedValue) => {
+        this.formData.documentType = selectedValue;
+      }
     });
-
-    await alert.present();
+    // const alert = await this.alertCtrl.create({
+    //   header: 'Seleccione',
+    //   inputs,
+    //   buttons: [
+    //     {
+    //       text: 'Cancelar',
+    //       role: 'cancel',
+    //       cssClass: 'secondary',
+    //       handler: () => {}
+    //     },
+    //     {
+    //       text: 'Ok',
+    //       handler: (selectedValue) => {
+    //         this.formData.documentType = selectedValue;
+    //       }
+    //     }
+    //   ]
+    // });
+    //
+    // await alert.present();
   }
 
   async confirmCancel() {
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertConfirm({
       header: 'Confirme',
-      message: '¿Está seguro qué desea cancelar el registro del nuevo miembro?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        }, {
-          text: 'Sí',
-          handler: () => {
-            this.back();
-          }
-        }
-      ]
+      message: '¿Está seguro qué desea cancelar el registro?',
+      confirmAction: () => this.back()
     });
-
-    await alert.present();
   }
 
   validateData(): string|null {
     if (!/^([CC|CE|PE|TI|PAS]){2,3}/.test(this.formData.documentType)) return 'Disculpe, pero debe indicar el tipo de documento.';
     if (!/[0-9]{5,10}/.test(this.formData.document)) return 'Disculpe, pero debe indicar el número de documento de identidad.';
-    if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre.';
-    if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido.';
+    if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
+    if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
     if (!checkEmail(this.formData.email)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
     if (this.formData.phone && !checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido.';
-    if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el usuario..';
+    if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el usuario.';
+    if (this.formData.referred && !checkDocument(`${this.formData.referred}`))
+      return 'Disculpe, pero debe indicar un número de documento correcto del usuario referido (ejm: CC12345678).';
 
     return null;
   }
@@ -216,24 +199,11 @@ export class RegistroPage implements OnInit {
     const validated = this.validateData();
 
     if (!validated) {
-      const alert = await this.alertCtrl.create({
+      this.globalSer.alertConfirm({
         header: 'Confirme',
-        message: '¿Está seguro qué desea actualizar información de este usuario?',
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {}
-          }, {
-            text: 'Sí',
-            handler: () => {
-              this.registerMember();
-            }
-          }
-        ]
+        message: '¿Está seguro qué desea registar a este nuevo miembro?',
+        confirmAction: () => this.registerMember()
       });
-      await alert.present();
     }
     else {
       await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');

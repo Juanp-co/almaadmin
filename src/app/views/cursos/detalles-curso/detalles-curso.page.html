@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{ title }}</ion-title>
-    <ion-buttons slot="end" *ngIf="staticData && !views.info.edit && !editBanner">
+    <ion-buttons slot="end" *ngIf="staticData && !views.info.edit && !editBanner && !staticData.enable && staticData.totalsUsers === 0">
       <ion-button color="danger" (click)="confirmCourseDelete()">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-text>Eliminar curso</ion-text>
@@ -29,7 +29,7 @@
             <ion-title *ngIf="!views.info.edit && !editBanner">{{ views.info.title }}</ion-title>
             <ion-title *ngIf="!views.info.edit && editBanner">Cambiar imagen del curso</ion-title>
             <ion-title *ngIf="views.info.edit && !editBanner">Editar datos principales del curso</ion-title>
-            <ion-buttons slot="end" *ngIf="views.info.show">
+            <ion-buttons slot="end" *ngIf="views.info.show && !staticData.enable && staticData.totalsUsers === 0">
               <ion-button (click)="setShowEditInfo('info')" *ngIf="!views.info.edit && !editBanner">
                 <ion-icon name="create-outline"></ion-icon>
                 <ion-text>Editar</ion-text>
@@ -45,12 +45,8 @@
 
           <div *ngIf="!views.info.edit && !editBanner">
             <ion-row>
-              <ion-col [size]="12">
-                <ion-row class="ion-align-items-center">
-                  <ion-col [size]="12" class="ion-text-center">
-                    <ion-img class="banner" [src]="banner || 'assets/icon/escuela.svg'"></ion-img>
-                  </ion-col>
-                </ion-row>
+              <ion-col [size]="12" class="ion-text-center">
+                <img class="banner" [src]="banner || 'assets/icon/escuela.svg'"/>
               </ion-col>
               <ion-col [size]="12" size-sm="6">
                 <ion-row>
@@ -72,7 +68,11 @@
                   </ion-col>
                   <ion-col [size]="12">
                     <ion-text><b class="mini-title no-selected-text">Usuarios actualmente con el curso</b></ion-text><br/>
-                    <ion-text class="title-or-description ion-margin-bottom">{{this.totalsUsers}}</ion-text>
+                    <ion-text class="title-or-description ion-margin-bottom">{{totalsUsers}}</ion-text>
+                  </ion-col>
+                  <ion-col [size]="12">
+                    <ion-text><b class="mini-title no-selected-text">Estado del curso</b></ion-text><br/>
+                    <ion-text class="title-or-description ion-margin-bottom">{{staticData.enable ? 'Publicado' : 'Borrador'}}</ion-text>
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -89,7 +89,7 @@
             </ion-row>
           </div>
 
-          <div *ngIf="views.info.edit && formDataInfo">
+          <div *ngIf="views.info.edit && formDataInfo && !staticData.enable && staticData.totalsUsers === 0">
             <app-editar-info-curso
               [data]="formDataInfo"
               [handleCancel]="cancelEditInfo"
@@ -97,7 +97,7 @@
             ></app-editar-info-curso>
           </div>
 
-          <div *ngIf="editBanner">
+          <div *ngIf="editBanner && !staticData.enable && staticData.totalsUsers === 0">
             <app-editar-banner-curso
               [handleCancel]="cancelEditBanner"
               [handleSave]="saveEditBanner"
@@ -119,10 +119,9 @@
               </ion-button>
             </ion-buttons>
             <ion-title>
-              {{ views.temary.title }}
-              <ion-badge color="light">{{ views.temary.data.length }}</ion-badge>
+              {{ views.temary.title }} ({{ views.temary.data.length }})
             </ion-title>
-            <ion-buttons slot="end" *ngIf="views.temary.show">
+            <ion-buttons slot="end" *ngIf="views.temary.show && !staticData.enable && staticData.totalsUsers === 0">
               <ion-button (click)="modalTheme()">
                 <ion-icon name="add-outline" slot="start"></ion-icon>
                 <ion-text>Agregar</ion-text>
@@ -133,12 +132,26 @@
         <ion-card-content class="{{views.temary.show ? '' : 'ion-hide'}}">
           <app-temarylist
             [temary]="views.temary.data"
+            [enableActions]="!staticData.enable && staticData.totalsUsers === 0"
             [handlePreview]="showPreviewModal"
             [handleEditTheme]="showEditTheme"
             [handleDeleteTheme]="showDeleteConfirmTheme"
             [handleEditContent]="showEditContent"
             [handleDeleteContent]="showDeleteConfirmContent"
+            *ngIf="views.temary.data.length > 0; else noTemaries"
           ></app-temarylist>
+
+          <ng-template #noTemaries>
+            <ion-row>
+              <ion-col [size]="12" class="ion-text-center">
+                <ion-text>
+                  <p class="ion-margin-top ion-padding-top ion-text-center no-selected-text">
+                    <ion-icon name="alert-circle-outline"></ion-icon> Este curso no posee temas.
+                  </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ng-template>
         </ion-card-content>
       </ion-card>
     </ion-col>
@@ -153,18 +166,31 @@
               </ion-button>
             </ion-buttons>
             <ion-title>
-              {{ views.test.title }}
-              <ion-badge color="light">{{ views.test.data.length }}</ion-badge>
+              {{ views.test.title }} ({{ views.test.data.length }})
             </ion-title>
           </ion-toolbar>
         </ion-card-header>
         <ion-card-content class="{{views.test.show ? '' : 'ion-hide'}}">
           <app-test-list
             [data]="views.test.data"
+            [enableActions]="!staticData.enable && staticData.totalsUsers === 0"
             [handlePreview]="showPreviewTest"
             [handleEditQuestion]="showEditQuestion"
             [handleDeleteQuestion]="showDeleteConfirmQuestion"
+            *ngIf="views.test.data.length > 0; else noTests"
           ></app-test-list>
+
+          <ng-template #noTests>
+            <ion-row>
+              <ion-col [size]="12" class="ion-text-center">
+                <ion-text>
+                  <p class="ion-margin-top ion-padding-top ion-text-center no-selected-text">
+                    <ion-icon name="alert-circle-outline"></ion-icon> Debes registrar temas para poder visualizar la sección de pruebas.
+                  </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ng-template>
         </ion-card-content>
       </ion-card>
     </ion-col>
@@ -178,8 +204,8 @@
                 <ion-icon name="chevron-{{views.levels.show ? 'up' : 'down' }}-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
-            <ion-title>{{ views.levels.title }}</ion-title>
-            <ion-buttons slot="end" *ngIf="views.levels.show">
+            <ion-title>{{ views.levels.title }} {{ views.levels.data.length > 0 ? '(' + views.levels.data.length + ')' : '' }}</ion-title>
+            <ion-buttons slot="end" *ngIf="views.levels.show && !staticData.enable && staticData.totalsUsers === 0">
               <ion-button (click)="modalAddPreviousCourses()">
                 <ion-icon name="add-outline" slot="start"></ion-icon>
                 <ion-text>Agregar</ion-text>
@@ -187,7 +213,7 @@
             </ion-buttons>
           </ion-toolbar>
         </ion-card-header>
-        <ion-card-content class="{{views.levels.show ? '' : 'ion-hide'}}">
+        <ion-card-content class="{{views.levels.show ? '' : 'ion-hide'}} ion-no-padding">
           <ion-row *ngIf="views.levels.data && views.levels.data.length > 0; else noLevels">
             <ion-col [size]="12" size-sm="4" *ngFor="let d of views.levels.data">
               <app-cursos-previos-card
@@ -198,9 +224,15 @@
           </ion-row>
 
           <ng-template #noLevels>
-            <ion-text>
-              <p class="ion-margin-top ion-padding-top ion-text-center">No existen niveles previos para visualizar este curso.</p>
-            </ion-text>
+            <ion-row>
+              <ion-col [size]="12" class="ion-text-center ion-margin-bottom">
+                <ion-text>
+                  <p class="ion-margin-top ion-padding-top ion-text-center no-selected-text">
+                    <ion-icon name="alert-circle-outline"></ion-icon> No existen cursos previos en el listado.
+                  </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
           </ng-template>
         </ion-card-content>
       </ion-card>
@@ -223,17 +255,23 @@
             <ion-col class="ion-margin-top" size="12">
               <ion-text>
                 <ul>
-                  <li>Haga que el curso sea visible para los usuarios con solo presionar el botón.</li>
+                  <li>Puede mostrar el curso a los miembros con solo presionar el botón: <b>"PUBLICAR CURSO"</b>.</li>
+                  <li>Puede ocutar el curso de los miembros con solo presionar el botón <b>"QUITAR CURSO DE LA SECCIÓN PÚBLICA"</b>.</li>
                   <li>Los cursos una vez publicados, <b>NO PUEDEN SER EDITADOS</b> en ninguna de las secciones.</li>
-                  <li>Si un curso no ha sido agregado por un usuario a su listado, este puede removerse de la lista pública y puede editarse.</li>
+                  <li>Puede editar un curso siempre y cuando este no se encuentre publicado y ningún miembro lo tenga en su lista.</li>
+                  <li>Puede retirar el curso del listado público incluso si algún miembro lo tenga agregado en su lista.</li>
                 </ul>
               </ion-text>
               <ion-text>
-                <h3><b>NOTA:</b> ASEGÚRESE DE EDITAR Y VERIFICAR EL CONTENIDO DEL CURSO ANTES DE PUBLICARLO. UNA VEZ REALIZADA ESTA ACCIÓN Y ALGÚN USUARIO AGREGUE EL CURSO A SU LISTADO, NO PUEDE REVERTIRSE O EDITARSE.</h3>
+                <h3><b>NOTA:</b> ASEGÚRESE DE AGREGAR Y VERIFICAR EL CONTENIDO DEL CURSO ANTES DE PUBLICARLO. UNA VEZ REALIZADA ESTA ACCIÓN Y ALGÚN USUARIO AGREGA EL CURSO A SU LISTA, NO PUEDE VOLVER A <b><i>EDITARLO</i></b> Y NI PODRÁ <b><i>ELIMINARLO</i></b>.</h3>
               </ion-text>
             </ion-col>
             <ion-col class="ion-margin-top ion-padding-top ion-text-center" size="12">
-              <ion-button [color]="views.publish.enable ? 'danger' : 'primary'" (click)="confirmPublish()">
+              <ion-button
+                size="large"
+                [color]="views.publish.enable ? 'danger' : 'primary'"
+                (click)="confirmPublish()"
+              >
                 <ion-icon name="alert-circle-outline" slot="start" *ngIf="views.publish.enable"></ion-icon>
                 <ion-icon name="earth-outline" slot="start" *ngIf="!views.publish.enable"></ion-icon>
                 <ion-text>{{ views.publish.enable ? 'Quitar curso de la sección pública' : 'Publicar curso' }}</ion-text>

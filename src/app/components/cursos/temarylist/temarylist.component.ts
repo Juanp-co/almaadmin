@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class TemarylistComponent implements OnInit {
 
   @Input() temary: any = [];
+  @Input() enableActions = false;
   @Input() handlePreview: (themeId: string, contentId: string|null) => void;
   @Input() handleEditTheme: (themeId: string) => void;
   @Input() handleDeleteTheme: (themeId: string) => void;

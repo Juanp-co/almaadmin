@@ -72,7 +72,6 @@ export class CursosPage implements OnInit {
       this.queryParams.page = 1;
       this.pages = 0;
       this.courses = [];
-      await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
     else {

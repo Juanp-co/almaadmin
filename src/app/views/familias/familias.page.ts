@@ -113,7 +113,7 @@ export class FamiliasPage implements OnInit {
       this.groups.push(res);
       this.setShowForm();
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', 'Se ha agregado el grupo exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha registrado el grupo exitosamente.');
     }
     else if (res && res.error) {
       await this.globalSer.dismissLoading();
@@ -163,8 +163,8 @@ export class FamiliasPage implements OnInit {
   }
 
   async setQueryValues() {
-    const alert = await this.alertCtrl.create({
-      header: 'Cursos por página',
+    this.globalSer.alertWithList({
+      header: 'Resultados por página',
       inputs: [
         {
           name: `results-per-page`,
@@ -188,34 +188,20 @@ export class FamiliasPage implements OnInit {
           checked: this.queryParams.limit === 50,
         },
       ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.queryParams.limit = selectedValue;
-            this.queryParams.page = 1;
-            this.pages = this.globalSer.getPagination(this.totals, this.queryParams.limit);
-            this.groups = null;
-            this.getGroupList();
-          }
-        }
-      ]
+      confirmAction: (selectedValue) => {
+        this.queryParams.limit = selectedValue;
+        this.queryParams.page = 1;
+        this.pages = this.globalSer.getPagination(this.totals, this.queryParams.limit);
+        this.groups = null;
+        this.getGroupList();
+      }
     });
-    await alert.present();
   }
 
   // actions
 
   validateForm(): string|null {
     if (!checkTitlesOrDescriptions(this.formData.name)) return 'Disculpe, pero debe indicar un nombre correcto para el grupo.';
-    if (this.formData.code && !checkCodeValue(this.formData.code))
-      return 'Disculpe, pero el código indicado es incorrecto. Ejemplos de código: COD-01 ó GRUPO-NUEVO-1';
     return null;
   }
 
@@ -259,29 +245,17 @@ export class FamiliasPage implements OnInit {
 
     if (showConfirm) {
       let message = '¿Está seguro qué desea __action__ este grupo?';
+      if (remove) message = message.replace('__action__', 'eliminar a');
+      else message = message.replace('__action__', 'registrar a');
 
-      if (remove) message = message.replace('__action__', 'eliminar');
-      else message = message.replace('__action__', 'registrar');
-
-      const dAlert = await this.alertCtrl.create({
-        header: '¡Confirme!',
+      this.globalSer.alertConfirm({
+        header: 'Confirme',
         message,
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => { }
-          }, {
-            text: 'Si',
-            handler: () => {
-              if (remove) this.deleteGroup(id);
-              else this.addGroup();
-            }
-          }
-        ]
+        confirmAction: () => {
+          if (remove) this.deleteGroup(id);
+          else this.addGroup();
+        }
       });
-      await dAlert.present();
     }
   }
 

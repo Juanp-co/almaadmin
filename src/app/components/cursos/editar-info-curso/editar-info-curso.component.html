@@ -4,7 +4,7 @@
     <ion-row>
       <ion-col size="12">
         <ion-item>
-          <ion-label position="floating" color="medium">Nombre del curso *</ion-label>
+          <ion-label position="floating" color="medium">Nombre del curso (*)</ion-label>
           <ion-input
             [value]="formData.title"
             (change)="setValue('title', $event)"
@@ -15,7 +15,7 @@
       </ion-col>
       <ion-col size="12">
         <ion-item>
-          <ion-label position="floating" color="medium">Descripcion del curso *</ion-label>
+          <ion-label position="floating" color="medium">Descripcion del curso (*)</ion-label>
           <ion-textarea
             [value]="formData.description"
             (change)="setValue('description', $event)"
@@ -27,7 +27,7 @@
       </ion-col>
       <ion-col size="12">
         <ion-item>
-          <ion-label position="floating" color="medium">Nombre del ponente *</ion-label>
+          <ion-label position="floating" color="medium">Nombre del ponente (*)</ion-label>
           <ion-input
             [value]="formData.speaker"
             (change)="setValue('speaker', $event)"
@@ -38,7 +38,7 @@
       </ion-col>
       <ion-col size="12">
         <ion-item>
-          <ion-label position="floating" color="medium">Cargo o posición del ponente *</ion-label>
+          <ion-label position="floating" color="medium">Cargo o posición del ponente (*)</ion-label>
           <ion-input
             [value]="formData.speakerPosition"
             (change)="setValue('speakerPosition', $event)"
@@ -49,7 +49,7 @@
       </ion-col>
       <ion-col size="12">
         <ion-item>
-          <ion-label position="floating" color="medium">Roles a los que va dirigido *</ion-label>
+          <ion-label position="floating" color="medium">Roles a los que va dirigido (*)</ion-label>
           <ion-input
             [readonly]="true"
             [value]="getRoles(formData.toRoles)"
@@ -59,6 +59,9 @@
         </ion-item>
       </ion-col>
     </ion-row>
+  </ion-col>
+  <ion-col size="12" size-sm="12" class="ion-margin-top">
+    <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
   </ion-col>
   <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
     <ion-button color="light" (click)="cancel()">

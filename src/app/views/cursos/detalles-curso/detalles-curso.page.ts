@@ -124,7 +124,7 @@ export class DetallesCursoPage implements OnInit {
       this.views.info.edit = false;
       this.title = `Detalles: ${this.course.title}`;
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el curso exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado  la información del curso exitosamente.');
     }
     else if (updated && updated.error) {
       await this.globalSer.dismissLoading();
@@ -322,7 +322,9 @@ export class DetallesCursoPage implements OnInit {
 
   async confirmCourseDelete() {
     await this.globalSer.alertConfirm({
-      message: `¿Está seguro qué desea eliminar este curso?<br/><br/>NOTA: Se eliminará toda la información registrada. Este paso es irreversible.`,
+      message: `¿Está seguro qué desea eliminar este curso?<br/><br/>
+        <b>NOTA:</b> Se eliminará toda la información registrada.<br/><br/>
+        <b><i>ESTA ACCIÓN ES IRREVERSIBLE</i></b>.`,
       confirmAction: () => this.deleteCourse()
     });
   }
@@ -364,7 +366,10 @@ export class DetallesCursoPage implements OnInit {
         content.description = theme.description;
       }
       else {
-        await this.globalSer.presentAlert('Alerta', 'Disculpe, ha ocurrido un error al momento de obtener el tema a editar.');
+        await this.globalSer.presentAlert(
+          'Alerta',
+          'Disculpe, ha ocurrido un error al momento de obtener el tema a editar.'
+        );
         openModal = false;
       }
     }
@@ -564,7 +569,7 @@ export class DetallesCursoPage implements OnInit {
       description: null,
       placeholder: null,
       extra: null,
-      inputType: false,
+      inputType: null,
       require: true,
       values: [],
       correctAnswer: null,
@@ -590,14 +595,17 @@ export class DetallesCursoPage implements OnInit {
         else {
           await this.globalSer.presentAlert(
             'Alerta',
-            'Disculpe, ha ocurrido un error al momento de obtener el contenido a editar.'
+            'Disculpe, ha ocurrido un error al momento de obtener la pregunta a editar.'
           );
           openModal = false;
         }
       }
     }
     else {
-      await this.globalSer.presentAlert('Alerta', 'Disculpe, ha ocurrido un error al momento de obtener la información.');
+      await this.globalSer.presentAlert(
+        'Alerta',
+        'Disculpe, ha ocurrido un error al momento de obtener la información.'
+      );
       openModal = false;
     }
 
@@ -642,6 +650,7 @@ export class DetallesCursoPage implements OnInit {
 
     // get ids registered
     content.listIdsIgnore = this.views.levels.data.map(l => l._id);
+    content.listIdsIgnore.push(this.id);
 
     await this.globalSer.loadModal(ModalCursosPreviosPage, content, false, updateListLevels);
   }
@@ -653,7 +662,7 @@ export class DetallesCursoPage implements OnInit {
     if (index1 === -1) {
       await this.globalSer.presentAlert(
         'Alerta',
-        'Disculpe, pero no se ha encontrado en el listado el curso a remover.');
+        'Disculpe, pero no se ha encontrado el curso a remover.');
       showConfirm = false;
     }
 
@@ -671,7 +680,7 @@ export class DetallesCursoPage implements OnInit {
   async confirmPublish() {
     const message = this.views.publish.enable ?
       '¿Está seguro qué desea quitar este curso de la sección pública?' +
-      '<br><br>NOTA: Si algún usuario posee este curso en sus listados, este no podrá ser modificado.' :
+      '<br><br>NOTA: Si algún miembro agrega este curso a su lista, este no podrá ser modificado.' :
       '¿Está seguro qué desea publicar este curso?<br><br>NOTA: Asegúrese que el contenido del curso esté completo.';
 
     await this.globalSer.alertConfirm({ message, confirmAction: () => this.publishCourse() });

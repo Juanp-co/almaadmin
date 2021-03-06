@@ -51,13 +51,23 @@ export class ModalEditarContenidoPage implements OnInit {
     this.modalCtrl.dismiss(data);
   }
 
+  disableButton() {
+    const val1 = [null, ''];
+    let counter = 0;
+
+    if (val1.indexOf(this.formData.title) > -1) counter += 1;
+    if (val1.indexOf(this.formData.urlVideo) > -1 && val1.indexOf(this.formData.description) > -1) counter += 1;
+
+    return counter > 0;
+  }
+
   async createContent() {
     await this.globalSer.presentLoading();
     const created: any = await this.cursosService.createContentThemeCourse(this.id, this.themeId, this.formData);
 
     if (created && !created.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', 'Se ha agregado el contenido al tema exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha agregado el contenido al tema exitosamente.');
       this.closeModal(created);
     }
     else if (created && created.error) {
@@ -73,7 +83,7 @@ export class ModalEditarContenidoPage implements OnInit {
 
     if (updated && !updated.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', 'Se ha actualizado el contenido del tema exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el contenido del tema exitosamente.');
       this.closeModal({
         title: updated.title,
         description: updated.description,
@@ -93,7 +103,7 @@ export class ModalEditarContenidoPage implements OnInit {
     if (!validated) {
       const alert = await this.alertCtrl.create({
         header: 'Confirme',
-        message: `¿Está seguro qué desea ${this.themeId ? 'actualizar' : 'agregar'} este contenido?`,
+        message: `¿Está seguro qué desea ${this.contentId ? 'actualizar' : 'agregar'} este contenido?`,
         buttons: [
           {
             text: 'Cancelar',

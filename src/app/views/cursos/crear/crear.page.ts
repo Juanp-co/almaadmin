@@ -59,7 +59,7 @@ export class CrearPage implements OnInit {
 
     if (res && !res.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Éxito', res || 'Se ha guardado el nuevo cuso exitosamente.');
+      await this.globalSer.presentAlert('Éxito', res || 'Se ha registrado el nuevo cuso exitosamente.');
       await this.back();
     }
     else if (res && res.error) {
@@ -109,72 +109,32 @@ export class CrearPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Seleccione los roles',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.formData.toRoles = selectedValue;
-          }
-        }
-      ]
+      confirmAction: (selectedValue) => {
+        this.formData.toRoles = selectedValue;
+      }
     });
-
-    await alert.present();
   }
 
   async confirmCancel() {
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertConfirm({
       header: 'Confirme',
       message: '¿Está seguro qué desea cancelar el registro del nuevo curso?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        }, {
-          text: 'Sí',
-          handler: () => {
-            this.back();
-          }
-        }
-      ]
+      confirmAction: () => this.back()
     });
-
-    await alert.present();
   }
 
   async confirmRegister() {
     const validated = this.cursosService.validationRegister(this.formData);
 
     if (!validated) {
-      const alert = await this.alertCtrl.create({
+      await this.globalSer.alertConfirm({
         header: 'Confirme',
-        message: '¿Está seguro qué desea actualizar información de este usuario?',
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {}
-          }, {
-            text: 'Sí',
-            handler: () => {
-              this.registerCourse();
-            }
-          }
-        ]
+        message: '¿Está seguro qué desea registrar este curso?',
+        confirmAction: () => this.registerCourse()
       });
-      await alert.present();
     }
     else {
       await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');

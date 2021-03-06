@@ -117,6 +117,21 @@ export class ModalEditarPreguntaPage implements OnInit {
     this.word = null;
   }
 
+  enableButtonSave() {
+    const val1 = [null, ''];
+    const val2 = ['text', 'textarea'];
+    let counter = 0;
+
+    if (val1.indexOf(this.formData.title) > -1) counter += 1;
+    if (val1.indexOf(this.formData.inputType) > -1) counter += 1;
+    if (
+      val2.indexOf(this.formData.inputType) === -1
+      && (this.formData.values.length === 0 || val1.indexOf(this.formData.correctAnswer) > -1)
+    ) counter += 1;
+
+    return counter > 0;
+  }
+
   removeValueOfList(index: number) {
     this.formData.values.splice(index, 1);
     this.formData.correctAnswer = null;
@@ -135,31 +150,18 @@ export class ModalEditarPreguntaPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Tipo de campo',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            if (['text', 'textarea'].indexOf(selectedValue) > -1 ) {
-              this.formData.values = [];
-              this.formData.placeholder = null;
-              this.formData.correctAnswer = null;
-            }
-            this.formData.inputType = selectedValue;
-          }
+      confirmAction: (selectedValue) => {
+        if (['text', 'textarea'].indexOf(selectedValue) > -1 ) {
+          this.formData.values = [];
+          this.formData.placeholder = null;
+          this.formData.correctAnswer = null;
         }
-      ]
+        this.formData.inputType = selectedValue;
+      }
     });
-
-    await alert.present();
   }
 
   async showRequireAlert() {
@@ -174,49 +176,25 @@ export class ModalEditarPreguntaPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
-      header: '¿Campo requerido?',
+    await this.globalSer.alertWithList({
+      header: '¿Respuesta obligatoria?',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => { this.formData.require = selectedValue; }
-        }
-      ]
+      confirmAction: (selectedValue) => { this.formData.require = selectedValue; }
     });
-
-    await alert.present();
   }
 
   async confirmEdit() {
     const validated = this.cursosService.validationEdit('question', this.formData);
 
     if (!validated) {
-      const alert = await this.alertCtrl.create({
+      await this.globalSer.alertConfirm({
         header: 'Confirme',
         message: `¿Está seguro qué desea ${this.questionId ? 'actualizar' : 'agregar'} este pregunta?`,
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {}
-          }, {
-            text: 'Sí',
-            handler: () => {
-              if (this.themeId && this.questionId) this.updateQuestion();
-              else this.addQuestion();
-            }
-          }
-        ]
+        confirmAction: () => {
+          if (this.themeId && this.questionId) this.updateQuestion();
+          else this.addQuestion();
+        }
       });
-      await alert.present();
     }
     else {
       await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');

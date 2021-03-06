@@ -17,7 +17,7 @@ export class EditarInfoCursoComponent implements OnInit {
   formData: any = {
     title: null,
     description: null,
-    toRoles: null,
+    toRoles: [],
     speaker: null,
     speakerPosition: null,
   };
@@ -54,7 +54,7 @@ export class EditarInfoCursoComponent implements OnInit {
 
   async showRoleListAlert(selected: any = []) {
     const inputs: any = [];
-    const updateData = (value: any) => this.data.toRoles = value;
+
     for (const [i, value] of this.cursosService.roles.entries()) {
       inputs.push({
         name: `roles`,
@@ -68,7 +68,9 @@ export class EditarInfoCursoComponent implements OnInit {
     await this.globalSer.alertWithList({
       header: 'Seleccione los roles',
       inputs,
-      confirmAction: updateData
+      confirmAction: (selectedValue) => {
+        this.formData.toRoles = selectedValue;
+      }
     });
   }
 

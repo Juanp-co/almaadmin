@@ -1,15 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="closeModal()">
-        <ion-icon name="close-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
     <ion-title>Agregar cursos previos</ion-title>
-    <ion-buttons slot="end" *ngIf="listAdded.length > 0">
-      <ion-button color="primary" (click)="confirmAdd()">
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="listAdded.length === 0"
+        color="primary"
+        (click)="confirmAdd()"
+      >
         <ion-icon name="save-outline" slot="start"></ion-icon>
         <ion-text>Guardar</ion-text>
+      </ion-button>
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-text>Cancelar</ion-text>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

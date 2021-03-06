@@ -13,7 +13,7 @@ export class AppComponent {
   public appPages = [
     { title: 'Inicio', url: '/inicio', icon: 'home' },
     { title: 'Miembros', url: '/miembros', icon: 'people' },
-    { title: 'Familiar', url: '/familias', icon: 'people-circle' },
+    { title: 'Grupos familiares', url: '/familias', icon: 'people-circle' },
     { title: 'Cursos', url: '/cursos', icon: 'desktop' },
     { title: 'Eventos', url: '/eventos', icon: 'calendar-number' },
     { title: 'Ofrendas', url: '/ofrendas', icon: 'cash' },

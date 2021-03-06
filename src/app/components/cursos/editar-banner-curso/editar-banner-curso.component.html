@@ -1,31 +1,25 @@
-
 <ion-row class="ion-align-items-center">
-  <ion-col [size]="12" size-sm="6" class="ion-justify-content-center">
-
-    <ion-row class="ion-justify-content-center ion-margin">
-      <ion-col size="12" class="ion-text-center ion-margin-top ion-padding-top">
-        <img [src]="banner || 'assets/photo.png'" class="img-fluid">
-      </ion-col>
-      <ion-col size="12" class="ion-text-center">
-        <ion-text><i class="toSmall">Imagen actual</i></ion-text>
-      </ion-col>
-    </ion-row>
+  <ion-col [size]="12" size-sm="6" class="ion-align-items-center ion-text-center">
+    <img [src]="banner || 'assets/photo.png'" class="banner">
+    <ion-text class="ion-hide-sm-up"><p><b><i>Imagen actual</i></b></p></ion-text>
   </ion-col>
-
-  <ion-col [size]="12" size-sm="6" class="ion-justify-content-center">
-    <ion-row class="ion-justify-content-center ion-margin">
-      <ion-col size="12" class="ion-text-center">
-        <label class="micursor ion-text-center w-100">
-          <input type='file' accept="image/x-png,image/gif,image/jpeg,image/jpg" (change)='openFile($event)' hidden>
-          <img [src]="formData.banner || 'assets/photo.png'" class="img-fluid">
-        </label>
-      </ion-col>
-      <ion-col size="12" class="ion-text-center">
-        <ion-text><i class="toSmall">Clic para cargar una imagen</i></ion-text>
-      </ion-col>
-    </ion-row>
+  <ion-col [size]="12" size-sm="6" class="ion-align-items-center ion-text-center">
+    <label class="micursor ion-text-center w-100">
+      <input type='file' accept="image/x-png,image/gif,image/jpeg,image/jpg" (change)='openFile($event)' hidden>
+      <img [src]="formData.banner || 'assets/photo.png'" class="banner">
+    </label>
+    <ion-text class="ion-hide-sm-up"><p><b><i>Clic para cargar una imagen (*)</i></b></p></ion-text>
   </ion-col>
-  <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+  <ion-col size="12" size-sm="6" class="ion-text-center ion-hide-sm-down">
+    <ion-text><b><i>Imagen actual</i></b></ion-text>
+  </ion-col>
+  <ion-col size="12" size-sm="6" class="ion-text-center ion-hide-sm-down">
+    <ion-text><b><i>Clic para cargar una imagen (*)</i></b></ion-text>
+  </ion-col>
+  <ion-col size="12" class="ion-margin-top">
+    <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+  </ion-col>
+  <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center">
     <ion-button color="light" (click)="cancel()">
       <ion-icon name="close-outline" slot="start"></ion-icon>
       <ion-text>Cancelar</ion-text>
