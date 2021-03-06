@@ -17,7 +17,7 @@ export class CursosService {
     { val: 'text', label: 'Caja de texto simple' },
     { val: 'textarea', label: 'Caja de texto extensa' },
     { val: 'radio', label: 'Respuesta única' },
-    { val: 'checkbox', label: 'Múltiples respuestas múltiple' },
+    { val: 'checkbox', label: 'Respuesta múltiple' },
   ];
 
   roles: string[] = [

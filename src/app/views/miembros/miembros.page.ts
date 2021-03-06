@@ -1,4 +1,4 @@
-import {Component, NgZone, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AxiosService} from '../../services/axios.service';
 import {CookiesService} from '../../services/cookies.service';
@@ -21,8 +21,8 @@ export class MiembrosPage implements OnInit {
   queryParams: any = {
     limit: 10,
     page: 1,
-    input: 'document',
-    value: -1,
+    input: 'names',
+    value: 1,
     word: null
   };
 
@@ -106,7 +106,6 @@ export class MiembrosPage implements OnInit {
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('Alerta', data ? data.error : '¡Error desconocido!');
     }
-
   }
 
   async setSortOrder() {

@@ -1,15 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="closeModal()">
-        <ion-icon name="close-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
     <ion-title>{{ titleModal }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="confirmEdit()">
+      <ion-button
+        color="primary"
+        (click)="confirmEdit()"
+        [disabled]="disableButton()"
+      >
         <ion-icon name="save-outline" slot="start"></ion-icon>
         <ion-text>Guardar</ion-text>
+      </ion-button>
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-text>Cancelar</ion-text>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -23,7 +26,7 @@
         <ion-input
           [(ngModel)]="formData.title"
           class="ion-text-uppercase"
-          maxlength="25"
+          maxlength="30"
         ></ion-input>
       </ion-item>
     </ion-col>
@@ -37,27 +40,14 @@
       </ion-item>
     </ion-col>
     <ion-col size="12">
-      <ion-item>
-        <ion-label color="medium">Descripción del tema</ion-label>
-      </ion-item>
       <ckeditor
         [(ngModel)]="formData.description"
         [editor]="Editor"
         [config]="configEditor"
       ></ckeditor>
     </ion-col>
-  </ion-row>
-
-  <ion-row class="ion-justify-content-center">
-    <ion-col size="auto" class="ion-margin-top ion-margin-bottom">
-      <ion-button color="light" (click)="closeModal()">
-        <ion-icon name="close-outline" slot="start"></ion-icon>
-        <ion-text>Cancelar</ion-text>
-      </ion-button>
-      <ion-button (click)="confirmEdit()">
-        <ion-icon name="save-outline" slot="start"></ion-icon>
-        <ion-text>Guardar</ion-text>
-      </ion-button>
+    <ion-col size="12" class="ion-margin-top">
+      <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
     </ion-col>
   </ion-row>
 </ion-content>

@@ -16,8 +16,10 @@
 }
 
 .banner {
-  width: 100% !important;
-  height: 250px !important;
+  width: auto !important;
+  min-height: auto !important;
+  max-height: 450px !important;
+  border-radius: 5px;
   //margin: 0 auto !important;
 }
 

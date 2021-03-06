@@ -29,15 +29,9 @@ export class FamiliasDetallesPage implements OnInit {
     value: 1,
     word: null
   };
-  handleAdd = (id: string): void => {
-    this.addToSelected(id);
-  }
-  handleRemove = (id: string): void => {
-    this.removeOfSelected(id);
-  }
-  handleDelete = (id: string): void => {
-    this.confirmRemoveMember(id);
-  }
+  handleAdd = (id: string): void => this.addToSelected(id);
+  handleRemove = (id: string): void => this.removeOfSelected(id);
+  handleDelete = (id: string): Promise<void> => this.confirmRemoveMember(id);
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -170,8 +164,6 @@ export class FamiliasDetallesPage implements OnInit {
   validateData(): string|null {
     if (!checkTitlesOrDescriptions(this.formData.name))
       return 'Disculpe, pero debe indicar un nombre correcto para el grupo.';
-    if (!checkCodeValue(this.formData.code))
-      return 'Disculpe, pero debe indicar el código para el grupo.';
 
     return null;
   }
@@ -183,6 +175,7 @@ export class FamiliasDetallesPage implements OnInit {
   async showFindUsers() {
     this.users = [];
     this.selectedUsers = [];
+    this.selectedUsersIds = [];
     this.findMembers = !this.findMembers;
     if (this.findMembers) await this.findMembersList();
     else this.queryParams.word = null;
@@ -229,7 +222,7 @@ export class FamiliasDetallesPage implements OnInit {
   // alerts
   async confirmSaveNewMembers() {
     if (this.selectedUsers.length > 0) {
-      let message = `¿Está seguro qué desea agergar a estos nuevos miembros?`;
+      let message = `¿Está seguro qué desea agregar a estos miembros en el grupo?`;
 
       for (const m of this.selectedUsers) {
         message += `<br/><br/>- <b>${m.names} ${m.lastNames}</b> - <i>${m.document}</i>`;
@@ -290,22 +283,11 @@ export class FamiliasDetallesPage implements OnInit {
     if (!validated) {
       this.formData.name = this.formData.name.trim();
       this.formData.code = this.formData.code.trim();
-      const alert = await this.alertCtrl.create({
+      this.globalSer.alertConfirm({
         header: 'Confirme',
-        message: '¿Está seguro qué desea actualizar información de este grupo?',
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {}
-          }, {
-            text: 'Sí',
-            handler: () => { this.updateData(); }
-          }
-        ]
+        message: '¿Está seguro qué desea actualizar el nombre de este grupo?',
+        confirmAction: () => { this.updateData(); }
       });
-      await alert.present();
     }
     else {
       await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');
@@ -313,25 +295,14 @@ export class FamiliasDetallesPage implements OnInit {
   }
 
   async confirmDelete() {
-    const alert = await this.alertCtrl.create({
+    this.globalSer.alertConfirm({
       header: 'Confirme',
       message: `¿Está seguro qué desea borrar a este grupo?
         <br/><br/>
         NOTA: Todos los miembros asociados volverán a estar disponibles para ser reasignados.
       `,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        }, {
-          text: 'Sí',
-          handler: () => { this.deleteGroup(); }
-        }
-      ]
+      confirmAction: () => this.deleteGroup()
     });
-    await alert.present();
   }
 
 }

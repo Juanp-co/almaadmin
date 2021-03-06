@@ -23,7 +23,7 @@
 
         <ion-col [size]="12"*ngIf="!infoToShow.contentView">
           <ion-row>
-            <ion-col [size]="12" *ngIf="data.content && data.content.length > 0; else noTemary">
+            <ion-col [size]="12" *ngIf="data.content && data.content.length > 0; else noContent">
               <ion-text class="ion-margin-top"><b>Lista de contenido:</b></ion-text>
               <ion-list>
                 <ion-item *ngFor="let c of data.content">
@@ -33,10 +33,12 @@
               </ion-list>
             </ion-col>
 
-            <ng-template #noTemary>
+            <ng-template #noContent>
               <ion-col [size]="12">
-                <ion-text class="ion-margin-top ion-margin-bottom">
-                  <p class="ion-text-center">No se ha registado contenido para el tema.</p>
+                <ion-text>
+                  <p class="ion-margin-top ion-padding-top ion-text-center no-selected-text">
+                    <ion-icon name="alert-circle-outline"></ion-icon> No se ha registado contenido para este el tema.
+                  </p>
                 </ion-text>
               </ion-col>
             </ng-template>

@@ -334,11 +334,11 @@ export class EventosPage implements OnInit {
       const btns = [
         {
           text: 'Eliminar',
-          handler: () => { this.confirmAction({ id: ev._id, update: false, remove: true }); }
+          handler: () => this.confirmAction({ id: ev._id, update: false, remove: true })
         },
         {
           text: 'Editar',
-          handler: () => { this.setShowForm({ id: ev._id, edit: true, show: true, disable: disableEdit }); }
+          handler: () => this.setShowForm({ id: ev._id, edit: true, show: true, disable: disableEdit })
         },
         {
           text: 'Cerrar',
@@ -352,13 +352,17 @@ export class EventosPage implements OnInit {
         else if (!disableEdit) buttons.push(b);
       }
 
+      const roles = this.getRoles(ev.toRoles);
+
       const alert = await this.alertCtrl.create({
+        cssClass: 'max-width-640',
         header: ev.title,
         subHeader: `Por: ${ev.user ? `${ev.user.names} ${ev.user.lastNames}` : 'Anónimo'}`,
         message: `
           <b>Fecha:</b> ${ev.date}<br/>
           <b>Hora de inicio:</b> ${ev.initHour}<br/>
           ${ev.endHour ? `<b>Hora fin:</b> ${ev.endHour}<br/>` : ''}
+          <b>Dirigido a:</b> ${roles}<br/><br/>
           <b>Descripción:</b> ${ev.description || 'No especificada.'}<br/>
         `,
         buttons
@@ -389,26 +393,15 @@ export class EventosPage implements OnInit {
       else if (remove) message = message.replace('__action__', 'eliminar');
       else message = message.replace('__action__', 'agregar');
 
-      const dAlert = await this.alertCtrl.create({
+      await this.globalSer.alertConfirm({
         header: '¡Confirme!',
         message,
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => { }
-          }, {
-            text: 'Si',
-            handler: () => {
-              if (update) this.updateEvent(id, dataToSend);
-              else if (remove) this.deleteEvent(id);
-              else this.addEvent(dataToSend);
-            }
-          }
-        ]
+        confirmAction: () => {
+          if (update) this.updateEvent(id, dataToSend);
+          else if (remove) this.deleteEvent(id);
+          else this.addEvent(dataToSend);
+        }
       });
-      await dAlert.present();
     }
   }
 

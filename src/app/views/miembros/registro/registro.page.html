@@ -18,7 +18,7 @@
           <ion-row>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Tipo de documento *</ion-label>
+                <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
                 <ion-input
                   [readonly]="true"
                   [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
@@ -29,7 +29,7 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Número de documento *</ion-label>
+                <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
                 <ion-input
                   [(ngModel)]="formData.document"
                   autocomplete="off"
@@ -42,7 +42,7 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Nombre(s) *</ion-label>
+                <ion-label position="floating" color="medium">Nombre(s) (*)</ion-label>
                 <ion-input
                   [(ngModel)]="formData.names"
                   autocomplete="off"
@@ -53,7 +53,7 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Apellidos(s) *</ion-label>
+                <ion-label position="floating" color="medium">Apellido(s) (*)</ion-label>
                 <ion-input
                   [(ngModel)]="formData.lastNames"
                   autocomplete="off"
@@ -64,13 +64,13 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Correo electrónico *</ion-label>
+                <ion-label position="floating" color="medium">Correo electrónico (*)</ion-label>
                 <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Teléfono *</ion-label>
+                <ion-label position="floating" color="medium">Teléfono</ion-label>
                 <ion-input
                   [(ngModel)]="formData.phone"
                   autocomplete="off"
@@ -82,7 +82,7 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Role para el usuario *</ion-label>
+                <ion-label position="floating" color="medium">Rol (*)</ion-label>
                 <ion-input
                   [readonly]="true"
                   [value]="roles[formData.role] || ''"
@@ -90,6 +90,21 @@
                   (click)="showRoleListAlert(formData.role)"
                 ></ion-input>
               </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Número de documento referido (opcional)</ion-label>
+                <ion-input
+                  [(ngModel)]="formData.referred"
+                  autocomplete="off"
+                  maxlength="15"
+                  class="ion-text-uppercase"
+                >
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" class="ion-margin-top">
+              <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
             </ion-col>
             <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
               <ion-button color="light" (click)="confirmCancel()">
