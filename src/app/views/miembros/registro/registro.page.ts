@@ -20,14 +20,7 @@ import {MiembrosService} from '../miembros.service';
 })
 export class RegistroPage implements OnInit {
 
-  roles: string[] = [
-    'Administrador',
-    'Pastor',
-    'Supervisor',
-    'Líder',
-    'Padre espiritual',
-    'Persona',
-  ];
+  roles = [];
   documentTypes = [];
   successRegister = false;
   successData: any = null;
@@ -56,6 +49,7 @@ export class RegistroPage implements OnInit {
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
     else {
       this.documentTypes = detallesMiembroService.documentTypesList;
+      this.roles = this.globalSer.roles;
     }
   }
 
@@ -151,26 +145,6 @@ export class RegistroPage implements OnInit {
         this.formData.documentType = selectedValue;
       }
     });
-    // const alert = await this.alertCtrl.create({
-    //   header: 'Seleccione',
-    //   inputs,
-    //   buttons: [
-    //     {
-    //       text: 'Cancelar',
-    //       role: 'cancel',
-    //       cssClass: 'secondary',
-    //       handler: () => {}
-    //     },
-    //     {
-    //       text: 'Ok',
-    //       handler: (selectedValue) => {
-    //         this.formData.documentType = selectedValue;
-    //       }
-    //     }
-    //   ]
-    // });
-    //
-    // await alert.present();
   }
 
   async confirmCancel() {

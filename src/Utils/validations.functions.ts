@@ -121,3 +121,9 @@ export function setSaltLinesOrBr(value: string|null, changeToBr = false): string
   if (!value) return null;
   return changeToBr ? value.replace(/\n/g, '<br/>') : value.replace(/<br ?\/?>/g, '\n');
 }
+
+
+export function replaceNbsp(value: string|null): string {
+  if (!value) return null;
+  return value.replace(/&NBSP;/g, ' ');
+}

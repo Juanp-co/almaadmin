@@ -9,6 +9,7 @@ import { EventosPageRoutingModule } from './eventos-routing.module';
 import { EventosPage } from './eventos.page';
 
 import {ComponentsModule} from '../../components/components.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {ComponentsModule} from '../../components/components.module';
     FormsModule,
     IonicModule,
     EventosPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    CKEditorModule
   ],
   declarations: [EventosPage]
 })

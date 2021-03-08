@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {AlertController, ModalController} from '@ionic/angular';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import dayjs from 'dayjs';
 import {EventosService} from './eventos.service';
 import {GlobalService} from '../../services/global.service';
-import {checkDate, checkHour, checkTitlesOrDescriptions} from '../../../Utils/validations.functions';
+import {checkDate, checkHour, checkTitlesOrDescriptions, replaceNbsp} from '../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-eventos',
@@ -12,6 +13,9 @@ import {checkDate, checkHour, checkTitlesOrDescriptions} from '../../../Utils/va
   styleUrls: ['./eventos.page.scss'],
 })
 export class EventosPage implements OnInit {
+
+  Editor = ClassicEditor;
+  configEditor: any = null;
   queryParams: any = {
     input: 'date',
     value: -1,
@@ -47,14 +51,19 @@ export class EventosPage implements OnInit {
   minEndHour: string = dayjs().startOf('d').add(1, 'd').format('HH:[00]');
 
   constructor(
-    public alertCtrl: AlertController,
+    private alertCtrl: AlertController,
     private eventsService: EventosService,
     private globalSer: GlobalService,
     private modalController: ModalController,
     private router: Router,
   ) {
     // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
+    if (!this.globalSer.checkSession())
+      this.router.navigate(['/ingresar']);
+    else {
+      this.configEditor = this.globalSer.configEditor;
+      this.configEditor.description = 'Indica una descripción para el evento ...';
+    }
   }
 
   async ngOnInit() {
@@ -135,7 +144,7 @@ export class EventosPage implements OnInit {
 
   validateForm(validate: any): string|null {
     if (!checkTitlesOrDescriptions(validate.title)) return 'Disculpe, pero debe indicar el título correcto para el evento.';
-    if (!checkTitlesOrDescriptions(validate.description)) return 'Disculpe, pero debe indicar una descripción para el evento.';
+    if (validate.description && validate.description.length < 5) return 'Disculpe, pero debe indicar una descripción para el evento válida.';
     if (!checkDate(validate.date)) return 'Disculpe, pero debe indicar la fecha del evento.';
     if (!checkHour(validate.initHour)) return 'Disculpe, pero debe indicar la hora de inicio del evento.';
     if (!checkHour(validate.endHour))
@@ -185,7 +194,7 @@ export class EventosPage implements OnInit {
     const ev = id ? this.events.find(e => e._id === id) : null;
     this.formData._id = ev ? ev._id : null;
     this.formData.title = ev ? ev.title : null;
-    this.formData.description = ev ? ev.description : null;
+    this.formData.description = ev ? replaceNbsp(ev.description) : null;
     this.formData.date = ev ? ev.date : null;
     this.formData.initHour = ev ? ev.initHour : null;
     this.formData.endHour = ev ? ev.endHour : null;
@@ -265,7 +274,7 @@ export class EventosPage implements OnInit {
   setDateFormToSend() {
     return {
       title: this.formData.title ? this.formData.title.toUpperCase() : null,
-      description: this.formData.description ? this.formData.description.toUpperCase() : null,
+      description: this.formData.description ? replaceNbsp(this.formData.description.toUpperCase()) : null,
       date: this.formData.date ? dayjs(this.formData.date).format('YYYY-MM-DD') : null,
       initHour: this.getHours(this.formData.initHour),
       endHour: this.getHours(this.formData.endHour),
@@ -353,6 +362,7 @@ export class EventosPage implements OnInit {
       }
 
       const roles = this.getRoles(ev.toRoles);
+      const description = replaceNbsp(ev.description);
 
       const alert = await this.alertCtrl.create({
         cssClass: 'max-width-640',
@@ -363,7 +373,8 @@ export class EventosPage implements OnInit {
           <b>Hora de inicio:</b> ${ev.initHour}<br/>
           ${ev.endHour ? `<b>Hora fin:</b> ${ev.endHour}<br/>` : ''}
           <b>Dirigido a:</b> ${roles}<br/><br/>
-          <b>Descripción:</b> ${ev.description || 'No especificada.'}<br/>
+          <b>Descripción:</b><br/>
+          ${description ? description : 'No especificada.'}<br/>
         `,
         buttons
       });

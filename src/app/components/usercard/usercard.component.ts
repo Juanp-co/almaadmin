@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CookiesService} from '../../services/cookies.service';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-usercard',
@@ -10,12 +11,14 @@ import {CookiesService} from '../../services/cookies.service';
 export class UsercardComponent implements OnInit {
 
   @Input() data: any;
+  @Input() list = false;
   showButton = false;
   member: any = null;
 
   constructor(
     private router: Router,
     private cookiesService: CookiesService,
+    private globalSer: GlobalService,
   ) { }
 
   ngOnInit() {

@@ -4,6 +4,7 @@
     <ion-card-title>
       <ion-icon name="checkmark-circle-outline" *ngIf="course.approved !== undefined && course.approved"></ion-icon>
       <ion-icon name="close-circle-outline" *ngIf="course.approved !== undefined && !course.approved"></ion-icon>
+      <ion-icon name="{{ course.enable ? 'earth' : 'alert-circle' }}-outline" *ngIf="list !== undefined"></ion-icon>
       {{ course.title }}
     </ion-card-title>
   </ion-card-header>
