@@ -252,6 +252,11 @@ export class DetallesCursoPage implements OnInit {
       this.staticData.enable = data.enable;
       this.course.enable = data.enable;
       this.views.publish.enable = data.enable;
+      if (!data.enable) {
+        this.staticData.levels = data.levels || [];
+        this.course.levels = data.levels || [];
+        this.views.levels.data = data.levels || [];
+      }
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert(
         '¡Éxito!',

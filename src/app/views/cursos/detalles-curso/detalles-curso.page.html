@@ -253,18 +253,21 @@
         <ion-card-content class="{{views.publish.show ? '' : 'ion-hide'}}">
           <ion-row class="ion-align-items-center">
             <ion-col class="ion-margin-top" size="12">
-              <ion-text>
-                <ul>
-                  <li>Puede mostrar el curso a los miembros con solo presionar el botón: <b>"PUBLICAR CURSO"</b>.</li>
-                  <li>Puede ocutar el curso de los miembros con solo presionar el botón <b>"QUITAR CURSO DE LA SECCIÓN PÚBLICA"</b>.</li>
-                  <li>Los cursos una vez publicados, <b>NO PUEDEN SER EDITADOS</b> en ninguna de las secciones.</li>
-                  <li>Puede editar un curso siempre y cuando este no se encuentre publicado y ningún miembro lo tenga en su lista.</li>
-                  <li>Puede retirar el curso del listado público incluso si algún miembro lo tenga agregado en su lista.</li>
-                </ul>
-              </ion-text>
-              <ion-text>
-                <h3><b>NOTA:</b> ASEGÚRESE DE AGREGAR Y VERIFICAR EL CONTENIDO DEL CURSO ANTES DE PUBLICARLO. UNA VEZ REALIZADA ESTA ACCIÓN Y ALGÚN USUARIO AGREGA EL CURSO A SU LISTA, NO PUEDE VOLVER A <b><i>EDITARLO</i></b> Y NI PODRÁ <b><i>ELIMINARLO</i></b>.</h3>
-              </ion-text>
+              <h2><b>IMPORTANTE</b></h2>
+              <ul>
+                <li>Puede publicar el curso a los miembros con solo presionar el botón: <b>"PUBLICAR CURSO"</b>.</li>
+                <li>Puede retirar el curso del listado público con solo presionar el botón <b>"QUITAR CURSO DE LA SECCIÓN PÚBLICA"</b>.</li>
+                <li>El curso una vez publicado, <b>NO PUEDE SER EDITADO</b> en ninguna de las secciones.</li>
+                <li>Puede editar un curso siempre y cuando este no se encuentre publicado y ningún miembro lo tenga en su lista.</li>
+                <li>Puede retirar el curso del listado público incluso si algún miembro lo tiene agregado en su lista.</li>
+                <li>Si el curso requiere de otros cursos, estos deberán estar publicados previamente antes de publicar este curso para miembros.</li>
+                <li>Si retira el curso del listado público y este se encuentra asociados otros cursos previos, estos pasarán también a <b>NO PUBLICADOS</b>.</li>
+              </ul>
+              <h3>
+                <b>NOTA:</b> ASEGÚRESE DE VERIFICAR EL CONTENIDO DEL CURSO ANTES DE PUBLICARLO.
+                UNA VEZ REALIZADA ESTA ACCIÓN Y ALGÚN USUARIO AGREGA EL CURSO A SU LISTA,
+                NO PODRÁ VOLVER A <b><i>EDITARLO</i></b>, NI PODRÁ <b><i>ELIMINARLO</i></b>.
+              </h3>
             </ion-col>
             <ion-col class="ion-margin-top ion-padding-top ion-text-center" size="12">
               <ion-button

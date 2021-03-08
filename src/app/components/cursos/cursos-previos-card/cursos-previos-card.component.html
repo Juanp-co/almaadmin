@@ -1,7 +1,10 @@
 <ion-card *ngIf="course">
   <img class="banner" [src]="course.banner || 'assets/icon/escuela.svg'"/>
   <ion-card-header>
-    <ion-card-title>{{ course.title }}</ion-card-title>
+    <ion-card-title>
+      <ion-icon name="{{ course.enable ? 'earth' : 'alert-circle' }}-outline"></ion-icon>
+      {{ course.title }}
+    </ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <ion-row class="ion-no-padding ion-no-margin">
