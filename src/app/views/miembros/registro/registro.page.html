@@ -129,11 +129,6 @@
               <ion-img class="pictureLogo2" [src]="'/assets/icon/check.svg'"></ion-img>
               <ion-card-title class="ion-margin-top">{{ successData.msg }}</ion-card-title>
             </ion-col>
-            <ion-col [size]="12" class="ion-text-center ion-margin-top ion-padding-top">
-              <ion-card-subtitle>Contraseña del nuevo usuario</ion-card-subtitle>
-              <p class="password-text">{{ successData.password }}</p>
-              <ion-text><i>Asegúrese de copiar la contaseña.</i></ion-text>
-            </ion-col>
             <ion-col size="12" size-sm="12" class="ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center">
               <ion-button color="primary" (click)="back()">
                 <ion-icon name="chevron-back-outline" slot="start"></ion-icon>&nbsp;
