@@ -51,7 +51,7 @@
 
   <ion-row *ngIf="courses && courses.length > 0; else noCourses">
     <ion-col size="12" size-sm="6" size-md="4" *ngFor="let course of courses">
-      <app-cursoscard [course]="course"></app-cursoscard>
+      <app-cursoscard [course]="course" [list]="true"></app-cursoscard>
     </ion-col>
   </ion-row>
 

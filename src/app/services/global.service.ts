@@ -14,7 +14,7 @@ export class GlobalService {
       'bold', 'italic', '|',
       'outdent', 'indent', '|',
       'bulletedList', 'numberedList', '|',
-      'blockQuote', '|',
+      // 'blockQuote', '|',
       'undo', 'redo'
     ],
     heading: {
@@ -30,6 +30,14 @@ export class GlobalService {
     shouldNotGroupWhenFull: true,
     placeholder: 'Indica la descripción aquí ...'
   };
+  roles: string[] = [
+    'Administrador',
+    'Pastor',
+    'Supervisor',
+    'Líder',
+    'Padre espiritual',
+    'Persona',
+  ];
 
   constructor(
     private alertCtrl: AlertController,
@@ -142,6 +150,11 @@ export class GlobalService {
   getRole() {
     const data = this.cookieService.getCookie('data');
     return data && data.role !== null && data.role !== undefined ? data.role : null;
+  }
+
+  getRoleValue(role: any): string {
+    if (role === null || role === undefined) return 'No se encontró el rol.';
+    return this.roles[role] || 'No se encontró el rol.';
   }
 
   checkRoleToEnableAddOrUpdate() {

@@ -16,14 +16,18 @@
           <br/>
           <ion-text>
             <ion-icon name="id-card-outline"></ion-icon>
-            {{ member.document || 'Error' }}
-          </ion-text><br>
+            {{ member.document || 'Error' }}<br>
+          </ion-text>
           <ion-text>
             <ion-icon name="call-outline"></ion-icon>
-            {{ member.phone || 'No indicado.' }}
+            {{ member.phone || 'No indicado.' }}<br>
+          </ion-text>
+          <ion-text *ngIf="list">
+            <ion-icon name="accessibility-outline"></ion-icon>
+            {{ this.globalSer.getRoleValue(member.role) }}<br>
           </ion-text>
           <div *ngIf="showButton">
-            <i class="toSmall">Toca para más información.</i>
+            <i class="toSmall">Clic para más información.</i>
           </div>
         </div>
       </ion-col>

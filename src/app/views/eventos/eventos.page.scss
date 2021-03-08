@@ -2,4 +2,7 @@
   .max-width-640 {
     --max-width: 640px;
   }
+  .ck-editor__editable_inline {
+    min-height: 250px;
+  }
 }

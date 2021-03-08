@@ -10,6 +10,7 @@ import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
 export class CursoscardComponent implements OnInit {
 
   @Input() course: any;
+  @Input() list: any;
 
   constructor(
     private router: Router

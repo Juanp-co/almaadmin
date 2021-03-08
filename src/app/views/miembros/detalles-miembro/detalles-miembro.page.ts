@@ -22,6 +22,7 @@ import {IDetallesMiembro, IDetallesMiembroEdit, IDetallesMiembroTotals} from './
 })
 export class DetallesMiembroPage implements OnInit {
   // static data to edit values
+  roles = [];
   professions = [];
   companyType = [];
   educationLevel = [];
@@ -75,6 +76,7 @@ export class DetallesMiembroPage implements OnInit {
     // check if exist session
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
     else {
+      this.roles = this.globalSer.roles;
       this.documentTypes = detallesMiembroService.documentTypesList;
       this.educationLevel = detallesMiembroService.educationLevel;
       this.professions = detallesMiembroService.professionsList;
