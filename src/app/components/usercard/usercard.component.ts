@@ -18,7 +18,7 @@ export class UsercardComponent implements OnInit {
   constructor(
     private router: Router,
     private cookiesService: CookiesService,
-    private globalSer: GlobalService,
+    public globalSer: GlobalService,
   ) { }
 
   ngOnInit() {

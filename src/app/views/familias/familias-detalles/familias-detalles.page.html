@@ -60,7 +60,7 @@
             <ion-toolbar color="primary">
               <ion-title>Listado de miembros ({{ group.members ? group.members.length : 0 }})</ion-title>
               <ion-buttons slot="end">
-                <ion-button (click)="showFindUsers()" *ngIf="!deleteMembers">
+                <ion-button (click)="showFindUsers()">
                   <ion-icon name="add-outline"></ion-icon>
                   <ion-text>Agregar miembros</ion-text>
                 </ion-button>

@@ -1,4 +1,3 @@
-
 <ion-row *ngIf="data">
   <ion-col [size]="12" size-sm="12">
     <ion-row>
@@ -68,7 +67,7 @@
       <ion-icon name="close-outline" slot="start"></ion-icon>
       <ion-text>Cancelar</ion-text>
     </ion-button>
-    <ion-button color="primary" (click)="confirmEdit()">
+    <ion-button color="primary" (click)="confirmEdit('info')">
       <ion-icon name="save-outline" slot="start"></ion-icon>
       <ion-text>Guardar</ion-text>
     </ion-button>

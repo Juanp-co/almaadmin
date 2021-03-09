@@ -19,7 +19,6 @@
         <ion-menu-toggle auto-hide="false" *ngIf="session">
           <ion-item
             *ngFor="let p of appPages; let i = index"
-            (click)="selectedIndex = i"
             routerDirection="root"
             [routerLink]="[p.url]"
             lines="none"

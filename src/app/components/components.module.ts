@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {IonicModule} from '@ionic/angular';
 
 import {ChartComponent} from './chart/chart.component';
-import {ContentListCourseComponent} from './cursos/content-list-course/content-list-course.component';
 import {CursoscardComponent} from './cursos/cursoscard/cursoscard.component';
 import {CursosPreviosCardComponent} from './cursos/cursos-previos-card/cursos-previos-card.component';
 import {EditarBannerCursoComponent} from './cursos/editar-banner-curso/editar-banner-curso.component';
@@ -19,7 +19,6 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
 @NgModule({
   declarations: [
     ChartComponent,
-    ContentListCourseComponent,
     CursoscardComponent,
     CursosPreviosCardComponent,
     EditarBannerCursoComponent,
@@ -34,11 +33,10 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     VideoPlayerComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule, IonicModule
   ],
   exports: [
     ChartComponent,
-    ContentListCourseComponent,
     CursoscardComponent,
     CursosPreviosCardComponent,
     EditarBannerCursoComponent,

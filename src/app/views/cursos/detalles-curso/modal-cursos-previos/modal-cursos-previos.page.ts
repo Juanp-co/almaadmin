@@ -30,6 +30,11 @@ export class ModalCursosPreviosPage implements OnInit {
 
   handleAddOrRemove = (id: string) => { this.addOrRemoveId(id); };
 
+  handlePage = (page: number): void => {
+    this.queryParams.page = page;
+    this.getCoursesList();
+  }
+
   constructor(
     private alertCtrl: AlertController,
     private globalSer: GlobalService,

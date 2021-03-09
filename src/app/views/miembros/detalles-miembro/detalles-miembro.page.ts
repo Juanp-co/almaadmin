@@ -68,7 +68,7 @@ export class DetallesMiembroPage implements OnInit {
     private activateRoute: ActivatedRoute,
     private alertCtrl: AlertController,
     private axios: AxiosService,
-    private globalSer: GlobalService,
+    public globalSer: GlobalService,
     private detallesMiembroService: DetallesMiembroService,
     private navCtrl: NavController,
     private router: Router,
