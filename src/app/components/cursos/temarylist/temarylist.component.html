@@ -24,7 +24,7 @@
   <ion-card-content *ngIf="viewsT[theme._id]">
     <ion-toolbar class="ion-margin-start">
       <ion-buttons slot="end">
-        <ion-button color="primary" (click)="handleEditContent(theme._id)" *ngIf="enableActions">
+        <ion-button color="primary" (click)="handleEditContent(theme._id, null)" *ngIf="enableActions">
           <ion-icon name="add-outline"></ion-icon>&nbsp;
           <ion-text>Agregar contenido</ion-text>
         </ion-button>
