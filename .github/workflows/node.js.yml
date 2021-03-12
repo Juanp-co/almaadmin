@@ -1,0 +1,16 @@
+name: AlmaAdmin
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v2
+    # - run: sudo pm2 start npm --name "server-gaitan" -- start
+    # - run: pm2 reload server-gaitan
