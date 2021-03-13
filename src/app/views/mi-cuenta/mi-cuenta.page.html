@@ -1,0 +1,432 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mi cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col [size]="12">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start" *ngIf="!views.info.edit">
+              <ion-button (click)="setShowView('info')">
+                <ion-icon name="chevron-{{views.info.show ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title *ngIf="!views.info.edit">Mis datos</ion-title>
+            <ion-title *ngIf="views.info.edit">Actualizar mis datos</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="editEnable()">
+                <ion-icon name="create-outline" slot="start" *ngIf="!views.info.edit"></ion-icon>
+                <ion-icon name="close-outline" slot="start" *ngIf="views.info.edit"></ion-icon>
+                <ion-text *ngIf="!views.info.edit">Editar</ion-text>
+                <ion-text *ngIf="views.info.edit">Cancelar</ion-text>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
+
+          <ion-row>
+            <ion-col size="12" class="{{views.info.edit ? 'ion-hide' : '' }}">
+              <ion-row class="ion-margin-top" *ngIf="views.info.data">
+                <ion-row>
+                  <ion-col size="12" size-sm="6">
+                    <ion-row>
+                      <ion-col size="5">
+                        <ion-text><b>Nombre(s):</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.names || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Apellido(s):</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Correo electrónico:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Teléfono:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Fecha de nac.:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Sexo:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.gender || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Estado civil:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.civilStatus || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Nivel educativo:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.educationLevel || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Profesión:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.profession || 'No indicado'}}</ion-text>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="12" size-sm="6">
+                    <ion-row>
+                      <ion-col size="5">
+                        <ion-text><b>Tipo de sangre:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.bloodType || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Empresa:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.company ? 'Si' : 'No'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5" *ngIf="views.info.data.company">
+                        <ion-text><b>Tipo de empresa:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7" *ngIf="views.info.data.company">
+                        <ion-text>{{views.info.data.companyType}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Bautizado:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.baptized ? 'Si' : 'No'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Departamento:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{ views.info.data.department || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Cuidad:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{ views.info.data.city || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Barrio:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.locality || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
+                        <ion-text><b>Dirección:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.direction || 'No indicado'}}</ion-text>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-row>
+            </ion-col>
+
+            <ion-col size="12" class="{{views.info.edit ? '' : 'ion-hide' }}">
+
+              <ion-row class="ion-margin-top" *ngIf="formData">
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
+                      autocomplete="off"
+                      (click)="showAlertDocumentList(formData.documentType)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
+                    <ion-input
+                      [(ngModel)]="formData.document"
+                      autocomplete="off"
+                      maxlength="10"
+                      (keypress)="validateOnlyNumber($event)"
+                      class="ion-text-uppercase"
+                    >
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Nombre(s) (*)</ion-label>
+                    <ion-input
+                      [(ngModel)]="formData.names"
+                      autocomplete="off"
+                      maxlength="50"
+                      (keyup)="validateOnlyLetters($event)"
+                      class="ion-text-uppercase"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Apellidos(s) (*)</ion-label>
+                    <ion-input
+                      [(ngModel)]="formData.lastNames"
+                      autocomplete="off"
+                      maxlength="50"
+                      (keyup)="validateOnlyLetters($event)"
+                      class="ion-text-uppercase"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Correo electrónico (*)</ion-label>
+                    <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Teléfono (*)</ion-label>
+                    <ion-input
+                      [(ngModel)]="formData.phone"
+                      autocomplete="off"
+                      maxlength="13"
+                      (keypress)="validateOnlyNumber($event)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Fecha de nacimiento (*)</ion-label>
+                    <ion-datetime
+                      [(ngModel)]="formData.birthday"
+                      displayFormat="DD/MM/YYYY"
+                      min="1910-03-14"
+                      max="{{maxDate}}"
+                      doneText="Listo"
+                      cancelText="Cancelar"
+                      (change)="setDate()"
+                    >
+                    </ion-datetime>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Sexo (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="gender[formData.gender] || ''"
+                      autocomplete="off"
+                      (click)="showAlertList('gender', 'gender', formData.gender)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Tipo de sangre (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="bloodType[formData.bloodType] || ''"
+                      autocomplete="off"
+                      (click)="showAlertList('bloodType', 'bloodType', formData.bloodType)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Estado civil (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="civilStatus[formData.civilStatus] || ''"
+                      autocomplete="off"
+                      (click)="showAlertList('civilStatus', 'civilStatus', formData.civilStatus)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Nivel educativo (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="educationLevel[formData.educationLevel] || ''"
+                      autocomplete="off"
+                      (click)="showAlertList('educationLevel', 'educationLevel', formData.educationLevel)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Profesión (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="professions[formData.profession] || ''"
+                      autocomplete="off"
+                      (click)="showAlertList('profession', 'professions', formData.profession)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">¿Posee una empresa? (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="formData.company"
+                      autocomplete="off"
+                      (click)="showAlertYesOrNotList('company', formData.company)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6" size-sm="6" *ngIf="formData.company === 'Si';">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Tipo de empresa (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="companyType[formData.companyType] || ''"
+                      autocomplete="off"
+                      class="ion-text-uppercase"
+                      (click)="showAlertList('companyType', 'companyType', formData.companyType)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">¿Estás bautizado?</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="formData.baptized"
+                      autocomplete="off"
+                      (click)="showAlertYesOrNotList('baptized', formData.baptized)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Departamento (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="departments[formData.department] || ''"
+                      autocomplete="off"
+                      class="ion-text-uppercase"
+                      (click)="showAlertList('department', 'departments', formData.department)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Ciudad (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="cities[formData.city] || ''"
+                      autocomplete="off"
+                      class="ion-text-uppercase"
+                      (click)="showAlertList('city', 'cities', formData.city)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Barrio o localidad (*)</ion-label>
+                    <ion-input [(ngModel)]="formData.locality" autocomplete="off" maxlength="100" class="ion-text-uppercase"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Dirección (*)</ion-label>
+                    <ion-input [(ngModel)]="formData.direction" autocomplete="off" maxlength="250" class="ion-text-uppercase"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="12" class="ion-margin-top">
+                  <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+                </ion-col>
+                <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                  <ion-button color="light" (click)="editEnable()">
+                    <ion-icon name="close-outline" slot="start"></ion-icon>
+                    <ion-text>Cancelar</ion-text>
+                  </ion-button>
+                  <ion-button color="primary" (click)="confirmUpdate()">
+                    <ion-icon name="save-outline" slot="start"></ion-icon>
+                    <ion-text>Guardar</ion-text>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col [size]="12" class="{{views.info.edit ? 'ion-hide' : '' }}">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-button (click)="setShowView('pass')">
+                <ion-icon name="chevron-{{views.pass.show ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>Cambiar contraseña</ion-title>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.pass.show ? '' : 'ion-hide'}}">
+          <ion-row class="ion-margin-top ion-padding-top ion-justify-content-center">
+            <ion-col size="12">
+              <ion-text><i>La nueva contraseña debe contener al menos 6 caracteres entre letras (A-Z, a-z), números (0-9) y caracteres especiales (¿?¡!=)(/&%$#,.-+*).</i></ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">Contaseña actual (*)</ion-label>
+                <ion-input [(ngModel)]="formPass.password" type="password"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">Nueva contraseña (*)</ion-label>
+                <ion-input [(ngModel)]="formPass.newPassword" type="password"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">Rep. nueva contraseña (*)</ion-label>
+                <ion-input [(ngModel)]="formPass.repPassword" type="password"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+              <ion-button color="light" (click)="cleanFormPassword()">
+                <ion-icon name="backspace-outline" slot="start"></ion-icon>
+                <ion-text>Limpiar</ion-text>
+              </ion-button>
+              <ion-button color="primary" (click)="confirmChangePassword()">
+                <ion-icon name="save-outline" slot="start"></ion-icon>
+                <ion-text>Cambiar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

@@ -139,7 +139,7 @@ export class ModalEditarPreguntaPage implements OnInit {
   }
 
   async showInputsListAlert() {
-    const inputs: any = [];
+    const inputs: any[] = [];
     for (const value of this.inputsList) {
       inputs.push({
         name: `input-type`,
@@ -165,7 +165,7 @@ export class ModalEditarPreguntaPage implements OnInit {
   }
 
   async showRequireAlert() {
-    const inputs: any = [];
+    const inputs: any[] = [];
     for (const value of [true, false]) {
       inputs.push({
         name: `require`,

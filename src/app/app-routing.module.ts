@@ -42,6 +42,10 @@ const routes: Routes = [
   {
     path: 'cuentas-bancarias',
     loadChildren: () => import('./views/cuentas-bancarias/cuentas-bancarias.module').then( m => m.CuentasBancariasPageModule)
+  },
+  {
+    path: 'mi-cuenta',
+    loadChildren: () => import('./views/mi-cuenta/mi-cuenta.module').then( m => m.MiCuentaPageModule)
   }
 ];
 

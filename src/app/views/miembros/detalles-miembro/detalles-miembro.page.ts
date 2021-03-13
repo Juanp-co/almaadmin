@@ -246,7 +246,7 @@ export class DetallesMiembroPage implements OnInit {
 
     this.views.data.edit = !this.views.data.edit;
 
-    if (this.views.data.edit ) {
+    if (this.views.data.edit) {
       this.formData = {documentType: null, ...this.staticData} as IDetallesMiembroEdit;
       this.title = `Editar datos de: ${this.formData.names} ${this.formData.lastNames}`;
       this.formData.documentType = this.formData.document ? this.formData.document.replace(/[0-9]{5,12}/, '') : null;
@@ -264,7 +264,7 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   async showAlertList(input: string, nameArray: string, selected: any = null) {
-    const inputs: any = [];
+    const inputs: any[] = [];
     for (const [i, value] of this[nameArray].entries()) {
       inputs.push({
         name: `value-${i}`,
@@ -275,27 +275,14 @@ export class DetallesMiembroPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Seleccione',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.formData[input] = selectedValue;
-            if (input === 'department') this.getCity(true);
-          }
-        }
-      ]
+      confirmAction: (selectedValue) => {
+        this.formData[input] = selectedValue;
+        if (input === 'department') this.getCity(true);
+      }
     });
-
-    await alert.present();
   }
 
   async showAlertDocumentList(selected: any = null) {
@@ -310,26 +297,13 @@ export class DetallesMiembroPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Seleccione',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => {
-            this.formData.documentType = selectedValue;
-          }
-        }
-      ]
+      confirmAction: (selectedValue) => {
+        this.formData.documentType = selectedValue;
+      }
     });
-
-    await alert.present();
   }
 
   async showAlertYesOrNotList(input: string, selected: any = null) {
@@ -344,24 +318,11 @@ export class DetallesMiembroPage implements OnInit {
       });
     }
 
-    const alert = await this.alertCtrl.create({
+    await this.globalSer.alertWithList({
       header: 'Seleccione',
       inputs,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (selectedValue) => { this.formData[input] = selectedValue; }
-        }
-      ]
+      confirmAction: (selectedValue) => { this.formData[input] = selectedValue; }
     });
-
-    await alert.present();
   }
 
   validateData(): string|null {
@@ -394,7 +355,7 @@ export class DetallesMiembroPage implements OnInit {
 
     if (validated) await this.globalSer.presentAlert('Alerta', validated);
     else {
-      this.globalSer.alertConfirm({
+      await this.globalSer.alertConfirm({
         header: 'Confirme',
         message: '¿Está seguro qué desea actualizar información de este usuario?',
         confirmAction: () => this.updateData()

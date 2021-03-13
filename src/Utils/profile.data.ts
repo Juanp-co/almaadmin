@@ -34,7 +34,7 @@ export const professions: any[] = [
   'Antropólogo, Arqueólogo y Etnólogo',
   'Archivero',
   'Armador de Barco',
-  'Arquitecto 00020 Artesano',
+  'Arquitecto Artesano',
   'Asistente Social',
   'Autor Literario, Escritor y Crmtico',
   'Avicultor',

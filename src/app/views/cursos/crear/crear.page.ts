@@ -98,7 +98,7 @@ export class CrearPage implements OnInit {
   }
 
   async showRoleListAlert(selected: any = []) {
-    const inputs: any = [];
+    const inputs: any[] = [];
     for (const [i, value] of this.roles.entries()) {
       inputs.push({
         name: `roles`,
