@@ -1,0 +1,16 @@
+::ng-deep {
+  .max-width-640 {
+    --width: 640px;
+  }
+  .ck-editor__editable_inline {
+    min-height: 250px;
+  }
+  .max-height-pic {
+    max-height: 120px;
+    margin: 0 auto !important;
+  }
+
+  .card-item {
+    height: 100%;
+  }
+}

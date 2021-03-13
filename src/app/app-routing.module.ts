@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'ingresar',
     loadChildren: () => import('./views/ingresar/ingresar.module').then( m => m.IngresarPageModule)
+  },
+  {
+    path: 'cuentas-bancarias',
+    loadChildren: () => import('./views/cuentas-bancarias/cuentas-bancarias.module').then( m => m.CuentasBancariasPageModule)
   }
 ];
 

@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cuentas bancarias</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="showForm({ clean: true })" *ngIf="!edit">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <ion-text>Agregar cuenta</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="ion-margin-bottom">
+
+    <ion-col [size]="12" class="ion-no-margin ion-no-padding" *ngIf="edit">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ formData._id ? 'Editar datos' : 'Agregar cuenta' }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col [size]="12" size-sm="8">
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Nombre del banco (*)</ion-label>
+                    <ion-input
+                      [(ngModel)]="formData.title"
+                      class="ion-text-uppercase"
+                      maxlength="30"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" class="editor">
+                  <ckeditor
+                    [(ngModel)]="formData.description"
+                    [editor]="Editor"
+                    [config]="configEditor"
+                  ></ckeditor>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col [size]="12" size-sm="4">
+              <ion-row class="ion-justify-content-center ion-margin">
+                <ion-col size="12" class="ion-text-center">
+                  <label class="micursor ion-text-center w-100">
+                    <input type='file' accept="image/x-png,image/gif,image/jpeg" (change)='openFile($event)' hidden>
+                    <img [src]="formData.picture || 'assets/photo.png'" class="img-fluid">
+                  </label>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                  <ion-text><i class="toSmall">Clic para cargar una imagen del banco (*)</i></ion-text>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top">
+              <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+              <ion-button color="light" (click)="showForm({ clean: true })">
+                <ion-icon name="close-outline" slot="start"></ion-icon>
+                <ion-text>Cancelar</ion-text>
+              </ion-button>
+              <ion-button color="primary" (click)="confirmForm(formData._id)">
+                <ion-icon name="save-outline" slot="start"></ion-icon>
+                <ion-text>Guardar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-col>
+
+    <ion-col size="12" *ngIf="!edit">
+
+      <ion-row *ngIf="banks && banks.length > 0; else noBanks">
+
+        <ion-col size="12" size-sm="4" *ngFor="let bank of banks" (click)="showDetails(bank._id)">
+          <ion-card
+            class="ion-no-padding ion-no-margin ion-margin-start ion-margin-end ion-margin-bottom card-item"
+            *ngIf="bank"
+          >
+            <ion-card-content class="ion-no-margin ion-no-padding">
+              <ion-row>
+                <ion-col size="3">
+                  <ion-img class="pictureIcon" [src]="bank.picture"></ion-img>
+                </ion-col>
+                <ion-col size="9">
+                  <ion-text color="primary" class="ion-margin-top ion-margin-bottom"><b>{{ bank.title }}</b></ion-text>
+                  <br/>
+
+                  <i class="toSmall">Clic para más información.</i>
+
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+
+
+        </ion-col>
+
+      </ion-row>
+
+      <ng-template #noBanks>
+        <ion-card>
+          <ion-text>
+            <p class="ion-text-center no-selected-text">
+              <ion-icon name="alert-circle-outline"></ion-icon> No existen cuentas bancarias registradas.
+            </p>
+          </ion-text>
+        </ion-card>
+      </ng-template>
+
+
+    </ion-col>
+
+    <!--<ion-col size="12" *ngIf="banks && banks.length > 0; else noBanks">-->
+      <!--<div class="row header">-->
+        <!--<div class="col">#</div>-->
+        <!--<div class="col">Imagen</div>-->
+        <!--<div class="col">Título</div>-->
+        <!--<div class="col"></div>-->
+      <!--</div>-->
+      <!--<div class="row" *ngFor="let bank in banks; let i = index">-->
+        <!--<div class="col">{{i + 1}}</div>-->
+        <!--<div class="col">{{bank.picture}}</div>-->
+        <!--<div class="col">{{bank.title}}</div>-->
+        <!--<div class="col"><button class="button">Add</button></div>-->
+      <!--</div>-->
+    <!--</ion-col>-->
+  </ion-row>
+
+
+</ion-content>
