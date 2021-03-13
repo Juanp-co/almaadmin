@@ -106,7 +106,7 @@ export class RegistroPage implements OnInit {
   // Alerts
 
   async showRoleListAlert(selected: any = null) {
-    const inputs: any = [];
+    const inputs: any[] = [];
     for (const [i, value] of this.roles.entries()) {
       inputs.push({
         name: `roles`,
@@ -127,7 +127,7 @@ export class RegistroPage implements OnInit {
   }
 
   async showAlertDocumentList(selected: any = null) {
-    const inputs: any = [];
+    const inputs: any[] = [];
     for (const value of this.documentTypes) {
       inputs.push({
         name: `documentType`,

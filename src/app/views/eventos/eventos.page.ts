@@ -314,7 +314,7 @@ export class EventosPage implements OnInit {
 
   // actions alerts
   async showAlertRolesList(selected: number[]) {
-    const inputs: any = [];
+    const inputs: any[] = [];
 
     for (const [i, value] of this.roles.entries()) {
       inputs.push({

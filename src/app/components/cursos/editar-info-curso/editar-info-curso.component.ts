@@ -53,7 +53,7 @@ export class EditarInfoCursoComponent implements OnInit {
   }
 
   async showRoleListAlert(selected: any = []) {
-    const inputs: any = [];
+    const inputs: any[] = [];
 
     for (const [i, value] of this.cursosService.roles.entries()) {
       inputs.push({
