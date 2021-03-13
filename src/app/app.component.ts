@@ -16,7 +16,7 @@ export class AppComponent {
     { title: 'Grupos familiares', url: '/familias', icon: 'people-circle' },
     { title: 'Cursos', url: '/cursos', icon: 'desktop' },
     { title: 'Eventos', url: '/eventos', icon: 'calendar-number' },
-    { title: 'Ofrendas', url: '/ofrendas', icon: 'cash' },
+    { title: 'Cuentas bancarias', url: '/cuentas-bancarias', icon: 'cash' },
     // { title: 'Informes', url: '/informes', icon: 'bar-chart' },
   ];
   session: any = null;

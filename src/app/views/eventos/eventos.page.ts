@@ -144,7 +144,8 @@ export class EventosPage implements OnInit {
 
   validateForm(validate: any): string|null {
     if (!checkTitlesOrDescriptions(validate.title)) return 'Disculpe, pero debe indicar el título correcto para el evento.';
-    if (validate.description && validate.description.length < 5) return 'Disculpe, pero debe indicar una descripción para el evento válida.';
+    if (validate.description && validate.description.length < 5)
+      return 'Disculpe, pero debe indicar una descripción para el evento válida.';
     if (!checkDate(validate.date)) return 'Disculpe, pero debe indicar la fecha del evento.';
     if (!checkHour(validate.initHour)) return 'Disculpe, pero debe indicar la hora de inicio del evento.';
     if (!checkHour(validate.endHour))
