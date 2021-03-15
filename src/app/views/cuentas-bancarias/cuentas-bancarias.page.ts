@@ -215,19 +215,35 @@ export class CuentasBancariasPage implements OnInit {
 
   async confirmForm(id: string|null = null, remove = false) {
     let message = '¿Está seguro qué desea __ACTION__ esta información?';
+    let next = false;
 
-    if (!remove) message = message.replace('__ACTION__', id ? 'actualizar' : 'agregar');
+    if (!remove) {
+      const validated = this.validate();
+
+      if (!validated) {
+        next = true;
+        message = message.replace('__ACTION__', id ? 'actualizar' : 'agregar');
+      }
+      else {
+        await this.globalSer.presentAlert(
+          'Error',
+          validated || 'Disculpe, pero debe completar el formulario.'
+        );
+      }
+    }
     else message = message.replace('__ACTION__', 'borrar');
 
-    await this.globalSer.alertConfirm({
-      header: 'Confirme',
-      message,
-      confirmAction: () => {
-        if (!id) this.saveBanks();
-        else if (id && !remove) this.updateBanks(id);
-        else this.deleteBank(id);
-      }
-    });
+    if (next) {
+      await this.globalSer.alertConfirm({
+        header: 'Confirme',
+        message,
+        confirmAction: () => {
+          if (!id) this.saveBanks();
+          else if (id && !remove) this.updateBanks(id);
+          else this.deleteBank(id);
+        }
+      });
+    }
   }
 
 }
