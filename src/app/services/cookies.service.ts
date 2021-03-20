@@ -6,7 +6,9 @@ import * as cookie from 'js-cookie';
 })
 export class CookiesService {
 
-  constructor() { }
+  constructor() {
+
+  }
 
   getCookie(key: string) {
     const data = cookie.get(key);
