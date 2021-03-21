@@ -11,7 +11,7 @@
         </ion-avatar>
       </ion-col>
       <ion-col>
-        <div class="ion-margin-top ion-margin-bottom">
+        <div class="ion-margin-top">
           <b>{{ member.names || '' }} {{ member.lastNames || '' }}</b>
           <br/>
           <ion-text>
@@ -21,6 +21,10 @@
           <ion-text>
             <ion-icon name="call-outline"></ion-icon>
             {{ member.phone || 'No indicado.' }}<br>
+          </ion-text>
+          <ion-text *ngIf="member.totalsReferrals !== undefined">
+            <ion-icon name="people-outline"></ion-icon>
+            {{ member.totalsReferrals || 0 }} Hijo(s) Espirituales.<br>
           </ion-text>
           <ion-text *ngIf="list">
             <ion-icon name="accessibility-outline"></ion-icon>
