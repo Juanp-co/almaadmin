@@ -404,23 +404,35 @@
               <ion-icon name="chevron-{{views.referrals.show ? 'up' : 'down' }}-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
-          <ion-title>{{ views.referrals.label }} ({{ views.referrals.data.length }})</ion-title>
+          <ion-title>{{ views.referrals.label }}</ion-title>
         </ion-toolbar>
       </ion-card-header>
       <ion-card-content class="{{ views.referrals.show ? '' : 'ion-hide' }}">
-        <ion-row class="ion-margin-bottom" *ngIf="views.referrals.referred">
-          <ion-col size="12" >
-            <ion-text><h2><b>Referido por:</b></h2></ion-text>
-          </ion-col>
-          <ion-col size="6">
+        <ion-row class="ion-margin-bottom">
+          <!--<ion-col size="12" class="ion-margin-top">-->
+          <!--</ion-col>-->
+          <ion-col size="12" size-sm="5" class="{{ views.referrals.referred ? '' : 'ion-hide' }} ion-margin-top" *ngIf="views.referrals.referred">
+            <ion-text class="ion-margin-top"><h2><b>Padre espiritual:</b></h2></ion-text>
             <app-usercard [data]="views.referrals.referred"></app-usercard>
           </ion-col>
-        </ion-row>
-        <ion-row class="ion-margin-bottom" *ngIf="views.referrals.data.length > 0; else noReferrals">
-          <ion-col size="12">
-            <ion-text><h2><b>Listado de referidos</b></h2></ion-text>
+          <ion-col size="12" [sizeSm]="views.referrals.referred ? 7 : 12" class="ion-text-center ion-margin-top">
+            <h2 class="numberTitle ion-margin-bottom">{{ totals.totalsReferrals }}</h2>
+            <h1 class="ion-margin-top ion-margin-bottom">Total de hijos</h1>
+            <!--<ion-img class="pictureLogo" [src]="'/assets/icon/padres_menu.svg'"></ion-img><br>-->
+            <ion-text class="ion-margin-top" color="medium" *ngIf="totals.totalsReferrals">
+              <p class="ion-margin-top">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                El número total de hijos se refiere a los hijos este miembro, sumado con los hijos de estos.
+              </p>
+            </ion-text>
           </ion-col>
-          <ion-col size="4" *ngFor="let ref of views.referrals.data">
+        </ion-row>
+        <br>
+        <ion-row class="ion-margin-top ion-margin-bottom max-height-250" *ngIf="views.referrals.data.length > 0; else noReferrals">
+          <ion-col size="12">
+            <ion-text><h2><b>Hijos espirituales:</b></h2></ion-text>
+          </ion-col>
+          <ion-col size="12" size-sm="6" size-md="4" *ngFor="let ref of views.referrals.data">
             <app-usercard [data]="ref"></app-usercard>
           </ion-col>
         </ion-row>
@@ -431,7 +443,7 @@
               <ion-text>
                 <p class="ion-text-center">
                   <ion-icon name="alert-circle-outline"></ion-icon>
-                  Este miembro no posee referidos asociados.
+                  Este miembro no posee hijos espirituales.
                 </p>
               </ion-text>
             </ion-col>
@@ -472,6 +484,8 @@
         </ng-template>
       </ion-card-content>
     </ion-card>
+
+    <div class="ion-margin"><br/></div>
   </div>
 
 </ion-content>

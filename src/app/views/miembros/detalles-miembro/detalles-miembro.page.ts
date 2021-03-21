@@ -57,7 +57,7 @@ export class DetallesMiembroPage implements OnInit {
       data: [],
     },
     referrals: {
-      label: 'Referidos',
+      label: 'Hijos espirituales',
       show: false,
       referred: null,
       data: [],
@@ -111,14 +111,12 @@ export class DetallesMiembroPage implements OnInit {
       await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else {
-      await this.globalSer.dismissLoading();
-    }
+    else await this.globalSer.dismissLoading();
   }
 
   async ionViewWillEnter() {
     if (!this.globalSer.checkSession())
-      this.router.navigate(['/ingresar']);
+      await this.router.navigate(['/ingresar']);
   }
 
   async updateData() {
@@ -286,7 +284,7 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   async showAlertDocumentList(selected: any = null) {
-    const inputs: any = [];
+    const inputs: any[] = [];
     for (const value of this.documentTypes) {
       inputs.push({
         name: `documentType`,
@@ -307,7 +305,7 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   async showAlertYesOrNotList(input: string, selected: any = null) {
-    const inputs: any = [];
+    const inputs: any[] = [];
     for (const [i, value] of this.yesOrNotValues.entries()) {
       inputs.push({
         name: `value-${i}`,
@@ -364,7 +362,7 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   async confirmDelete() {
-    this.globalSer.alertConfirm({
+    await this.globalSer.alertConfirm({
       header: 'Confirme',
       message: '¿Está seguro qué desea eliminar toda la información de este usuario?',
       confirmAction: () => this.deleteUser()

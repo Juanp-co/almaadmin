@@ -53,7 +53,7 @@ export class AxiosService {
          * of http.ClientRequest in Node.js
          */
         // console.log('Error msg', error.message);
-        ret.error = error.toString();
+        ret.error = error.message || error.toString();
       } else {
         // Something happened in setting up the request and triggered an Error
         // console.log('Error msg', error.message);
