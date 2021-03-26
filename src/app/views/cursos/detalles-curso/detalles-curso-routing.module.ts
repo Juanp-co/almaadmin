@@ -28,10 +28,6 @@ const routes: Routes = [
     path: 'modal-preview-prueba',
     loadChildren: () => import('./modal-preview-prueba/modal-preview-prueba.module').then( m => m.ModalPreviewPruebaPageModule)
   },
-  {
-    path: 'modal-cursos-previos',
-    loadChildren: () => import('./modal-cursos-previos/modal-cursos-previos.module').then( m => m.ModalCursosPreviosPageModule)
-  },
 ];
 
 @NgModule({

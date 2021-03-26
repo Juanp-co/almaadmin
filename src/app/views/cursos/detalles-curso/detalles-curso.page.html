@@ -195,49 +195,6 @@
       </ion-card>
     </ion-col>
 
-    <ion-col [size]="12" *ngIf="!views.info.edit && !editBanner">
-      <ion-card>
-        <ion-card-header class="ion-no-padding ion-no-margin">
-          <ion-toolbar color="primary">
-            <ion-buttons slot="start">
-              <ion-button (click)="setShowView('levels')">
-                <ion-icon name="chevron-{{views.levels.show ? 'up' : 'down' }}-outline"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-            <ion-title>{{ views.levels.title }} {{ views.levels.data.length > 0 ? '(' + views.levels.data.length + ')' : '' }}</ion-title>
-            <ion-buttons slot="end" *ngIf="views.levels.show && !staticData.enable && staticData.totalsUsers === 0">
-              <ion-button (click)="modalAddPreviousCourses()">
-                <ion-icon name="add-outline" slot="start"></ion-icon>
-                <ion-text>Agregar</ion-text>
-              </ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-card-header>
-        <ion-card-content class="{{views.levels.show ? '' : 'ion-hide'}} ion-no-padding">
-          <ion-row *ngIf="views.levels.data && views.levels.data.length > 0; else noLevels">
-            <ion-col [size]="12" size-sm="4" *ngFor="let d of views.levels.data">
-              <app-cursos-previos-card
-                [course]="d"
-                [handleDelete]="showDeleteConfirmLevel"
-              ></app-cursos-previos-card>
-            </ion-col>
-          </ion-row>
-
-          <ng-template #noLevels>
-            <ion-row>
-              <ion-col [size]="12" class="ion-text-center ion-margin-bottom">
-                <ion-text>
-                  <p class="ion-margin-top ion-padding-top ion-text-center no-selected-text">
-                    <ion-icon name="alert-circle-outline"></ion-icon> No existen cursos previos en el listado.
-                  </p>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-          </ng-template>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-
     <ion-col class="ion-margin-bottom ion-padding-bottom" [size]="12" *ngIf="!views.info.edit && !editBanner">
       <ion-card>
         <ion-card-header class="ion-no-padding ion-no-margin">
