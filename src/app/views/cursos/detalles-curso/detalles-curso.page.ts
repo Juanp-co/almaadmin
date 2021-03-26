@@ -11,7 +11,6 @@ import {ModalPreviewTemaPage} from './modal-preview-tema/modal-preview-tema.page
 import {ModalEditarContenidoPage} from './modal-editar-contenido/modal-editar-contenido.page';
 import {ModalEditarPreguntaPage} from './modal-editar-pregunta/modal-editar-pregunta.page';
 import {ModalPreviewPruebaPage} from './modal-preview-prueba/modal-preview-prueba.page';
-import {ModalCursosPreviosPage} from './modal-cursos-previos/modal-cursos-previos.page';
 
 @Component({
   selector: 'app-detalles-curso',
@@ -46,13 +45,11 @@ export class DetallesCursoPage implements OnInit {
     },
     temary: { show: false, title: 'Temas', data: [] },
     test: { show: false, title: 'Pruebas', data: [] },
-    levels: { show: false, title: 'Cursos previos requeridos', data: [] },
     publish: { show: false, title: 'Publicar curso', enable: false },
   };
   formData: any = {
     temary: { show: false, title: 'Temas del curso' },
     test: { show: false, title: 'Pruebas' },
-    levels: { show: false, title: 'Niveles previos al curso' },
   };
   formDataInfo = null;
 
@@ -92,7 +89,6 @@ export class DetallesCursoPage implements OnInit {
       this.setDataToView('info', this.course);
       this.setDataToView('temary', this.course.temary);
       this.setDataToView('test', this.course.temary);
-      this.setDataToView('levels', this.course.levels);
       this.title = `Detalles: ${this.course.title}`;
       await this.globalSer.dismissLoading();
     }
@@ -225,25 +221,6 @@ export class DetallesCursoPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
-  async deleteLevel(levelId: string) {
-    await this.globalSer.presentLoading();
-    const deleted: any = await this.cursosService.deleteLevelCourse(this.id, levelId);
-
-    if (deleted && !deleted.error) {
-      this.staticData.levels = this.staticData.levels.filter(l => l._id !== levelId);
-      this.course.levels = this.course.levels.filter(l => l._id !== levelId);
-      this.views.levels.data = this.views.levels.data.filter(l => l._id !== levelId);
-      await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', deleted || 'Se ha removido el curso del listado exitosamente.');
-
-    }
-    else if (deleted && deleted.error) {
-      await this.globalSer.dismissLoading();
-      await this.globalSer.errorSession();
-    }
-    else await this.globalSer.dismissLoading();
-  }
-
   async publishCourse() {
     await this.globalSer.presentLoading();
     const data: any = await this.cursosService.publishCourse(this.id);
@@ -252,11 +229,6 @@ export class DetallesCursoPage implements OnInit {
       this.staticData.enable = data.enable;
       this.course.enable = data.enable;
       this.views.publish.enable = data.enable;
-      if (!data.enable) {
-        this.staticData.levels = data.levels || [];
-        this.course.levels = data.levels || [];
-        this.views.levels.data = data.levels || [];
-      }
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert(
         '¡Éxito!',
@@ -302,7 +274,7 @@ export class DetallesCursoPage implements OnInit {
           this.views[group].data[k] = data[k];
       });
     }
-    else if (['levels', 'temary'].indexOf(group) > -1) {
+    else if (group === 'temary') {
       this.views[group].data = data || [];
     }
     else if (group === 'test') {
@@ -641,45 +613,6 @@ export class DetallesCursoPage implements OnInit {
   }
 
   /*
-  Levels
-   */
-  async modalAddPreviousCourses() {
-    const updateListLevels = (data: any) => {
-      if (data && data.length > 0)
-        this.views.levels.data = this.views.levels.data.concat(data);
-    };
-    const content = {
-      id: this.id,
-      listIdsIgnore: [],
-    };
-
-    // get ids registered
-    content.listIdsIgnore = this.views.levels.data.map(l => l._id);
-    content.listIdsIgnore.push(this.id);
-
-    await this.globalSer.loadModal(ModalCursosPreviosPage, content, false, updateListLevels);
-  }
-
-  async deleteLevelConfirm(levelId: string) {
-    let showConfirm = true;
-    const index1 = this.views.levels.data.findIndex(d => d._id === levelId);
-
-    if (index1 === -1) {
-      await this.globalSer.presentAlert(
-        'Alerta',
-        'Disculpe, pero no se ha encontrado el curso a remover.');
-      showConfirm = false;
-    }
-
-    if (showConfirm) {
-      await this.globalSer.alertConfirm({
-        message: '¿Está seguro qué desea remover este curso del listado?',
-        confirmAction: () => this.deleteLevel(levelId)
-      });
-    }
-  }
-
-  /*
   Publish
    */
   async confirmPublish() {
@@ -704,6 +637,5 @@ export class DetallesCursoPage implements OnInit {
   showPreviewTest = (themeId: string): void => { this.modalPreviewTest(themeId); };
   showEditQuestion = (themeId: string, questionId: string|null = null): void => { this.modalEditQuestion(themeId, questionId); };
   showDeleteConfirmQuestion = (themeId: string, questionId: string): void => { this.deleteQuestionConfirm(themeId, questionId); };
-  showDeleteConfirmLevel = (levelId: string): void => { this.deleteLevelConfirm(levelId); };
 
 }
