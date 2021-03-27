@@ -14,7 +14,7 @@ import {AppComponent} from '../../app.component';
 export class IngresarPage implements OnInit {
 
   session: any = false;
-  user = 'CC123456789';
+  phone = '31612345678';
   pass = 'password';
 
   constructor(
@@ -47,12 +47,12 @@ export class IngresarPage implements OnInit {
   }
 
   async ingresar() {
-    if (this.pass && this.user) {
+    if (this.pass && this.phone) {
       await this.globalSer.presentLoading();
 
       const res: any = await this.axios.postData(
         '/login',
-        { document: this.user, password: this.pass, admin: true }
+        { phone: this.phone, password: this.pass, admin: true }
       );
 
       if (res && res.success) {
@@ -65,7 +65,7 @@ export class IngresarPage implements OnInit {
         await this.router.navigate(['/inicio']);
       }
       else {
-        this.user = null;
+        this.phone = null;
         this.pass = null;
         await this.globalSer.dismissLoading();
         await this.globalSer.presentAlert('Alerta', res && res.error ? res.error : 'Error desconocido.');

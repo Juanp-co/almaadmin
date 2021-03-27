@@ -325,10 +325,13 @@ export class DetallesMiembroPage implements OnInit {
 
   validateData(): string|null {
     const { formData } = this;
+    if (['CC', 'TI', 'PAS', 'CE', 'PE'].indexOf(`${formData.documentType}`) === -1) return 'Disculpe, pero debe seleccionar un tipo de documento.';
+    if (!/[0-9]{5,9}/.test(`${formData.document}`)) return 'Disculpe, pero debe indicar su número de documento.';
     if (!checkEmail(formData.email)) return 'Disculpe, pero debe indicar su correo electrónico.';
     if (!checkNameOrLastName(formData.names)) return 'Disculpe, pero debe indicar su nombre.';
     if (!checkNameOrLastName(formData.lastNames)) return 'Disculpe, pero debe indicar su apellido.';
-    if (!checkPhone(formData.phone)) return 'Disculpe, pero debe indicar su número de teléfono.';
+    if (!checkPhone(formData.phone))
+      return 'Disculpe, pero debe indicar su número de teléfono.<br><br>NOTA: Recuerde que el número de teléfono es el usuario de acceso para a la cuenta del miembro.';
     if (!checkDate(formData.birthday)) return 'Disculpe, pero debe indicar su fecha de nacimiento.';
     if (!checkIfValueIsNumber(`${formData.gender}`)) return 'Disculpe, pero debe indicar su sexo.';
     if (!checkIfValueIsNumber(`${formData.bloodType}`)) return 'Disculpe, pero debe indicar su tipo de sangre.';
