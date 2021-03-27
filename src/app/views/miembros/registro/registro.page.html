@@ -64,13 +64,7 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Correo electrónico (*)</ion-label>
-                <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12" size-sm="6">
-              <ion-item>
-                <ion-label position="floating" color="medium">Teléfono</ion-label>
+                <ion-label position="floating" color="medium">Nº de Teléfono (usuario) (*)</ion-label>
                 <ion-input
                   [(ngModel)]="formData.phone"
                   autocomplete="off"
@@ -78,6 +72,12 @@
                   (keypress)="validateOnlyNumbers($event)"
                   class="ion-text-uppercase"
                 ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Correo electrónico</ion-label>
+                <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="12" size-sm="6">
@@ -93,7 +93,7 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Número de documento referido (opcional)</ion-label>
+                <ion-label position="floating" color="medium">Nº de documento padre espiritual (opcional)</ion-label>
                 <ion-input
                   [(ngModel)]="formData.referred"
                   autocomplete="off"

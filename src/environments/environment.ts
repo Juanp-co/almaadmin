@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  // urlApi: 'http://192.168.250.29:7000/api'
+  // urlApi: 'http://localhost:7000/api'
   urlApi: 'https://api.ccadv.co/api'
 };
 

@@ -161,11 +161,6 @@ export const gender: string[] = [
   'Prefiero no indicar',
 ];
 
-// <option value="CC">Cedula de ciudadanía</option>
-// <option value="TI">Tarjeta de identídad</option>
-// <option value="PAS">Pasaporte</option>
-//   <option value="CE">Cedula de extrangería</option>
-// <option value="PE">Permiso especial de permanencía</option>
 export const documentType: any[] = [
   { val: 'CC', label: 'Cédula de ciudadanía' },
   { val: 'TI', label: 'Tarjeta de identidad' },

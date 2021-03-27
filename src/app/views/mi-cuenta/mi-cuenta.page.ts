@@ -6,7 +6,7 @@ import {
   checkIfValueIsNumber, checkNameOrLastName,
   checkPassword,
   checkPhone,
-  checkTitlesOrDescriptions
+  checkTitlesOrDescriptions, onlyLettersInputValidation, onlyNumbersInputValidation
 } from '../../../Utils/validations.functions';
 import {GlobalService} from '../../services/global.service';
 import {MiCuentaService} from './mi-cuenta.service';
@@ -20,7 +20,7 @@ import {CookiesService} from '../../services/cookies.service';
   styleUrls: ['./mi-cuenta.page.scss'],
 })
 export class MiCuentaPage implements OnInit {
-  // static data to edit values
+
   roles = [];
   professions = [];
   companyType = [];
@@ -232,6 +232,14 @@ export class MiCuentaPage implements OnInit {
     }
   }
 
+  validateOnlyNumbers(event: any) {
+    onlyNumbersInputValidation(event);
+  }
+
+  validateOnlyLetters(event: any) {
+    onlyLettersInputValidation(event);
+  }
+
   async showAlertList(input: string, nameArray: string, selected: any = null) {
     const inputs: any[] = [];
     for (const [i, value] of this[nameArray].entries()) {
@@ -296,10 +304,13 @@ export class MiCuentaPage implements OnInit {
 
   validateData(): string|null {
     const { formData } = this;
-    if (!checkEmail(formData.email)) return 'Disculpe, pero debe indicar su correo electrónico.';
+    if (['CC', 'TI', 'PAS', 'CE', 'PE'].indexOf(`${formData.documentType}`) === -1) return 'Disculpe, pero debe seleccionar un tipo de documento.';
+    if (!/[0-9]{5,9}/.test(`${formData.document}`)) return 'Disculpe, pero debe indicar su número de documento.';
     if (!checkNameOrLastName(formData.names)) return 'Disculpe, pero debe indicar su nombre.';
     if (!checkNameOrLastName(formData.lastNames)) return 'Disculpe, pero debe indicar su apellido.';
-    if (!checkPhone(formData.phone)) return 'Disculpe, pero debe indicar su número de teléfono.';
+    if (!checkEmail(formData.email)) return 'Disculpe, pero debe indicar su correo electrónico.';
+    if (!checkPhone(formData.phone))
+      return 'Disculpe, pero debe indicar su número de teléfono.<br><br>NOTA: Recuerde que el número de teléfono es su usuario de acceso para a su cuenta.';
     if (!checkDate(formData.birthday)) return 'Disculpe, pero debe indicar su fecha de nacimiento.';
     if (!checkIfValueIsNumber(`${formData.gender}`)) return 'Disculpe, pero debe indicar su sexo.';
     if (!checkIfValueIsNumber(`${formData.bloodType}`)) return 'Disculpe, pero debe indicar su tipo de sangre.';
