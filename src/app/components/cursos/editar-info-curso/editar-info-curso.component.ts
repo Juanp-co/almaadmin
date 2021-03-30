@@ -13,6 +13,7 @@ export class EditarInfoCursoComponent implements OnInit {
   @Input() data: any;
   @Input() handleCancel: () => void;
   @Input() handleSave: (data: any) => void;
+  levels: any[] = [];
 
   formData: any = {
     title: null,
@@ -20,12 +21,14 @@ export class EditarInfoCursoComponent implements OnInit {
     toRoles: [],
     speaker: null,
     speakerPosition: null,
+    level: null,
   };
 
   constructor(
     private cursosService: CursosService,
     private globalSer: GlobalService,
   ) {
+    this.levels = this.cursosService.levelsList;
   }
 
   ngOnInit() {
@@ -48,8 +51,31 @@ export class EditarInfoCursoComponent implements OnInit {
   }
 
   // getters and setters
+  getLevel(level: number[]): string|null {
+    const lvl = this.levels.find(l => l.val === level) || null;
+    return lvl ? lvl.label : null;
+  }
+
   getRoles(roles: number[]): string {
     return this.cursosService.getRoles(roles);
+  }
+
+  async showLevelsListAlert(selected: any = []) {
+    const inputs: any[] = [];
+    for (const lvl of this.levels) {
+      inputs.push({
+        name: `lvls`,
+        type: 'radio',
+        label: lvl.label,
+        value: lvl.val,
+        checked: lvl.val === selected,
+      });
+    }
+
+    await this.globalSer.alertWithList({
+      inputs,
+      confirmAction: (selectedValue) => { this.formData.level = selectedValue; }
+    });
   }
 
   async showRoleListAlert(selected: any = []) {
@@ -68,9 +94,7 @@ export class EditarInfoCursoComponent implements OnInit {
     await this.globalSer.alertWithList({
       header: 'Seleccione los roles',
       inputs,
-      confirmAction: (selectedValue) => {
-        this.formData.toRoles = selectedValue;
-      }
+      confirmAction: (selectedValue) => { this.formData.toRoles = selectedValue; }
     });
   }
 

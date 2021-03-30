@@ -1,66 +1,19 @@
-<ion-card class="ion-margin-bottom ion-no-padding" *ngFor="let theme of temary">
-  <ion-card-header class="ion-no-padding">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button (click)="viewsT[theme._id] = !viewsT[theme._id]">
-          <ion-icon name="chevron-{{viewsT[theme._id] ? 'up' : 'down' }}-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-text><b>{{ theme.title }} ({{theme.content ? theme.content.length : 0}})</b></ion-text>
-      <ion-buttons slot="end">
-        <ion-button color="primary" (click)="handlePreview(theme._id, null)">
-          <ion-icon name="eye-outline"></ion-icon>
-        </ion-button>
-        <ion-button color="primary" (click)="handleEditTheme(theme._id)" *ngIf="enableActions">
-          <ion-icon name="pencil-outline" slot="start"></ion-icon>
-        </ion-button>
-        <ion-button color="primary" (click)="handleDeleteTheme(theme._id)" *ngIf="enableActions">
-          <ion-icon name="trash-outline" slot="start"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-card-header>
-
-  <ion-card-content *ngIf="viewsT[theme._id]">
-    <ion-toolbar class="ion-margin-start">
-      <ion-buttons slot="end">
-        <ion-button color="primary" (click)="handleEditContent(theme._id, null)" *ngIf="enableActions">
-          <ion-icon name="add-outline"></ion-icon>&nbsp;
-          <ion-text>Agregar contenido</ion-text>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-
-    <ion-list *ngIf="theme.content && theme.content.length > 0; else noContent">
-      <ion-item *ngFor="let content of theme.content">
-        <ion-icon name="videocam-outline" slot="start" *ngIf="content.urlVideo"></ion-icon>
-        <ion-icon name="text-outline" slot="start" *ngIf="content.description && !content.urlVideo"></ion-icon>
-        <ion-text>{{ content.title }}</ion-text>
-        <ion-buttons slot="end">
-          <ion-button color="primary" (click)="handlePreview(theme._id, content._id)">
-            <ion-icon name="eye-outline"></ion-icon>
-          </ion-button>
-          <ion-button color="primary" (click)="handleEditContent(theme._id, content._id)" *ngIf="enableActions">
-            <ion-icon name="pencil-outline"></ion-icon>
-          </ion-button>
-          <ion-button color="primary" (click)="handleDeleteContent(theme._id, content._id)" *ngIf="enableActions">
-            <ion-icon name="trash-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-item>
-    </ion-list>
-
-    <ng-template #noContent>
-      <ion-row>
-        <ion-col [size]="12" class="ion-text-center">
-          <ion-text>
-            <p class="ion-margin-top ion-padding-top ion-text-center no-selected-text">
-              <ion-icon name="alert-circle-outline"></ion-icon> No se ha registado contenido para el tema.
-            </p>
-          </ion-text>
-        </ion-col>
-      </ion-row>
-    </ng-template>
-  </ion-card-content>
-
-</ion-card>
+<ion-list>
+  <ion-item *ngFor="let theme of temary">
+    <ion-icon name="videocam-outline" slot="start" *ngIf="theme.urlVideo"></ion-icon>
+    <ion-icon name="text-outline" slot="start" *ngIf="theme.description && !theme.urlVideo"></ion-icon>
+    <ion-icon name="help-circle-outline" slot="start" *ngIf="!theme.description && !theme.urlVideo && theme.quiz"></ion-icon>
+    <ion-text><b>{{ theme.title }}</b></ion-text>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="handlePreview(theme._id)">
+        <ion-icon name="eye-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="primary" (click)="handleEditTheme(theme._id, !!theme.quiz)" *ngIf="enableActions">
+        <ion-icon name="pencil-outline" slot="start"></ion-icon>
+      </ion-button>
+      <ion-button color="primary" (click)="handleDeleteTheme(theme._id)" *ngIf="enableActions">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-list>

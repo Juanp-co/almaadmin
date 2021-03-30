@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {AxiosService} from '../../services/axios.service';
 import {GlobalService} from '../../services/global.service';
 import {
-  checkBase64,
   checkNameOrLastName,
   checkTitlesOrDescriptions,
   checkYoutubeUrl
@@ -18,6 +17,14 @@ export class CursosService {
     { val: 'textarea', label: 'Caja de texto extensa' },
     { val: 'radio', label: 'Respuesta única' },
     { val: 'checkbox', label: 'Respuesta múltiple' },
+  ];
+
+  levelsList = [
+    { val: 1, label: 'Nivel 1' },
+    { val: 2, label: 'Nivel 2' },
+    { val: 3, label: 'Nivel 3' },
+    { val: 4, label: 'Nivel 4' },
+    { val: 5, label: 'Nivel 5' },
   ];
 
   roles: string[] = [
@@ -52,13 +59,6 @@ export class CursosService {
   /*
     API services
    */
-
-  async getCoursesTotals(query = {}): Promise<any> {
-    const res: any = await this.axios.getData('/admin/courses/counters', query);
-
-    if (res && res.success) return res.data.totals;
-    return this.globalSer.altResponse(res);
-  }
 
   async getCourses(query = {}): Promise<any> {
     const res: any = await this.axios.getData('/admin/courses', query);
@@ -103,7 +103,7 @@ export class CursosService {
   }
 
   /*
-    Temaries
+    Temary
    */
 
   async createThemeCourse(id: string, data: any): Promise<any> {
@@ -127,74 +127,6 @@ export class CursosService {
     return this.globalSer.altResponse(res);
   }
 
-  /*
-   Content
-   */
-
-  async createContentThemeCourse(id: string, themeId: string, data: any): Promise<any> {
-    const res: any = await this.axios.postData(`/admin/courses/${id}/theme/${themeId}/content`, data);
-
-    if (res && res.success) return res.data.content;
-    return this.globalSer.altResponse(res);
-  }
-
-  async updateContentThemeCourse(id: string, themeId: string, contentId: string, data: any): Promise<any> {
-    const res: any = await this.axios.putData(`/admin/courses/${id}/theme/${themeId}/content/${contentId}`, data);
-
-    if (res && res.success) return res.data.content;
-    return this.globalSer.altResponse(res);
-  }
-
-  async deleteContentThemeCourse(id: string, themeId: string, contentId: string): Promise<any> {
-    const res: any = await this.axios.deleteData(`/admin/courses/${id}/theme/${themeId}/content/${contentId}`);
-
-    if (res && res.success) return res.data.msg;
-    return this.globalSer.altResponse(res);
-  }
-
-  /*
-   Questions
-   */
-
-  async addQuestionTestThemeCourse(id: string, themeId: string, data: any): Promise<any> {
-    const res: any = await this.axios.postData(`/admin/courses/${id}/theme/${themeId}/test`, data);
-
-    if (res && res.success) return res.data.question;
-    return this.globalSer.altResponse(res);
-  }
-
-  async updateQuestionTestThemeCourse(id: string, themeId: string, questionId: string, data: any): Promise<any> {
-    const res: any = await this.axios.putData(`/admin/courses/${id}/theme/${themeId}/test/${questionId}`, data);
-
-    if (res && res.success) return res.data.question;
-    return this.globalSer.altResponse(res);
-  }
-
-  async deleteQuestionTestThemeCourse(id: string, themeId: string, questionId: string): Promise<any> {
-    const res: any = await this.axios.deleteData(`/admin/courses/${id}/theme/${themeId}/test/${questionId}`);
-
-    if (res && res.success) return res.data.msg;
-    return this.globalSer.altResponse(res);
-  }
-
-  /*
-   Levels
-   */
-
-  async addLevelCourse(id: string, data: any): Promise<any> {
-    const res: any = await this.axios.postData(`/admin/courses/${id}/levels`, data);
-
-    if (res && res.success) return res.data.msg;
-    return this.globalSer.altResponse(res);
-  }
-
-  async deleteLevelCourse(id: string, levelId: string): Promise<any> {
-    const res: any = await this.axios.deleteData(`/admin/courses/${id}/levels/${levelId}`);
-
-    if (res && res.success) return res.data.msg;
-    return this.globalSer.altResponse(res);
-  }
-
   async publishCourse(id: string): Promise<any> {
     const res: any = await this.axios.putData(`/admin/courses/${id}/enable`);
 
@@ -208,16 +140,13 @@ export class CursosService {
   validationRegister(data: any): string|null {
     if (!checkTitlesOrDescriptions(data.title)) return 'Disculpe, pero debe indicar un título para el curso.';
     if (!checkTitlesOrDescriptions(data.description)) return 'Disculpe, pero debe indicar una descripción para el curso.';
-    if (!data.banner) return 'Disculpe, pero debe subir una imagen para el curso.';
+    if ([1, 2, 3, 4, 5].indexOf(data.level) === -1) return 'Disculpe, pero debe indicar el nivel del nuevo curso.';
     if (data.toRoles.length === 0) return 'Disculpe, pero debe indicar los roles a los que va dirigido el curso.';
     return null;
   }
 
   validationEdit(section: string, data: any): string|null {
-    if (section === 'banner') {
-      if (!checkBase64(data)) return 'Disculpe, pero debe seleccionar una imagen válida.';
-    }
-    else if (section === 'content') {
+    if (section === 'content') {
       if (!checkTitlesOrDescriptions(data.title)) return 'Disculpe, pero debe indicar un título para el tema.';
       if (!data.urlVideo && !data.description) return 'Disculpe, pero debe indicar una descripción o una enlace a un video.';
       else if (!data.urlVideo && data.description && data.description.length <= 5)
@@ -239,10 +168,28 @@ export class CursosService {
     else if (section === 'question') {
       if (!checkTitlesOrDescriptions(data.title)) return 'Disculpe, pero debe indicar un título para la pregunta.';
       if (data.description && data.description.length <= 5) return 'Disculpe, pero debe indicar una descripción válida para la pregunta.';
-      if (!data.inputType) return 'Disculpe, pero debe indicar el tipo de campo para la pregunta.';
-      if (['text', 'textarea'].indexOf(`${data.inputType}`) === -1) {
-        if (!data.values && data.values.length === 0) return 'Disculpe, pero debe indicar opciones disponibles para la respuesta.';
-        if (data.correctAnswer === null) return 'Disculpe, pero debe seleccionar una respuesta correcta.';
+
+      if (data.quiz && data.quiz.length === 0) return 'Disculpe, pero agregar preguntas para el Quiz.';
+      else {
+        let error = false;
+        let msg: string | null = null;
+
+        for (const q of data.quiz) {
+          if (!checkTitlesOrDescriptions(q.title)) msg = 'Disculpe, pero debe indicar un título para la pregunta.';
+          if (q.description && q.description.length <= 5) msg = 'Disculpe, pero debe indicar una descripción válida para la pregunta.';
+          if (!q.inputType) msg = 'Disculpe, pero debe indicar el tipo de campo para la pregunta.';
+          if (['text', 'textarea'].indexOf(`${q.inputType}`) === -1) {
+            if (!q.values && q.values.length === 0) msg = 'Disculpe, pero debe indicar opciones disponibles para la respuesta.';
+            if (q.correctAnswer === null) msg = 'Disculpe, pero debe seleccionar una respuesta correcta.';
+          }
+
+          if (msg) {
+            error = true;
+            break;
+          }
+        }
+
+        if (error) return msg;
       }
     }
     return null;

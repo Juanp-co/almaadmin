@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start" *ngIf="!views.info.edit && !editBanner">
+    <ion-buttons slot="start" *ngIf="!views.info.edit">
       <ion-button (click)="back()">
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>{{ title }}</ion-title>
-    <ion-buttons slot="end" *ngIf="staticData && !views.info.edit && !editBanner && !staticData.enable && staticData.totalsUsers === 0">
+    <ion-buttons slot="end" *ngIf="staticData && !views.info.edit && !staticData.enable && staticData.totalsUsers === 0">
       <ion-button color="danger" (click)="confirmCourseDelete()">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-text>Eliminar curso</ion-text>
@@ -21,38 +21,37 @@
       <ion-card>
         <ion-card-header class="ion-no-padding ion-no-margin">
           <ion-toolbar color="primary">
-            <ion-buttons slot="start" *ngIf="!views.info.edit && !editBanner">
+            <ion-buttons slot="start" *ngIf="!views.info.edit">
               <ion-button (click)="setShowView('info')">
                 <ion-icon name="chevron-{{views.info.show ? 'up' : 'down' }}-outline"></ion-icon>
               </ion-button>
             </ion-buttons>
-            <ion-title *ngIf="!views.info.edit && !editBanner">{{ views.info.title }}</ion-title>
-            <ion-title *ngIf="!views.info.edit && editBanner">Cambiar imagen del curso</ion-title>
-            <ion-title *ngIf="views.info.edit && !editBanner">Editar datos principales del curso</ion-title>
-            <ion-buttons slot="end" *ngIf="views.info.show && !staticData.enable && staticData.totalsUsers === 0">
-              <ion-button (click)="setShowEditInfo('info')" *ngIf="!views.info.edit && !editBanner">
+            <ion-title *ngIf="!views.info.edit">{{ views.info.title }}</ion-title>
+            <ion-title *ngIf="views.info.edit">Editar datos principales del curso</ion-title>
+            <ion-buttons slot="end" *ngIf="views.info.show && !staticData.enable">
+              <ion-button (click)="setShowEditInfo('info')" *ngIf="!views.info.edit">
                 <ion-icon name="create-outline"></ion-icon>
                 <ion-text>Editar</ion-text>
-              </ion-button>
-              <ion-button (click)="setShowBannerEdit()" *ngIf="!views.info.edit && !editBanner">
-                <ion-icon name="image-outline" slot="start"></ion-icon>
-                <ion-text>Cambiar imagen</ion-text>
               </ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-card-header>
         <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
 
-          <div *ngIf="!views.info.edit && !editBanner">
+          <div *ngIf="!views.info.edit">
             <ion-row>
-              <ion-col [size]="12" class="ion-text-center">
-                <img class="banner" [src]="banner || 'assets/icon/escuela.svg'"/>
+              <ion-col size="12" class="ion-text-center">
+                <img src="assets/icon/level-{{views.info.data.level}}.svg" class="icon-courses">
               </ion-col>
               <ion-col [size]="12" size-sm="6">
                 <ion-row>
                   <ion-col [size]="12">
                     <ion-text><b class="mini-title no-selected-text">Título curso</b></ion-text><br/>
                     <ion-text class="title-or-description ion-margin-bottom">{{views.info.data.title}}</ion-text>
+                  </ion-col>
+                  <ion-col [size]="12">
+                    <ion-text><b class="mini-title no-selected-text">Nivel</b></ion-text><br/>
+                    <ion-text class="title-or-description ion-margin-bottom">{{views.info.data.level || 'No especificado' }}</ion-text>
                   </ion-col>
                   <ion-col [size]="12">
                     <ion-text><b class="mini-title no-selected-text">Dirigido a</b></ion-text><br/>
@@ -89,7 +88,7 @@
             </ion-row>
           </div>
 
-          <div *ngIf="views.info.edit && formDataInfo && !staticData.enable && staticData.totalsUsers === 0">
+          <div *ngIf="views.info.edit && formDataInfo && !staticData.enable">
             <app-editar-info-curso
               [data]="formDataInfo"
               [handleCancel]="cancelEditInfo"
@@ -97,19 +96,11 @@
             ></app-editar-info-curso>
           </div>
 
-          <div *ngIf="editBanner && !staticData.enable && staticData.totalsUsers === 0">
-            <app-editar-banner-curso
-              [handleCancel]="cancelEditBanner"
-              [handleSave]="saveEditBanner"
-              [banner]="banner"
-            ></app-editar-banner-curso>
-          </div>
-
         </ion-card-content>
       </ion-card>
     </ion-col>
 
-    <ion-col [size]="12" *ngIf="!views.info.edit && !editBanner">
+    <ion-col [size]="12" *ngIf="!views.info.edit">
       <ion-card>
         <ion-card-header class="ion-no-padding ion-no-margin">
           <ion-toolbar color="primary">
@@ -121,10 +112,14 @@
             <ion-title>
               {{ views.temary.title }} ({{ views.temary.data.length }})
             </ion-title>
-            <ion-buttons slot="end" *ngIf="views.temary.show && !staticData.enable && staticData.totalsUsers === 0">
+            <ion-buttons slot="end" *ngIf="views.temary.show && !staticData.enable">
               <ion-button (click)="modalTheme()">
                 <ion-icon name="add-outline" slot="start"></ion-icon>
                 <ion-text>Agregar</ion-text>
+              </ion-button>
+              <ion-button (click)="modalTheme(null, true)">
+                <ion-icon name="add-outline" slot="start"></ion-icon>
+                <ion-text>Agregar Quiz</ion-text>
               </ion-button>
             </ion-buttons>
           </ion-toolbar>
@@ -132,12 +127,10 @@
         <ion-card-content class="{{views.temary.show ? '' : 'ion-hide'}}">
           <app-temarylist
             [temary]="views.temary.data"
-            [enableActions]="!staticData.enable && staticData.totalsUsers === 0"
+            [enableActions]="!staticData.enable"
             [handlePreview]="showPreviewModal"
             [handleEditTheme]="showEditTheme"
             [handleDeleteTheme]="showDeleteConfirmTheme"
-            [handleEditContent]="showEditContent"
-            [handleDeleteContent]="showDeleteConfirmContent"
             *ngIf="views.temary.data.length > 0; else noTemaries"
           ></app-temarylist>
 
@@ -156,46 +149,7 @@
       </ion-card>
     </ion-col>
 
-    <ion-col [size]="12" *ngIf="!views.info.edit && !editBanner">
-      <ion-card>
-        <ion-card-header class="ion-no-padding ion-no-margin">
-          <ion-toolbar color="primary">
-            <ion-buttons slot="start">
-              <ion-button (click)="setShowView('test')">
-                <ion-icon name="chevron-{{views.test.show ? 'up' : 'down' }}-outline"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-            <ion-title>
-              {{ views.test.title }} ({{ views.test.data.length }})
-            </ion-title>
-          </ion-toolbar>
-        </ion-card-header>
-        <ion-card-content class="{{views.test.show ? '' : 'ion-hide'}}">
-          <app-test-list
-            [data]="views.test.data"
-            [enableActions]="!staticData.enable && staticData.totalsUsers === 0"
-            [handlePreview]="showPreviewTest"
-            [handleEditQuestion]="showEditQuestion"
-            [handleDeleteQuestion]="showDeleteConfirmQuestion"
-            *ngIf="views.test.data.length > 0; else noTests"
-          ></app-test-list>
-
-          <ng-template #noTests>
-            <ion-row>
-              <ion-col [size]="12" class="ion-text-center">
-                <ion-text>
-                  <p class="ion-margin-top ion-padding-top ion-text-center no-selected-text">
-                    <ion-icon name="alert-circle-outline"></ion-icon> Debes registrar temas para poder visualizar la sección de pruebas.
-                  </p>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-          </ng-template>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-
-    <ion-col class="ion-margin-bottom ion-padding-bottom" [size]="12" *ngIf="!views.info.edit && !editBanner">
+    <ion-col class="ion-margin-bottom ion-padding-bottom" [size]="12" *ngIf="!views.info.edit">
       <ion-card>
         <ion-card-header class="ion-no-padding ion-no-margin">
           <ion-toolbar color="primary">

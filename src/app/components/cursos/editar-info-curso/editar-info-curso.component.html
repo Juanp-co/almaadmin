@@ -24,7 +24,7 @@
           ></ion-textarea>
         </ion-item>
       </ion-col>
-      <ion-col size="12">
+      <ion-col size="12" size-sm="6">
         <ion-item>
           <ion-label position="floating" color="medium">Nombre del ponente (*)</ion-label>
           <ion-input
@@ -35,7 +35,7 @@
           ></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col size="12">
+      <ion-col size="12" size-sm="6">
         <ion-item>
           <ion-label position="floating" color="medium">Cargo o posición del ponente (*)</ion-label>
           <ion-input
@@ -46,7 +46,18 @@
           ></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col size="12">
+      <ion-col size="12" size-sm="6">
+        <ion-item>
+          <ion-label position="floating" color="medium">Nivel del curso (*)</ion-label>
+          <ion-input
+            [readonly]="true"
+            [value]="getLevel(formData.level)"
+            autocomplete="off"
+            (click)="showLevelsListAlert(formData.level)"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
         <ion-item>
           <ion-label position="floating" color="medium">Roles a los que va dirigido (*)</ion-label>
           <ion-input

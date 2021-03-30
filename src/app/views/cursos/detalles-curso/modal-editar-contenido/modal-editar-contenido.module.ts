@@ -15,7 +15,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     FormsModule,
     IonicModule,
     ModalEditarContenidoPageRoutingModule,
-    CKEditorModule
+    CKEditorModule,
   ],
   declarations: [ModalEditarContenidoPage]
 })
