@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ModalEditarPreguntaPageRoutingModule } from './modal-editar-pregunta-routing.module';
 
 import { ModalEditarPreguntaPage } from './modal-editar-pregunta.page';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModalEditarPreguntaPageRoutingModule
+    ModalEditarPreguntaPageRoutingModule,
+    CKEditorModule,
   ],
   declarations: [ModalEditarPreguntaPage]
 })

@@ -9,8 +9,8 @@ export class TemarylistComponent implements OnInit {
 
   @Input() temary: any = [];
   @Input() enableActions = false;
-  @Input() handlePreview: (themeId: string, contentId: string|null) => void;
-  @Input() handleEditTheme: (themeId: string) => void;
+  @Input() handlePreview: (themeId: string) => void;
+  @Input() handleEditTheme: (themeId: string, quiz: boolean) => void;
   @Input() handleDeleteTheme: (themeId: string) => void;
   @Input() handleEditContent: (themeId: string, contentId: string|null) => void;
   @Input() handleDeleteContent: (themeId: string, contentId: string) => void;

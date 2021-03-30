@@ -19,7 +19,7 @@
         <ion-card-content>
           <ion-row>
 
-            <ion-col [size]="12" size-sm="8">
+            <ion-col [size]="6">
               <ion-row>
                 <ion-col size="12">
                   <ion-item>
@@ -41,6 +41,21 @@
                     ></ion-textarea>
                   </ion-item>
                 </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col [size]="6">
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Nivel del curso (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="getLevel(formData.level)"
+                      autocomplete="off"
+                      (click)="showLevelsListAlert(formData.level)"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
                 <ion-col size="12">
                   <ion-item>
                     <ion-label position="floating" color="medium">Roles a los que va dirigido (*)</ion-label>
@@ -51,19 +66,6 @@
                       (click)="showRoleListAlert(formData.toRoles)"
                     ></ion-input>
                   </ion-item>
-                </ion-col>
-              </ion-row>
-            </ion-col>
-            <ion-col [size]="12" size-sm="4">
-              <ion-row class="ion-justify-content-center ion-margin">
-                <ion-col size="12" class="ion-text-center">
-                  <label class="micursor ion-text-center w-100">
-                    <input type='file' accept="image/x-png,image/gif,image/jpeg" (change)='openFile($event)' hidden>
-                    <img [src]="formData.banner || 'assets/photo.png'" class="img-fluid">
-                  </label>
-                </ion-col>
-                <ion-col size="12" class="ion-text-center">
-                  <ion-text><i class="toSmall">Clic para cargar una imagen (*)</i></ion-text>
                 </ion-col>
               </ion-row>
             </ion-col>

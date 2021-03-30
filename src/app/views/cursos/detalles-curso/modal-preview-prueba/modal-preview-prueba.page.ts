@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AlertController, ModalController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {GlobalService} from '../../../../services/global.service';
 
 @Component({
@@ -10,6 +10,7 @@ import {GlobalService} from '../../../../services/global.service';
 export class ModalPreviewPruebaPage implements OnInit {
   @Input() test: any = [];
   @Input() title: string|null = null;
+  @Input() description: string|null = null;
   titleModal = 'Cargando ...';
   totalsViews = 0;
   viewSelected = 0;
@@ -18,7 +19,6 @@ export class ModalPreviewPruebaPage implements OnInit {
   questionsModel: any = {};
 
   constructor(
-    private alertController: AlertController,
     private globalSer: GlobalService,
     private modalController: ModalController,
   ) { }
@@ -84,19 +84,7 @@ export class ModalPreviewPruebaPage implements OnInit {
   }
 
   async getQuestionsFromList(next = false) {
-    // await this.globalSer.presentLoading();
-    // check required answer
-    if (next && this.checkAnswerSections(this.viewSelected)) {
-      // await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert(
-        'Alerta',
-        'Disculpe, pero debe asegurarse de responder las preguntas obligatorias de esta sección.'
-      );
-    }
-    else {
-      this.viewSelected += next ? 1 : -1;
-      this.questionsView = this.questions[this.viewSelected] || null;
-      // await this.globalSer.dismissLoading();
-    }
+    this.viewSelected += next ? 1 : -1;
+    this.questionsView = this.questions[this.viewSelected] || null;
   }
 }

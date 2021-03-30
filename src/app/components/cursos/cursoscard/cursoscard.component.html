@@ -1,5 +1,5 @@
 <ion-card *ngIf="course" (click)="goToDetails(course._id)">
-  <img class="banner" [src]="course.banner || 'assets/icon/escuela.svg'"/>
+  <img src="assets/icon/level-{{course.level}}.svg" class="icon-courses">
   <ion-card-header>
     <ion-card-title>
       <ion-icon name="checkmark-circle-outline" *ngIf="course.approved !== undefined && course.approved"></ion-icon>

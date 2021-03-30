@@ -9,9 +9,8 @@ import {GlobalService} from '../../../../services/global.service';
 })
 export class ModalPreviewTemaPage implements OnInit {
 
-  @Input() infoToShow: any;
+  @Input() data: any;
   titleModal = 'Cargando...';
-  data: any = null;
 
   constructor(
     private globalSer: GlobalService,
@@ -19,27 +18,13 @@ export class ModalPreviewTemaPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    if (this.infoToShow) {
-      if (!this.infoToShow.contentView && this.infoToShow.theme) {
-        this.data = this.infoToShow.theme;
-        this.titleModal = `Previsualizando: ${this.data.title}`;
-      }
-      else if (this.infoToShow.contentView && this.infoToShow.content) {
-        this.data = this.infoToShow.content;
-        this.titleModal = `Previsualizando: ${this.data.title}`;
-      }
-      else {
-        await this.globalSer.presentAlert(
-          'Alerta',
-          'Disculpe, pero no existe información que mostrar.'
-        );
-        this.closeModal();
-      }
+    if (this.data) {
+      this.titleModal = `Previsualizando: ${this.data.title}`;
     }
     else {
       await this.globalSer.presentAlert(
         'Alerta',
-        'Disculpe, ha ocurrido un error al momento de obtener la información a mostrar.'
+        'Disculpe, pero no existe información que mostrar.'
       );
       this.closeModal();
     }

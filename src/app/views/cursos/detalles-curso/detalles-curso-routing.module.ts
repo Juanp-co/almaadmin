@@ -9,10 +9,6 @@ const routes: Routes = [
     component: DetallesCursoPage
   },
   {
-    path: 'modal-editar-tema',
-    loadChildren: () => import('./modal-editar-tema/modal-editar-tema.module').then( m => m.ModalEditarTemaPageModule)
-  },
-  {
     path: 'modal-editar-contenido',
     loadChildren: () => import('./modal-editar-contenido/modal-editar-contenido.module').then( m => m.ModalEditarContenidoPageModule)
   },

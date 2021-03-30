@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, NavController} from '@ionic/angular';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AxiosService} from '../../../services/axios.service';
+import {NavController} from '@ionic/angular';
+import {Router} from '@angular/router';
 import {GlobalService} from '../../../services/global.service';
 import {CursosService} from '../cursos.service';
-import {DataService} from '../../../services/data.service';
 
 @Component({
   selector: 'app-crear',
@@ -13,10 +11,11 @@ import {DataService} from '../../../services/data.service';
 })
 export class CrearPage implements OnInit {
 
+  levels: any = [];
   formData: any = {
     title: null,
     description: null,
-    banner: null,
+    level: null,
     toRoles: []
   };
   roles: string[] = [
@@ -28,17 +27,16 @@ export class CrearPage implements OnInit {
   ];
 
   constructor(
-    private activateRoute: ActivatedRoute,
-    private alertCtrl: AlertController,
-    private axios: AxiosService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
     private cursosService: CursosService,
-    private router: Router,
-    private dataService: DataService
+    private router: Router
   ) {
     // check if exist session
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
+    else {
+      this.levels = this.cursosService.levelsList;
+    }
   }
 
   async ngOnInit() {
@@ -73,6 +71,11 @@ export class CrearPage implements OnInit {
 
   // getters and setters
 
+  getLevel(level: number[]): string|null {
+    const lvl = this.levels.find(l => l.val === level) || null;
+    return lvl ? lvl.label : null;
+  }
+
   getRoles(rolesList: number[]): string {
     let ret = '';
     if (rolesList.length > 0) {
@@ -86,15 +89,22 @@ export class CrearPage implements OnInit {
   }
 
   // actions form
-  openFile(event) {
-    const files = event.target.files;
-
-    if (typeof files[0] !== 'object') return false;
-    else {
-      this.dataService.resizePhoto(files[0], 900, 'dataURL',  (resizedFile) => {
-        this.formData.banner = resizedFile;
+  async showLevelsListAlert(selected: any = []) {
+    const inputs: any[] = [];
+    for (const lvl of this.levels) {
+      inputs.push({
+        name: `lvls`,
+        type: 'radio',
+        label: lvl.label,
+        value: lvl.val,
+        checked: lvl.val === selected,
       });
     }
+
+    await this.globalSer.alertWithList({
+      inputs,
+      confirmAction: (selectedValue) => { this.formData.level = selectedValue; }
+    });
   }
 
   async showRoleListAlert(selected: any = []) {
@@ -110,11 +120,8 @@ export class CrearPage implements OnInit {
     }
 
     await this.globalSer.alertWithList({
-      header: 'Seleccione los roles',
       inputs,
-      confirmAction: (selectedValue) => {
-        this.formData.toRoles = selectedValue;
-      }
+      confirmAction: (selectedValue) => { this.formData.toRoles = selectedValue; }
     });
   }
 

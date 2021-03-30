@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {AlertController, ModalController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
 import {CursosService} from '../../cursos.service';
 import {GlobalService} from '../../../../services/global.service';
 
@@ -29,7 +29,6 @@ export class ModalEditarContenidoPage implements OnInit {
   };
 
   constructor(
-    private alertCtrl: AlertController,
     private globalSer: GlobalService,
     private modalCtrl: ModalController,
     private cursosService: CursosService
@@ -44,11 +43,18 @@ export class ModalEditarContenidoPage implements OnInit {
     }
     if (this.description) this.formData.description = this.description;
     if (this.urlVideo) this.formData.urlVideo = this.urlVideo;
-
   }
 
   closeModal(data: any = null) {
     this.modalCtrl.dismiss(data);
+  }
+
+  async confirmCloseModal() {
+    await this.globalSer.alertConfirm({
+      header: 'Confirme',
+      message: '¿Está seguro qué cerrar la ventana?<br><br>NOTA: Todos los cambios se perderán.',
+      confirmAction: () => this.closeModal()
+    });
   }
 
   disableButton() {
@@ -63,7 +69,7 @@ export class ModalEditarContenidoPage implements OnInit {
 
   async createContent() {
     await this.globalSer.presentLoading();
-    const created: any = await this.cursosService.createContentThemeCourse(this.id, this.themeId, this.formData);
+    const created: any = await this.cursosService.createThemeCourse(this.id, this.formData);
 
     if (created && !created.error) {
       await this.globalSer.dismissLoading();
@@ -79,7 +85,7 @@ export class ModalEditarContenidoPage implements OnInit {
 
   async updateContent() {
     await this.globalSer.presentLoading();
-    const updated: any = await this.cursosService.updateContentThemeCourse(this.id, this.themeId, this.contentId, this.formData);
+    const updated: any = await this.cursosService.updateThemeCourse(this.id, this.themeId, this.formData);
 
     if (updated && !updated.error) {
       await this.globalSer.dismissLoading();
@@ -101,25 +107,14 @@ export class ModalEditarContenidoPage implements OnInit {
     const validated = this.cursosService.validationEdit('content', this.formData);
 
     if (!validated) {
-      const alert = await this.alertCtrl.create({
+      await this.globalSer.alertConfirm({
         header: 'Confirme',
         message: `¿Está seguro qué desea ${this.contentId ? 'actualizar' : 'agregar'} este contenido?`,
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {}
-          }, {
-            text: 'Sí',
-            handler: () => {
-              if (this.themeId && this.contentId) this.updateContent();
-              else this.createContent();
-            }
-          }
-        ]
+        confirmAction: () => {
+          if (this.themeId && this.contentId) this.updateContent();
+          else this.createContent();
+        }
       });
-      await alert.present();
     }
     else {
       await this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe completar el formulario.');

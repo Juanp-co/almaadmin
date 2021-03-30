@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AlertController, ModalController} from '@ionic/angular';
+import {ModalController} from '@ionic/angular';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {CursosService} from '../../cursos.service';
 import {GlobalService} from '../../../../services/global.service';
 
@@ -14,29 +15,28 @@ export class ModalEditarPreguntaPage implements OnInit {
 
   id: string|null = null;
   themeId: string|null = null;
-  questionId: string|null = null;
+  quiz: any[] = [];
+  quizViews: boolean[] = [];
+  showInfoForm = true;
   titleModal = 'Agregar pregunta';
   inputsList = [];
   word: string|null = null;
 
+  Editor = ClassicEditor;
+  configEditor: any = null;
+
   formData: any = {
     title: null,
     description: null,
-    placeholder: null,
-    extra: null,
-    inputType: null,
-    require: true,
-    values: [],
-    correctAnswer: null,
   };
 
   constructor(
-    private alertCtrl: AlertController,
     private globalSer: GlobalService,
     private modalCtrl: ModalController,
     private cursosService: CursosService
   ) {
     this.inputsList = this.cursosService.inputTypeList;
+    this.configEditor = this.globalSer.configEditor;
   }
 
   ngOnInit() {
@@ -44,20 +44,15 @@ export class ModalEditarPreguntaPage implements OnInit {
       // set title
       if (this.data.title) this.titleModal = `Editar: ${this.data.title}`;
 
+      this.formData.title = this.data.title;
+      this.formData.description = this.data.description;
+
       // set principal params
       this.id = this.data.id;
       this.themeId = this.data.themeId;
-      this.questionId = this.data.questionId;
+      this.quiz = [...this.data.quiz] || [];
 
-      // set data
-      this.formData.title = this.data.title;
-      this.formData.description = this.data.description;
-      this.formData.placeholder = this.data.placeholder;
-      this.formData.extra = this.data.extra;
-      this.formData.inputType = this.data.inputType;
-      this.formData.require = this.data.require;
-      this.formData.values = this.data.values;
-      this.formData.correctAnswer = this.data.correctAnswer;
+      if (this.quiz.length > 0) this.quiz.forEach(_ => { this.quizViews.push(false); });
     }
 
   }
@@ -66,17 +61,64 @@ export class ModalEditarPreguntaPage implements OnInit {
     this.modalCtrl.dismiss(data);
   }
 
+  async confirmCloseModal() {
+    await this.globalSer.alertConfirm({
+      header: 'Confirme',
+      message: '¿Está seguro qué cerrar la ventana?<br><br>NOTA: Todos los cambios se perderán.',
+      confirmAction: () => this.closeModal()
+    });
+  }
+
+  setShowView(index) {
+    this.quizViews[index] = !this.quizViews[index];
+  }
+
+  setShowInfoView() {
+    this.showInfoForm = !this.showInfoForm;
+  }
+
+  addItem() {
+    this.quiz.push({
+      title: null,
+      description: null,
+      placeholder: null,
+      extra: null,
+      inputType: null,
+      require: true,
+      values: [],
+      correctAnswer: null,
+    });
+    this.quizViews.push(true);
+  }
+
+  async removeItem(index) {
+    await this.globalSer.alertConfirm({
+      header: 'Confirme',
+      message: '¿Está seguro qué desea quitar esta pregunta?',
+      confirmAction: () => {
+        this.quiz.splice(index, 1);
+        this.quizViews.splice(index, 1);
+      }
+    });
+  }
+
   /*
     actions service
    */
 
   async addQuestion() {
     await this.globalSer.presentLoading();
-    const add: any = await this.cursosService.addQuestionTestThemeCourse(this.id, this.themeId, this.formData);
+    const data = {
+      title: this.formData.title,
+      description: this.formData.description,
+      urlVideo: this.formData.description,
+      quiz: this.quiz,
+    };
+    const add: any = await this.cursosService.createThemeCourse(this.id, data);
 
     if (add && !add.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', 'Se ha agregado el pregunta exitosamente.');
+      await this.globalSer.presentAlert('Alerta', 'Se ha agregado el Quiz exitosamente.');
       this.closeModal(add);
     }
     else if (add && add.error) {
@@ -88,11 +130,17 @@ export class ModalEditarPreguntaPage implements OnInit {
 
   async updateQuestion() {
     await this.globalSer.presentLoading();
-    const updated: any = await this.cursosService.updateQuestionTestThemeCourse(this.id, this.themeId, this.questionId, this.formData);
+    const data = {
+      title: this.formData.title,
+      description: this.formData.description,
+      urlVideo: this.formData.description,
+      quiz: this.quiz,
+    };
+    const updated: any = await this.cursosService.updateThemeCourse(this.id, this.themeId, data);
 
     if (updated && !updated.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', 'Se ha actualizado la pregunta exitosamente.');
+      await this.globalSer.presentAlert('Alerta', 'Se ha actualizado el Quiz exitosamente.');
       this.closeModal(updated);
     }
     else if (updated && updated.error) {
@@ -112,33 +160,31 @@ export class ModalEditarPreguntaPage implements OnInit {
     return null;
   }
 
-  addValuesInList() {
-    if (this.word) this.formData.values.push(this.word);
+  addValuesInList(index: number) {
+    if (this.word) this.quiz[index].values.push(this.word);
+    this.word = null;
+  }
+
+  removeValueOfList(elem: number, index: number) {
+    if (!!this.quiz[elem]) {
+      this.quiz[elem].values.splice(index, 1);
+      this.quiz[elem].correctAnswer = null;
+    }
     this.word = null;
   }
 
   enableButtonSave() {
     const val1 = [null, ''];
-    const val2 = ['text', 'textarea'];
     let counter = 0;
 
     if (val1.indexOf(this.formData.title) > -1) counter += 1;
-    if (val1.indexOf(this.formData.inputType) > -1) counter += 1;
-    if (
-      val2.indexOf(this.formData.inputType) === -1
-      && (this.formData.values.length === 0 || val1.indexOf(this.formData.correctAnswer) > -1)
-    ) counter += 1;
+    // if (val1.indexOf(this.formData.description) > -1) counter += 1;
+    if (this.quiz.length === 0) counter += 1;
 
     return counter > 0;
   }
 
-  removeValueOfList(index: number) {
-    this.formData.values.splice(index, 1);
-    this.formData.correctAnswer = null;
-    this.word = null;
-  }
-
-  async showInputsListAlert() {
+  async showInputsListAlert(index: number) {
     const inputs: any[] = [];
     for (const value of this.inputsList) {
       inputs.push({
@@ -146,7 +192,7 @@ export class ModalEditarPreguntaPage implements OnInit {
         type: 'radio',
         label: value.label,
         value: value.val,
-        checked: this.formData.inputType === value.val,
+        checked: this.quiz[index].inputType === value.val,
       });
     }
 
@@ -155,16 +201,16 @@ export class ModalEditarPreguntaPage implements OnInit {
       inputs,
       confirmAction: (selectedValue) => {
         if (['text', 'textarea'].indexOf(selectedValue) > -1 ) {
-          this.formData.values = [];
-          this.formData.placeholder = null;
-          this.formData.correctAnswer = null;
+          this.quiz[index].values = [];
+          this.quiz[index].placeholder = null;
+          this.quiz[index].correctAnswer = null;
         }
-        this.formData.inputType = selectedValue;
+        this.quiz[index].inputType = selectedValue;
       }
     });
   }
 
-  async showRequireAlert() {
+  async showRequireAlert(index) {
     const inputs: any[] = [];
     for (const value of [true, false]) {
       inputs.push({
@@ -179,19 +225,19 @@ export class ModalEditarPreguntaPage implements OnInit {
     await this.globalSer.alertWithList({
       header: '¿Respuesta obligatoria?',
       inputs,
-      confirmAction: (selectedValue) => { this.formData.require = selectedValue; }
+      confirmAction: (selectedValue) => { this.quiz[index].require = selectedValue; }
     });
   }
 
   async confirmEdit() {
-    const validated = this.cursosService.validationEdit('question', this.formData);
+    const validated = this.cursosService.validationEdit('question', {...this.formData, quiz: this.quiz});
 
     if (!validated) {
       await this.globalSer.alertConfirm({
         header: 'Confirme',
-        message: `¿Está seguro qué desea ${this.questionId ? 'actualizar' : 'agregar'} este pregunta?`,
+        message: `¿Está seguro qué desea ${this.themeId ? 'actualizar' : 'agregar'} este Quiz?`,
         confirmAction: () => {
-          if (this.themeId && this.questionId) this.updateQuestion();
+          if (this.themeId) this.updateQuestion();
           else this.addQuestion();
         }
       });
