@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Grupos familiares</ion-title>
+    <ion-title>Familias</ion-title>
     <ion-buttons slot="end">
       <ion-button color="primary" (click)="setShowForm()" *ngIf="!showForm">
         <ion-icon name="{{showForm ? 'close' : 'add'}}-outline" slot="start"></ion-icon>
@@ -94,7 +94,7 @@
   <ng-template #noGroups>
     <ion-card class="ion-no-padding">
       <ion-text>
-        <p class="ion-text-center">No existen grupos familiares registrados.</p>
+        <p class="ion-text-center">No existen familias registradas.</p>
       </ion-text>
     </ion-card>
   </ng-template>

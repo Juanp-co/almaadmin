@@ -95,11 +95,12 @@ export class GlobalService {
   }
 
   async alertWithList(
-    { header, inputs, confirmAction, rejectAction }:
-    { header?: string|null, inputs: any[], confirmAction: any, rejectAction?: any }
+    { header, inputs, confirmAction, rejectAction, cssClass }:
+    { header?: string|null, inputs: any[], confirmAction: any, rejectAction?: any , cssClass?: any }
   ) {
     const alert = await this.alertCtrl.create({
       header: header || 'Seleccione',
+      cssClass,
       inputs,
       buttons: [
         { text: 'Cancelar', role: 'cancel', handler: () => { if (!!rejectAction) rejectAction(); } },

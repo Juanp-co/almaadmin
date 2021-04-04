@@ -24,6 +24,7 @@
     "@ckeditor/ckeditor5-angular": "^2.0.1",
     "@ckeditor/ckeditor5-build-classic": "^25.0.0",
     "@ionic/angular": "^5.5.2",
+    "@swimlane/ngx-datatable": "^19.0.0",
     "axios": "^0.21.1",
     "capacitor-youtube-player": "^1.0.0-alpha.1-58",
     "chart.js": "^2.9.4",

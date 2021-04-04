@@ -52,6 +52,7 @@
                       [readonly]="true"
                       [value]="getLevel(formData.level)"
                       autocomplete="off"
+                      class="no-selected-text"
                       (click)="showLevelsListAlert(formData.level)"
                     ></ion-input>
                   </ion-item>
@@ -63,6 +64,7 @@
                       [readonly]="true"
                       [value]="getRoles(formData.toRoles)"
                       autocomplete="off"
+                      class="no-selected-text"
                       (click)="showRoleListAlert(formData.toRoles)"
                     ></ion-input>
                   </ion-item>

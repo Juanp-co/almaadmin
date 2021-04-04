@@ -7,6 +7,7 @@ import {CursoscardComponent} from './cursos/cursoscard/cursoscard.component';
 import {EditarInfoCursoComponent} from './cursos/editar-info-curso/editar-info-curso.component';
 import {EventcardComponent} from './eventcard/eventcard.component';
 import {FamiliacardComponent} from './familiacard/familiacard.component';
+import {GroupcardComponent} from './groupcard/groupcard.component';
 import {PaginatorComponent} from './paginator/paginator.component';
 import {TemarylistComponent} from './cursos/temarylist/temarylist.component';
 import {UsercardComponent} from './usercard/usercard.component';
@@ -20,6 +21,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     EditarInfoCursoComponent,
     EventcardComponent,
     FamiliacardComponent,
+    GroupcardComponent,
     PaginatorComponent,
     TemarylistComponent,
     UsercardComponent,
@@ -35,6 +37,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     EditarInfoCursoComponent,
     EventcardComponent,
     FamiliacardComponent,
+    GroupcardComponent,
     PaginatorComponent,
     TemarylistComponent,
     UsercardComponent,

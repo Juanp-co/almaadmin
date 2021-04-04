@@ -1,0 +1,286 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="group">
+    <ion-card *ngIf="views.data.data">
+      <ion-card-header class="ion-no-padding ion-no-margin">
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-button (click)="setShowView('data')" *ngIf="!views.data.edit">
+              <ion-icon name="chevron-{{views.data.show ? 'up' : 'down' }}-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="editEnable()" *ngIf="views.data.edit">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title *ngIf="!views.data.edit">{{ views.data.label }}</ion-title>
+          <ion-title *ngIf="views.data.edit">Editar grupo familiar</ion-title>
+          <ion-buttons slot="end" *ngIf="views.data.show">
+            <ion-button color="primary" (click)="editEnable()" *ngIf="views.data.edit">
+              <ion-icon name="close-outline" slot="start"></ion-icon>
+              <ion-text>Cancelar edición</ion-text>
+            </ion-button>
+            <ion-button color="light" expand="full" (click)="editEnable()" slot="end" *ngIf="!views.data.edit">
+              <ion-icon name="create-outline" slot="start"></ion-icon>
+              <ion-text>Editar</ion-text>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content class="{{ views.data.show ? '' : 'ion-hide' }}">
+        <ion-row>
+          <ion-col class="ion-no-margin" size="12" *ngIf="views.data.edit && formData">
+            <ion-row>
+              <ion-col size="12" size-sm="4">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Sector (*)</ion-label>
+                  <ion-input
+                    [(ngModel)]="formData.sector"
+                    autocomplete="off"
+                    maxlength="4"
+                    (keypress)="validateOnlyNumber($event)"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="4">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Sub-sector (*)</ion-label>
+                  <ion-input
+                    [(ngModel)]="formData.subSector"
+                    autocomplete="off"
+                    maxlength="4"
+                    (keypress)="validateOnlyNumber($event)"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="4">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Número (*)</ion-label>
+                  <ion-input
+                    [(ngModel)]="formData.number"
+                    autocomplete="off"
+                    maxlength="4"
+                    (keypress)="validateOnlyNumber($event)"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="6">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Dirección (*)</ion-label>
+                  <ion-textarea
+                    [(ngModel)]="formData.direction"
+                    rows="5"
+                    class="ion-text-uppercase"
+                    placeholder="Indica la dirección del grupo familiar..."
+                  ></ion-textarea>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="12" class="ion-margin-top">
+                <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+              </ion-col>
+              <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                <ion-button color="light" (click)="editEnable()">
+                  <ion-icon name="close-outline" slot="start"></ion-icon>
+                  <ion-text>Cancelar</ion-text>
+                </ion-button>
+                <ion-button color="primary" (click)="confirmUpdate()">
+                  <ion-icon name="save-outline" slot="start"></ion-icon>
+                  <ion-text>Guardar</ion-text>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="12" *ngIf="!views.data.edit">
+            <ion-row>
+              <ion-col class="ion-no-padding" size="12" size-sm="6">
+                <ion-row>
+                  <ion-col size="5">
+                    <ion-text><b>Número</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-text>{{group.number}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-text><b>Sector:</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-text>{{group.sector || 'No indicado.'}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-text><b>Sub-sector:</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-text>{{group.subSector || 'No indicado.'}}</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col class="ion-no-padding" size="12" size-sm="6">
+                <ion-row>
+                  <ion-col size="5">
+                    <ion-text><b>Dirección</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-text>{{group.direction || 'No indicado.'}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-text><b>Fecha de creación:</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-text>{{group.created_at || 'No indicado'}}</ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="{{ views.data.edit ? 'ion-hide' : '' }}">
+      <ion-card-header class="ion-no-padding ion-no-margin">
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-button (click)="setShowView('members')">
+              <ion-icon name="chevron-{{views.members.show ? 'up' : 'down' }}-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>{{ views.members.label }}</ion-title>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content class="{{ views.members.show ? '' : 'ion-hide' }}">
+        <ion-row class="ion-margin-bottom" *ngIf="views.members.data; else noMembers">
+          <ion-col size="12" size-sm="6" class="ion-margin-top">
+            <ion-text class="ion-margin-top"><h2><b>Líder:</b></h2></ion-text>
+            <app-user-group-card
+              [user]="views.members.data.leader"
+              [handleRemove]="handleRemove"
+              [added]="true"
+              *ngIf="views.members.data.leader; else noleader"
+            ></app-user-group-card>
+            <ng-template #noleader>
+              <ion-card>
+                <ion-card-content>
+                  <ion-text>
+                    <p class="ion-text-center">
+                      <ion-icon name="alert-circle-outline"></ion-icon>
+                      No se ha asignado ningún miembro a este rol.
+                      <br>
+                      <ion-button color="primary" (click)="modalMember('leader')">
+                        <ion-icon name="add-outline" slot="start"></ion-icon>
+                        <ion-text>Asignar</ion-text>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-card-content>
+              </ion-card>
+            </ng-template>
+          </ion-col>
+          <ion-col size="12" size-sm="6" class="ion-margin-top">
+            <ion-text class="ion-margin-top"><h2><b>Anfitrión:</b></h2></ion-text>
+            <app-user-group-card
+              [user]="views.members.data.host"
+              [handleRemove]="handleRemove"
+              [added]="true"
+              *ngIf="views.members.data.host; else nohost"
+            ></app-user-group-card>
+            <ng-template #nohost>
+              <ion-card>
+                <ion-card-content>
+                  <ion-text>
+                    <p class="ion-text-center">
+                      <ion-icon name="alert-circle-outline"></ion-icon>
+                      No se ha asignado ningún miembro a este rol.
+                      <br>
+                      <ion-button color="primary" (click)="modalMember('host')">
+                        <ion-icon name="add-outline" slot="start"></ion-icon>
+                        <ion-text>Asignar</ion-text>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-card-content>
+              </ion-card>
+            </ng-template>
+          </ion-col>
+          <ion-col size="12" size-sm="6" class="ion-margin-top">
+            <ion-text class="ion-margin-top"><h2><b>Asistente:</b></h2></ion-text>
+            <app-user-group-card
+              [user]="views.members.data.assistant"
+              [handleRemove]="handleRemove"
+              [added]="true"
+              *ngIf="views.members.data.assistant; else noassistant"
+            ></app-user-group-card>
+            <ng-template #noassistant>
+              <ion-card>
+                <ion-card-content>
+                  <ion-text>
+                    <p class="ion-text-center">
+                      <ion-icon name="alert-circle-outline"></ion-icon>
+                      No se ha asignado ningún miembro a este rol.
+                      <br>
+                      <ion-button color="primary" (click)="modalMember('assistant')">
+                        <ion-icon name="add-outline" slot="start"></ion-icon>
+                        <ion-text>Asignar</ion-text>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-card-content>
+              </ion-card>
+            </ng-template>
+          </ion-col>
+          <ion-col size="12" size-sm="6" class="ion-margin-top">
+            <ion-text class="ion-margin-top"><h2><b>Maestro:</b></h2></ion-text>
+            <app-user-group-card
+              [user]="views.members.data.master"
+              [handleRemove]="handleRemove"
+              [added]="true"
+              *ngIf="views.members.data.master; else nomaster"
+            ></app-user-group-card>
+            <ng-template #nomaster>
+              <ion-card>
+                <ion-card-content>
+                  <ion-text>
+                    <p class="ion-text-center">
+                      <ion-icon name="alert-circle-outline"></ion-icon>
+                      No se ha asignado ningún miembro a este rol.
+                      <br>
+                      <ion-button color="primary" (click)="modalMember('master')">
+                        <ion-icon name="add-outline" slot="start"></ion-icon>
+                        <ion-text>Asignar</ion-text>
+                      </ion-button>
+                    </p>
+                  </ion-text>
+                </ion-card-content>
+              </ion-card>
+            </ng-template>
+          </ion-col>
+        </ion-row>
+
+        <ng-template #noMembers>
+          <ion-row class="ion-margin-top">
+            <ion-col size="12">
+              <ion-text>
+                <p class="ion-text-center">
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+                  No se logró obtener los miembros de este grupo.
+                </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="ion-margin"><br/></div>
+  </div>
+</ion-content>

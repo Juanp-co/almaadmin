@@ -1,0 +1,13 @@
+<ion-card class="" *ngIf="data">
+  <ion-card-content class="">
+    <ion-row>
+      <ion-col size="12">
+        <ion-text color="primary" class="ion-margin-top ion-margin-bottom"><h3>{{ group.name }}</h3></ion-text>
+        <ion-text><b>Número:</b> {{ group.number}}</ion-text><br/>
+        <ion-text><b>Sector:</b> {{ group.sector}}</ion-text><br/>
+        <ion-text><b>Sub-Sector:</b> {{ group.subSector }}</ion-text><br/>
+        <ion-text class="ion-margin-top"><i class="toSmall">Clic para más información.</i></ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

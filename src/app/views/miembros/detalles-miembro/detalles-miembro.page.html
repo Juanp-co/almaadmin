@@ -54,6 +54,7 @@
                     [readonly]="true"
                     [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
                     autocomplete="off"
+                    class="no-selected-text"
                     (click)="showAlertDocumentList(formData.documentType)"
                   ></ion-input>
                 </ion-item>
@@ -134,6 +135,7 @@
                     [readonly]="true"
                     [value]="gender[formData.gender] || ''"
                     autocomplete="off"
+                    class="no-selected-text"
                     (click)="showAlertList('gender', 'gender', formData.gender)"
                   ></ion-input>
                 </ion-item>
@@ -145,6 +147,7 @@
                     [readonly]="true"
                     [value]="bloodType[formData.bloodType] || ''"
                     autocomplete="off"
+                    class="no-selected-text"
                     (click)="showAlertList('bloodType', 'bloodType', formData.bloodType)"
                   ></ion-input>
                 </ion-item>
@@ -156,6 +159,7 @@
                     [readonly]="true"
                     [value]="civilStatus[formData.civilStatus] || ''"
                     autocomplete="off"
+                    class="no-selected-text"
                     (click)="showAlertList('civilStatus', 'civilStatus', formData.civilStatus)"
                   ></ion-input>
                 </ion-item>
@@ -167,6 +171,7 @@
                     [readonly]="true"
                     [value]="educationLevel[formData.educationLevel] || ''"
                     autocomplete="off"
+                    class="no-selected-text"
                     (click)="showAlertList('educationLevel', 'educationLevel', formData.educationLevel)"
                   ></ion-input>
                 </ion-item>
@@ -178,6 +183,7 @@
                     [readonly]="true"
                     [value]="professions[formData.profession] || ''"
                     autocomplete="off"
+                    class="no-selected-text"
                     (click)="showAlertList('profession', 'professions', formData.profession)"
                   ></ion-input>
                 </ion-item>
@@ -189,6 +195,7 @@
                     [readonly]="true"
                     [value]="formData.company"
                     autocomplete="off"
+                    class="no-selected-text"
                     (click)="showAlertYesOrNotList('company', formData.company)"
                   ></ion-input>
                 </ion-item>
@@ -200,7 +207,7 @@
                     [readonly]="true"
                     [value]="companyType[formData.companyType] || ''"
                     autocomplete="off"
-                    class="ion-text-uppercase"
+                    class="ion-text-uppercase no-selected-text"
                     (click)="showAlertList('companyType', 'companyType', formData.companyType)"
                   ></ion-input>
                 </ion-item>
@@ -212,6 +219,7 @@
                     [readonly]="true"
                     [value]="formData.baptized"
                     autocomplete="off"
+                    class="no-selected-text"
                     (click)="showAlertYesOrNotList('baptized', formData.baptized)"
                   ></ion-input>
                 </ion-item>
@@ -223,7 +231,7 @@
                     [readonly]="true"
                     [value]="departments[formData.department] || ''"
                     autocomplete="off"
-                    class="ion-text-uppercase"
+                    class="ion-text-uppercase no-selected-text"
                     (click)="showAlertList('department', 'departments', formData.department)"
                   ></ion-input>
                 </ion-item>
@@ -235,7 +243,7 @@
                     [readonly]="true"
                     [value]="cities[formData.city] || ''"
                     autocomplete="off"
-                    class="ion-text-uppercase"
+                    class="ion-text-uppercase no-selected-text"
                     (click)="showAlertList('city', 'cities', formData.city)"
                   ></ion-input>
                 </ion-item>

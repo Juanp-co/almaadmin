@@ -105,7 +105,7 @@
                   [value]="formData.rolesSelected"
                   [readonly]="true"
                   autocomplete="off"
-                  class="ion-text-uppercase"
+                  class="ion-text-uppercase no-selected-text"
                   (click)="!disableEdit ? showAlertRolesList(formData.toRoles) : null"
                   [disabled]="disableEdit"
                 >
@@ -155,6 +155,7 @@
                   <ion-label position="floating" color="medium">Ordenar por:</ion-label>
                   <ion-input
                     [readonly]="true"
+                    class="no-selected-text no-selected-text"
                     [value]="queryParams.value === -1 ? 'Fecha ascendente' : 'Fecha descendente'"
                     (click)="setOrderData()"
                   ></ion-input>

@@ -163,7 +163,7 @@ export class FamiliasPage implements OnInit {
   }
 
   async setQueryValues() {
-    this.globalSer.alertWithList({
+    await this.globalSer.alertWithList({
       header: 'Resultados por página',
       inputs: [
         {

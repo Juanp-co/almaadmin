@@ -17,6 +17,16 @@ export function onlyNumbersInputValidation(event: any) {
   }
 }
 
+export function onlyNumbersInputValidation2(event: any) {
+  const pattern = /[0-9]/;
+  const inputChar = String.fromCharCode(event.charCode);
+
+  if (!pattern.test(inputChar)) {
+    // invalid character, prevent input
+    event.preventDefault();
+  }
+}
+
 export function onlyLettersInputValidation(event: any) {
   const pattern = /^([A-Z\u00C0-\u024F\u1E00-\u1EFF]?)+([[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+[,.]?[ ]?|[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+['-]]?)+$/;
   const { value } = event.target;
