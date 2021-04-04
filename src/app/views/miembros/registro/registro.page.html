@@ -23,6 +23,7 @@
                   [readonly]="true"
                   [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
                   autocomplete="off"
+                  class="no-selected-text"
                   (click)="showAlertDocumentList(formData.documentType)"
                 ></ion-input>
               </ion-item>
@@ -87,6 +88,7 @@
                   [readonly]="true"
                   [value]="roles[formData.role] || ''"
                   autocomplete="off"
+                  class="no-selected-text"
                   (click)="showRoleListAlert(formData.role)"
                 ></ion-input>
               </ion-item>

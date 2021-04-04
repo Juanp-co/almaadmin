@@ -129,6 +129,7 @@
                           [readonly]="true"
                           [value]="getInputTypeLabel(q.inputType)"
                           autocomplete="off"
+                          class="no-selected-text"
                           (click)="showInputsListAlert(i)"
                         ></ion-input>
                       </ion-item>
@@ -182,6 +183,7 @@
                           [readonly]="true"
                           [value]="q.require ? 'Si' : 'No'"
                           autocomplete="off"
+                          class="no-selected-text"
                           (click)="showRequireAlert()"
                         ></ion-input>
                       </ion-item>

@@ -46,6 +46,10 @@ const routes: Routes = [
   {
     path: 'mi-cuenta',
     loadChildren: () => import('./views/mi-cuenta/mi-cuenta.module').then( m => m.MiCuentaPageModule)
+  },
+  {
+    path: 'grupos-familiares',
+    loadChildren: () => import('./views/grupos-familiares/grupos-familiares.module').then( m => m.GruposFamiliaresPageModule)
   }
 ];
 

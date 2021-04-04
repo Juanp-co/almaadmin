@@ -86,7 +86,15 @@
       <app-chart
         [data]="data.users.families"
         [sizeElem]="sizeElems"
-        title="Miembros en un grupo"
+        title="Miembros en un familias"
+        typeChart="bar"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.groups && data.groups">
+      <app-chart
+        [data]="data.groups"
+        [sizeElem]="sizeElems"
+        title="Familias"
         typeChart="bar"
       ></app-chart>
     </ion-col>
@@ -112,14 +120,6 @@
         [sizeElem]="sizeElems"
         title="Cursos"
         typeChart="pie"
-      ></app-chart>
-    </ion-col>
-    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.groups && data.groups">
-      <app-chart
-        [data]="data.groups"
-        [sizeElem]="sizeElems"
-        title="Grupos familiares"
-        typeChart="bar"
       ></app-chart>
     </ion-col>
     <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.events && data.events">
