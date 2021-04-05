@@ -142,7 +142,7 @@ export class FamiliasDetallesPage implements OnInit {
   }
 
   async findMembersList() {
-    await this.globalSer.presentLoading('Obteniendo usuarios, por favor espere ...');
+    await this.globalSer.presentLoading('Cargando, por favor espere ...');
 
     const data = await this.familiasService.findMembersToGroup(this.id, this.queryParams);
 
@@ -258,7 +258,7 @@ export class FamiliasDetallesPage implements OnInit {
   async confirmRemoveMember(id: string) {
     const alert = await this.alertCtrl.create({
       header: 'Confirme',
-      message: `¿Está seguro qué desea remover a este usuario de este grupo?`,
+      message: `¿Está seguro qué desea remover a este miembro de este grupo?`,
       buttons: [
         {
           text: 'Cancelar',

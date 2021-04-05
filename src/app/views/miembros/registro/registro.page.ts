@@ -162,9 +162,9 @@ export class RegistroPage implements OnInit {
     if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
     if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido.';
     if (this.formData.email && !checkEmail(this.formData.email)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
-    if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el usuario.';
+    if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el miembro.';
     if (this.formData.referred && !checkDocument(`${this.formData.referred.toUpperCase()}`))
-      return 'Disculpe, pero debe indicar un número de documento correcto del usuario referido (ejm: CC12345678).';
+      return 'Disculpe, pero debe indicar un número de documento correcto del miemro referente (ejm: CC12345678).';
 
     return null;
   }

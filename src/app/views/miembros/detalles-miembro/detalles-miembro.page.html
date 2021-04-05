@@ -22,23 +22,27 @@
       <ion-card-header class="ion-no-padding ion-no-margin">
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
-            <ion-button (click)="setShowView('data')" *ngIf="!views.data.edit">
+            <ion-button (click)="setShowView('data')" *ngIf="!views.data.edit && !editRole">
               <ion-icon name="chevron-{{views.data.show ? 'up' : 'down' }}-outline"></ion-icon>
             </ion-button>
-            <ion-button (click)="editEnable()" *ngIf="views.data.edit">
+            <ion-button (click)="showFormEdit()" *ngIf="views.data.edit">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="showFormEditRole()" *ngIf="editRole">
               <ion-icon name="close-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
-          <ion-title *ngIf="!views.data.edit">{{ views.data.label }}</ion-title>
-          <ion-title *ngIf="views.data.edit">Editar perfil del usuario</ion-title>
+          <ion-title *ngIf="!views.data.edit && !editRole">{{ views.data.label }}</ion-title>
+          <ion-title *ngIf="views.data.edit">Editar perfil del miembro</ion-title>
+          <ion-title *ngIf="editRole">Cambiar rol del miembro</ion-title>
           <ion-buttons slot="end" *ngIf="views.data.show">
-            <ion-button color="primary" (click)="editEnable()" *ngIf="views.data.edit">
-              <ion-icon name="close-outline" slot="start"></ion-icon>
-              <ion-text>Cancelar edición</ion-text>
-            </ion-button>
-            <ion-button color="light" expand="full" (click)="editEnable()" slot="end" *ngIf="!views.data.edit">
+            <ion-button color="light" expand="full" (click)="showFormEdit()" slot="end" *ngIf="!views.data.edit && !editRole">
               <ion-icon name="create-outline" slot="start"></ion-icon>
               <ion-text>Editar</ion-text>
+            </ion-button>
+            <ion-button color="light" expand="full" (click)="showFormEditRole()" slot="end" *ngIf="!views.data.edit && !editRole">
+              <ion-icon name="key-outline" slot="start"></ion-icon>
+              <ion-text>Cambiar rol</ion-text>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
@@ -264,7 +268,7 @@
                 <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
               </ion-col>
               <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
-                <ion-button color="light" (click)="editEnable()">
+                <ion-button color="light" (click)="showFormEdit()">
                   <ion-icon name="close-outline" slot="start"></ion-icon>
                   <ion-text>Cancelar</ion-text>
                 </ion-button>
@@ -276,7 +280,48 @@
             </ion-row>
           </ion-col>
 
-          <ion-col size="12" *ngIf="!views.data.edit">
+          <ion-col class="ion-no-margin" size="12" *ngIf="editRole">
+            <ion-row>
+              <ion-col size="12" size-sm="6">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Rol actual</ion-label>
+                  <ion-input
+                    [readonly]="true"
+                    [value]="this.globalSer.getRoleValue(staticData.role)"
+                    autocomplete="off"
+                    class="no-selected-text"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="6">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Nuevo rol (*)</ion-label>
+                  <ion-input
+                    [readonly]="true"
+                    [value]="this.globalSer.getRoleValue(formDataRole.role)"
+                    autocomplete="off"
+                    class="no-selected-text"
+                    (click)="showRolesListAlert(formDataRole.role)"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="12" class="ion-margin-top">
+                <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+              </ion-col>
+              <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                <ion-button color="light" (click)="showFormEditRole()">
+                  <ion-icon name="close-outline" slot="start"></ion-icon>
+                  <ion-text>Cancelar</ion-text>
+                </ion-button>
+                <ion-button color="primary" (click)="confirmUpdateRole()">
+                  <ion-icon name="save-outline" slot="start"></ion-icon>
+                  <ion-text>Guardar</ion-text>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+
+          <ion-col size="12" *ngIf="!views.data.edit && !editRole">
             <ion-row>
               <ion-col class="ion-no-padding" size="12" size-sm="6">
                 <ion-row>
@@ -407,7 +452,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card class="{{ views.data.edit ? 'ion-hide' : '' }}">
+    <ion-card class="{{ views.data.edit || editRole ? 'ion-hide' : '' }}">
       <ion-card-header class="ion-no-padding ion-no-margin">
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
@@ -463,7 +508,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card class="{{ views.data.edit ? 'ion-hide' : '' }}">
+    <ion-card class="{{ views.data.edit || editRole ? 'ion-hide' : '' }}">
       <ion-card-header class="ion-no-padding ion-no-margin">
         <ion-toolbar color="primary">
           <ion-buttons slot="start">

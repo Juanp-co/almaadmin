@@ -37,6 +37,13 @@ export class DetallesMiembroService {
     return this.globalSer.altResponse(res);
   }
 
+  async updateRoleUser(id: string, data: any): Promise<any | null> {
+    const res: any = await this.axios.putData(`/admin/users/${id}/role`, data);
+
+    if (res && res.success) return res.data.msg || 'Se asignado el nuevo rol al miembro exitosamente.';
+    return this.globalSer.altResponse(res);
+  }
+
   async deleteUser(id: string): Promise<any | null> {
     const res: any = await this.axios.deleteData(`/admin/users/${id}`);
 
