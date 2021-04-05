@@ -42,11 +42,15 @@ export class DetallesMiembroPage implements OnInit {
   staticData: IDetallesMiembro | null = null;
   totals: IDetallesMiembroTotals | null = null;
   enableActions = false;
+  editRole = false;
   formData: IDetallesMiembroEdit | null = null;
+  formDataRole: any = {
+    role: null
+  };
 
   views: any = {
     data: {
-      label: 'Datos del usuario',
+      label: 'Datos del miembro',
       show: true,
       edit: false,
       data: null,
@@ -134,7 +138,28 @@ export class DetallesMiembroPage implements OnInit {
       this.user = {...updated} as IDetallesMiembro;
       this.staticData = {...updated} as IDetallesMiembro;
       await this.setUserParams();
-      await this.editEnable(true);
+      await this.showFormEdit(true);
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
+    }
+    else if (updated && updated.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
+  async updateRole() {
+    await this.globalSer.presentLoading('Actualizando, por favor espere ...');
+
+    const data: any = {...this.formDataRole};
+
+    const updated = await this.detallesMiembroService.updateRoleUser(this.id, data);
+
+    if (updated && !updated.error) {
+      this.user.role = data.role;
+      this.staticData.role = data.role;
+      this.showFormEditRole();
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
     }
@@ -146,13 +171,13 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   async deleteUser() {
-    await this.globalSer.presentLoading('Eliminando usuario, por favor espere ...');
+    await this.globalSer.presentLoading('Eliminando miembro, por favor espere ...');
 
     const deleted = await this.detallesMiembroService.deleteUser(this.id);
 
     if (deleted && !deleted.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', deleted || 'Se ha eliminado los datos del usuario exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', deleted || 'Se ha eliminado los datos del miembro exitosamente.');
       await this.back();
     }
     else if (deleted && deleted.error) {
@@ -206,7 +231,7 @@ export class DetallesMiembroPage implements OnInit {
   async setShowView(input: string) {
     this.views[input].show = !this.views[input].show;
     if (this.views[input].edit) {
-      await this.editEnable();
+      await this.showFormEdit();
     }
   }
 
@@ -239,7 +264,7 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   // actions
-  async editEnable(edited = false) {
+  async showFormEdit(edited = false) {
     if (!edited) await this.globalSer.presentLoading();
 
     this.views.data.edit = !this.views.data.edit;
@@ -261,6 +286,11 @@ export class DetallesMiembroPage implements OnInit {
     if (!edited) await this.globalSer.dismissLoading();
   }
 
+  showFormEditRole() {
+    this.formDataRole.role = !this.editRole ? this.staticData.role : null;
+    this.editRole = !this.editRole;
+  }
+
   async showAlertList(input: string, nameArray: string, selected: any = null) {
     const inputs: any[] = [];
     for (const [i, value] of this[nameArray].entries()) {
@@ -279,6 +309,27 @@ export class DetallesMiembroPage implements OnInit {
       confirmAction: (selectedValue) => {
         this.formData[input] = selectedValue;
         if (input === 'department') this.getCity(true);
+      }
+    });
+  }
+
+  async showRolesListAlert(selected: any = null) {
+    const inputs: any[] = [];
+    for (const [i, value] of this.globalSer.roles.entries()) {
+      inputs.push({
+        name: `value-${i}`,
+        type: 'radio',
+        label: value,
+        value: i,
+        checked: selected !== null && selected.toString() === i.toString(),
+      });
+    }
+
+    await this.globalSer.alertWithList({
+      header: 'Seleccione',
+      inputs,
+      confirmAction: (selectedValue) => {
+        this.formDataRole.role = selectedValue;
       }
     });
   }
@@ -331,7 +382,7 @@ export class DetallesMiembroPage implements OnInit {
     if (!checkNameOrLastName(formData.names)) return 'Disculpe, pero debe indicar su nombre.';
     if (!checkNameOrLastName(formData.lastNames)) return 'Disculpe, pero debe indicar su apellido.';
     if (!checkPhone(formData.phone))
-      return 'Disculpe, pero debe indicar su número de teléfono.<br><br>NOTA: Recuerde que el número de teléfono es el usuario de acceso para a la cuenta del miembro.';
+      return 'Disculpe, pero debe indicar su número de teléfono.<br><br>NOTA: Recuerde que el número de teléfono es el miembro de acceso para a la cuenta del miembro.';
     if (!checkDate(formData.birthday)) return 'Disculpe, pero debe indicar su fecha de nacimiento.';
     if (!checkIfValueIsNumber(`${formData.gender}`)) return 'Disculpe, pero debe indicar su sexo.';
     if (!checkIfValueIsNumber(`${formData.bloodType}`)) return 'Disculpe, pero debe indicar su tipo de sangre.';
@@ -351,6 +402,12 @@ export class DetallesMiembroPage implements OnInit {
     return null;
   }
 
+  validateRoleData(): string|null {
+    if (!/^[012345]{1}/.test(`${this.formDataRole.role}`))
+      return 'Disculpe, pero el rol seleccionado es incorrecto.';
+    return null;
+  }
+
   async confirmUpdate() {
     const validated = this.validateData();
 
@@ -358,8 +415,21 @@ export class DetallesMiembroPage implements OnInit {
     else {
       await this.globalSer.alertConfirm({
         header: 'Confirme',
-        message: '¿Está seguro qué desea actualizar información de este usuario?',
+        message: '¿Está seguro qué desea actualizar información de este miembro?',
         confirmAction: () => this.updateData()
+      });
+    }
+  }
+
+  async confirmUpdateRole() {
+    const validated = this.validateRoleData();
+
+    if (validated) await this.globalSer.presentAlert('Alerta', validated);
+    else {
+      await this.globalSer.alertConfirm({
+        header: 'Confirme',
+        message: '¿Está seguro qué desea cambiar el rol de este miembro?',
+        confirmAction: () => this.updateRole()
       });
     }
   }
@@ -367,7 +437,7 @@ export class DetallesMiembroPage implements OnInit {
   async confirmDelete() {
     await this.globalSer.alertConfirm({
       header: 'Confirme',
-      message: '¿Está seguro qué desea eliminar toda la información de este usuario?',
+      message: '¿Está seguro qué desea eliminar toda la información de este miembro?',
       confirmAction: () => this.deleteUser()
     });
   }
