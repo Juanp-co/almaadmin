@@ -20,7 +20,7 @@ export class DetallesConsolidadoPage implements OnInit {
 
   async ngOnInit() {
     if (!this.data) await this.closeModal();
-    else this.data.date = dayjs(this.data.date).locale('es').format('dddd, DD [de] MMMM [de] YYYY');
+    else this.data.date = dayjs(this.data.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY');
   }
 
   async closeModal() {

@@ -50,7 +50,11 @@ export class ConsolidadosPage implements OnInit {
 
   async ngOnInit() {
     if (!this.globalSer.checkSession()) await this.router.navigate(['/ingresar']);
-    else await this.getData();
+    // else await this.getData();
+  }
+
+  async ionViewWillEnter() {
+    await this.getData();
   }
 
   async getData() {
@@ -136,7 +140,7 @@ export class ConsolidadosPage implements OnInit {
         this.consolidatesPreview.push({
           member: c.member,
           observation: c.observation.length > 50 ? `${c.observation.substr(0, 50)} ...` : c.observation,
-          date: dayjs(c.date).locale('es').format('dddd, DD [de] MMMM [de] YYYY'),
+          date: dayjs(c.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY'),
         });
       });
     }
