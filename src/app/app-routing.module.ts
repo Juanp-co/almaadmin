@@ -50,7 +50,11 @@ const routes: Routes = [
   {
     path: 'grupos-familiares',
     loadChildren: () => import('./views/grupos-familiares/grupos-familiares.module').then( m => m.GruposFamiliaresPageModule)
-  }
+  },
+  {
+    path: 'consolidados',
+    loadChildren: () => import('./views/consolidados/consolidados.module').then( m => m.ConsolidadosPageModule)
+  },
 ];
 
 @NgModule({

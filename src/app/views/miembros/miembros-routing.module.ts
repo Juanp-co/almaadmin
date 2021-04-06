@@ -16,6 +16,10 @@ const routes: Routes = [
     path: ':userid',
     loadChildren: () => import('./detalles-miembro/detalles-miembro.module').then(m => m.DetallesMiembroPageModule)
   },
+  {
+    path: 'asignar-consolidador',
+    loadChildren: () => import('./asignar-consolidador/asignar-consolidador.module').then( m => m.AsignarConsolidadorPageModule)
+  },
 ];
 
 @NgModule({

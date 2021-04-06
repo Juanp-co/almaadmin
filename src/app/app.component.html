@@ -4,7 +4,7 @@
       <ion-content >
         <ion-row class="fondoCool ion-justify-content-end ion-padding ">
           <ion-col size="8" class="ion-margin-top ion-padding-top no-selected-text">
-            <br><br><br><br>
+            <br><br>
             <ion-text color="light" class="titulo1">Bienvenido</ion-text> <br>
             <ion-text color="light" class="titulo2" *ngIf="!userData">Usuario anonimo</ion-text>
             <ion-text color="light" class="titulo2" *ngIf="userData">{{ userData.names }} {{ userData.lastNames }}</ion-text>
@@ -13,8 +13,6 @@
             <img src="assets/logo.png" class="logo">
           </ion-col>
         </ion-row>
-        <br>
-        <br>
         <br>
         <ion-menu-toggle auto-hide="false" *ngIf="session">
           <ion-item
