@@ -5,11 +5,12 @@
                       url("/assets/cruz.png");
   background-size: cover;
   background-position: center center;
+  height: 150px;
   // -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 100%, 50% 86%, 0% 100%);
   // clip-path: polygon(0% 0%, 100% 0, 100% 100%, 50% 86%, 0% 100%);
 }
 
 .logo{
-  margin-bottom: -190px !important;
+  margin-bottom: -140px !important;
   z-index: 1 !important;
 }

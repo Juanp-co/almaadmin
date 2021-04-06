@@ -141,9 +141,9 @@
           </ion-toolbar>
         </ion-card-header>
         <ion-card-content class="{{ showTotals ? '' : 'ion-hide'}} ion-no-padding ">
-          <ion-row>
+          <ion-row class="ion-margin-bottom ion-margin-top">
             <ion-col size="12" *ngIf="dataToReport">
-              <ion-row>
+              <ion-row class="ion-align-items-center">
                 <ion-col size="5" class="ion-text-center">
                   <ion-text>
                     <ion-icon name="body-outline" class="bigIcon"></ion-icon>
@@ -161,7 +161,7 @@
               </ion-row>
             </ion-col>
             <ion-col size="12" *ngIf="dataToReport">
-              <ion-row>
+              <ion-row class="ion-align-items-center">
                 <ion-col size="5" class="ion-text-center">
                   <ion-text class="ion-text-center">
                     <ion-icon name="cash-outline" class="bigIcon"></ion-icon>

@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Detalle de la visita</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row *ngIf="data" class="ion-padding">
+    <ion-col size="12" size-sm="6">
+      <ion-row>
+        <ion-col size="12">
+          <ion-text><b>Consolidador:</b></ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <app-usercard [data]="data.consolidator" (click)="closeModal()"></app-usercard>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="12" size-sm="6">
+      <ion-row>
+        <ion-col size="12">
+          <ion-text><b>Miembro visitado:</b></ion-text>
+        </ion-col>
+        <ion-col size="12">
+          <app-usercard [data]="data.member" (click)="closeModal()"></app-usercard>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="12">
+      <ion-row>
+        <ion-col size="12">
+          <ion-text color="medium">
+            <b>Fecha de la visita: </b>
+            <br><br>
+            {{ data.date }}
+            <br>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12" class="ion-margin-top">
+          <ion-text>
+            <b>Observación: </b>
+            <br><br>
+          </ion-text>
+          <ion-text class="ion-margin-top" color="medium">
+            <i>{{ data.observation || 'No se ha indicado ninguna observación.' }}</i>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <br>
+  <br>
+</ion-content>

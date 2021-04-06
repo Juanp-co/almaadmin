@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AlertController, NavController} from '@ionic/angular';
+import {Router} from '@angular/router';
+import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
 import {GruposService} from '../grupos.service';
-import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
 import {onlyNumbersInputValidation2} from '../../../../Utils/validations.functions';
 import {formatCurrency} from '@angular/common';
@@ -32,17 +31,14 @@ export class ReportesPage implements OnInit {
   minEndDate: string = dayjs('2020-01-01').format('YYYY-MM-DD');
   maxEndDate: string = dayjs().format('YYYY-MM-DD');
   queryParams: any = {
-    sector: 4,
-    subSector: 2,
-    number: 2,
+    sector: null,
+    subSector: null,
+    number: null,
     initDate: null,
     endDate: null,
   };
 
   constructor(
-    private activateRoute: ActivatedRoute,
-    private alertCtrl: AlertController,
-    private axios: AxiosService,
     public globalSer: GlobalService,
     private gruposService: GruposService,
     private navCtrl: NavController,

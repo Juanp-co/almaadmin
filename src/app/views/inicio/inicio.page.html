@@ -114,7 +114,7 @@
         typeChart="bar"
       ></app-chart>
     </ion-col>
-    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.courses && data.courses">
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.courses">
       <app-chart
         [data]="data.courses"
         [sizeElem]="sizeElems"
@@ -122,11 +122,19 @@
         typeChart="pie"
       ></app-chart>
     </ion-col>
-    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.events && data.events">
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.events">
       <app-chart
         [data]="data.events"
         [sizeElem]="sizeElems"
         title="Eventos"
+        typeChart="bar"
+      ></app-chart>
+    </ion-col>
+    <ion-col size="12" [sizeSm]="sizeElems" *ngIf="data.consolidates">
+      <app-chart
+        [data]="data.consolidates"
+        [sizeElem]="sizeElems"
+        title="Consolidaciones"
         typeChart="bar"
       ></app-chart>
     </ion-col>

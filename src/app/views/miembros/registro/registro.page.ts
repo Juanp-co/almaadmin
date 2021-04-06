@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AlertController, NavController} from '@ionic/angular';
+import {DetallesMiembroService} from '../detalles-miembro/detalles-miembro.service';
+import {MiembrosService} from '../miembros.service';
+import {AsignarConsolidadorPage} from '../asignar-consolidador/asignar-consolidador.page';
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
-import {AlertController, NavController} from '@ionic/angular';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DetallesMiembroService} from '../detalles-miembro/detalles-miembro.service';
 import {
   checkDocument,
   checkEmail, checkIfValueIsNumber,
@@ -11,7 +13,6 @@ import {
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
-import {MiembrosService} from '../miembros.service';
 
 @Component({
   selector: 'app-registro',
@@ -24,6 +25,7 @@ export class RegistroPage implements OnInit {
   documentTypes = [];
   successRegister = false;
   successData: any = null;
+  consolidatorMember: any = null;
   formData: any = {
     documentType: null,
     document: null,
@@ -33,6 +35,8 @@ export class RegistroPage implements OnInit {
     lastNames: null,
     role: null,
     referred: null,
+    consolidator: false,
+    consolidatorId: null,
   };
 
   constructor(
@@ -95,6 +99,17 @@ export class RegistroPage implements OnInit {
     return da ? da.label : null;
   }
 
+  checkConsolidator() {
+    if (this.formData.consolidator) {
+      this.consolidatorMember = null;
+    }
+    this.formData.consolidator = !this.formData.consolidator;
+  }
+
+  getConsolidatorsNames() {
+    return this.consolidatorMember ? `${this.consolidatorMember.names} ${this.consolidatorMember.lastNames}` : null;
+  }
+
   validateOnlyNumbers(event: any) {
     onlyNumbersInputValidation(event);
   }
@@ -153,6 +168,21 @@ export class RegistroPage implements OnInit {
       message: '¿Está seguro qué desea cancelar el registro?',
       confirmAction: () => this.back()
     });
+  }
+
+  // members
+  async modalMember() {
+    const updateData = (member: any) => {
+      this.consolidatorMember = member || null;
+      this.formData.consolidatorId = member ? member._id : null;
+    };
+
+    await this.globalSer.loadModal(
+      AsignarConsolidadorPage,
+      { selectedId: this.formData.consolidatorId },
+      false,
+      updateData
+    );
   }
 
   validateData(): string|null {

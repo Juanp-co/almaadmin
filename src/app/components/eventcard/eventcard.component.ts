@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import 'dayjs/locale/es';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-eventcard',
