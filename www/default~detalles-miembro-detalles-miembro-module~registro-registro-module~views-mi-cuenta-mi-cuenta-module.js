@@ -35,7 +35,6 @@ const professions = [
     'Abogado',
     'Actor, Actriz, Artista, Director de Espectáculos',
     'Actuario',
-    'Administrador',
     'Aduanero/Agente de Aduanas/Inspectores de Frontera',
     'Aeromozo/Azafata',
     'Agente/Intermediario/Corredor Inmobiliario',
@@ -44,7 +43,8 @@ const professions = [
     'Agente de Turismo/Viajes',
     'Agente/Intermediario/Corredor de Seguros',
     'Agricultor, Agrónomo, Agrologo, Arboricultor',
-    'albañil, Obrero de Construcción',
+    'Administrador',
+    'Albañil, Obrero de Construcción',
     'Ama de Casa',
     'Analista de Sistema y Computación',
     'Antropólogo, Arqueólogo y Etnólogo',
@@ -53,7 +53,6 @@ const professions = [
     'Arquitecto Artesano',
     'Asistente Social',
     'Autor Literario, Escritor y Crmtico',
-    'Avicultor',
     'Bacteriólogo, Farmacólogo, Biólogo, Científico',
     'Basurero/Barrendero',
     'Cajero',
@@ -173,11 +172,6 @@ const gender = [
     'Mujer',
     'Prefiero no indicar',
 ];
-// <option value="CC">Cedula de ciudadanía</option>
-// <option value="TI">Tarjeta de identídad</option>
-// <option value="PAS">Pasaporte</option>
-//   <option value="CE">Cedula de extrangería</option>
-// <option value="PE">Permiso especial de permanencía</option>
 const documentType = [
     { val: 'CC', label: 'Cédula de ciudadanía' },
     { val: 'TI', label: 'Tarjeta de identidad' },

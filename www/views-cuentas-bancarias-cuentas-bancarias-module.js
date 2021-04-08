@@ -1,5 +1,76 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["views-cuentas-bancarias-cuentas-bancarias-module"],{
 
+/***/ "EnSQ":
+/*!******************************************!*\
+  !*** ./src/app/services/data.service.ts ***!
+  \******************************************/
+/*! exports provided: DataService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+let DataService = class DataService {
+    constructor() { }
+    resizePhoto(file, maxSize, outputType, callback) {
+        const reader = new FileReader();
+        reader.onload = (readerEvent) => {
+            this.resizeReresize(readerEvent.target.result, maxSize, outputType, callback);
+        };
+        reader.readAsDataURL(file);
+    }
+    resizeReresize(dataURL, maxSize, outputType, callback) {
+        const image = new Image();
+        image.onload = (imageEvent) => {
+            // Resize image
+            const canvas = document.createElement('canvas');
+            let width = image.width;
+            let height = image.height;
+            if (width > height) {
+                if (width > maxSize) {
+                    height *= maxSize / width;
+                    width = maxSize;
+                }
+            }
+            else if (height > maxSize) {
+                width *= maxSize / height;
+                height = maxSize;
+            }
+            canvas.width = width;
+            canvas.height = height;
+            canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+            this.resizeOuput(canvas, outputType, callback);
+        };
+        image.src = dataURL;
+    }
+    resizeOuput(canvas, outputType, callback) {
+        switch (outputType) {
+            case 'file':
+                canvas.toBlob((blob) => {
+                    callback(blob);
+                }, 'image/jpeg', 0.8);
+                break;
+            case 'dataURL':
+                callback(canvas.toDataURL('image/jpeg', 0.8));
+                break;
+        }
+    }
+};
+DataService.ctorParameters = () => [];
+DataService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], DataService);
+
+
+
+/***/ }),
+
 /***/ "KAO9":
 /*!*****************************************************************************!*\
   !*** ./src/app/views/cuentas-bancarias/cuentas-bancarias-routing.module.ts ***!
@@ -117,7 +188,7 @@ CuentasBancariasService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .max-width-640 {\n  --width: 640px;\n}\n::ng-deep .ck-editor__editable_inline {\n  min-height: 250px;\n}\n::ng-deep .max-height-pic {\n  max-height: 120px;\n  margin: 0 auto !important;\n}\n::ng-deep .card-item {\n  height: 100%;\n}\n::ng-deep .pictureIcon {\n  width: auto !important;\n  height: 150px !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2N1ZW50YXMtYmFuY2FyaWFzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDRTtFQUNFLGNBQUE7QUFBSjtBQUVFO0VBQ0UsaUJBQUE7QUFBSjtBQUVFO0VBQ0UsaUJBQUE7RUFDQSx5QkFBQTtBQUFKO0FBR0U7RUFDRSxZQUFBO0FBREo7QUFJRTtFQUNFLHNCQUFBO0VBQ0Esd0JBQUE7QUFGSiIsImZpbGUiOiJjdWVudGFzLWJhbmNhcmlhcy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6Om5nLWRlZXAge1xyXG4gIC5tYXgtd2lkdGgtNjQwIHtcclxuICAgIC0td2lkdGg6IDY0MHB4O1xyXG4gIH1cclxuICAuY2stZWRpdG9yX19lZGl0YWJsZV9pbmxpbmUge1xyXG4gICAgbWluLWhlaWdodDogMjUwcHg7XHJcbiAgfVxyXG4gIC5tYXgtaGVpZ2h0LXBpYyB7XHJcbiAgICBtYXgtaGVpZ2h0OiAxMjBweDtcclxuICAgIG1hcmdpbjogMCBhdXRvICFpbXBvcnRhbnQ7XHJcbiAgfVxyXG5cclxuICAuY2FyZC1pdGVtIHtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICB9XHJcblxyXG4gIC5waWN0dXJlSWNvbiB7XHJcbiAgICB3aWR0aDogYXV0byAhaW1wb3J0YW50O1xyXG4gICAgaGVpZ2h0OiAxNTBweCAhaW1wb3J0YW50O1xyXG4gICAgLy9tYXJnaW46IDAgYXV0byAhaW1wb3J0YW50O1xyXG4gIH1cclxufVxyXG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .max-width-640 {\n  --width: 640px;\n}\n::ng-deep .ck-editor__editable_inline {\n  min-height: 250px;\n}\n::ng-deep .max-height-pic {\n  max-height: 120px;\n  margin: 0 auto !important;\n}\n::ng-deep .card-item {\n  height: 100%;\n}\n::ng-deep .pictureIcon {\n  width: auto !important;\n  height: 150px !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFxjdWVudGFzLWJhbmNhcmlhcy5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0U7RUFDRSxjQUFBO0FBQUo7QUFFRTtFQUNFLGlCQUFBO0FBQUo7QUFFRTtFQUNFLGlCQUFBO0VBQ0EseUJBQUE7QUFBSjtBQUdFO0VBQ0UsWUFBQTtBQURKO0FBSUU7RUFDRSxzQkFBQTtFQUNBLHdCQUFBO0FBRkoiLCJmaWxlIjoiY3VlbnRhcy1iYW5jYXJpYXMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiOjpuZy1kZWVwIHtcclxuICAubWF4LXdpZHRoLTY0MCB7XHJcbiAgICAtLXdpZHRoOiA2NDBweDtcclxuICB9XHJcbiAgLmNrLWVkaXRvcl9fZWRpdGFibGVfaW5saW5lIHtcclxuICAgIG1pbi1oZWlnaHQ6IDI1MHB4O1xyXG4gIH1cclxuICAubWF4LWhlaWdodC1waWMge1xyXG4gICAgbWF4LWhlaWdodDogMTIwcHg7XHJcbiAgICBtYXJnaW46IDAgYXV0byAhaW1wb3J0YW50O1xyXG4gIH1cclxuXHJcbiAgLmNhcmQtaXRlbSB7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgfVxyXG5cclxuICAucGljdHVyZUljb24ge1xyXG4gICAgd2lkdGg6IGF1dG8gIWltcG9ydGFudDtcclxuICAgIGhlaWdodDogMTUwcHggIWltcG9ydGFudDtcclxuICAgIC8vbWFyZ2luOiAwIGF1dG8gIWltcG9ydGFudDtcclxuICB9XHJcbn1cclxuIl19 */");
 
 /***/ }),
 

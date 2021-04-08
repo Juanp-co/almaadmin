@@ -91,7 +91,7 @@ CrearPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"confirmCancel()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Crear curso</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col [size]=\"12\" class=\"ion-no-margin ion-no-padding\">\n      <ion-card>\n        <ion-card-header>\n          <ion-card-title>Complete el formulario para nuevos cursos</ion-card-title>\n        </ion-card-header>\n        <ion-card-content>\n          <ion-row>\n\n            <ion-col [size]=\"12\" size-sm=\"8\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nombre del curso (*)</ion-label>\n                    <ion-input\n                      [(ngModel)]=\"formData.title\"\n                      class=\"ion-text-uppercase\"\n                      maxlength=\"25\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Descripcion del curso (*)</ion-label>\n                    <ion-textarea\n                      [(ngModel)]=\"formData.description\"\n                      rows=\"5\"\n                      placeholder=\"Indica la descripción del curso...\"\n                    ></ion-textarea>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Roles a los que va dirigido (*)</ion-label>\n                    <ion-input\n                      [readonly]=\"true\"\n                      [value]=\"getRoles(formData.toRoles)\"\n                      autocomplete=\"off\"\n                      (click)=\"showRoleListAlert(formData.toRoles)\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col [size]=\"12\" size-sm=\"4\">\n              <ion-row class=\"ion-justify-content-center ion-margin\">\n                <ion-col size=\"12\" class=\"ion-text-center\">\n                  <label class=\"micursor ion-text-center w-100\">\n                    <input type='file' accept=\"image/x-png,image/gif,image/jpeg\" (change)='openFile($event)' hidden>\n                    <img [src]=\"formData.banner || 'assets/photo.png'\" class=\"img-fluid\">\n                  </label>\n                </ion-col>\n                <ion-col size=\"12\" class=\"ion-text-center\">\n                  <ion-text><i class=\"toSmall\">Clic para cargar una imagen (*)</i></ion-text>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n              <ion-button color=\"light\" (click)=\"confirmCancel()\">\n                <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmRegister()\">\n                <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"confirmCancel()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Crear curso</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col [size]=\"12\" class=\"ion-no-margin ion-no-padding\">\n      <ion-card>\n        <ion-card-header>\n          <ion-card-title>Complete el formulario para nuevos cursos</ion-card-title>\n        </ion-card-header>\n        <ion-card-content>\n          <ion-row>\n\n            <ion-col [size]=\"6\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nombre del curso (*)</ion-label>\n                    <ion-input\n                      [(ngModel)]=\"formData.title\"\n                      class=\"ion-text-uppercase\"\n                      maxlength=\"25\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Descripcion del curso (*)</ion-label>\n                    <ion-textarea\n                      [(ngModel)]=\"formData.description\"\n                      rows=\"5\"\n                    ></ion-textarea>\n                  </ion-item>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col [size]=\"6\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nivel del curso (*)</ion-label>\n                    <ion-input\n                      [readonly]=\"true\"\n                      [value]=\"getLevel(formData.level)\"\n                      autocomplete=\"off\"\n                      class=\"no-selected-text\"\n                      (click)=\"showLevelsListAlert(formData.level)\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Roles a los que va dirigido (*)</ion-label>\n                    <ion-input\n                      [readonly]=\"true\"\n                      [value]=\"getRoles(formData.toRoles)\"\n                      autocomplete=\"off\"\n                      class=\"no-selected-text\"\n                      (click)=\"showRoleListAlert(formData.toRoles)\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n              <ion-button color=\"light\" (click)=\"confirmCancel()\">\n                <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmRegister()\">\n                <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".micursor {\n  cursor: pointer;\n}\n\n.pictureSize200 {\n  max-height: 200px;\n}\n\n.w-100 {\n  width: 100% !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL2NyZWFyLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGVBQUE7QUFDRjs7QUFFQTtFQUNFLGlCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxzQkFBQTtBQUNGIiwiZmlsZSI6ImNyZWFyLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5taWN1cnNvcntcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbn1cclxuXHJcbi5waWN0dXJlU2l6ZTIwMHtcclxuICBtYXgtaGVpZ2h0OiAyMDBweDtcclxufVxyXG5cclxuLnctMTAwe1xyXG4gIHdpZHRoOiAxMDAlICFpbXBvcnRhbnQ7XHJcbn1cclxuIl19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".micursor {\n  cursor: pointer;\n}\n\n.pictureSize200 {\n  max-height: 200px;\n}\n\n.w-100 {\n  width: 100% !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcY3JlYXIucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtBQUNGOztBQUVBO0VBQ0UsaUJBQUE7QUFDRjs7QUFFQTtFQUNFLHNCQUFBO0FBQ0YiLCJmaWxlIjoiY3JlYXIucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1pY3Vyc29ye1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxuLnBpY3R1cmVTaXplMjAwe1xyXG4gIG1heC1oZWlnaHQ6IDIwMHB4O1xyXG59XHJcblxyXG4udy0xMDB7XHJcbiAgd2lkdGg6IDEwMCUgIWltcG9ydGFudDtcclxufVxyXG4iXX0= */");
 
 /***/ }),
 
@@ -124,12 +124,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
-/* harmony import */ var _cursos_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../cursos.service */ "BpEJ");
-/* harmony import */ var _services_data_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/data.service */ "EnSQ");
-
-
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+/* harmony import */ var _cursos_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cursos.service */ "BpEJ");
 
 
 
@@ -139,19 +135,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let CrearPage = class CrearPage {
-    constructor(activateRoute, alertCtrl, axios, globalSer, navCtrl, cursosService, router, dataService) {
-        this.activateRoute = activateRoute;
-        this.alertCtrl = alertCtrl;
-        this.axios = axios;
+    constructor(globalSer, navCtrl, cursosService, router) {
         this.globalSer = globalSer;
         this.navCtrl = navCtrl;
         this.cursosService = cursosService;
         this.router = router;
-        this.dataService = dataService;
+        this.levels = [];
         this.formData = {
             title: null,
             description: null,
-            banner: null,
+            level: null,
             toRoles: []
         };
         this.roles = [
@@ -164,6 +157,9 @@ let CrearPage = class CrearPage {
         // check if exist session
         if (!this.globalSer.checkSession())
             this.router.navigate(['/ingresar']);
+        else {
+            this.levels = this.cursosService.levelsList;
+        }
     }
     ngOnInit() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -197,6 +193,10 @@ let CrearPage = class CrearPage {
         });
     }
     // getters and setters
+    getLevel(level) {
+        const lvl = this.levels.find(l => l.val === level) || null;
+        return lvl ? lvl.label : null;
+    }
     getRoles(rolesList) {
         let ret = '';
         if (rolesList.length > 0) {
@@ -210,15 +210,23 @@ let CrearPage = class CrearPage {
         return ret;
     }
     // actions form
-    openFile(event) {
-        const files = event.target.files;
-        if (typeof files[0] !== 'object')
-            return false;
-        else {
-            this.dataService.resizePhoto(files[0], 900, 'dataURL', (resizedFile) => {
-                this.formData.banner = resizedFile;
+    showLevelsListAlert(selected = []) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const inputs = [];
+            for (const lvl of this.levels) {
+                inputs.push({
+                    name: `lvls`,
+                    type: 'radio',
+                    label: lvl.label,
+                    value: lvl.val,
+                    checked: lvl.val === selected,
+                });
+            }
+            yield this.globalSer.alertWithList({
+                inputs,
+                confirmAction: (selectedValue) => { this.formData.level = selectedValue; }
             });
-        }
+        });
     }
     showRoleListAlert(selected = []) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -233,11 +241,8 @@ let CrearPage = class CrearPage {
                 });
             }
             yield this.globalSer.alertWithList({
-                header: 'Seleccione los roles',
                 inputs,
-                confirmAction: (selectedValue) => {
-                    this.formData.toRoles = selectedValue;
-                }
+                confirmAction: (selectedValue) => { this.formData.toRoles = selectedValue; }
             });
         });
     }
@@ -267,14 +272,10 @@ let CrearPage = class CrearPage {
     }
 };
 CrearPage.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
-    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_6__["AxiosService"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["NavController"] },
-    { type: _cursos_service__WEBPACK_IMPORTED_MODULE_8__["CursosService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] },
-    { type: _services_data_service__WEBPACK_IMPORTED_MODULE_9__["DataService"] }
+    { type: _cursos_service__WEBPACK_IMPORTED_MODULE_7__["CursosService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] }
 ];
 CrearPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({

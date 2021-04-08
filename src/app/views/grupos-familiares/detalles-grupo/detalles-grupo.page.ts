@@ -185,6 +185,7 @@ export class DetallesGrupoPage implements OnInit {
 
   // members
   async modalMember(role: string) {
+    await this.globalSer.presentLoading();
     const updateData = (member: any) => {
       if (member) {
         const data = {...this.views.members.data};
@@ -192,7 +193,7 @@ export class DetallesGrupoPage implements OnInit {
         this.updateMembers(data);
       }
     };
-
+    await this.globalSer.dismissLoading();
     await this.globalSer.loadModal(
       AsignarMiembroPage,
       { data: {...this.views.members.data} },

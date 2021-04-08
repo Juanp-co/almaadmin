@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/juanpineros/Documents/PROYECTOS/ALMA/almaadmin/src/main.ts */"zUnb");
+module.exports = __webpack_require__(/*! C:\Users\Velantcode\Documents\projects\Juan\alma\almaadmin\src\main.ts */"zUnb");
 
 
 /***/ }),
@@ -266,10 +266,11 @@ let GlobalService = class GlobalService {
             yield alert.present();
         });
     }
-    alertWithList({ header, inputs, confirmAction, rejectAction }) {
+    alertWithList({ header, inputs, confirmAction, rejectAction, cssClass }) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const alert = yield this.alertCtrl.create({
                 header: header || 'Seleccione',
+                cssClass,
                 inputs,
                 buttons: [
                     { text: 'Cancelar', role: 'cancel', handler: () => { if (!!rejectAction)
@@ -395,6 +396,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
+    // urlApi: 'http://localhost:7000/api'
     urlApi: 'https://api.ccadv.co/api'
 };
 /*
@@ -491,7 +493,9 @@ let AppComponent = class AppComponent {
         this.appPages = [
             { title: 'Inicio', url: '/inicio', icon: 'home' },
             { title: 'Miembros', url: '/miembros', icon: 'people' },
-            { title: 'Grupos familiares', url: '/familias', icon: 'people-circle' },
+            { title: 'Consolidados', url: '/consolidados', icon: 'id-card' },
+            { title: 'Familias', url: '/familias', icon: 'people-circle' },
+            { title: 'Grupos familiares', url: '/grupos-familiares', icon: 'list' },
             { title: 'Cursos', url: '/cursos', icon: 'desktop' },
             { title: 'Eventos', url: '/eventos', icon: 'calendar-number' },
             { title: 'Cuentas bancarias', url: '/cuentas-bancarias', icon: 'cash' },
@@ -570,7 +574,7 @@ AppComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-split-pane contentId=\"main-content\">\n    <ion-menu contentId=\"main-content\" type=\"overlay\">\n      <ion-content >\n        <ion-row class=\"fondoCool ion-justify-content-end ion-padding \">\n          <ion-col size=\"8\" class=\"ion-margin-top ion-padding-top no-selected-text\">\n            <br><br><br><br>\n            <ion-text color=\"light\" class=\"titulo1\">Bienvenido</ion-text> <br>\n            <ion-text color=\"light\" class=\"titulo2\" *ngIf=\"!userData\">Usuario anonimo</ion-text>\n            <ion-text color=\"light\" class=\"titulo2\" *ngIf=\"userData\">{{ userData.names }} {{ userData.lastNames }}</ion-text>\n          </ion-col>\n          <ion-col size=\"4\">\n            <img src=\"assets/logo.png\" class=\"logo\">\n          </ion-col>\n        </ion-row>\n        <br>\n        <br>\n        <br>\n        <ion-menu-toggle auto-hide=\"false\" *ngIf=\"session\">\n          <ion-item\n            *ngFor=\"let p of appPages; let i = index\"\n            routerDirection=\"root\"\n            [routerLink]=\"[p.url]\"\n            lines=\"none\"\n            detail=\"false\"\n            routerLinkActive=\"selected\"\n          >\n            <ion-icon slot=\"start\" [ios]=\"p.icon + '-outline'\" [md]=\"p.icon + '-sharp'\"></ion-icon>\n            <ion-label>{{ p.title }}</ion-label>\n          </ion-item>\n          <ion-item button (click)=\"salir()\" lines=\"none\">\n            <ion-icon slot=\"start\" name=\"log-out\"></ion-icon>\n            <ion-label>Salir</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle auto-hide=\"false\" *ngIf=\"!session\">\n          <ion-item\n            button\n            lines=\"none\"\n            [routerLink]=\"['/ingresar']\"\n            routerLinkActive=\"selected\"\n          >\n            <ion-icon slot=\"start\" name=\"log-in\"></ion-icon>\n            <ion-label>Ingresar</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      </ion-content>\n    </ion-menu>\n    <ion-router-outlet id=\"main-content\"></ion-router-outlet>\n  </ion-split-pane>\n</ion-app>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-split-pane contentId=\"main-content\">\n    <ion-menu contentId=\"main-content\" type=\"overlay\">\n      <ion-content >\n        <ion-row class=\"fondoCool ion-justify-content-end ion-padding \">\n          <ion-col size=\"8\" class=\"ion-margin-top ion-padding-top no-selected-text\">\n            <br><br>\n            <ion-text color=\"light\" class=\"titulo1\">Bienvenido</ion-text> <br>\n            <ion-text color=\"light\" class=\"titulo2\" *ngIf=\"!userData\">Usuario anónimo</ion-text>\n            <ion-text color=\"light\" class=\"titulo2\" *ngIf=\"userData\">{{ userData.names }} {{ userData.lastNames }}</ion-text>\n          </ion-col>\n          <ion-col size=\"4\">\n            <img src=\"assets/logo.png\" class=\"logo\">\n          </ion-col>\n        </ion-row>\n        <br>\n        <ion-menu-toggle auto-hide=\"false\" *ngIf=\"session\">\n          <ion-item\n            *ngFor=\"let p of appPages; let i = index\"\n            routerDirection=\"root\"\n            [routerLink]=\"[p.url]\"\n            lines=\"none\"\n            detail=\"false\"\n            routerLinkActive=\"selected\"\n          >\n            <ion-icon slot=\"start\" [ios]=\"p.icon + '-outline'\" [md]=\"p.icon + '-sharp'\"></ion-icon>\n            <ion-label>{{ p.title }}</ion-label>\n          </ion-item>\n          <ion-item button (click)=\"salir()\" lines=\"none\">\n            <ion-icon slot=\"start\" name=\"log-out\"></ion-icon>\n            <ion-label>Salir</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle auto-hide=\"false\" *ngIf=\"!session\">\n          <ion-item\n            button\n            lines=\"none\"\n            [routerLink]=\"['/ingresar']\"\n            routerLinkActive=\"selected\"\n          >\n            <ion-icon slot=\"start\" name=\"log-in\"></ion-icon>\n            <ion-label>Ingresar</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      </ion-content>\n    </ion-menu>\n    <ion-router-outlet id=\"main-content\"></ion-router-outlet>\n  </ion-split-pane>\n</ion-app>\n");
 
 /***/ }),
 
@@ -885,19 +889,19 @@ const routes = [
     },
     {
         path: 'inicio',
-        loadChildren: () => Promise.all(/*! import() | views-inicio-inicio-module */[__webpack_require__.e("default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa"), __webpack_require__.e("views-inicio-inicio-module")]).then(__webpack_require__.bind(null, /*! ./views/inicio/inicio.module */ "Wtct")).then(m => m.InicioPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-inicio-inicio-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-inicio-inicio-module")]).then(__webpack_require__.bind(null, /*! ./views/inicio/inicio.module */ "Wtct")).then(m => m.InicioPageModule)
     },
     {
         path: 'familias',
-        loadChildren: () => Promise.all(/*! import() | views-familias-familias-module */[__webpack_require__.e("default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa"), __webpack_require__.e("views-familias-familias-module")]).then(__webpack_require__.bind(null, /*! ./views/familias/familias.module */ "c9Jc")).then(m => m.FamiliasPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-familias-familias-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-familias-familias-module")]).then(__webpack_require__.bind(null, /*! ./views/familias/familias.module */ "c9Jc")).then(m => m.FamiliasPageModule)
     },
     {
         path: 'eventos',
-        loadChildren: () => Promise.all(/*! import() | views-eventos-eventos-module */[__webpack_require__.e("default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa"), __webpack_require__.e("default~crear-crear-module~modal-editar-contenido-modal-editar-contenido-module~modal-editar-tema-mo~23c6fd20"), __webpack_require__.e("default~detalles-curso-detalles-curso-module~views-cuentas-bancarias-cuentas-bancarias-module~views-~916dc538"), __webpack_require__.e("views-eventos-eventos-module")]).then(__webpack_require__.bind(null, /*! ./views/eventos/eventos.module */ "TjVE")).then(m => m.EventosPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-eventos-eventos-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("default~crear-crear-module~modal-editar-contenido-modal-editar-contenido-module~modal-editar-pregunt~d06b41f1"), __webpack_require__.e("default~detalles-curso-detalles-curso-module~views-cuentas-bancarias-cuentas-bancarias-module~views-~916dc538"), __webpack_require__.e("views-eventos-eventos-module")]).then(__webpack_require__.bind(null, /*! ./views/eventos/eventos.module */ "TjVE")).then(m => m.EventosPageModule)
     },
     {
         path: 'cursos',
-        loadChildren: () => Promise.all(/*! import() | views-cursos-cursos-module */[__webpack_require__.e("default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa"), __webpack_require__.e("views-cursos-cursos-module")]).then(__webpack_require__.bind(null, /*! ./views/cursos/cursos.module */ "8C+O")).then(m => m.CursosPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-cursos-cursos-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-cursos-cursos-module")]).then(__webpack_require__.bind(null, /*! ./views/cursos/cursos.module */ "8C+O")).then(m => m.CursosPageModule)
     },
     {
         path: 'ofrendas',
@@ -909,7 +913,7 @@ const routes = [
     // },
     {
         path: 'miembros',
-        loadChildren: () => Promise.all(/*! import() | views-miembros-miembros-module */[__webpack_require__.e("default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa"), __webpack_require__.e("views-miembros-miembros-module")]).then(__webpack_require__.bind(null, /*! ./views/miembros/miembros.module */ "PI0l")).then(m => m.MiembrosPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-miembros-miembros-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-miembros-miembros-module")]).then(__webpack_require__.bind(null, /*! ./views/miembros/miembros.module */ "PI0l")).then(m => m.MiembrosPageModule)
     },
     {
         path: 'ingresar',
@@ -917,12 +921,20 @@ const routes = [
     },
     {
         path: 'cuentas-bancarias',
-        loadChildren: () => Promise.all(/*! import() | views-cuentas-bancarias-cuentas-bancarias-module */[__webpack_require__.e("default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa"), __webpack_require__.e("default~crear-crear-module~modal-editar-contenido-modal-editar-contenido-module~modal-editar-tema-mo~23c6fd20"), __webpack_require__.e("default~detalles-curso-detalles-curso-module~views-cuentas-bancarias-cuentas-bancarias-module~views-~916dc538"), __webpack_require__.e("views-cuentas-bancarias-cuentas-bancarias-module")]).then(__webpack_require__.bind(null, /*! ./views/cuentas-bancarias/cuentas-bancarias.module */ "Y16Y")).then(m => m.CuentasBancariasPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-cuentas-bancarias-cuentas-bancarias-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("default~crear-crear-module~modal-editar-contenido-modal-editar-contenido-module~modal-editar-pregunt~d06b41f1"), __webpack_require__.e("default~detalles-curso-detalles-curso-module~views-cuentas-bancarias-cuentas-bancarias-module~views-~916dc538"), __webpack_require__.e("views-cuentas-bancarias-cuentas-bancarias-module")]).then(__webpack_require__.bind(null, /*! ./views/cuentas-bancarias/cuentas-bancarias.module */ "Y16Y")).then(m => m.CuentasBancariasPageModule)
     },
     {
         path: 'mi-cuenta',
-        loadChildren: () => Promise.all(/*! import() | views-mi-cuenta-mi-cuenta-module */[__webpack_require__.e("default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa"), __webpack_require__.e("default~detalles-miembro-detalles-miembro-module~registro-registro-module~views-mi-cuenta-mi-cuenta-module"), __webpack_require__.e("views-mi-cuenta-mi-cuenta-module")]).then(__webpack_require__.bind(null, /*! ./views/mi-cuenta/mi-cuenta.module */ "1LWO")).then(m => m.MiCuentaPageModule)
-    }
+        loadChildren: () => Promise.all(/*! import() | views-mi-cuenta-mi-cuenta-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("default~detalles-miembro-detalles-miembro-module~registro-registro-module~views-mi-cuenta-mi-cuenta-module"), __webpack_require__.e("views-mi-cuenta-mi-cuenta-module")]).then(__webpack_require__.bind(null, /*! ./views/mi-cuenta/mi-cuenta.module */ "1LWO")).then(m => m.MiCuentaPageModule)
+    },
+    {
+        path: 'grupos-familiares',
+        loadChildren: () => Promise.all(/*! import() | views-grupos-familiares-grupos-familiares-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-grupos-familiares-grupos-familiares-module")]).then(__webpack_require__.bind(null, /*! ./views/grupos-familiares/grupos-familiares.module */ "DOPO")).then(m => m.GruposFamiliaresPageModule)
+    },
+    {
+        path: 'consolidados',
+        loadChildren: () => Promise.all(/*! import() | views-consolidados-consolidados-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-consolidados-consolidados-module")]).then(__webpack_require__.bind(null, /*! ./views/consolidados/consolidados.module */ "V5HN")).then(m => m.ConsolidadosPageModule)
+    },
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
@@ -948,7 +960,7 @@ AppRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".fondoCool {\n  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(\"/assets/cruz.png\");\n  background-size: cover;\n  background-position: center center;\n}\n\n.logo {\n  margin-bottom: -190px !important;\n  z-index: 1 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2FwcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLG1IQUFBO0VBSUEsc0JBQUE7RUFDQSxrQ0FBQTtBQUZGOztBQU9BO0VBQ0UsZ0NBQUE7RUFDQSxxQkFBQTtBQUpGIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5mb25kb0Nvb2x7XG4gIGJhY2tncm91bmQtaW1hZ2U6ICAgbGluZWFyLWdyYWRpZW50KHRvIHJpZ2h0IGJvdHRvbSxcbiAgICAgICAgICAgICAgICAgICAgICByZ2JhKDAsIDAsIDAsIDAuNSksXG4gICAgICAgICAgICAgICAgICAgICAgcmdiYSgwLCAwLCAwLCAwLjUpKSxcbiAgICAgICAgICAgICAgICAgICAgICB1cmwoXCIvYXNzZXRzL2NydXoucG5nXCIpO1xuICBiYWNrZ3JvdW5kLXNpemU6IGNvdmVyO1xuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXIgY2VudGVyO1xuICAvLyAtd2Via2l0LWNsaXAtcGF0aDogcG9seWdvbigwJSAwJSwgMTAwJSAwLCAxMDAlIDEwMCUsIDUwJSA4NiUsIDAlIDEwMCUpO1xuICAvLyBjbGlwLXBhdGg6IHBvbHlnb24oMCUgMCUsIDEwMCUgMCwgMTAwJSAxMDAlLCA1MCUgODYlLCAwJSAxMDAlKTtcbn1cblxuLmxvZ297XG4gIG1hcmdpbi1ib3R0b206IC0xOTBweCAhaW1wb3J0YW50O1xuICB6LWluZGV4OiAxICFpbXBvcnRhbnQ7XG59XG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".fondoCool {\n  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(\"/assets/cruz.png\");\n  background-size: cover;\n  background-position: center center;\n  height: 150px;\n}\n\n.logo {\n  margin-bottom: -140px !important;\n  z-index: 1 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbUhBQUE7RUFJQSxzQkFBQTtFQUNBLGtDQUFBO0VBQ0EsYUFBQTtBQUZGOztBQU9BO0VBQ0UsZ0NBQUE7RUFDQSxxQkFBQTtBQUpGIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5mb25kb0Nvb2x7XG4gIGJhY2tncm91bmQtaW1hZ2U6ICAgbGluZWFyLWdyYWRpZW50KHRvIHJpZ2h0IGJvdHRvbSxcbiAgICAgICAgICAgICAgICAgICAgICByZ2JhKDAsIDAsIDAsIDAuNSksXG4gICAgICAgICAgICAgICAgICAgICAgcmdiYSgwLCAwLCAwLCAwLjUpKSxcbiAgICAgICAgICAgICAgICAgICAgICB1cmwoXCIvYXNzZXRzL2NydXoucG5nXCIpO1xuICBiYWNrZ3JvdW5kLXNpemU6IGNvdmVyO1xuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXIgY2VudGVyO1xuICBoZWlnaHQ6IDE1MHB4O1xuICAvLyAtd2Via2l0LWNsaXAtcGF0aDogcG9seWdvbigwJSAwJSwgMTAwJSAwLCAxMDAlIDEwMCUsIDUwJSA4NiUsIDAlIDEwMCUpO1xuICAvLyBjbGlwLXBhdGg6IHBvbHlnb24oMCUgMCUsIDEwMCUgMCwgMTAwJSAxMDAlLCA1MCUgODYlLCAwJSAxMDAlKTtcbn1cblxuLmxvZ297XG4gIG1hcmdpbi1ib3R0b206IC0xNDBweCAhaW1wb3J0YW50O1xuICB6LWluZGV4OiAxICFpbXBvcnRhbnQ7XG59XG4iXX0= */");
 
 /***/ }),
 

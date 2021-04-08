@@ -283,7 +283,7 @@ export class ReportesPage implements OnInit {
 
   getNumberGroup() {
     return this.selected ?
-      `Sector: ${this.selected.sector} / Sub-sector: ${this.selected.subSector} Nº ${this.selected.number}`
+      `Sector #${this.selected.sector} / Sub-sector #${this.selected.subSector} / Grupo #${this.selected.number}`
       : null;
   }
 

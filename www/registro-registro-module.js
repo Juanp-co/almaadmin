@@ -88,7 +88,7 @@ RegistroPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"back()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Registrar miembro</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-row>\n    <ion-col class=\"ion-no-margin\" size=\"12\" *ngIf=\"!successRegister\">\n      <ion-card>\n        <ion-card-content>\n          <ion-row>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Tipo de documento (*)</ion-label>\n                <ion-input\n                  [readonly]=\"true\"\n                  [value]=\"formData.documentType ? getDocumentLabel(formData.documentType) : ''\"\n                  autocomplete=\"off\"\n                  (click)=\"showAlertDocumentList(formData.documentType)\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Número de documento (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.document\"\n                  autocomplete=\"off\"\n                  maxlength=\"10\"\n                  (keypress)=\"validateOnlyNumbers($event)\"\n                  class=\"ion-text-uppercase\"\n                >\n                </ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Nombre(s) (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.names\"\n                  autocomplete=\"off\"\n                  (keyup)=\"validateOnlyLetters($event)\"\n                  class=\"ion-text-uppercase\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Apellido(s) (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.lastNames\"\n                  autocomplete=\"off\"\n                  (keyup)=\"validateOnlyLetters($event)\"\n                  class=\"ion-text-uppercase\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Correo electrónico (*)</ion-label>\n                <ion-input [(ngModel)]=\"formData.email\" autocomplete=\"off\" class=\"ion-text-uppercase\"></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Teléfono</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.phone\"\n                  autocomplete=\"off\"\n                  maxlength=\"13\"\n                  (keypress)=\"validateOnlyNumbers($event)\"\n                  class=\"ion-text-uppercase\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Rol (*)</ion-label>\n                <ion-input\n                  [readonly]=\"true\"\n                  [value]=\"roles[formData.role] || ''\"\n                  autocomplete=\"off\"\n                  (click)=\"showRoleListAlert(formData.role)\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Número de documento referido (opcional)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.referred\"\n                  autocomplete=\"off\"\n                  maxlength=\"15\"\n                  class=\"ion-text-uppercase\"\n                >\n                </ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center\">\n              <ion-button color=\"light\" (click)=\"confirmCancel()\">\n                <ion-icon name=\"close-outline\"></ion-icon>&nbsp;\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmRegister()\">\n                <ion-icon name=\"save-outline\"></ion-icon>&nbsp;\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n\n    <ion-col class=\"ion-no-margin\" size=\"12\" *ngIf=\"successRegister && successData\">\n      <ion-card>\n        <ion-card-content>\n          <ion-row>\n            <ion-col [size]=\"12\" class=\"ion-text-center\">\n              <ion-img class=\"pictureLogo2\" [src]=\"'/assets/icon/check.svg'\"></ion-img>\n              <ion-card-title class=\"ion-margin-top\">{{ successData.msg }}</ion-card-title>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center\">\n              <ion-button color=\"primary\" (click)=\"back()\">\n                <ion-icon name=\"chevron-back-outline\" slot=\"start\"></ion-icon>&nbsp;\n                <ion-text>Regresar al listado de miembros</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"back()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Registrar miembro</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-row>\n    <ion-col class=\"ion-no-margin\" size=\"12\" *ngIf=\"!successRegister\">\n      <ion-card>\n        <ion-card-content>\n          <ion-row>\n            <ion-col size=\"12\">\n              <ion-text color=\"medium\">\n                <p>\n                  <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                  Todos los miembros registrados dispondrán de la siguiente contraseña para el acceso: <b><i>alma1234</i></b>.\n                  Estos podrán cambiarla (si lo desean) desde la Aplicación Móvil o desde el Panel Administrador (en caso de disponga del rol).\n                </p>\n              </ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Tipo de documento (*)</ion-label>\n                <ion-input\n                  [readonly]=\"true\"\n                  [value]=\"formData.documentType ? getDocumentLabel(formData.documentType) : ''\"\n                  autocomplete=\"off\"\n                  class=\"no-selected-text\"\n                  (click)=\"showAlertDocumentList(formData.documentType)\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Número de documento (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.document\"\n                  autocomplete=\"off\"\n                  maxlength=\"10\"\n                  (keypress)=\"validateOnlyNumbers($event)\"\n                  class=\"ion-text-uppercase\"\n                >\n                </ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Nombre(s) (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.names\"\n                  autocomplete=\"off\"\n                  (keyup)=\"validateOnlyLetters($event)\"\n                  class=\"ion-text-uppercase\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Apellido(s) (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.lastNames\"\n                  autocomplete=\"off\"\n                  (keyup)=\"validateOnlyLetters($event)\"\n                  class=\"ion-text-uppercase\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Nº de Teléfono (usuario) (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.phone\"\n                  autocomplete=\"off\"\n                  maxlength=\"13\"\n                  (keypress)=\"validateOnlyNumbers($event)\"\n                  class=\"ion-text-uppercase\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Correo electrónico</ion-label>\n                <ion-input [(ngModel)]=\"formData.email\" autocomplete=\"off\" class=\"ion-text-uppercase\"></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Rol (*)</ion-label>\n                <ion-input\n                  [readonly]=\"true\"\n                  [value]=\"roles[formData.role] || ''\"\n                  autocomplete=\"off\"\n                  class=\"no-selected-text\"\n                  (click)=\"showRoleListAlert(formData.role)\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Nº de documento padre espiritual (opcional)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.referred\"\n                  autocomplete=\"off\"\n                  maxlength=\"15\"\n                  class=\"ion-text-uppercase\"\n                >\n                </ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item lines=\"none\">\n                <ion-label color=\"medium\">Asignar miembro consolidador</ion-label>\n                <ion-checkbox\n                  slot=\"start\"\n                  [checked]=\"formData.consolidator\"\n                  (ionChange)=\"checkConsolidator()\"\n                ></ion-checkbox>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\" *ngIf=\"formData.consolidator\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Seleccione un miembro (*)</ion-label>\n                <ion-input\n                  [readonly]=\"true\"\n                  [value]=\"getConsolidatorsNames()\"\n                  autocomplete=\"off\"\n                  class=\"no-selected-text\"\n                  (click)=\"modalMember()\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center\">\n              <ion-button color=\"light\" (click)=\"confirmCancel()\">\n                <ion-icon name=\"close-outline\"></ion-icon>&nbsp;\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmRegister()\">\n                <ion-icon name=\"save-outline\"></ion-icon>&nbsp;\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n\n    <ion-col class=\"ion-no-margin\" size=\"12\" *ngIf=\"successRegister && successData\">\n      <ion-card>\n        <ion-card-content>\n          <ion-row>\n            <ion-col [size]=\"12\" class=\"ion-text-center\">\n              <ion-img class=\"pictureLogo2\" [src]=\"'/assets/icon/check.svg'\"></ion-img>\n              <ion-card-title class=\"ion-margin-top\">{{ successData.msg }}</ion-card-title>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-padding-top ion-padding-bottom ion-margin-bottom ion-text-center\">\n              <ion-button color=\"primary\" (click)=\"back()\">\n                <ion-icon name=\"chevron-back-outline\" slot=\"start\"></ion-icon>&nbsp;\n                <ion-text>Regresar al listado de miembros</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".password-text {\n  font-size: 2em !important;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3JlZ2lzdHJvLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLHlCQUFBO0VBQ0EsaUJBQUE7QUFDRiIsImZpbGUiOiJyZWdpc3Ryby5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucGFzc3dvcmQtdGV4dCB7XHJcbiAgZm9udC1zaXplOiAyZW0gIWltcG9ydGFudDtcclxuICBmb250LXdlaWdodDogYm9sZDtcclxufVxyXG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".password-text {\n  font-size: 2em !important;\n  font-weight: bold;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxccmVnaXN0cm8ucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UseUJBQUE7RUFDQSxpQkFBQTtBQUNGIiwiZmlsZSI6InJlZ2lzdHJvLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5wYXNzd29yZC10ZXh0IHtcclxuICBmb250LXNpemU6IDJlbSAhaW1wb3J0YW50O1xyXG4gIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcbiJdfQ== */");
 
 /***/ }),
 
@@ -119,13 +119,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_registro_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./registro.page.html */ "rtVd");
 /* harmony import */ var _registro_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./registro.page.scss */ "sH/h");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _detalles_miembro_detalles_miembro_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../detalles-miembro/detalles-miembro.service */ "iN9u");
-/* harmony import */ var _Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../Utils/validations.functions */ "OmbT");
-/* harmony import */ var _miembros_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../miembros.service */ "wJOZ");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _detalles_miembro_detalles_miembro_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../detalles-miembro/detalles-miembro.service */ "iN9u");
+/* harmony import */ var _miembros_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../miembros.service */ "wJOZ");
+/* harmony import */ var _asignar_consolidador_asignar_consolidador_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../asignar-consolidador/asignar-consolidador.page */ "FA8q");
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+/* harmony import */ var _Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../Utils/validations.functions */ "OmbT");
+
 
 
 
@@ -151,6 +153,7 @@ let RegistroPage = class RegistroPage {
         this.documentTypes = [];
         this.successRegister = false;
         this.successData = null;
+        this.consolidatorMember = null;
         this.formData = {
             documentType: null,
             document: null,
@@ -160,6 +163,8 @@ let RegistroPage = class RegistroPage {
             lastNames: null,
             role: null,
             referred: null,
+            consolidator: false,
+            consolidatorId: null,
         };
         // check if exist session
         if (!this.globalSer.checkSession())
@@ -212,11 +217,20 @@ let RegistroPage = class RegistroPage {
         const da = this.documentTypes.find(d => d.val === value);
         return da ? da.label : null;
     }
+    checkConsolidator() {
+        if (this.formData.consolidator) {
+            this.consolidatorMember = null;
+        }
+        this.formData.consolidator = !this.formData.consolidator;
+    }
+    getConsolidatorsNames() {
+        return this.consolidatorMember ? `${this.consolidatorMember.names} ${this.consolidatorMember.lastNames}` : null;
+    }
     validateOnlyNumbers(event) {
-        Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["onlyNumbersInputValidation"])(event);
+        Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__["onlyNumbersInputValidation"])(event);
     }
     validateOnlyLetters(event) {
-        Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["onlyLettersInputValidation"])(event);
+        Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__["onlyLettersInputValidation"])(event);
     }
     // Alerts
     showRoleListAlert(selected = null) {
@@ -270,23 +284,33 @@ let RegistroPage = class RegistroPage {
             });
         });
     }
+    // members
+    modalMember() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const updateData = (member) => {
+                this.consolidatorMember = member || null;
+                this.formData.consolidatorId = member ? member._id : null;
+            };
+            yield this.globalSer.loadModal(_asignar_consolidador_asignar_consolidador_page__WEBPACK_IMPORTED_MODULE_8__["AsignarConsolidadorPage"], { selectedId: this.formData.consolidatorId }, false, updateData);
+        });
+    }
     validateData() {
         if (!/^([CC|CE|PE|TI|PAS]){2,3}/.test(this.formData.documentType))
             return 'Disculpe, pero debe indicar el tipo de documento.';
-        if (!/[0-9]{5,10}/.test(this.formData.document))
+        if (!/[0-9]{5,9}/.test(this.formData.document))
             return 'Disculpe, pero debe indicar el número de documento de identidad.';
-        if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["checkNameOrLastName"])(this.formData.names))
+        if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__["checkNameOrLastName"])(this.formData.names))
             return 'Disculpe, pero debe indicar un nombre válido.';
-        if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["checkNameOrLastName"])(this.formData.lastNames))
+        if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__["checkNameOrLastName"])(this.formData.lastNames))
             return 'Disculpe, pero debe indicar un apellido válido.';
-        if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["checkEmail"])(this.formData.email))
-            return 'Disculpe, pero debe indicar un correo electrónico válido.';
-        if (this.formData.phone && !Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["checkPhone"])(this.formData.phone))
+        if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__["checkPhone"])(this.formData.phone))
             return 'Disculpe, pero debe indicar un número de teléfono válido.';
-        if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["checkIfValueIsNumber"])(`${this.formData.role}`))
-            return 'Disculpe, pero debe seleccionar un rol para el usuario.';
-        if (this.formData.referred && !Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["checkDocument"])(`${this.formData.referred.toUpperCase()}`))
-            return 'Disculpe, pero debe indicar un número de documento correcto del usuario referido (ejm: CC12345678).';
+        if (this.formData.email && !Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__["checkEmail"])(this.formData.email))
+            return 'Disculpe, pero debe indicar un correo electrónico válido.';
+        if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__["checkIfValueIsNumber"])(`${this.formData.role}`))
+            return 'Disculpe, pero debe seleccionar un rol para el miembro.';
+        if (this.formData.referred && !Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_11__["checkDocument"])(`${this.formData.referred.toUpperCase()}`))
+            return 'Disculpe, pero debe indicar un número de documento correcto del miemro referente (ejm: CC12345678).';
         return null;
     }
     confirmRegister() {
@@ -306,14 +330,14 @@ let RegistroPage = class RegistroPage {
     }
 };
 RegistroPage.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__["AlertController"] },
-    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_4__["AxiosService"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_5__["GlobalService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_6__["NavController"] },
-    { type: _detalles_miembro_detalles_miembro_service__WEBPACK_IMPORTED_MODULE_8__["DetallesMiembroService"] },
-    { type: _miembros_service__WEBPACK_IMPORTED_MODULE_10__["MiembrosService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"] }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["AlertController"] },
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_9__["AxiosService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_10__["GlobalService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"] },
+    { type: _detalles_miembro_detalles_miembro_service__WEBPACK_IMPORTED_MODULE_6__["DetallesMiembroService"] },
+    { type: _miembros_service__WEBPACK_IMPORTED_MODULE_7__["MiembrosService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }
 ];
 RegistroPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
