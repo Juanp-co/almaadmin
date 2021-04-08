@@ -18,7 +18,7 @@ export class ModalEditarPreguntaPage implements OnInit {
   quiz: any[] = [];
   quizViews: boolean[] = [];
   showInfoForm = true;
-  titleModal = 'Agregar pregunta';
+  titleModal = 'Agregar Quiz';
   inputsList = [];
   word: string|null = null;
 
@@ -111,14 +111,14 @@ export class ModalEditarPreguntaPage implements OnInit {
     const data = {
       title: this.formData.title,
       description: this.formData.description,
-      urlVideo: this.formData.description,
+      urlVideo: null,
       quiz: this.quiz,
     };
     const add: any = await this.cursosService.createThemeCourse(this.id, data);
 
     if (add && !add.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', 'Se ha agregado el Quiz exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha agregado el Quiz exitosamente.');
       this.closeModal(add);
     }
     else if (add && add.error) {
@@ -140,7 +140,7 @@ export class ModalEditarPreguntaPage implements OnInit {
 
     if (updated && !updated.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', 'Se ha actualizado el Quiz exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el Quiz exitosamente.');
       this.closeModal(updated);
     }
     else if (updated && updated.error) {

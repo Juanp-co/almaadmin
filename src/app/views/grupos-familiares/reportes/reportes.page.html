@@ -148,7 +148,7 @@
                   <ion-text>
                     <ion-icon name="body-outline" class="bigIcon"></ion-icon>
                     <br>
-                    <span class="textTotals">Total de hermanos y niños</span>
+                    <span class="textTotals">Hermanos y niños</span>
                   </ion-text>
                 </ion-col>
                 <ion-col size="7" class="ion-text-center ion-align-items-center">
@@ -166,7 +166,7 @@
                   <ion-text class="ion-text-center">
                     <ion-icon name="cash-outline" class="bigIcon"></ion-icon>
                     <br>
-                    <span class="textTotals">Total en ofrendas</span>
+                    <span class="textTotals">Ofrendas</span>
                   </ion-text>
                 </ion-col>
                 <ion-col size="7" class="ion-text-center ion-align-items-center">
@@ -244,7 +244,7 @@
         </ion-card-header>
         <ion-card-content class="{{ showObservations ? '' : 'ion-hide'}} ion-no-padding ">
           <ion-row *ngIf="observationsPreview && observationsPreview.length > 0" class="{{ sizeElems === 6 ? 'max-height-250' : 'max-height-450'}}">
-            <ion-col size="12" *ngFor="let o of observationsPreview; let i=index">
+            <ion-col size="12" [sizeSm]="sizeElems === 6 ? 12 : 6" *ngFor="let o of observationsPreview; let i=index">
               <ion-card (click)="showObservation(i)">
                 <ion-card-content>
                   <ion-text>

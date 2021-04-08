@@ -72,7 +72,7 @@ ModalEditarContenidoPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__de
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
             _modal_editar_contenido_routing_module__WEBPACK_IMPORTED_MODULE_5__["ModalEditarContenidoPageRoutingModule"],
-            _ckeditor_ckeditor5_angular__WEBPACK_IMPORTED_MODULE_7__["CKEditorModule"]
+            _ckeditor_ckeditor5_angular__WEBPACK_IMPORTED_MODULE_7__["CKEditorModule"],
         ],
         declarations: [_modal_editar_contenido_page__WEBPACK_IMPORTED_MODULE_6__["ModalEditarContenidoPage"]]
     })

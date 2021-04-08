@@ -18,7 +18,7 @@ export class ModalEditarContenidoPage implements OnInit {
   @Input() description: string|null;
   @Input() urlVideo: string|null;
 
-  titleModal = 'Agregar contenido';
+  titleModal = 'Agregar tema';
   Editor = ClassicEditor;
   configEditor: any = null;
 
@@ -73,7 +73,7 @@ export class ModalEditarContenidoPage implements OnInit {
 
     if (created && !created.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', 'Se ha agregado el contenido al tema exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha agregado el tema exitosamente.');
       this.closeModal(created);
     }
     else if (created && created.error) {
@@ -89,7 +89,7 @@ export class ModalEditarContenidoPage implements OnInit {
 
     if (updated && !updated.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el contenido del tema exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado el tema exitosamente.');
       this.closeModal({
         title: updated.title,
         description: updated.description,
@@ -109,7 +109,7 @@ export class ModalEditarContenidoPage implements OnInit {
     if (!validated) {
       await this.globalSer.alertConfirm({
         header: 'Confirme',
-        message: `¿Está seguro qué desea ${this.contentId ? 'actualizar' : 'agregar'} este contenido?`,
+        message: `¿Está seguro qué desea ${this.contentId ? 'actualizar' : 'agregar'} este tema?`,
         confirmAction: () => {
           if (this.themeId && this.contentId) this.updateContent();
           else this.createContent();

@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"],{
 
 /***/ "+o14":
 /*!*****************************************************************!*\
@@ -665,7 +665,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-card *ngIf=\"course\" (click)=\"goToDetails(course._id)\">\n  <img class=\"banner\" [src]=\"course.banner || 'assets/icon/escuela.svg'\"/>\n  <ion-card-header>\n    <ion-card-title>\n      <ion-icon name=\"checkmark-circle-outline\" *ngIf=\"course.approved !== undefined && course.approved\"></ion-icon>\n      <ion-icon name=\"close-circle-outline\" *ngIf=\"course.approved !== undefined && !course.approved\"></ion-icon>\n      <ion-icon name=\"{{ course.enable ? 'earth' : 'alert-circle' }}-outline\" *ngIf=\"list !== undefined\"></ion-icon>\n      {{ course.title }}\n    </ion-card-title>\n  </ion-card-header>\n  <ion-card-content>\n    <ion-text class=\"no-selected-text\" *ngIf=\"course.description\">\n      {{ course.description.length > 50 ? course.description.substr(0, 50) + '...' : course.description }}\n    </ion-text>\n    <ion-text class=\"no-selected-text\" *ngIf=\"!course.description\">Sin descripción.</ion-text>\n    <br/>\n    <br/>\n    <ion-text class=\"no-selected-text ion-text-center toSmall\">\n      <ion-icon name=\"open-outline\"></ion-icon>&nbsp;\n      <i>Haz clic para más detalles</i>\n    </ion-text>\n  </ion-card-content>\n</ion-card>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-card *ngIf=\"course\" (click)=\"goToDetails(course._id)\">\n  <img src=\"assets/icon/level-{{course.level}}{{ course.approved ? '' : '-gray' }}.svg\" class=\"icon-courses\" *ngIf=\"course.approved !== undefined\">\n  <img src=\"assets/icon/level-{{course.level}}.svg\" class=\"icon-courses\" *ngIf=\"course.approved === undefined\">\n  <ion-card-header>\n    <ion-card-title>\n      <ion-icon name=\"checkmark-circle-outline\" *ngIf=\"course.approved !== undefined && course.approved\"></ion-icon>\n      <ion-icon name=\"close-circle-outline\" *ngIf=\"course.approved !== undefined && !course.approved\"></ion-icon>\n      <ion-icon name=\"{{ course.enable ? 'earth' : 'alert-circle' }}-outline\" *ngIf=\"list !== undefined\"></ion-icon>\n      {{ course.title }}\n    </ion-card-title>\n  </ion-card-header>\n  <ion-card-content>\n    <ion-text class=\"no-selected-text\" *ngIf=\"course.description\">\n      {{ course.description.length > 50 ? course.description.substr(0, 50) + '...' : course.description }}\n    </ion-text>\n    <ion-text class=\"no-selected-text\" *ngIf=\"!course.description\">Sin descripción.</ion-text>\n    <br/>\n    <br/>\n    <ion-text class=\"no-selected-text ion-text-center toSmall\">\n      <ion-icon name=\"open-outline\"></ion-icon>&nbsp;\n      <i>Haz clic para más detalles</i>\n    </ion-text>\n  </ion-card-content>\n</ion-card>\n");
 
 /***/ }),
 
@@ -755,6 +755,19 @@ __webpack_require__.r(__webpack_exports__);
 
 !function(t,s){ true?module.exports=s():undefined}(this,function(){"use strict";var t,s,n=/\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,i=/^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/,e={years:31536e6,months:2592e6,days:864e5,hours:36e5,minutes:6e4,seconds:1e3,milliseconds:1,weeks:6048e5},r=function(t){return t instanceof c},o=function(t,s,n){return new c(t,n,s.$l)},u=function(t){return s.p(t)+"s"},h=function(t){return t<0},a=function(t){return h(t)?Math.ceil(t):Math.floor(t)},d=function(t,s){return t?h(t)?{negative:!0,format:""+function(t){return Math.abs(t)}(t)+s}:{negative:!1,format:""+t+s}:{negative:!1,format:""}},c=function(){function h(t,s,n){var r=this;if(this.$d={},this.$l=n,s)return o(t*e[u(s)],this);if("number"==typeof t)return this.$ms=t,this.parseFromMilliseconds(),this;if("object"==typeof t)return Object.keys(t).forEach(function(s){r.$d[u(s)]=t[s]}),this.calMilliseconds(),this;if("string"==typeof t){var h=t.match(i);if(h)return this.$d.years=h[2],this.$d.months=h[3],this.$d.weeks=h[4],this.$d.days=h[5],this.$d.hours=h[6],this.$d.minutes=h[7],this.$d.seconds=h[8],this.calMilliseconds(),this}return this}var c=h.prototype;return c.calMilliseconds=function(){var t=this;this.$ms=Object.keys(this.$d).reduce(function(s,n){return s+(t.$d[n]||0)*e[n]},0)},c.parseFromMilliseconds=function(){var t=this.$ms;this.$d.years=a(t/31536e6),t%=31536e6,this.$d.months=a(t/2592e6),t%=2592e6,this.$d.days=a(t/864e5),t%=864e5,this.$d.hours=a(t/36e5),t%=36e5,this.$d.minutes=a(t/6e4),t%=6e4,this.$d.seconds=a(t/1e3),t%=1e3,this.$d.milliseconds=t},c.toISOString=function(){var t=d(this.$d.years,"Y"),s=d(this.$d.months,"M"),n=+this.$d.days||0;this.$d.weeks&&(n+=7*this.$d.weeks);var i=d(n,"D"),e=d(this.$d.hours,"H"),r=d(this.$d.minutes,"M"),o=this.$d.seconds||0;this.$d.milliseconds&&(o+=this.$d.milliseconds/1e3);var u=d(o,"S"),h=t.negative||s.negative||i.negative||e.negative||r.negative||u.negative,a=e.format||r.format||u.format?"T":"",c=(h?"-":"")+"P"+t.format+s.format+i.format+a+e.format+r.format+u.format;return"P"===c||"-P"===c?"P0D":c},c.toJSON=function(){return this.toISOString()},c.format=function(t){var i=t||"YYYY-MM-DDTHH:mm:ss",e={Y:this.$d.years,YY:s.s(this.$d.years,2,"0"),YYYY:s.s(this.$d.years,4,"0"),M:this.$d.months,MM:s.s(this.$d.months,2,"0"),D:this.$d.days,DD:s.s(this.$d.days,2,"0"),H:this.$d.hours,HH:s.s(this.$d.hours,2,"0"),m:this.$d.minutes,mm:s.s(this.$d.minutes,2,"0"),s:this.$d.seconds,ss:s.s(this.$d.seconds,2,"0"),SSS:s.s(this.$d.milliseconds,3,"0")};return i.replace(n,function(t,s){return s||String(e[t])})},c.as=function(t){return this.$ms/e[u(t)]},c.get=function(t){var s=this.$ms,n=u(t);return"milliseconds"===n?s%=1e3:s="weeks"===n?a(s/e[n]):this.$d[n],0===s?0:s},c.add=function(t,s,n){var i;return i=s?t*e[u(s)]:r(t)?t.$ms:o(t,this).$ms,o(this.$ms+i*(n?-1:1),this)},c.subtract=function(t,s){return this.add(t,s,!0)},c.locale=function(t){var s=this.clone();return s.$l=t,s},c.clone=function(){return o(this.$ms,this)},c.humanize=function(s){return t().add(this.$ms,"ms").locale(this.$l).fromNow(!s)},c.milliseconds=function(){return this.get("milliseconds")},c.asMilliseconds=function(){return this.as("milliseconds")},c.seconds=function(){return this.get("seconds")},c.asSeconds=function(){return this.as("seconds")},c.minutes=function(){return this.get("minutes")},c.asMinutes=function(){return this.as("minutes")},c.hours=function(){return this.get("hours")},c.asHours=function(){return this.as("hours")},c.days=function(){return this.get("days")},c.asDays=function(){return this.as("days")},c.weeks=function(){return this.get("weeks")},c.asWeeks=function(){return this.as("weeks")},c.months=function(){return this.get("months")},c.asMonths=function(){return this.as("months")},c.years=function(){return this.get("years")},c.asYears=function(){return this.as("years")},h}();return function(n,i,e){t=e,s=e().$utils(),e.duration=function(t,s){var n=e.locale();return o(t,{$l:n},s)},e.isDuration=r;var u=i.prototype.add,h=i.prototype.subtract;i.prototype.add=function(t,s){return r(t)&&(t=t.asMilliseconds()),u.bind(this)(t,s)},i.prototype.subtract=function(t,s){return r(t)&&(t=t.asMilliseconds()),h.bind(this)(t,s)}}});
 
+
+/***/ }),
+
+/***/ "1Bxu":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/groupcard/groupcard.component.html ***!
+  \*****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-card class=\"\" *ngIf=\"data\">\n  <ion-card-content class=\"\">\n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-text color=\"primary\" class=\"ion-margin-top ion-margin-bottom\"><h3>{{ group.name }}</h3></ion-text>\n        <ion-text><b>Número:</b> {{ group.number}}</ion-text><br/>\n        <ion-text><b>Sector:</b> {{ group.sector}}</ion-text><br/>\n        <ion-text><b>Sub-Sector:</b> {{ group.subSector }}</ion-text><br/>\n        <ion-text class=\"ion-margin-top\"><i class=\"toSmall\">Clic para más información.</i></ion-text>\n      </ion-col>\n    </ion-row>\n  </ion-card-content>\n</ion-card>\n");
 
 /***/ }),
 
@@ -1154,52 +1167,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "2vPN":
-/*!****************************************************************************************!*\
-  !*** ./src/app/components/cursos/cursos-previos-card/cursos-previos-card.component.ts ***!
-  \****************************************************************************************/
-/*! exports provided: CursosPreviosCardComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CursosPreviosCardComponent", function() { return CursosPreviosCardComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _raw_loader_cursos_previos_card_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./cursos-previos-card.component.html */ "IJhF");
-/* harmony import */ var _cursos_previos_card_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cursos-previos-card.component.scss */ "GYlW");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-
-
-
-
-let CursosPreviosCardComponent = class CursosPreviosCardComponent {
-    constructor() {
-        this.add = false;
-        this.added = false;
-    }
-    ngOnInit() {
-    }
-};
-CursosPreviosCardComponent.ctorParameters = () => [];
-CursosPreviosCardComponent.propDecorators = {
-    course: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    add: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    added: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    handleAddRemove: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    handleDelete: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
-};
-CursosPreviosCardComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
-        selector: 'app-cursos-previos-card',
-        template: _raw_loader_cursos_previos_card_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
-        styles: [_cursos_previos_card_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
-    })
-], CursosPreviosCardComponent);
-
-
-
-/***/ }),
-
 /***/ "2ykv":
 /*!*********************************************!*\
   !*** ./node_modules/moment/locale/nl-be.js ***!
@@ -1503,19 +1470,6 @@ CursosPreviosCardComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decora
 
 })));
 
-
-/***/ }),
-
-/***/ "44yu":
-/*!******************************************************************************************!*\
-  !*** ./src/app/components/cursos/editar-banner-curso/editar-banner-curso.component.scss ***!
-  \******************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".banner {\n  width: auto !important;\n  min-height: auto !important;\n  max-height: 300px !important;\n  border-radius: 5px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL2VkaXRhci1iYW5uZXItY3Vyc28uY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxzQkFBQTtFQUNBLDJCQUFBO0VBQ0EsNEJBQUE7RUFDQSxrQkFBQTtBQUNGIiwiZmlsZSI6ImVkaXRhci1iYW5uZXItY3Vyc28uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuYmFubmVyIHtcclxuICB3aWR0aDogYXV0byAhaW1wb3J0YW50O1xyXG4gIG1pbi1oZWlnaHQ6IGF1dG8gIWltcG9ydGFudDtcclxuICBtYXgtaGVpZ2h0OiAzMDBweCAhaW1wb3J0YW50O1xyXG4gIGJvcmRlci1yYWRpdXM6IDVweDtcclxufVxyXG4iXX0= */");
 
 /***/ }),
 
@@ -3387,6 +3341,13 @@ let CursosService = class CursosService {
             { val: 'radio', label: 'Respuesta única' },
             { val: 'checkbox', label: 'Respuesta múltiple' },
         ];
+        this.levelsList = [
+            { val: 1, label: 'Nivel 1' },
+            { val: 2, label: 'Nivel 2' },
+            { val: 3, label: 'Nivel 3' },
+            { val: 4, label: 'Nivel 4' },
+            { val: 5, label: 'Nivel 5' },
+        ];
         this.roles = [
             'Pastores',
             'Supervisores',
@@ -3413,14 +3374,6 @@ let CursosService = class CursosService {
     /*
       API services
      */
-    getCoursesTotals(query = {}) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.getData('/admin/courses/counters', query);
-            if (res && res.success)
-                return res.data.totals;
-            return this.globalSer.altResponse(res);
-        });
-    }
     getCourses(query = {}) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const res = yield this.axios.getData('/admin/courses', query);
@@ -3470,7 +3423,7 @@ let CursosService = class CursosService {
         });
     }
     /*
-      Temaries
+      Temary
      */
     createThemeCourse(id, data) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -3496,79 +3449,6 @@ let CursosService = class CursosService {
             return this.globalSer.altResponse(res);
         });
     }
-    /*
-     Content
-     */
-    createContentThemeCourse(id, themeId, data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.postData(`/admin/courses/${id}/theme/${themeId}/content`, data);
-            if (res && res.success)
-                return res.data.content;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    updateContentThemeCourse(id, themeId, contentId, data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.putData(`/admin/courses/${id}/theme/${themeId}/content/${contentId}`, data);
-            if (res && res.success)
-                return res.data.content;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    deleteContentThemeCourse(id, themeId, contentId) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.deleteData(`/admin/courses/${id}/theme/${themeId}/content/${contentId}`);
-            if (res && res.success)
-                return res.data.msg;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    /*
-     Questions
-     */
-    addQuestionTestThemeCourse(id, themeId, data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.postData(`/admin/courses/${id}/theme/${themeId}/test`, data);
-            if (res && res.success)
-                return res.data.question;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    updateQuestionTestThemeCourse(id, themeId, questionId, data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.putData(`/admin/courses/${id}/theme/${themeId}/test/${questionId}`, data);
-            if (res && res.success)
-                return res.data.question;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    deleteQuestionTestThemeCourse(id, themeId, questionId) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.deleteData(`/admin/courses/${id}/theme/${themeId}/test/${questionId}`);
-            if (res && res.success)
-                return res.data.msg;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    /*
-     Levels
-     */
-    addLevelCourse(id, data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.postData(`/admin/courses/${id}/levels`, data);
-            if (res && res.success)
-                return res.data.msg;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    deleteLevelCourse(id, levelId) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.deleteData(`/admin/courses/${id}/levels/${levelId}`);
-            if (res && res.success)
-                return res.data.msg;
-            return this.globalSer.altResponse(res);
-        });
-    }
     publishCourse(id) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const res = yield this.axios.putData(`/admin/courses/${id}/enable`);
@@ -3585,18 +3465,14 @@ let CursosService = class CursosService {
             return 'Disculpe, pero debe indicar un título para el curso.';
         if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_4__["checkTitlesOrDescriptions"])(data.description))
             return 'Disculpe, pero debe indicar una descripción para el curso.';
-        if (!data.banner)
-            return 'Disculpe, pero debe subir una imagen para el curso.';
+        if ([1, 2, 3, 4, 5].indexOf(data.level) === -1)
+            return 'Disculpe, pero debe indicar el nivel del nuevo curso.';
         if (data.toRoles.length === 0)
             return 'Disculpe, pero debe indicar los roles a los que va dirigido el curso.';
         return null;
     }
     validationEdit(section, data) {
-        if (section === 'banner') {
-            if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_4__["checkBase64"])(data))
-                return 'Disculpe, pero debe seleccionar una imagen válida.';
-        }
-        else if (section === 'content') {
+        if (section === 'content') {
             if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_4__["checkTitlesOrDescriptions"])(data.title))
                 return 'Disculpe, pero debe indicar un título para el tema.';
             if (!data.urlVideo && !data.description)
@@ -3629,13 +3505,31 @@ let CursosService = class CursosService {
                 return 'Disculpe, pero debe indicar un título para la pregunta.';
             if (data.description && data.description.length <= 5)
                 return 'Disculpe, pero debe indicar una descripción válida para la pregunta.';
-            if (!data.inputType)
-                return 'Disculpe, pero debe indicar el tipo de campo para la pregunta.';
-            if (['text', 'textarea'].indexOf(`${data.inputType}`) === -1) {
-                if (!data.values && data.values.length === 0)
-                    return 'Disculpe, pero debe indicar opciones disponibles para la respuesta.';
-                if (data.correctAnswer === null)
-                    return 'Disculpe, pero debe seleccionar una respuesta correcta.';
+            if (data.quiz && data.quiz.length === 0)
+                return 'Disculpe, pero agregar preguntas para el Quiz.';
+            else {
+                let error = false;
+                let msg = null;
+                for (const q of data.quiz) {
+                    if (!Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_4__["checkTitlesOrDescriptions"])(q.title))
+                        msg = 'Disculpe, pero debe indicar un título para la pregunta.';
+                    if (q.description && q.description.length <= 5)
+                        msg = 'Disculpe, pero debe indicar una descripción válida para la pregunta.';
+                    if (!q.inputType)
+                        msg = 'Disculpe, pero debe indicar el tipo de campo para la pregunta.';
+                    if (['text', 'textarea'].indexOf(`${q.inputType}`) === -1) {
+                        if (!q.values && q.values.length === 0)
+                            msg = 'Disculpe, pero debe indicar opciones disponibles para la respuesta.';
+                        if (q.correctAnswer === null)
+                            msg = 'Disculpe, pero debe seleccionar una respuesta correcta.';
+                    }
+                    if (msg) {
+                        error = true;
+                        break;
+                    }
+                }
+                if (error)
+                    return msg;
             }
         }
         return null;
@@ -4847,74 +4741,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "EnSQ":
-/*!******************************************!*\
-  !*** ./src/app/services/data.service.ts ***!
-  \******************************************/
-/*! exports provided: DataService */
+/***/ "EZ7q":
+/*!***************************************************************!*\
+  !*** ./src/app/components/groupcard/groupcard.component.scss ***!
+  \***************************************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-
-
-let DataService = class DataService {
-    constructor() { }
-    resizePhoto(file, maxSize, outputType, callback) {
-        const reader = new FileReader();
-        reader.onload = (readerEvent) => {
-            this.resizeReresize(readerEvent.target.result, maxSize, outputType, callback);
-        };
-        reader.readAsDataURL(file);
-    }
-    resizeReresize(dataURL, maxSize, outputType, callback) {
-        const image = new Image();
-        image.onload = (imageEvent) => {
-            // Resize image
-            const canvas = document.createElement('canvas');
-            let width = image.width;
-            let height = image.height;
-            if (width > height) {
-                if (width > maxSize) {
-                    height *= maxSize / width;
-                    width = maxSize;
-                }
-            }
-            else if (height > maxSize) {
-                width *= maxSize / height;
-                height = maxSize;
-            }
-            canvas.width = width;
-            canvas.height = height;
-            canvas.getContext('2d').drawImage(image, 0, 0, width, height);
-            this.resizeOuput(canvas, outputType, callback);
-        };
-        image.src = dataURL;
-    }
-    resizeOuput(canvas, outputType, callback) {
-        switch (outputType) {
-            case 'file':
-                canvas.toBlob((blob) => {
-                    callback(blob);
-                }, 'image/jpeg', 0.8);
-                break;
-            case 'dataURL':
-                callback(canvas.toDataURL('image/jpeg', 0.8));
-                break;
-        }
-    }
-};
-DataService.ctorParameters = () => [];
-DataService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
-    })
-], DataService);
-
-
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJncm91cGNhcmQuY29tcG9uZW50LnNjc3MifQ== */");
 
 /***/ }),
 
@@ -4927,7 +4763,7 @@ DataService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-row *ngIf=\"data\">\n  <ion-col [size]=\"12\" size-sm=\"12\">\n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Nombre del curso (*)</ion-label>\n          <ion-input\n            [value]=\"formData.title\"\n            (change)=\"setValue('title', $event)\"\n            name=\"title\"\n            class=\"ion-text-uppercase\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Descripcion del curso (*)</ion-label>\n          <ion-textarea\n            [value]=\"formData.description\"\n            (change)=\"setValue('description', $event)\"\n            name=\"description\"\n            rows=\"6\"\n            placeholder=\"Escribe aqui...\"\n          ></ion-textarea>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Nombre del ponente (*)</ion-label>\n          <ion-input\n            [value]=\"formData.speaker\"\n            (change)=\"setValue('speaker', $event)\"\n            name=\"speaker\"\n            class=\"ion-text-uppercase\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Cargo o posición del ponente (*)</ion-label>\n          <ion-input\n            [value]=\"formData.speakerPosition\"\n            (change)=\"setValue('speakerPosition', $event)\"\n            name=\"speakerPosition\"\n            class=\"ion-text-uppercase\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Roles a los que va dirigido (*)</ion-label>\n          <ion-input\n            [readonly]=\"true\"\n            [value]=\"getRoles(formData.toRoles)\"\n            autocomplete=\"off\"\n            (click)=\"showRoleListAlert(formData.toRoles)\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-col>\n  <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n    <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n  </ion-col>\n  <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n    <ion-button color=\"light\" (click)=\"cancel()\">\n      <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n      <ion-text>Cancelar</ion-text>\n    </ion-button>\n    <ion-button color=\"primary\" (click)=\"confirmEdit('info')\">\n      <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n      <ion-text>Guardar</ion-text>\n    </ion-button>\n  </ion-col>\n</ion-row>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-row *ngIf=\"data\">\n  <ion-col [size]=\"12\" size-sm=\"12\">\n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Nombre del curso (*)</ion-label>\n          <ion-input\n            [value]=\"formData.title\"\n            (change)=\"setValue('title', $event)\"\n            name=\"title\"\n            class=\"ion-text-uppercase\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Descripcion del curso (*)</ion-label>\n          <ion-textarea\n            [value]=\"formData.description\"\n            (change)=\"setValue('description', $event)\"\n            name=\"description\"\n            rows=\"6\"\n            placeholder=\"Escribe aqui...\"\n          ></ion-textarea>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"6\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Nombre del ponente (*)</ion-label>\n          <ion-input\n            [value]=\"formData.speaker\"\n            (change)=\"setValue('speaker', $event)\"\n            name=\"speaker\"\n            class=\"ion-text-uppercase\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"6\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Cargo o posición del ponente (*)</ion-label>\n          <ion-input\n            [value]=\"formData.speakerPosition\"\n            (change)=\"setValue('speakerPosition', $event)\"\n            name=\"speakerPosition\"\n            class=\"ion-text-uppercase\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"6\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Nivel del curso (*)</ion-label>\n          <ion-input\n            [readonly]=\"true\"\n            [value]=\"getLevel(formData.level)\"\n            autocomplete=\"off\"\n            class=\"no-selected-text\"\n            (click)=\"showLevelsListAlert(formData.level)\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col size=\"12\" size-sm=\"6\">\n        <ion-item>\n          <ion-label position=\"floating\" color=\"medium\">Roles a los que va dirigido (*)</ion-label>\n          <ion-input\n            [readonly]=\"true\"\n            [value]=\"getRoles(formData.toRoles)\"\n            autocomplete=\"off\"\n            class=\"no-selected-text\"\n            (click)=\"showRoleListAlert(formData.toRoles)\"\n          ></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-col>\n  <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n    <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n  </ion-col>\n  <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n    <ion-button color=\"light\" (click)=\"cancel()\">\n      <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n      <ion-text>Cancelar</ion-text>\n    </ion-button>\n    <ion-button color=\"primary\" (click)=\"confirmEdit('info')\">\n      <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n      <ion-text>Guardar</ion-text>\n    </ion-button>\n  </ion-col>\n</ion-row>\n");
 
 /***/ }),
 
@@ -5914,19 +5750,6 @@ const WebView = /*#__PURE__*/ registerPlugin('WebView');
 
 /***/ }),
 
-/***/ "GYlW":
-/*!******************************************************************************************!*\
-  !*** ./src/app/components/cursos/cursos-previos-card/cursos-previos-card.component.scss ***!
-  \******************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjdXJzb3MtcHJldmlvcy1jYXJkLmNvbXBvbmVudC5zY3NzIn0= */");
-
-/***/ }),
-
 /***/ "H8ED":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/be.js ***!
@@ -6707,19 +6530,6 @@ const YoutubePlayerWeb = new YoutubePlayerPluginWeb();
 
 /***/ }),
 
-/***/ "IJhF":
-/*!********************************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/cursos/cursos-previos-card/cursos-previos-card.component.html ***!
-  \********************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-card *ngIf=\"course\">\n  <img class=\"banner\" [src]=\"course.banner || 'assets/icon/escuela.svg'\"/>\n  <ion-card-header>\n    <ion-card-title>\n      <ion-icon name=\"{{ course.enable ? 'earth' : 'alert-circle' }}-outline\"></ion-icon>\n      {{ course.title }}\n    </ion-card-title>\n  </ion-card-header>\n  <ion-card-content>\n    <ion-row class=\"ion-no-padding ion-no-margin\">\n      <ion-col size=\"12\">\n        <ion-text class=\"no-selected-text\" *ngIf=\"!course.description\">Sin descripción.</ion-text>\n        <ion-text class=\"no-selected-text\" *ngIf=\"course.description\">\n          {{ course.description.length > 50 ? course.description.substr(0, 50) + '...' : course.description }}\n        </ion-text>\n      </ion-col>\n      <ion-col [size]=\"12\" *ngIf=\"add\">\n        <ion-button color=\"{{ added ? 'light' : 'primary' }}\" (click)=\"handleAddRemove(course._id)\">\n          <ion-icon name=\"{{ added ? 'close' : 'add' }}-outline\" slot=\"start\"></ion-icon>\n          <ion-text>{{ added ? 'Quitar' : 'Agregar' }}</ion-text>\n        </ion-button>\n      </ion-col>\n      <ion-col class=\"ion-text-center\" [size]=\"12\" *ngIf=\"!add\">\n        <ion-button color=\"light\" (click)=\"handleDelete(course._id)\">\n          <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n          <ion-text>Remover</ion-text>\n        </ion-button>\n      </ion-col>\n    </ion-row>\n  </ion-card-content>\n</ion-card>\n");
-
-/***/ }),
-
 /***/ "Ivi+":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/ko.js ***!
@@ -6975,7 +6785,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".min-height-120 {\n  min-height: 120px !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2V2ZW50Y2FyZC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLDRCQUFBO0FBQ0YiLCJmaWxlIjoiZXZlbnRjYXJkLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm1pbi1oZWlnaHQtMTIwIHtcclxuICBtaW4taGVpZ2h0OiAxMjBweCAhaW1wb3J0YW50O1xyXG59XHJcbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".min-height-120 {\n  min-height: 120px !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFxldmVudGNhcmQuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSw0QkFBQTtBQUNGIiwiZmlsZSI6ImV2ZW50Y2FyZC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5taW4taGVpZ2h0LTEyMCB7XHJcbiAgbWluLWhlaWdodDogMTIwcHggIWltcG9ydGFudDtcclxufVxyXG4iXX0= */");
 
 /***/ }),
 
@@ -24436,13 +24246,14 @@ return src;
 /*!********************************************!*\
   !*** ./src/Utils/validations.functions.ts ***!
   \********************************************/
-/*! exports provided: checkNameOrLastName, onlyNumbersInputValidation, onlyLettersInputValidation, checkRole, checkRoleAdmin, checkIfValueIsNumber, checkDocument, checkYoutubeUrl, checkInputTypeValueToTest, checkPhone, checkPassword, checkEmail, checkTitlesOrDescriptions, checkCodeValue, checkDate, checkHour, checkDateMonthAndYear, checkBase64, checkUrl, checkSlug, checkUUID, checkHtmlContent, setSaltLinesOrBr, replaceNbsp */
+/*! exports provided: checkNameOrLastName, onlyNumbersInputValidation, onlyNumbersInputValidation2, onlyLettersInputValidation, checkRole, checkRoleAdmin, checkIfValueIsNumber, checkDocument, checkYoutubeUrl, checkInputTypeValueToTest, checkPhone, checkPassword, checkEmail, checkTitlesOrDescriptions, checkCodeValue, checkDate, checkHour, checkDateMonthAndYear, checkBase64, checkUrl, checkSlug, checkUUID, checkHtmlContent, setSaltLinesOrBr, replaceNbsp */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkNameOrLastName", function() { return checkNameOrLastName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onlyNumbersInputValidation", function() { return onlyNumbersInputValidation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onlyNumbersInputValidation2", function() { return onlyNumbersInputValidation2; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onlyLettersInputValidation", function() { return onlyLettersInputValidation; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkRole", function() { return checkRole; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkRoleAdmin", function() { return checkRoleAdmin; });
@@ -24471,6 +24282,14 @@ function checkNameOrLastName(value) {
 }
 function onlyNumbersInputValidation(event) {
     const pattern = /[0-9.,]/;
+    const inputChar = String.fromCharCode(event.charCode);
+    if (!pattern.test(inputChar)) {
+        // invalid character, prevent input
+        event.preventDefault();
+    }
+}
+function onlyNumbersInputValidation2(event) {
+    const pattern = /[0-9]/;
     const inputChar = String.fromCharCode(event.charCode);
     if (!pattern.test(inputChar)) {
         // invalid character, prevent input
@@ -25170,7 +24989,7 @@ function replaceNbsp(value) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".banner {\n  width: 100% !important;\n  height: 150px !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL2N1cnNvc2NhcmQuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxzQkFBQTtFQUNBLHdCQUFBO0FBQ0YiLCJmaWxlIjoiY3Vyc29zY2FyZC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5iYW5uZXIge1xyXG4gIHdpZHRoOiAxMDAlICFpbXBvcnRhbnQ7XHJcbiAgaGVpZ2h0OiAxNTBweCAhaW1wb3J0YW50O1xyXG4gIC8vbWFyZ2luOiAwIGF1dG8gIWltcG9ydGFudDtcclxufVxyXG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".icon-courses {\n  width: 100% !important;\n  height: 120px !important;\n  margin: 5px auto !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcY3Vyc29zY2FyZC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLHNCQUFBO0VBQ0Esd0JBQUE7RUFDQSwyQkFBQTtBQUNGIiwiZmlsZSI6ImN1cnNvc2NhcmQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaWNvbi1jb3Vyc2Vze1xyXG4gIHdpZHRoOiAxMDAlICFpbXBvcnRhbnQ7XHJcbiAgaGVpZ2h0OiAxMjBweCAhaW1wb3J0YW50O1xyXG4gIG1hcmdpbjogNXB4IGF1dG8gIWltcG9ydGFudDtcclxufVxyXG5cclxuIl19 */");
 
 /***/ }),
 
@@ -28609,7 +28428,7 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-card class=\"ion-margin-bottom ion-no-padding\" *ngFor=\"let theme of temary\">\n  <ion-card-header class=\"ion-no-padding\">\n    <ion-toolbar>\n      <ion-buttons slot=\"start\">\n        <ion-button (click)=\"viewsT[theme._id] = !viewsT[theme._id]\">\n          <ion-icon name=\"chevron-{{viewsT[theme._id] ? 'up' : 'down' }}-outline\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n      <ion-text><b>{{ theme.title }} ({{theme.content ? theme.content.length : 0}})</b></ion-text>\n      <ion-buttons slot=\"end\">\n        <ion-button color=\"primary\" (click)=\"handlePreview(theme._id, null)\">\n          <ion-icon name=\"eye-outline\"></ion-icon>\n        </ion-button>\n        <ion-button color=\"primary\" (click)=\"handleEditTheme(theme._id)\" *ngIf=\"enableActions\">\n          <ion-icon name=\"pencil-outline\" slot=\"start\"></ion-icon>\n        </ion-button>\n        <ion-button color=\"primary\" (click)=\"handleDeleteTheme(theme._id)\" *ngIf=\"enableActions\">\n          <ion-icon name=\"trash-outline\" slot=\"start\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n    </ion-toolbar>\n  </ion-card-header>\n\n  <ion-card-content *ngIf=\"viewsT[theme._id]\">\n    <ion-toolbar class=\"ion-margin-start\">\n      <ion-buttons slot=\"end\">\n        <ion-button color=\"primary\" (click)=\"handleEditContent(theme._id, null)\" *ngIf=\"enableActions\">\n          <ion-icon name=\"add-outline\"></ion-icon>&nbsp;\n          <ion-text>Agregar contenido</ion-text>\n        </ion-button>\n      </ion-buttons>\n    </ion-toolbar>\n\n    <ion-list *ngIf=\"theme.content && theme.content.length > 0; else noContent\">\n      <ion-item *ngFor=\"let content of theme.content\">\n        <ion-icon name=\"videocam-outline\" slot=\"start\" *ngIf=\"content.urlVideo\"></ion-icon>\n        <ion-icon name=\"text-outline\" slot=\"start\" *ngIf=\"content.description && !content.urlVideo\"></ion-icon>\n        <ion-text>{{ content.title }}</ion-text>\n        <ion-buttons slot=\"end\">\n          <ion-button color=\"primary\" (click)=\"handlePreview(theme._id, content._id)\">\n            <ion-icon name=\"eye-outline\"></ion-icon>\n          </ion-button>\n          <ion-button color=\"primary\" (click)=\"handleEditContent(theme._id, content._id)\" *ngIf=\"enableActions\">\n            <ion-icon name=\"pencil-outline\"></ion-icon>\n          </ion-button>\n          <ion-button color=\"primary\" (click)=\"handleDeleteContent(theme._id, content._id)\" *ngIf=\"enableActions\">\n            <ion-icon name=\"trash-outline\"></ion-icon>\n          </ion-button>\n        </ion-buttons>\n      </ion-item>\n    </ion-list>\n\n    <ng-template #noContent>\n      <ion-row>\n        <ion-col [size]=\"12\" class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-margin-top ion-padding-top ion-text-center no-selected-text\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon> No se ha registado contenido para el tema.\n            </p>\n          </ion-text>\n        </ion-col>\n      </ion-row>\n    </ng-template>\n  </ion-card-content>\n\n</ion-card>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-list>\n  <ion-item *ngFor=\"let theme of temary\">\n    <ion-icon name=\"videocam-outline\" slot=\"start\" *ngIf=\"theme.urlVideo\"></ion-icon>\n    <ion-icon name=\"text-outline\" slot=\"start\" *ngIf=\"theme.description && !theme.urlVideo && !theme.quiz\"></ion-icon>\n    <ion-icon name=\"help-circle-outline\" slot=\"start\" *ngIf=\"theme.quiz\"></ion-icon>\n    <ion-text><b>{{ theme.title }}</b></ion-text>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"handlePreview(theme._id)\">\n        <ion-icon name=\"eye-outline\"></ion-icon>\n      </ion-button>\n      <ion-button color=\"primary\" (click)=\"handleEditTheme(theme._id, !!theme.quiz)\" *ngIf=\"enableActions\">\n        <ion-icon name=\"pencil-outline\" slot=\"start\"></ion-icon>\n      </ion-button>\n      <ion-button color=\"primary\" (click)=\"handleDeleteTheme(theme._id)\" *ngIf=\"enableActions\">\n        <ion-icon name=\"trash-outline\" slot=\"start\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-item>\n</ion-list>\n");
 
 /***/ }),
 
@@ -29363,7 +29182,7 @@ PaginatorComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".custom-height {\n  min-height: 170px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3VzZXItZ3JvdXAtY2FyZC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGlCQUFBO0FBQ0YiLCJmaWxlIjoidXNlci1ncm91cC1jYXJkLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmN1c3RvbS1oZWlnaHQge1xyXG4gIG1pbi1oZWlnaHQ6IDE3MHB4O1xyXG59XHJcbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".custom-height {\n  min-height: 170px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFx1c2VyLWdyb3VwLWNhcmQuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxpQkFBQTtBQUNGIiwiZmlsZSI6InVzZXItZ3JvdXAtY2FyZC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jdXN0b20taGVpZ2h0IHtcclxuICBtaW4taGVpZ2h0OiAxNzBweDtcclxufVxyXG4iXX0= */");
 
 /***/ }),
 
@@ -30794,19 +30613,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _chart_chart_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./chart/chart.component */ "0HKr");
 /* harmony import */ var _cursos_cursoscard_cursoscard_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./cursos/cursoscard/cursoscard.component */ "Vtiu");
-/* harmony import */ var _cursos_cursos_previos_card_cursos_previos_card_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./cursos/cursos-previos-card/cursos-previos-card.component */ "2vPN");
-/* harmony import */ var _cursos_editar_banner_curso_editar_banner_curso_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./cursos/editar-banner-curso/editar-banner-curso.component */ "zhqd");
-/* harmony import */ var _cursos_editar_info_curso_editar_info_curso_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./cursos/editar-info-curso/editar-info-curso.component */ "x4lB");
-/* harmony import */ var _eventcard_eventcard_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./eventcard/eventcard.component */ "U7Qu");
-/* harmony import */ var _familiacard_familiacard_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./familiacard/familiacard.component */ "9W+5");
-/* harmony import */ var _paginator_paginator_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./paginator/paginator.component */ "bM8H");
-/* harmony import */ var _cursos_temarylist_temarylist_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./cursos/temarylist/temarylist.component */ "B35U");
-/* harmony import */ var _cursos_test_list_test_list_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./cursos/test-list/test-list.component */ "jHTo");
-/* harmony import */ var _usercard_usercard_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./usercard/usercard.component */ "nfHg");
-/* harmony import */ var _user_group_card_user_group_card_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./user-group-card/user-group-card.component */ "ATsP");
-/* harmony import */ var _video_player_video_player_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./video-player/video-player.component */ "Vsu4");
-
-
+/* harmony import */ var _cursos_editar_info_curso_editar_info_curso_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./cursos/editar-info-curso/editar-info-curso.component */ "x4lB");
+/* harmony import */ var _eventcard_eventcard_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./eventcard/eventcard.component */ "U7Qu");
+/* harmony import */ var _familiacard_familiacard_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./familiacard/familiacard.component */ "9W+5");
+/* harmony import */ var _groupcard_groupcard_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./groupcard/groupcard.component */ "rGMx");
+/* harmony import */ var _paginator_paginator_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./paginator/paginator.component */ "bM8H");
+/* harmony import */ var _cursos_temarylist_temarylist_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./cursos/temarylist/temarylist.component */ "B35U");
+/* harmony import */ var _usercard_usercard_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./usercard/usercard.component */ "nfHg");
+/* harmony import */ var _user_group_card_user_group_card_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./user-group-card/user-group-card.component */ "ATsP");
+/* harmony import */ var _video_player_video_player_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./video-player/video-player.component */ "Vsu4");
 
 
 
@@ -30829,17 +30644,15 @@ ComponentsModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         declarations: [
             _chart_chart_component__WEBPACK_IMPORTED_MODULE_4__["ChartComponent"],
             _cursos_cursoscard_cursoscard_component__WEBPACK_IMPORTED_MODULE_5__["CursoscardComponent"],
-            _cursos_cursos_previos_card_cursos_previos_card_component__WEBPACK_IMPORTED_MODULE_6__["CursosPreviosCardComponent"],
-            _cursos_editar_banner_curso_editar_banner_curso_component__WEBPACK_IMPORTED_MODULE_7__["EditarBannerCursoComponent"],
-            _cursos_editar_info_curso_editar_info_curso_component__WEBPACK_IMPORTED_MODULE_8__["EditarInfoCursoComponent"],
-            _eventcard_eventcard_component__WEBPACK_IMPORTED_MODULE_9__["EventcardComponent"],
-            _familiacard_familiacard_component__WEBPACK_IMPORTED_MODULE_10__["FamiliacardComponent"],
-            _paginator_paginator_component__WEBPACK_IMPORTED_MODULE_11__["PaginatorComponent"],
-            _cursos_temarylist_temarylist_component__WEBPACK_IMPORTED_MODULE_12__["TemarylistComponent"],
-            _cursos_test_list_test_list_component__WEBPACK_IMPORTED_MODULE_13__["TestListComponent"],
-            _usercard_usercard_component__WEBPACK_IMPORTED_MODULE_14__["UsercardComponent"],
-            _user_group_card_user_group_card_component__WEBPACK_IMPORTED_MODULE_15__["UserGroupCardComponent"],
-            _video_player_video_player_component__WEBPACK_IMPORTED_MODULE_16__["VideoPlayerComponent"],
+            _cursos_editar_info_curso_editar_info_curso_component__WEBPACK_IMPORTED_MODULE_6__["EditarInfoCursoComponent"],
+            _eventcard_eventcard_component__WEBPACK_IMPORTED_MODULE_7__["EventcardComponent"],
+            _familiacard_familiacard_component__WEBPACK_IMPORTED_MODULE_8__["FamiliacardComponent"],
+            _groupcard_groupcard_component__WEBPACK_IMPORTED_MODULE_9__["GroupcardComponent"],
+            _paginator_paginator_component__WEBPACK_IMPORTED_MODULE_10__["PaginatorComponent"],
+            _cursos_temarylist_temarylist_component__WEBPACK_IMPORTED_MODULE_11__["TemarylistComponent"],
+            _usercard_usercard_component__WEBPACK_IMPORTED_MODULE_12__["UsercardComponent"],
+            _user_group_card_user_group_card_component__WEBPACK_IMPORTED_MODULE_13__["UserGroupCardComponent"],
+            _video_player_video_player_component__WEBPACK_IMPORTED_MODULE_14__["VideoPlayerComponent"],
         ],
         imports: [
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _ionic_angular__WEBPACK_IMPORTED_MODULE_3__["IonicModule"]
@@ -30847,72 +30660,18 @@ ComponentsModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         exports: [
             _chart_chart_component__WEBPACK_IMPORTED_MODULE_4__["ChartComponent"],
             _cursos_cursoscard_cursoscard_component__WEBPACK_IMPORTED_MODULE_5__["CursoscardComponent"],
-            _cursos_cursos_previos_card_cursos_previos_card_component__WEBPACK_IMPORTED_MODULE_6__["CursosPreviosCardComponent"],
-            _cursos_editar_banner_curso_editar_banner_curso_component__WEBPACK_IMPORTED_MODULE_7__["EditarBannerCursoComponent"],
-            _cursos_editar_info_curso_editar_info_curso_component__WEBPACK_IMPORTED_MODULE_8__["EditarInfoCursoComponent"],
-            _eventcard_eventcard_component__WEBPACK_IMPORTED_MODULE_9__["EventcardComponent"],
-            _familiacard_familiacard_component__WEBPACK_IMPORTED_MODULE_10__["FamiliacardComponent"],
-            _paginator_paginator_component__WEBPACK_IMPORTED_MODULE_11__["PaginatorComponent"],
-            _cursos_temarylist_temarylist_component__WEBPACK_IMPORTED_MODULE_12__["TemarylistComponent"],
-            _cursos_test_list_test_list_component__WEBPACK_IMPORTED_MODULE_13__["TestListComponent"],
-            _usercard_usercard_component__WEBPACK_IMPORTED_MODULE_14__["UsercardComponent"],
-            _user_group_card_user_group_card_component__WEBPACK_IMPORTED_MODULE_15__["UserGroupCardComponent"],
-            _video_player_video_player_component__WEBPACK_IMPORTED_MODULE_16__["VideoPlayerComponent"],
+            _cursos_editar_info_curso_editar_info_curso_component__WEBPACK_IMPORTED_MODULE_6__["EditarInfoCursoComponent"],
+            _eventcard_eventcard_component__WEBPACK_IMPORTED_MODULE_7__["EventcardComponent"],
+            _familiacard_familiacard_component__WEBPACK_IMPORTED_MODULE_8__["FamiliacardComponent"],
+            _groupcard_groupcard_component__WEBPACK_IMPORTED_MODULE_9__["GroupcardComponent"],
+            _paginator_paginator_component__WEBPACK_IMPORTED_MODULE_10__["PaginatorComponent"],
+            _cursos_temarylist_temarylist_component__WEBPACK_IMPORTED_MODULE_11__["TemarylistComponent"],
+            _usercard_usercard_component__WEBPACK_IMPORTED_MODULE_12__["UsercardComponent"],
+            _user_group_card_user_group_card_component__WEBPACK_IMPORTED_MODULE_13__["UserGroupCardComponent"],
+            _video_player_video_player_component__WEBPACK_IMPORTED_MODULE_14__["VideoPlayerComponent"],
         ]
     })
 ], ComponentsModule);
-
-
-
-/***/ }),
-
-/***/ "jHTo":
-/*!********************************************************************!*\
-  !*** ./src/app/components/cursos/test-list/test-list.component.ts ***!
-  \********************************************************************/
-/*! exports provided: TestListComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TestListComponent", function() { return TestListComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _raw_loader_test_list_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./test-list.component.html */ "oEZ0");
-/* harmony import */ var _test_list_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./test-list.component.scss */ "ltrQ");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-
-
-
-
-let TestListComponent = class TestListComponent {
-    constructor() {
-        this.data = [];
-        this.enableActions = false;
-        this.viewsT = {};
-        this.listsIdsForViews = [];
-    }
-    ngOnInit() {
-        if (this.data.length > 0) {
-            this.listsIdsForViews = this.data.map(t => t._id);
-            this.listsIdsForViews.forEach(i => this.viewsT[i] = false);
-        }
-    }
-};
-TestListComponent.ctorParameters = () => [];
-TestListComponent.propDecorators = {
-    data: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    enableActions: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    handlePreview: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    handleEditQuestion: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    handleDeleteQuestion: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
-};
-TestListComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
-        selector: 'app-test-list',
-        template: _raw_loader_test_list_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
-        styles: [_test_list_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
-    })
-], TestListComponent);
 
 
 
@@ -31797,19 +31556,6 @@ TestListComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
-/***/ "kYdX":
-/*!********************************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/cursos/editar-banner-curso/editar-banner-curso.component.html ***!
-  \********************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-row class=\"ion-align-items-center\">\n  <ion-col [size]=\"12\" size-sm=\"6\" class=\"ion-align-items-center ion-text-center\">\n    <img [src]=\"banner || 'assets/photo.png'\" class=\"banner\">\n    <ion-text class=\"ion-hide-sm-up\"><p><b><i>Imagen actual</i></b></p></ion-text>\n  </ion-col>\n  <ion-col [size]=\"12\" size-sm=\"6\" class=\"ion-align-items-center ion-text-center\">\n    <label class=\"micursor ion-text-center w-100\">\n      <input type='file' accept=\"image/x-png,image/gif,image/jpeg,image/jpg\" (change)='openFile($event)' hidden>\n      <img [src]=\"formData.banner || 'assets/photo.png'\" class=\"banner\">\n    </label>\n    <ion-text class=\"ion-hide-sm-up\"><p><b><i>Clic para cargar una imagen (*)</i></b></p></ion-text>\n  </ion-col>\n  <ion-col size=\"12\" size-sm=\"6\" class=\"ion-text-center ion-hide-sm-down\">\n    <ion-text><b><i>Imagen actual</i></b></ion-text>\n  </ion-col>\n  <ion-col size=\"12\" size-sm=\"6\" class=\"ion-text-center ion-hide-sm-down\">\n    <ion-text><b><i>Clic para cargar una imagen (*)</i></b></ion-text>\n  </ion-col>\n  <ion-col size=\"12\" class=\"ion-margin-top\">\n    <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n  </ion-col>\n  <ion-col size=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n    <ion-button color=\"light\" (click)=\"cancel()\">\n      <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n      <ion-text>Cancelar</ion-text>\n    </ion-button>\n    <ion-button color=\"primary\" (click)=\"confirmUpdateBanner()\">\n      <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n      <ion-text>Guardar</ion-text>\n    </ion-button>\n  </ion-col>\n</ion-row>\n");
-
-/***/ }),
-
 /***/ "l5ep":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/cy.js ***!
@@ -32537,19 +32283,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "ltrQ":
-/*!**********************************************************************!*\
-  !*** ./src/app/components/cursos/test-list/test-list.component.scss ***!
-  \**********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ0ZXN0LWxpc3QuY29tcG9uZW50LnNjc3MifQ== */");
-
-/***/ }),
-
 /***/ "lyxo":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/ro.js ***!
@@ -32727,7 +32460,7 @@ UsercardComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".pointer {\n  cursor: pointer !important;\n}\n\n.min-height-100 {\n  min-height: 100% !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3VzZXJjYXJkLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsMEJBQUE7QUFDRjs7QUFDQTtFQUNFLDJCQUFBO0FBRUYiLCJmaWxlIjoidXNlcmNhcmQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucG9pbnRlciB7XHJcbiAgY3Vyc29yOiBwb2ludGVyICFpbXBvcnRhbnQ7XHJcbn1cclxuLm1pbi1oZWlnaHQtMTAwIHtcclxuICBtaW4taGVpZ2h0OiAxMDAlICFpbXBvcnRhbnQ7XHJcbn1cclxuIl19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".pointer {\n  cursor: pointer !important;\n}\n\n.min-height-100 {\n  min-height: 100% !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFx1c2VyY2FyZC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLDBCQUFBO0FBQ0Y7O0FBQ0E7RUFDRSwyQkFBQTtBQUVGIiwiZmlsZSI6InVzZXJjYXJkLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnBvaW50ZXIge1xyXG4gIGN1cnNvcjogcG9pbnRlciAhaW1wb3J0YW50O1xyXG59XHJcbi5taW4taGVpZ2h0LTEwMCB7XHJcbiAgbWluLWhlaWdodDogMTAwJSAhaW1wb3J0YW50O1xyXG59XHJcbiJdfQ== */");
 
 /***/ }),
 
@@ -33031,19 +32764,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "oEZ0":
-/*!************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/cursos/test-list/test-list.component.html ***!
-  \************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-card class=\"ion-margin-bottom ion-no-padding\" *ngFor=\"let theme of data\">\n  <ion-card-header class=\"ion-no-padding\">\n    <ion-toolbar>\n      <ion-buttons slot=\"start\">\n        <ion-button (click)=\"viewsT[theme._id] = !viewsT[theme._id]\">\n          <ion-icon name=\"chevron-{{viewsT[theme._id] ? 'up' : 'down' }}-outline\"></ion-icon>\n        </ion-button>\n      </ion-buttons>\n      <ion-text><b>{{ theme.title }} ({{ theme.test ? theme.test.length : 0 }})</b></ion-text>\n      <ion-buttons slot=\"end\" class=\"theme.test && theme.test.length > 0\">\n        <ion-button color=\"primary\" (click)=\"handlePreview(theme._id)\">\n          <ion-icon name=\"eye-outline\" slot=\"start\"></ion-icon>\n          <ion-text>Ver prueba</ion-text>\n        </ion-button>\n      </ion-buttons>\n    </ion-toolbar>\n  </ion-card-header>\n\n  <ion-card-content *ngIf=\"viewsT[theme._id]\">\n\n    <ion-toolbar class=\"ion-margin-start\" *ngIf=\"enableActions\">\n      <ion-buttons slot=\"end\">\n        <ion-button color=\"primary\" (click)=\"handleEditQuestion(theme._id, null)\">\n          <ion-icon name=\"add-outline\"></ion-icon>&nbsp;\n          <ion-text>Agregar pregunta</ion-text>\n        </ion-button>\n      </ion-buttons>\n    </ion-toolbar>\n\n    <ion-list *ngIf=\"theme.test && theme.test.length > 0; else noTests\">\n      <ion-item *ngFor=\"let t of theme.test\">\n        <ion-icon name=\"text-outline\" slot=\"start\" *ngIf=\"['text', 'textarea'].indexOf(t.inputType) > -1\"></ion-icon>\n        <ion-icon name=\"radio-button-on-outline\" slot=\"start\" *ngIf=\"t.inputType === 'radio'\"></ion-icon>\n        <ion-icon name=\"checkbox-outline\" slot=\"start\" *ngIf=\"t.inputType === 'checkbox'\"></ion-icon>\n\n        <ion-text>{{ t.title }} {{ t.require ? '(*)' : '' }}</ion-text>\n\n        <ion-buttons slot=\"end\" *ngIf=\"enableActions\">\n          <ion-button color=\"primary\" (click)=\"handleEditQuestion(theme._id, t._id)\">\n            <ion-icon name=\"pencil-outline\"></ion-icon>\n          </ion-button>\n          <ion-button color=\"primary\" (click)=\"handleDeleteQuestion(theme._id, t._id)\">\n            <ion-icon name=\"trash-outline\"></ion-icon>\n          </ion-button>\n        </ion-buttons>\n      </ion-item>\n    </ion-list>\n\n    <ng-template #noTests>\n      <ion-row>\n        <ion-col [size]=\"12\" class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-margin-top ion-padding-top ion-text-center no-selected-text\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon> No existen preguntas para la prueba de este tema.\n            </p>\n          </ion-text>\n        </ion-col>\n      </ion-row>\n    </ng-template>\n  </ion-card-content>\n\n</ion-card>\n");
-
-/***/ }),
-
 /***/ "p/rL":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/bm.js ***!
@@ -33255,6 +32975,60 @@ __webpack_require__.r(__webpack_exports__);
     return gomDeva;
 
 })));
+
+
+/***/ }),
+
+/***/ "rGMx":
+/*!*************************************************************!*\
+  !*** ./src/app/components/groupcard/groupcard.component.ts ***!
+  \*************************************************************/
+/*! exports provided: GroupcardComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GroupcardComponent", function() { return GroupcardComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_groupcard_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./groupcard.component.html */ "1Bxu");
+/* harmony import */ var _groupcard_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./groupcard.component.scss */ "EZ7q");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+
+
+let GroupcardComponent = class GroupcardComponent {
+    constructor() {
+        this.group = {
+            _id: null,
+            name: null,
+            number: null,
+            sector: null,
+            subSector: null
+        };
+    }
+    ngOnInit() {
+        if (this.data) {
+            this.group._id = this.data._id;
+            this.group.name = this.data.name;
+            this.group.number = this.data.number;
+            this.group.sector = this.data.sector !== null && this.data.sector !== undefined ? this.data.sector : null;
+            this.group.subSector = this.data.subSector !== null && this.data.subSector !== undefined ? this.data.subSector : null;
+        }
+    }
+};
+GroupcardComponent.ctorParameters = () => [];
+GroupcardComponent.propDecorators = {
+    data: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
+};
+GroupcardComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-groupcard',
+        template: _raw_loader_groupcard_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_groupcard_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], GroupcardComponent);
+
 
 
 /***/ }),
@@ -40191,13 +39965,16 @@ let EditarInfoCursoComponent = class EditarInfoCursoComponent {
     constructor(cursosService, globalSer) {
         this.cursosService = cursosService;
         this.globalSer = globalSer;
+        this.levels = [];
         this.formData = {
             title: null,
             description: null,
             toRoles: [],
             speaker: null,
             speakerPosition: null,
+            level: null,
         };
+        this.levels = this.cursosService.levelsList;
     }
     ngOnInit() {
         if (this.data) {
@@ -40217,8 +39994,30 @@ let EditarInfoCursoComponent = class EditarInfoCursoComponent {
         this.formData[input] = event.target.value;
     }
     // getters and setters
+    getLevel(level) {
+        const lvl = this.levels.find(l => l.val === level) || null;
+        return lvl ? lvl.label : null;
+    }
     getRoles(roles) {
         return this.cursosService.getRoles(roles);
+    }
+    showLevelsListAlert(selected = []) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const inputs = [];
+            for (const lvl of this.levels) {
+                inputs.push({
+                    name: `lvls`,
+                    type: 'radio',
+                    label: lvl.label,
+                    value: lvl.val,
+                    checked: lvl.val === selected,
+                });
+            }
+            yield this.globalSer.alertWithList({
+                inputs,
+                confirmAction: (selectedValue) => { this.formData.level = selectedValue; }
+            });
+        });
     }
     showRoleListAlert(selected = []) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -40235,9 +40034,7 @@ let EditarInfoCursoComponent = class EditarInfoCursoComponent {
             yield this.globalSer.alertWithList({
                 header: 'Seleccione los roles',
                 inputs,
-                confirmAction: (selectedValue) => {
-                    this.formData.toRoles = selectedValue;
-                }
+                confirmAction: (selectedValue) => { this.formData.toRoles = selectedValue; }
             });
         });
     }
@@ -40729,98 +40526,6 @@ EditarInfoCursoComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate
 
 /***/ }),
 
-/***/ "zhqd":
-/*!****************************************************************************************!*\
-  !*** ./src/app/components/cursos/editar-banner-curso/editar-banner-curso.component.ts ***!
-  \****************************************************************************************/
-/*! exports provided: EditarBannerCursoComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditarBannerCursoComponent", function() { return EditarBannerCursoComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _raw_loader_editar_banner_curso_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./editar-banner-curso.component.html */ "kYdX");
-/* harmony import */ var _editar_banner_curso_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editar-banner-curso.component.scss */ "44yu");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _services_data_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/data.service */ "EnSQ");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
-/* harmony import */ var _views_cursos_cursos_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../views/cursos/cursos.service */ "BpEJ");
-
-
-
-
-
-
-
-let EditarBannerCursoComponent = class EditarBannerCursoComponent {
-    constructor(dataService, globalSer, cursosService) {
-        this.dataService = dataService;
-        this.globalSer = globalSer;
-        this.cursosService = cursosService;
-        this.banner = null;
-        this.formData = {
-            banner: null
-        };
-    }
-    ngOnInit() { }
-    cancel() {
-        this.formData.banner = null;
-        this.handleCancel();
-    }
-    save() {
-        if (!this.formData.banner)
-            this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe indicar cargar una imagen.');
-        else
-            this.handleSave(this.formData.banner);
-    }
-    // actions form
-    openFile(event) {
-        const files = event.target.files;
-        if (typeof files[0] !== 'object')
-            return false;
-        else {
-            this.dataService.resizePhoto(files[0], 900, 'dataURL', (resizedFile) => {
-                this.formData.banner = resizedFile;
-            });
-        }
-    }
-    confirmUpdateBanner() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const validated = this.cursosService.validationEdit('banner', this.formData.banner);
-            if (!validated) {
-                yield this.globalSer.alertConfirm({
-                    message: '¿Está seguro qué desea cambiar la imagen del curso?',
-                    confirmAction: () => this.save()
-                });
-            }
-            else
-                yield this.globalSer.presentAlert('Alerta', validated || 'Disculpe, pero debe seleccionar la nueva imagen.');
-        });
-    }
-};
-EditarBannerCursoComponent.ctorParameters = () => [
-    { type: _services_data_service__WEBPACK_IMPORTED_MODULE_4__["DataService"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_5__["GlobalService"] },
-    { type: _views_cursos_cursos_service__WEBPACK_IMPORTED_MODULE_6__["CursosService"] }
-];
-EditarBannerCursoComponent.propDecorators = {
-    handleCancel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    handleSave: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
-    banner: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
-};
-EditarBannerCursoComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
-        selector: 'app-editar-banner-curso',
-        template: _raw_loader_editar_banner_curso_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
-        styles: [_editar_banner_curso_component_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
-    })
-], EditarBannerCursoComponent);
-
-
-
-/***/ }),
-
 /***/ "zx6S":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/sr.js ***!
@@ -40960,4 +40665,4 @@ EditarBannerCursoComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decora
 /***/ })
 
 }]);
-//# sourceMappingURL=default~views-cuentas-bancarias-cuentas-bancarias-module~views-cursos-cursos-module~views-eventos-ev~f8026faa.js.map
+//# sourceMappingURL=default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c.js.map

@@ -40,7 +40,7 @@ let IngresarPage = class IngresarPage {
         this.router = router;
         this.globalComponent = globalComponent;
         this.session = false;
-        this.user = 'CC123456789';
+        this.phone = '31612345678';
         this.pass = 'password';
     }
     ngOnInit() {
@@ -65,9 +65,9 @@ let IngresarPage = class IngresarPage {
     }
     ingresar() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            if (this.pass && this.user) {
+            if (this.pass && this.phone) {
                 yield this.globalSer.presentLoading();
-                const res = yield this.axios.postData('/login', { document: this.user, password: this.pass, admin: true });
+                const res = yield this.axios.postData('/login', { phone: this.phone, password: this.pass, admin: true });
                 if (res && res.success) {
                     const { data, token } = res.data;
                     this.cookieService.setCookie('token', token);
@@ -78,7 +78,7 @@ let IngresarPage = class IngresarPage {
                     yield this.router.navigate(['/inicio']);
                 }
                 else {
-                    this.user = null;
+                    this.phone = null;
                     this.pass = null;
                     yield this.globalSer.dismissLoading();
                     yield this.globalSer.presentAlert('Alerta', res && res.error ? res.error : 'Error desconocido.');
@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Ingresar</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-row class=\"ion-justify-content-center ion-margin-top ion-padding-top\" *ngIf=\"!session\">\n    <ion-col [size]=\"8\">\n      <div class=\"ion-margin-top ion-padding-top\">\n        <br><br><br>\n\n        <ion-row class=\"ion-justify-content-center\">\n          <ion-col size=\"auto\">\n            <h4>\n              <ion-text color=\"primary\">\n                Ingresar al panel administrador\n              </ion-text>\n            </h4>\n          </ion-col>\n        </ion-row>\n        <ion-row class=\"ion-justify-content-center\">\n          <ion-col size=\"8\">\n            <ion-item>\n              <ion-label position=\"floating\">Nº de documento</ion-label>\n              <ion-input [(ngModel)]=\"user\" class=\"ion-text-uppercase\" maxlength=\"12\"></ion-input>\n            </ion-item>\n            <ion-text class=\"ion-margin-start ion-margin-top\" color=\"medium\">\n              <i class=\"toSmall\">Ejm: CC123456789 ó PAS123456789</i>\n            </ion-text>\n          </ion-col>\n        </ion-row>\n        <ion-row class=\"ion-justify-content-center\">\n          <ion-col size=\"8\">\n            <ion-item>\n              <ion-label position=\"floating\">Contraseña</ion-label>\n              <ion-input type=\"password\" [(ngModel)]=\"pass\"></ion-input>\n            </ion-item>\n          </ion-col>\n        </ion-row>\n        <ion-row class=\"ion-justify-content-center ion-margin-top\">\n          <ion-col size=\"auto\">\n            <ion-button expand=\"full\" color=\"primary\" (click)=\"ingresar()\">\n              Ingresar\n            </ion-button>\n          </ion-col>\n        </ion-row>\n      </div>\n    </ion-col>\n  </ion-row>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Ingresar</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-row class=\"ion-justify-content-center ion-margin-top ion-padding-top\" *ngIf=\"!session\">\n    <ion-col [size]=\"8\">\n      <div class=\"ion-margin-top ion-padding-top\">\n        <br><br><br>\n\n        <ion-row class=\"ion-justify-content-center\">\n          <ion-col size=\"auto\">\n            <h4>\n              <ion-text color=\"primary\">\n                Ingresar al panel administrador\n              </ion-text>\n            </h4>\n          </ion-col>\n        </ion-row>\n        <ion-row class=\"ion-justify-content-center\">\n          <ion-col size=\"8\">\n            <ion-item>\n              <ion-label position=\"floating\">Nº de teléfono</ion-label>\n              <ion-input [(ngModel)]=\"phone\" class=\"ion-text-uppercase\" maxlength=\"13\"></ion-input>\n            </ion-item>\n          </ion-col>\n        </ion-row>\n        <ion-row class=\"ion-justify-content-center\">\n          <ion-col size=\"8\">\n            <ion-item>\n              <ion-label position=\"floating\">Contraseña</ion-label>\n              <ion-input type=\"password\" [(ngModel)]=\"pass\"></ion-input>\n            </ion-item>\n          </ion-col>\n        </ion-row>\n        <ion-row class=\"ion-justify-content-center ion-margin-top\">\n          <ion-col size=\"auto\">\n            <ion-button expand=\"full\" color=\"primary\" (click)=\"ingresar()\">\n              Ingresar\n            </ion-button>\n          </ion-col>\n        </ion-row>\n      </div>\n    </ion-col>\n  </ion-row>\n\n</ion-content>\n");
 
 /***/ }),
 

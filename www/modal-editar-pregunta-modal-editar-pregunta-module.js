@@ -54,6 +54,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _modal_editar_pregunta_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modal-editar-pregunta-routing.module */ "TeuI");
 /* harmony import */ var _modal_editar_pregunta_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modal-editar-pregunta.page */ "xGAF");
+/* harmony import */ var _ckeditor_ckeditor5_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ckeditor/ckeditor5-angular */ "zioG");
+
 
 
 
@@ -69,7 +71,8 @@ ModalEditarPreguntaPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__dec
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
-            _modal_editar_pregunta_routing_module__WEBPACK_IMPORTED_MODULE_5__["ModalEditarPreguntaPageRoutingModule"]
+            _modal_editar_pregunta_routing_module__WEBPACK_IMPORTED_MODULE_5__["ModalEditarPreguntaPageRoutingModule"],
+            _ckeditor_ckeditor5_angular__WEBPACK_IMPORTED_MODULE_7__["CKEditorModule"],
         ],
         declarations: [_modal_editar_pregunta_page__WEBPACK_IMPORTED_MODULE_6__["ModalEditarPreguntaPage"]]
     })

@@ -137,6 +137,306 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
+/***/ "CV5h":
+/*!************************************************************************************!*\
+  !*** ./src/app/views/miembros/asignar-consolidador/asignar-consolidador.page.scss ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhc2lnbmFyLWNvbnNvbGlkYWRvci5wYWdlLnNjc3MifQ== */");
+
+/***/ }),
+
+/***/ "FA8q":
+/*!**********************************************************************************!*\
+  !*** ./src/app/views/miembros/asignar-consolidador/asignar-consolidador.page.ts ***!
+  \**********************************************************************************/
+/*! exports provided: AsignarConsolidadorPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AsignarConsolidadorPage", function() { return AsignarConsolidadorPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_asignar_consolidador_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./asignar-consolidador.page.html */ "G4yk");
+/* harmony import */ var _asignar_consolidador_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./asignar-consolidador.page.scss */ "CV5h");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+
+
+
+
+
+
+
+let AsignarConsolidadorPage = class AsignarConsolidadorPage {
+    constructor(alertCtrl, axios, globalSer, modalCtrl) {
+        this.alertCtrl = alertCtrl;
+        this.axios = axios;
+        this.globalSer = globalSer;
+        this.modalCtrl = modalCtrl;
+        this.users = [];
+        this.totals = 0;
+        this.pages = 0;
+        this.page = 1;
+        this.showRegisterButton = false;
+        this.selectedUser = null;
+        this.queryParams = {
+            limit: 100,
+            page: 1,
+            input: 'names',
+            value: 1,
+            word: null,
+            admins: 'true',
+            ignoreIds: null
+        };
+        this.handleAdd = (id) => this.addToSelected(id);
+        this.handleRemove = () => this.removeOfSelected();
+    }
+    ngOnInit() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.selectedId)
+                this.queryParams.ignoreIds = this.selectedId;
+            yield this.getMembers();
+        });
+    }
+    closeModal(data = null) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.modalCtrl.dismiss(data);
+        });
+    }
+    getMembers() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.globalSer.presentLoading();
+            const res = yield this.axios.getData('/admin/users', this.queryParams);
+            if (res && res.success) {
+                this.users = res.data.users;
+                yield this.globalSer.dismissLoading();
+            }
+            else {
+                yield this.globalSer.dismissLoading();
+                yield this.globalSer.presentAlert('Alerta', res && res.error ? res.error : 'Error desconocido.');
+            }
+        });
+    }
+    findData() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.getMembers();
+        });
+    }
+    addToSelected(id) {
+        const user = this.users.find(u => u._id === id);
+        if (user)
+            this.selectedUser = user;
+    }
+    removeOfSelected() {
+        this.selectedUser = null;
+    }
+    checkAdded(id) {
+        return this.selectedUser ? this.selectedUser._id === id : false;
+    }
+    confirmSaveNewMembers() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.selectedUser) {
+                yield this.closeModal(this.selectedUser);
+            }
+            else {
+                yield this.globalSer.presentAlert('Alerta', 'Disculpe, pero no debe seleccionar a un miembro.');
+            }
+        });
+    }
+};
+AsignarConsolidadorPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_5__["AxiosService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] }
+];
+AsignarConsolidadorPage.propDecorators = {
+    selectedId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
+    role: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
+};
+AsignarConsolidadorPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-asignar-consolidador',
+        template: _raw_loader_asignar_consolidador_page_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_asignar_consolidador_page_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], AsignarConsolidadorPage);
+
+
+
+/***/ }),
+
+/***/ "G4yk":
+/*!**************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/views/miembros/asignar-consolidador/asignar-consolidador.page.html ***!
+  \**************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Asignar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmSaveNewMembers()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Guardar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\" size-sm=\"7\">\n          <ion-toolbar>\n            <ion-button color=\"light\" (click)=\"queryParams.word = null; findData()\" slot=\"start\" *ngIf=\"queryParams.word\">\n              <ion-icon name=\"backspace-outline\"></ion-icon>\n            </ion-button>\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n              <ion-input\n                [(ngModel)]=\"queryParams.word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n              ></ion-input>\n            </ion-item>\n            <ion-button color=\"light\" (click)=\"queryParams.word !== null || queryParams.word !== '' ? findData() : null\" slot=\"end\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </ion-button>\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users && users.length > 0\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let u of users\">\n      <app-user-group-card\n        [user]=\"u\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(u._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users.length === 0\">\n    <ion-col>\n      <ion-card>\n        <ion-card-content class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-text-center\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon>\n              No se encontraron resultados.\n            </p>\n          </ion-text>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+
+/***/ }),
+
+/***/ "G9AF":
+/*!*********************************************************************************!*\
+  !*** ./src/app/views/grupos-familiares/asignar-miembro/asignar-miembro.page.ts ***!
+  \*********************************************************************************/
+/*! exports provided: AsignarMiembroPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AsignarMiembroPage", function() { return AsignarMiembroPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_asignar_miembro_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./asignar-miembro.page.html */ "izRr");
+/* harmony import */ var _asignar_miembro_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./asignar-miembro.page.scss */ "tFUu");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+
+
+
+
+
+
+
+let AsignarMiembroPage = class AsignarMiembroPage {
+    constructor(alertCtrl, axios, globalSer, modalCtrl) {
+        this.alertCtrl = alertCtrl;
+        this.axios = axios;
+        this.globalSer = globalSer;
+        this.modalCtrl = modalCtrl;
+        this.users = [];
+        this.totals = 0;
+        this.pages = 0;
+        this.page = 1;
+        this.showRegisterButton = false;
+        this.selectedUser = null;
+        this.queryParams = {
+            limit: 100,
+            page: 1,
+            input: 'names',
+            value: 1,
+            word: null,
+            admins: 'true',
+            ignoreIds: null
+        };
+        this.handleAdd = (id) => this.addToSelected(id);
+        this.handleRemove = () => this.removeOfSelected();
+    }
+    ngOnInit() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.data) {
+                const listIds = [];
+                if (this.data.leader)
+                    listIds.push(this.data.leader._id);
+                if (this.data.host)
+                    listIds.push(this.data.host._id);
+                if (this.data.assistant)
+                    listIds.push(this.data.assistant._id);
+                if (this.data.master)
+                    listIds.push(this.data.master._id);
+                if (listIds.length > 0)
+                    this.queryParams.ignoreIds = listIds.toString();
+            }
+            yield this.getMembers();
+        });
+    }
+    closeModal(data = null) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.modalCtrl.dismiss(data);
+        });
+    }
+    getMembers() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            // if (this.showFilter) this.showFilter = false;
+            yield this.globalSer.presentLoading();
+            const res = yield this.axios.getData('/admin/users', this.queryParams);
+            if (res && res.success) {
+                this.users = res.data.users;
+                yield this.globalSer.dismissLoading();
+            }
+            else {
+                yield this.globalSer.dismissLoading();
+                yield this.globalSer.presentAlert('Alerta', res && res.error ? res.error : 'Error desconocido.');
+            }
+        });
+    }
+    findData() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.getMembers();
+        });
+    }
+    addToSelected(id) {
+        const user = this.users.find(u => u._id === id);
+        if (user)
+            this.selectedUser = user;
+    }
+    removeOfSelected() {
+        this.selectedUser = null;
+    }
+    checkAdded(id) {
+        return this.selectedUser ? this.selectedUser._id === id : false;
+    }
+    confirmSaveNewMembers() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.selectedUser) {
+                yield this.globalSer.alertConfirm({
+                    message: `¿Está seguro qué desea agregar a este miembros al grupo?`,
+                    confirmAction: () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () { yield this.closeModal(this.selectedUser); })
+                });
+            }
+            else {
+                yield this.globalSer.presentAlert('Alerta', 'Disculpe, pero no debe seleccionar a un miembro.');
+            }
+        });
+    }
+};
+AsignarMiembroPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_5__["AxiosService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] }
+];
+AsignarMiembroPage.propDecorators = {
+    data: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
+    role: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
+};
+AsignarMiembroPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-asignar-miembro',
+        template: _raw_loader_asignar_miembro_page_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_asignar_miembro_page_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], AsignarMiembroPage);
+
+
+
+/***/ }),
+
+/***/ "R3bu":
+/*!******************************************************************************************!*\
+  !*** ./src/app/views/consolidados/miembros-consolidados/miembros-consolidados.page.scss ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJtaWVtYnJvcy1jb25zb2xpZGFkb3MucGFnZS5zY3NzIn0= */");
+
+/***/ }),
+
 /***/ "ZaV5":
 /*!**************************************************************************!*\
   !*** ./node_modules/@ionic/core/dist/esm/framework-delegate-4584ab5a.js ***!
@@ -183,6 +483,19 @@ const detachComponent = (delegate, element) => {
 
 
 
+
+/***/ }),
+
+/***/ "f6+L":
+/*!********************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/views/consolidados/miembros-consolidados/miembros-consolidados.page.html ***!
+  \********************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Seleccionar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmAdd()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Seleccioar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\" size-sm=\"7\">\n          <ion-toolbar>\n            <!--<ion-button color=\"light\" (click)=\"word = null; findData()\" slot=\"start\" *ngIf=\"word\">-->\n              <!--<ion-icon name=\"backspace-outline\"></ion-icon>-->\n            <!--</ion-button>-->\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n              <ion-input\n                [(ngModel)]=\"word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n                (keyup)=\"findMember()\"\n              ></ion-input>\n            </ion-item>\n            <!--<ion-button color=\"light\" (click)=\"word !== null || word !== '' ?  : null\" slot=\"end\">-->\n              <!--<ion-icon name=\"search-outline\"></ion-icon>-->\n            <!--</ion-button>-->\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"listFilter && listFilter.length > 0\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let lf of listFilter\">\n      <app-user-group-card\n        [user]=\"lf\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(lf._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"listFilter.length === 0\">\n    <ion-col>\n      <ion-card>\n        <ion-card-content class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-text-center\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon>\n              No se encontraron resultados.\n            </p>\n          </ion-text>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -361,6 +674,14 @@ let DetallesMiembroService = class DetallesMiembroService {
             return this.globalSer.altResponse(res);
         });
     }
+    updateRoleUser(id, data) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const res = yield this.axios.putData(`/admin/users/${id}/role`, data);
+            if (res && res.success)
+                return res.data.msg || 'Se asignado el nuevo rol al miembro exitosamente.';
+            return this.globalSer.altResponse(res);
+        });
+    }
     deleteUser(id) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const res = yield this.axios.deleteData(`/admin/users/${id}`);
@@ -397,6 +718,19 @@ DetallesMiembroService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]
 ], DetallesMiembroService);
 
 
+
+/***/ }),
+
+/***/ "izRr":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/views/grupos-familiares/asignar-miembro/asignar-miembro.page.html ***!
+  \*************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Asignar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmSaveNewMembers()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Guardar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\" size-sm=\"7\">\n          <ion-toolbar>\n            <ion-button color=\"light\" (click)=\"queryParams.word = null; findData()\" slot=\"start\" *ngIf=\"queryParams.word\">\n              <ion-icon name=\"backspace-outline\"></ion-icon>\n            </ion-button>\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n              <ion-input\n                [(ngModel)]=\"queryParams.word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n              ></ion-input>\n            </ion-item>\n            <ion-button color=\"light\" (click)=\"queryParams.word !== null || queryParams.word !== '' ? findData() : null\" slot=\"end\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </ion-button>\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users && users.length > 0\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let u of users\">\n      <app-user-group-card\n        [user]=\"u\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(u._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users.length === 0\">\n    <ion-col>\n      <ion-card>\n        <ion-card-content class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-text-center\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon>\n              No se encontraron resultados.\n            </p>\n          </ion-text>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -519,6 +853,116 @@ const hapticImpact = (options) => {
   HapticEngine.impact(options);
 };
 
+
+
+
+/***/ }),
+
+/***/ "tFUu":
+/*!***********************************************************************************!*\
+  !*** ./src/app/views/grupos-familiares/asignar-miembro/asignar-miembro.page.scss ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhc2lnbmFyLW1pZW1icm8ucGFnZS5zY3NzIn0= */");
+
+/***/ }),
+
+/***/ "uAKu":
+/*!****************************************************************************************!*\
+  !*** ./src/app/views/consolidados/miembros-consolidados/miembros-consolidados.page.ts ***!
+  \****************************************************************************************/
+/*! exports provided: MiembrosConsolidadosPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MiembrosConsolidadosPage", function() { return MiembrosConsolidadosPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_miembros_consolidados_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./miembros-consolidados.page.html */ "f6+L");
+/* harmony import */ var _miembros_consolidados_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./miembros-consolidados.page.scss */ "R3bu");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+
+
+
+
+
+
+
+let MiembrosConsolidadosPage = class MiembrosConsolidadosPage {
+    constructor(alertCtrl, axios, globalSer, modalCtrl) {
+        this.alertCtrl = alertCtrl;
+        this.axios = axios;
+        this.globalSer = globalSer;
+        this.modalCtrl = modalCtrl;
+        this.selectedUser = null;
+        this.word = null;
+        this.listFilter = [];
+        this.handleAdd = (id) => this.addToSelected(id);
+        this.handleRemove = () => this.removeOfSelected();
+    }
+    ngOnInit() {
+        this.listFilter = this.data || [];
+    }
+    closeModal(data = null) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.modalCtrl.dismiss(data);
+        });
+    }
+    addToSelected(id) {
+        const user = this.data.find(u => u._id === id);
+        if (user)
+            this.selectedUser = user;
+    }
+    removeOfSelected() {
+        this.selectedUser = null;
+    }
+    checkAdded(id) {
+        return this.selectedUser ? this.selectedUser._id === id : false;
+    }
+    findMember() {
+        if (this.word) {
+            const term = new RegExp(this.word, 'i');
+            this.listFilter = this.data.filter(d => {
+                return term.exec(d.names) || term.exec(d.lastNames) || term.exec(d.phone) || term.exec(d.document);
+            });
+        }
+        else
+            this.listFilter = this.data;
+    }
+    confirmAdd() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.selectedUser)
+                yield this.closeModal(this.selectedUser);
+            else {
+                yield this.globalSer.presentAlert('Alerta', 'Disculpe, pero no debe seleccionar a un miembro.');
+            }
+        });
+    }
+};
+MiembrosConsolidadosPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_5__["AxiosService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] }
+];
+MiembrosConsolidadosPage.propDecorators = {
+    data: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
+    selectedUser: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
+};
+MiembrosConsolidadosPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-miembros-consolidados',
+        template: _raw_loader_miembros_consolidados_page_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_miembros_consolidados_page_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], MiembrosConsolidadosPage);
 
 
 
