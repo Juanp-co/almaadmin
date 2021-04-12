@@ -14,8 +14,8 @@ import {AppComponent} from '../../app.component';
 export class IngresarPage implements OnInit {
 
   session: any = false;
-  phone = '31612345678';
-  pass = 'password';
+  phone = '';
+  pass = '';
 
   constructor(
     private alertCtrl: AlertController,

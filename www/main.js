@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Velantcode\Documents\projects\Juan\alma\almaadmin\src\main.ts */"zUnb");
+module.exports = __webpack_require__(/*! /Users/juanpineros/Documents/PROYECTOS/INVENTY/ALMA/almaadmin/src/main.ts */"zUnb");
 
 
 /***/ }),
@@ -960,7 +960,7 @@ AppRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".fondoCool {\n  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(\"/assets/cruz.png\");\n  background-size: cover;\n  background-position: center center;\n  height: 150px;\n}\n\n.logo {\n  margin-bottom: -140px !important;\n  z-index: 1 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcYXBwLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsbUhBQUE7RUFJQSxzQkFBQTtFQUNBLGtDQUFBO0VBQ0EsYUFBQTtBQUZGOztBQU9BO0VBQ0UsZ0NBQUE7RUFDQSxxQkFBQTtBQUpGIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5mb25kb0Nvb2x7XG4gIGJhY2tncm91bmQtaW1hZ2U6ICAgbGluZWFyLWdyYWRpZW50KHRvIHJpZ2h0IGJvdHRvbSxcbiAgICAgICAgICAgICAgICAgICAgICByZ2JhKDAsIDAsIDAsIDAuNSksXG4gICAgICAgICAgICAgICAgICAgICAgcmdiYSgwLCAwLCAwLCAwLjUpKSxcbiAgICAgICAgICAgICAgICAgICAgICB1cmwoXCIvYXNzZXRzL2NydXoucG5nXCIpO1xuICBiYWNrZ3JvdW5kLXNpemU6IGNvdmVyO1xuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXIgY2VudGVyO1xuICBoZWlnaHQ6IDE1MHB4O1xuICAvLyAtd2Via2l0LWNsaXAtcGF0aDogcG9seWdvbigwJSAwJSwgMTAwJSAwLCAxMDAlIDEwMCUsIDUwJSA4NiUsIDAlIDEwMCUpO1xuICAvLyBjbGlwLXBhdGg6IHBvbHlnb24oMCUgMCUsIDEwMCUgMCwgMTAwJSAxMDAlLCA1MCUgODYlLCAwJSAxMDAlKTtcbn1cblxuLmxvZ297XG4gIG1hcmdpbi1ib3R0b206IC0xNDBweCAhaW1wb3J0YW50O1xuICB6LWluZGV4OiAxICFpbXBvcnRhbnQ7XG59XG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".fondoCool {\n  background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(\"/assets/cruz.png\");\n  background-size: cover;\n  background-position: center center;\n  height: 150px;\n}\n\n.logo {\n  margin-bottom: -140px !important;\n  z-index: 1 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2FwcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLG1IQUFBO0VBSUEsc0JBQUE7RUFDQSxrQ0FBQTtFQUNBLGFBQUE7QUFGRjs7QUFPQTtFQUNFLGdDQUFBO0VBQ0EscUJBQUE7QUFKRiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuZm9uZG9Db29se1xuICBiYWNrZ3JvdW5kLWltYWdlOiAgIGxpbmVhci1ncmFkaWVudCh0byByaWdodCBib3R0b20sXG4gICAgICAgICAgICAgICAgICAgICAgcmdiYSgwLCAwLCAwLCAwLjUpLFxuICAgICAgICAgICAgICAgICAgICAgIHJnYmEoMCwgMCwgMCwgMC41KSksXG4gICAgICAgICAgICAgICAgICAgICAgdXJsKFwiL2Fzc2V0cy9jcnV6LnBuZ1wiKTtcbiAgYmFja2dyb3VuZC1zaXplOiBjb3ZlcjtcbiAgYmFja2dyb3VuZC1wb3NpdGlvbjogY2VudGVyIGNlbnRlcjtcbiAgaGVpZ2h0OiAxNTBweDtcbiAgLy8gLXdlYmtpdC1jbGlwLXBhdGg6IHBvbHlnb24oMCUgMCUsIDEwMCUgMCwgMTAwJSAxMDAlLCA1MCUgODYlLCAwJSAxMDAlKTtcbiAgLy8gY2xpcC1wYXRoOiBwb2x5Z29uKDAlIDAlLCAxMDAlIDAsIDEwMCUgMTAwJSwgNTAlIDg2JSwgMCUgMTAwJSk7XG59XG5cbi5sb2dve1xuICBtYXJnaW4tYm90dG9tOiAtMTQwcHggIWltcG9ydGFudDtcbiAgei1pbmRleDogMSAhaW1wb3J0YW50O1xufVxuIl19 */");
 
 /***/ }),
 

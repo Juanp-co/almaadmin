@@ -596,7 +596,7 @@ DetallesMiembroPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorat
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".pictureLogo {\n  width: 65px !important;\n  margin: 0 auto !important;\n}\n\n.max-height-250 {\n  max-height: 450px !important;\n  overflow-y: auto;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uXFwuLlxcLi5cXC4uXFwuLlxcZGV0YWxsZXMtbWllbWJyby5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxzQkFBQTtFQUNBLHlCQUFBO0FBQ0Y7O0FBRUE7RUFDRSw0QkFBQTtFQUNBLGdCQUFBO0FBQ0YiLCJmaWxlIjoiZGV0YWxsZXMtbWllbWJyby5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucGljdHVyZUxvZ28ge1xyXG4gIHdpZHRoOiA2NXB4ICFpbXBvcnRhbnQ7XHJcbiAgbWFyZ2luOiAwIGF1dG8gIWltcG9ydGFudDtcclxufVxyXG5cclxuLm1heC1oZWlnaHQtMjUwIHtcclxuICBtYXgtaGVpZ2h0OiA0NTBweCAhaW1wb3J0YW50O1xyXG4gIG92ZXJmbG93LXk6IGF1dG87XHJcbn1cclxuIl19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".pictureLogo {\n  width: 65px !important;\n  margin: 0 auto !important;\n}\n\n.max-height-250 {\n  max-height: 450px !important;\n  overflow-y: auto;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL2RldGFsbGVzLW1pZW1icm8ucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0Usc0JBQUE7RUFDQSx5QkFBQTtBQUNGOztBQUVBO0VBQ0UsNEJBQUE7RUFDQSxnQkFBQTtBQUNGIiwiZmlsZSI6ImRldGFsbGVzLW1pZW1icm8ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnBpY3R1cmVMb2dvIHtcclxuICB3aWR0aDogNjVweCAhaW1wb3J0YW50O1xyXG4gIG1hcmdpbjogMCBhdXRvICFpbXBvcnRhbnQ7XHJcbn1cclxuXHJcbi5tYXgtaGVpZ2h0LTI1MCB7XHJcbiAgbWF4LWhlaWdodDogNDUwcHggIWltcG9ydGFudDtcclxuICBvdmVyZmxvdy15OiBhdXRvO1xyXG59XHJcbiJdfQ== */");
 
 /***/ })
 

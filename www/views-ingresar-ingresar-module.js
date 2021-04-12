@@ -40,8 +40,8 @@ let IngresarPage = class IngresarPage {
         this.router = router;
         this.globalComponent = globalComponent;
         this.session = false;
-        this.phone = '31612345678';
-        this.pass = 'password';
+        this.phone = '';
+        this.pass = '';
     }
     ngOnInit() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
