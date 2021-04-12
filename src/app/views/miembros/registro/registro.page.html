@@ -86,12 +86,6 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
-                <ion-label position="floating" color="medium">Correo electrónico</ion-label>
-                <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12" size-sm="6">
-              <ion-item>
                 <ion-label position="floating" color="medium">Rol (*)</ion-label>
                 <ion-input
                   [readonly]="true"
@@ -100,18 +94,6 @@
                   class="no-selected-text"
                   (click)="showRoleListAlert(formData.role)"
                 ></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12" size-sm="6">
-              <ion-item>
-                <ion-label position="floating" color="medium">Nº de documento padre espiritual (opcional)</ion-label>
-                <ion-input
-                  [(ngModel)]="formData.referred"
-                  autocomplete="off"
-                  maxlength="15"
-                  class="ion-text-uppercase"
-                >
-                </ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="12" size-sm="6">
@@ -129,7 +111,7 @@
                 <ion-label position="floating" color="medium">Seleccione un miembro (*)</ion-label>
                 <ion-input
                   [readonly]="true"
-                  [value]="getConsolidatorsNames()"
+                  [value]="getReferredNames()"
                   autocomplete="off"
                   class="no-selected-text"
                   (click)="modalMember()"
