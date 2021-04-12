@@ -139,8 +139,8 @@ export class ConsolidadosPage implements OnInit {
       data.forEach(c => {
         this.consolidatesPreview.push({
           member: c.member,
-          observation: c.observation.length > 50 ? `${c.observation.substr(0, 50)} ...` : c.observation,
-          date: dayjs(c.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY'),
+          observation: c.observation && c.observation.length > 50 ? `${c.observation.substr(0, 50)} ...` : c.observation || 'No indicada.',
+          date: c.date ? dayjs(c.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY') : 'No encontrada.',
         });
       });
     }

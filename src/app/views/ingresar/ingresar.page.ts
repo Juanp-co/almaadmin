@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AxiosService} from '../../services/axios.service';
-import {AlertController, NavController} from '@ionic/angular';
-import {CookiesService} from '../../services/cookies.service';
 import {Router} from '@angular/router';
+import {AxiosService} from '../../services/axios.service';
+import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
 import {AppComponent} from '../../app.component';
 
@@ -18,11 +17,9 @@ export class IngresarPage implements OnInit {
   pass = '';
 
   constructor(
-    private alertCtrl: AlertController,
     private axios: AxiosService,
     private cookieService: CookiesService,
     private globalSer: GlobalService,
-    private navCtrl: NavController,
     private router: Router,
     private globalComponent: AppComponent,
   ) {

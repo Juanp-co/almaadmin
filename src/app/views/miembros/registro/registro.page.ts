@@ -7,7 +7,6 @@ import {AsignarConsolidadorPage} from '../asignar-consolidador/asignar-consolida
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
 import {
-  checkDocument,
   checkEmail, checkIfValueIsNumber,
   checkNameOrLastName, checkPhone,
   onlyLettersInputValidation,
@@ -36,12 +35,9 @@ export class RegistroPage implements OnInit {
     role: null,
     referred: null,
     consolidator: false,
-    consolidatorId: null,
   };
 
   constructor(
-    private activateRoute: ActivatedRoute,
-    private alertCtrl: AlertController,
     private axios: AxiosService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
@@ -83,9 +79,7 @@ export class RegistroPage implements OnInit {
       await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else {
-      await this.globalSer.dismissLoading();
-    }
+    else await this.globalSer.dismissLoading();
   }
 
   async back() {
@@ -106,7 +100,7 @@ export class RegistroPage implements OnInit {
     this.formData.consolidator = !this.formData.consolidator;
   }
 
-  getConsolidatorsNames() {
+  getReferredNames() {
     return this.consolidatorMember ? `${this.consolidatorMember.names} ${this.consolidatorMember.lastNames}` : null;
   }
 
@@ -174,12 +168,12 @@ export class RegistroPage implements OnInit {
   async modalMember() {
     const updateData = (member: any) => {
       this.consolidatorMember = member || null;
-      this.formData.consolidatorId = member ? member._id : null;
+      this.formData.referred = member ? member._id : null;
     };
 
     await this.globalSer.loadModal(
       AsignarConsolidadorPage,
-      { selectedId: this.formData.consolidatorId },
+      { selectedId: this.consolidatorMember ? this.consolidatorMember._id : null },
       false,
       updateData
     );
@@ -191,10 +185,10 @@ export class RegistroPage implements OnInit {
     if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
     if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
     if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido.';
-    if (this.formData.email && !checkEmail(this.formData.email)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
+    // if (this.formData.email && !checkEmail(this.formData.email)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
     if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el miembro.';
-    if (this.formData.referred && !checkDocument(`${this.formData.referred.toUpperCase()}`))
-      return 'Disculpe, pero debe indicar un número de documento correcto del miemro referente (ejm: CC12345678).';
+    if (this.formData.consolidator && (!this.formData.referred || (this.formData.referred && this.formData.referred.length < 5)))
+      return 'Disculpe, pero debe seleccionar un miembro consolidador.';
 
     return null;
   }
@@ -203,7 +197,7 @@ export class RegistroPage implements OnInit {
     const validated = this.validateData();
 
     if (!validated) {
-      this.globalSer.alertConfirm({
+      await this.globalSer.alertConfirm({
         header: 'Confirme',
         message: '¿Está seguro qué desea registar a este nuevo miembro?',
         confirmAction: () => this.registerMember()

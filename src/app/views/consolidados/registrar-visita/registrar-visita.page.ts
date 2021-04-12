@@ -61,7 +61,7 @@ export class RegistrarVisitaPage implements OnInit {
 
     if (created && !created.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', created || 'Se ha registrado el grupo exitosamente.');
+      await this.globalSer.presentAlert('¡Éxito!', created || 'Se ha registrado la visita exitosamente.');
       await this.back();
     }
     else if (created && created.error) {
