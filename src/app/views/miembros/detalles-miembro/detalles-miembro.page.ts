@@ -127,10 +127,10 @@ export class DetallesMiembroPage implements OnInit {
     await this.globalSer.presentLoading('Actualizando, por favor espere ...');
 
     const data: any = {...this.formData};
-    data.document = `${data.documentType}${data.document}`;
+    if (data.documentType) data.document = `${data.documentType}${data.document}`;
     data.company = data.company === 'Si';
     data.baptized = data.baptized === 'Si';
-    data.birthday = dayjs(data.birthday).format('YYYY-MM-DD');
+    if (data.birthday) data.birthday = dayjs(data.birthday).format('YYYY-MM-DD');
 
     const updated = await this.detallesMiembroService.updateDataUser(this.id, data);
 
@@ -151,9 +151,7 @@ export class DetallesMiembroPage implements OnInit {
 
   async updateRole() {
     await this.globalSer.presentLoading('Actualizando, por favor espere ...');
-
     const data: any = {...this.formDataRole};
-
     const updated = await this.detallesMiembroService.updateRoleUser(this.id, data);
 
     if (updated && !updated.error) {
@@ -376,28 +374,18 @@ export class DetallesMiembroPage implements OnInit {
 
   validateData(): string|null {
     const { formData } = this;
-    if (['CC', 'TI', 'PAS', 'CE', 'PE'].indexOf(`${formData.documentType}`) === -1) return 'Disculpe, pero debe seleccionar un tipo de documento.';
-    if (!/[0-9]{5,9}/.test(`${formData.document}`)) return 'Disculpe, pero debe indicar su número de documento.';
-    if (!checkEmail(formData.email)) return 'Disculpe, pero debe indicar su correo electrónico.';
-    if (!checkNameOrLastName(formData.names)) return 'Disculpe, pero debe indicar su nombre.';
-    if (!checkNameOrLastName(formData.lastNames)) return 'Disculpe, pero debe indicar su apellido.';
     if (!checkPhone(formData.phone))
       return 'Disculpe, pero debe indicar su número de teléfono.<br><br>NOTA: Recuerde que el número de teléfono es el miembro de acceso para a la cuenta del miembro.';
-    if (!checkDate(formData.birthday)) return 'Disculpe, pero debe indicar su fecha de nacimiento.';
-    if (!checkIfValueIsNumber(`${formData.gender}`)) return 'Disculpe, pero debe indicar su sexo.';
-    if (!checkIfValueIsNumber(`${formData.bloodType}`)) return 'Disculpe, pero debe indicar su tipo de sangre.';
-    if (!checkIfValueIsNumber(`${formData.civilStatus}`)) return 'Disculpe, pero debe indicar su estado civil.';
-    if (!checkIfValueIsNumber(`${formData.educationLevel}`)) return 'Disculpe, pero debe indicar su nivel educativo.';
-    if (!checkIfValueIsNumber(`${formData.profession}`)) return 'Disculpe, pero debe indicar su profesión.';
-    if (formData.company === null || formData.company === undefined) return 'Disculpe, pero debe indicar si posee una empresa.';
+    if (!checkNameOrLastName(formData.names)) return 'Disculpe, pero debe indicar su nombre.';
+    if (!checkNameOrLastName(formData.lastNames)) return 'Disculpe, pero debe indicar su apellido.';
+    if (formData.documentType) {
+      if (['CC', 'TI', 'PAS', 'CE', 'PE'].indexOf(`${formData.documentType}`) === -1) return 'Disculpe, pero debe seleccionar un tipo de documento.';
+      if (!/[0-9]{5,9}/.test(`${formData.document}`)) return 'Disculpe, pero debe indicar su número de documento.';
+    }
+    if (formData.email) if (!checkEmail(formData.email)) return 'Disculpe, pero debe indicar su correo electrónico.';
+    if (formData.birthday) if (!checkDate(formData.birthday)) return 'Disculpe, pero debe indicar su fecha de nacimiento.';
     if (formData.company !== null && formData.company === 'Si')
       if (!checkIfValueIsNumber(`${formData.companyType}`)) return 'Disculpe, pero debe indicar el tipo de empresa que posee.';
-    if (formData.baptized === null || formData.baptized === undefined)
-      return 'Disculpe, pero debe indicar si usted se encuentra bautizado.';
-    if (!checkIfValueIsNumber(`${formData.department}`)) return 'Disculpe, pero debe indicar el departamento de residencia.';
-    if (!checkIfValueIsNumber(`${formData.city}`)) return 'Disculpe, pero debe indicar la ciudad de residencia.';
-    if (!checkTitlesOrDescriptions(formData.locality)) return 'Disculpe, pero debe indicar el nombre de la localidad de residencia.';
-    if (!checkTitlesOrDescriptions(formData.direction)) return 'Disculpe, pero debe indicar su dirección de residencia.';
 
     return null;
   }

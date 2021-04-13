@@ -7,7 +7,7 @@ import {AsignarConsolidadorPage} from '../asignar-consolidador/asignar-consolida
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
 import {
-  checkEmail, checkIfValueIsNumber,
+  checkIfValueIsNumber,
   checkNameOrLastName, checkPhone,
   onlyLettersInputValidation,
   onlyNumbersInputValidation
@@ -26,9 +26,6 @@ export class RegistroPage implements OnInit {
   successData: any = null;
   consolidatorMember: any = null;
   formData: any = {
-    documentType: null,
-    document: null,
-    email: null,
     phone: null,
     names: null,
     lastNames: null,
@@ -64,10 +61,7 @@ export class RegistroPage implements OnInit {
 
   async registerMember() {
     await this.globalSer.presentLoading('Registrando, por favor espere ...');
-
     const data: any = {...this.formData};
-    data.document = `${data.documentType}${data.document}`;
-
     const res = await this.miembrosService.registerUser(data);
 
     if (res && !res.error) {
@@ -180,12 +174,9 @@ export class RegistroPage implements OnInit {
   }
 
   validateData(): string|null {
-    if (!/^([CC|CE|PE|TI|PAS]){2,3}/.test(this.formData.documentType)) return 'Disculpe, pero debe indicar el tipo de documento.';
-    if (!/[0-9]{5,9}/.test(this.formData.document)) return 'Disculpe, pero debe indicar el número de documento de identidad.';
+    if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido.';
     if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
     if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
-    if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido.';
-    // if (this.formData.email && !checkEmail(this.formData.email)) return 'Disculpe, pero debe indicar un correo electrónico válido.';
     if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el miembro.';
     if (this.formData.consolidator && (!this.formData.referred || (this.formData.referred && this.formData.referred.length < 5)))
       return 'Disculpe, pero debe seleccionar un miembro consolidador.';
