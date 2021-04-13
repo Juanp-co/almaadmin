@@ -36,10 +36,10 @@
                   <ion-col size="12" size-sm="6">
                     <ion-row>
                       <ion-col size="5">
-                        <ion-text><b>Nº de documento:</b></ion-text>
+                        <ion-text><b>Teléfono:</b></ion-text>
                       </ion-col>
                       <ion-col size="7">
-                        <ion-text>{{views.info.data.document || 'No indicado'}}</ion-text>
+                        <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
                       </ion-col>
                       <ion-col size="5">
                         <ion-text><b>Nombre(s):</b></ion-text>
@@ -54,16 +54,16 @@
                         <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
                       </ion-col>
                       <ion-col size="5">
+                        <ion-text><b>Nº de documento:</b></ion-text>
+                      </ion-col>
+                      <ion-col size="7">
+                        <ion-text>{{views.info.data.document || 'No indicado'}}</ion-text>
+                      </ion-col>
+                      <ion-col size="5">
                         <ion-text><b>Correo electrónico:</b></ion-text>
                       </ion-col>
                       <ion-col size="7">
                         <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Teléfono:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
                       </ion-col>
                       <ion-col size="5">
                         <ion-text><b>Fecha de nac.:</b></ion-text>
@@ -158,27 +158,13 @@
               <ion-row class="ion-margin-top" *ngIf="formData">
                 <ion-col size="12" size-sm="6">
                   <ion-item>
-                    <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
+                    <ion-label position="floating" color="medium">Nº de Teléfono (usuario) (*)</ion-label>
                     <ion-input
-                      [readonly]="true"
-                      [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
+                      [(ngModel)]="formData.phone"
                       autocomplete="off"
-                      class="no-selected-text"
-                      (click)="showAlertDocumentList(formData.documentType)"
-                    ></ion-input>
-                  </ion-item>
-                </ion-col>
-                <ion-col size="12" size-sm="6">
-                  <ion-item>
-                    <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
-                    <ion-input
-                      [(ngModel)]="formData.document"
-                      autocomplete="off"
-                      maxlength="10"
+                      maxlength="13"
                       (keypress)="validateOnlyNumbers($event)"
-                      class="ion-text-uppercase"
-                    >
-                    </ion-input>
+                    ></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col size="12" size-sm="6">
@@ -213,13 +199,27 @@
                 </ion-col>
                 <ion-col size="12" size-sm="6">
                   <ion-item>
-                    <ion-label position="floating" color="medium">Nº de Teléfono (usuario) (*)</ion-label>
+                    <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
                     <ion-input
-                      [(ngModel)]="formData.phone"
+                      [readonly]="true"
+                      [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
                       autocomplete="off"
-                      maxlength="13"
-                      (keypress)="validateOnlyNumbers($event)"
+                      class="no-selected-text"
+                      (click)="showAlertDocumentList(formData.documentType)"
                     ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
+                    <ion-input
+                      [(ngModel)]="formData.document"
+                      autocomplete="off"
+                      maxlength="10"
+                      (keypress)="validateOnlyNumbers($event)"
+                      class="ion-text-uppercase"
+                    >
+                    </ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col size="12" size-sm="6">

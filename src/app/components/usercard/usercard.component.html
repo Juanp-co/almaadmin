@@ -15,12 +15,12 @@
           <b>{{ member.names || '' }} {{ member.lastNames || '' }}</b>
           <br/>
           <ion-text>
-            <ion-icon name="id-card-outline"></ion-icon>
-            {{ member.document || 'Error' }}<br>
+            <ion-icon name="call-outline"></ion-icon>
+            {{ member.phone }}<br>
           </ion-text>
           <ion-text>
-            <ion-icon name="call-outline"></ion-icon>
-            {{ member.phone || 'No indicado.' }}<br>
+            <ion-icon name="id-card-outline"></ion-icon>
+            {{ member.document || 'No indicado.' }}<br>
           </ion-text>
           <ion-text *ngIf="member.totalsReferrals !== undefined">
             <ion-icon name="people-outline"></ion-icon>

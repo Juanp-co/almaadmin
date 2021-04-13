@@ -8,8 +8,6 @@ import {bloodType, civilStatus, companyType, documentType, educationLevels, gend
   providedIn: 'root'
 })
 export class MiCuentaService {
-
-
   professionsList: any[] = professions;
   companyTypeList: string[] = companyType;
   departmentsList: any[] = departments;
