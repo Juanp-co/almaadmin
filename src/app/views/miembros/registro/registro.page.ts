@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AlertController, NavController} from '@ionic/angular';
+import {Router} from '@angular/router';
+import {NavController} from '@ionic/angular';
 import {DetallesMiembroService} from '../detalles-miembro/detalles-miembro.service';
 import {MiembrosService} from '../miembros.service';
 import {AsignarConsolidadorPage} from '../asignar-consolidador/asignar-consolidador.page';
@@ -21,17 +21,17 @@ import {
 export class RegistroPage implements OnInit {
 
   roles = [];
-  documentTypes = [];
   successRegister = false;
   successData: any = null;
-  consolidatorMember: any = null;
+  referralData: any = null;
   formData: any = {
     phone: null,
     names: null,
     lastNames: null,
     role: null,
     referred: null,
-    consolidator: false,
+    addReferral: false,
+    consolidated: false,
   };
 
   constructor(
@@ -45,7 +45,6 @@ export class RegistroPage implements OnInit {
     // check if exist session
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
     else {
-      this.documentTypes = detallesMiembroService.documentTypesList;
       this.roles = this.globalSer.roles;
     }
   }
@@ -61,8 +60,7 @@ export class RegistroPage implements OnInit {
 
   async registerMember() {
     await this.globalSer.presentLoading('Registrando, por favor espere ...');
-    const data: any = {...this.formData};
-    const res = await this.miembrosService.registerUser(data);
+    const res = await this.miembrosService.registerUser({...this.formData});
 
     if (res && !res.error) {
       this.successData = res;
@@ -80,22 +78,17 @@ export class RegistroPage implements OnInit {
     await this.navCtrl.back();
   }
 
-  // getters and setters
-  getDocumentLabel(value: any) {
-    if (!value) return null;
-    const da = this.documentTypes.find(d => d.val === value);
-    return da ? da.label : null;
+  checkReferralMember() {
+    if (this.formData.addReferral) this.referralData = null;
+    this.formData.addReferral = !this.formData.addReferral;
   }
 
-  checkConsolidator() {
-    if (this.formData.consolidator) {
-      this.consolidatorMember = null;
-    }
-    this.formData.consolidator = !this.formData.consolidator;
+  setConsolidatedValue() {
+    this.formData.consolidated = !this.formData.consolidated;
   }
 
   getReferredNames() {
-    return this.consolidatorMember ? `${this.consolidatorMember.names} ${this.consolidatorMember.lastNames}` : null;
+    return this.referralData ? `${this.referralData.names} ${this.referralData.lastNames}` : null;
   }
 
   validateOnlyNumbers(event: any) {
@@ -129,27 +122,6 @@ export class RegistroPage implements OnInit {
     });
   }
 
-  async showAlertDocumentList(selected: any = null) {
-    const inputs: any[] = [];
-    for (const value of this.documentTypes) {
-      inputs.push({
-        name: `documentType`,
-        type: 'radio',
-        label: value.label,
-        value: value.val,
-        checked: selected !== null && selected === value.val,
-      });
-    }
-
-    await this.globalSer.alertWithList({
-      header: 'Seleccione',
-      inputs,
-      confirmAction: (selectedValue) => {
-        this.formData.documentType = selectedValue;
-      }
-    });
-  }
-
   async confirmCancel() {
     await this.globalSer.alertConfirm({
       header: 'Confirme',
@@ -161,13 +133,13 @@ export class RegistroPage implements OnInit {
   // members
   async modalMember() {
     const updateData = (member: any) => {
-      this.consolidatorMember = member || null;
+      this.referralData = member || null;
       this.formData.referred = member ? member._id : null;
     };
 
     await this.globalSer.loadModal(
       AsignarConsolidadorPage,
-      { selectedId: this.consolidatorMember ? this.consolidatorMember._id : null },
+      { selectedId: this.referralData ? this.referralData._id : null },
       false,
       updateData
     );
@@ -178,7 +150,7 @@ export class RegistroPage implements OnInit {
     if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
     if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
     if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el miembro.';
-    if (this.formData.consolidator && (!this.formData.referred || (this.formData.referred && this.formData.referred.length < 5)))
+    if (this.formData.addReferral && (!this.formData.referred || (this.formData.referred && this.formData.referred.length < 5)))
       return 'Disculpe, pero debe seleccionar un miembro consolidador.';
 
     return null;

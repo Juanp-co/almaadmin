@@ -88,7 +88,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Fecha de nacimiento (*)</ion-label>
+                  <ion-label position="floating" color="medium">Fecha de nacimiento</ion-label>
                   <ion-datetime
                     [(ngModel)]="formData.birthday"
                     displayFormat="DD/MM/YYYY"
@@ -103,7 +103,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Tipo de documento (*)</ion-label>
+                  <ion-label position="floating" color="medium">Tipo de documento</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="formData.documentType ? getDocumentLabel(formData.documentType) : ''"
@@ -115,7 +115,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Número de documento (*)</ion-label>
+                  <ion-label position="floating" color="medium">Número de documento</ion-label>
                   <ion-input
                     [(ngModel)]="formData.document"
                     autocomplete="off"
@@ -128,13 +128,25 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Correo electrónico (*)</ion-label>
+                  <ion-label position="floating" color="medium">Correo electrónico</ion-label>
                   <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Sexo (*)</ion-label>
+                  <ion-label position="floating" color="medium">Cargo(s) o posición</ion-label>
+                  <ion-input
+                    [(ngModel)]="formData.position"
+                    autocomplete="off"
+                    maxlength="50"
+                    (keyup)="validateOnlyLetters($event)"
+                    class="ion-text-uppercase"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="6">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Sexo</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="gender[formData.gender] || ''"
@@ -146,7 +158,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Tipo de sangre (*)</ion-label>
+                  <ion-label position="floating" color="medium">Tipo de sangre</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="bloodType[formData.bloodType] || ''"
@@ -158,7 +170,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Estado civil (*)</ion-label>
+                  <ion-label position="floating" color="medium">Estado civil</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="civilStatus[formData.civilStatus] || ''"
@@ -170,7 +182,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Nivel educativo (*)</ion-label>
+                  <ion-label position="floating" color="medium">Nivel educativo</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="educationLevel[formData.educationLevel] || ''"
@@ -182,7 +194,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Profesión (*)</ion-label>
+                  <ion-label position="floating" color="medium">Profesión</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="professions[formData.profession] || ''"
@@ -194,7 +206,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">¿Posee una empresa? (*)</ion-label>
+                  <ion-label position="floating" color="medium">¿Posee una empresa?</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="formData.company"
@@ -206,7 +218,7 @@
               </ion-col>
               <ion-col size="6" size-sm="6" *ngIf="formData.company === 'Si';">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Tipo de empresa (*)</ion-label>
+                  <ion-label position="floating" color="medium">Tipo de empresa</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="companyType[formData.companyType] || ''"
@@ -230,7 +242,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Departamento (*)</ion-label>
+                  <ion-label position="floating" color="medium">Departamento</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="departments[formData.department] || ''"
@@ -242,7 +254,7 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Ciudad (*)</ion-label>
+                  <ion-label position="floating" color="medium">Ciudad</ion-label>
                   <ion-input
                     [readonly]="true"
                     [value]="cities[formData.city] || ''"
@@ -254,13 +266,13 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Barrio o localidad (*)</ion-label>
+                  <ion-label position="floating" color="medium">Barrio o localidad</ion-label>
                   <ion-input [(ngModel)]="formData.locality" autocomplete="off" maxlength="100" class="ion-text-uppercase"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Dirección (*)</ion-label>
+                  <ion-label position="floating" color="medium">Dirección</ion-label>
                   <ion-input [(ngModel)]="formData.direction" autocomplete="off" maxlength="250" class="ion-text-uppercase"></ion-input>
                 </ion-item>
               </ion-col>
@@ -332,7 +344,13 @@
                     <ion-text>{{this.globalSer.getRoleValue(user.role)}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Teléfono:</b></ion-text>
+                    <ion-text><b>Consolidado</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-text>{{user.consolidated ? 'Si' : 'No'}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-text><b>Teléfono</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.phone || 'No indicado'}}</ion-text>
@@ -356,34 +374,34 @@
                     <ion-text>{{user.document || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Correo electrónico:</b></ion-text>
+                    <ion-text><b>Correo electrónico</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.email || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Fecha de nac.:</b></ion-text>
+                    <ion-text><b>Fecha de nac.</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.birthday || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Sexo:</b></ion-text>
+                    <ion-text><b>Sexo</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.gender || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Estado civil:</b></ion-text>
+                    <ion-text><b>Estado civil</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.civilStatus || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Nivel educativo:</b></ion-text>
+                    <ion-text><b>Cargo(s) o posición</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
-                    <ion-text>{{user.educationLevel || 'No indicado'}}</ion-text>
+                    <ion-text>{{user.position || 'No indicado'}}</ion-text>
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -391,55 +409,61 @@
               <ion-col class="ion-no-padding" size="12" size-sm="6">
                 <ion-row>
                   <ion-col size="5">
-                    <ion-text><b>Profesión:</b></ion-text>
+                    <ion-text><b>Nivel educativo</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-text>{{user.educationLevel || 'No indicado'}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-text><b>Profesión</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.profession || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Tipo de sangre:</b></ion-text>
+                    <ion-text><b>Tipo de sangre</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.bloodType || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Empresa:</b></ion-text>
+                    <ion-text><b>Empresa</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.company ? 'Si' : 'No'}}</ion-text>
                   </ion-col>
                   <ion-col size="5" *ngIf="user.company">
-                    <ion-text><b>Tipo de empresa:</b></ion-text>
+                    <ion-text><b>Tipo de empresa</b></ion-text>
                   </ion-col>
                   <ion-col size="7" *ngIf="user.company">
                     <ion-text>{{user.companyType}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Bautizado:</b></ion-text>
+                    <ion-text><b>Bautizado</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.baptized ? 'Si' : 'No'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Departamento:</b></ion-text>
+                    <ion-text><b>Departamento</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.department || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Cuidad:</b></ion-text>
+                    <ion-text><b>Cuidad</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.city || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Barrio:</b></ion-text>
+                    <ion-text><b>Barrio</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.locality || 'No indicado'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
-                    <ion-text><b>Dirección:</b></ion-text>
+                    <ion-text><b>Dirección</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.direction || 'No indicado'}}</ion-text>

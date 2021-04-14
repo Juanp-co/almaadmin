@@ -21,7 +21,7 @@
                 <p>
                   <ion-icon name="alert-circle-outline"></ion-icon>
                   Todos los miembros registrados dispondrán de la siguiente contraseña para el acceso: <b><i>alma1234</i></b>.
-                  Estos podrán cambiarla (si lo desean) desde la Aplicación Móvil o desde el Panel Administrador (en caso de disponga del rol).
+                  Estos podrán cambiarla (si lo desean) desde la Aplicación Móvil o desde el Panel Administrador (en caso disponga del rol).
                 </p>
               </ion-text>
             </ion-col>
@@ -76,15 +76,15 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item lines="none">
-                <ion-label color="medium">Asignar miembro consolidador</ion-label>
+                <ion-label color="medium">Asignar padre espiritual</ion-label>
                 <ion-checkbox
                   slot="start"
-                  [checked]="formData.consolidator"
-                  (ionChange)="checkConsolidator()"
+                  [checked]="formData.addReferral"
+                  (ionChange)="checkReferralMember()"
                 ></ion-checkbox>
               </ion-item>
             </ion-col>
-            <ion-col size="12" size-sm="6" *ngIf="formData.consolidator">
+            <ion-col size="12" size-sm="6" *ngIf="formData.addReferral">
               <ion-item>
                 <ion-label position="floating" color="medium">Seleccione un miembro (*)</ion-label>
                 <ion-input
@@ -94,6 +94,16 @@
                   class="no-selected-text"
                   (click)="modalMember()"
                 ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item lines="none">
+                <ion-label color="medium">El miembro es consolidado</ion-label>
+                <ion-checkbox
+                  slot="start"
+                  [checked]="formData.consolidated"
+                  (ionChange)="setConsolidatedValue()"
+                ></ion-checkbox>
               </ion-item>
             </ion-col>
             <ion-col size="12" class="ion-margin-top">
