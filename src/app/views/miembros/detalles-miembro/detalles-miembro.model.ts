@@ -3,7 +3,6 @@ export interface IDetallesMiembroTotals {
   totalsReferrals: number;
 }
 
-
 export interface IDetallesMiembro {
   _id: string;
   document: string | null;
@@ -12,6 +11,7 @@ export interface IDetallesMiembro {
   names: string | null;
   lastNames: string | null;
   gender: any;
+  position: string | null;
   birthday: string | null;
   civilStatus: any;
   educationLevel: any;
@@ -22,6 +22,7 @@ export interface IDetallesMiembro {
   baptized: string | boolean | null;
   role: any;
   referred: any;
+  consolidated: boolean;
   department: any;
   city: any;
   locality: any;
@@ -38,6 +39,7 @@ export interface IDetallesMiembroEdit {
   phone: string | null;
   names: string | null;
   lastNames: string | null;
+  position: string | null;
   gender: number | string | null;
   birthday: string | null;
   civilStatus: number | string | null;

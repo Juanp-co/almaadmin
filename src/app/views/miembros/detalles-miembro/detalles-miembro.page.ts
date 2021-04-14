@@ -10,7 +10,7 @@ import {
   checkIfValueIsNumber,
   checkNameOrLastName,
   checkPhone,
-  checkTitlesOrDescriptions, onlyLettersInputValidation,
+  onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
 import {IDetallesMiembro, IDetallesMiembroEdit, IDetallesMiembroTotals} from './detalles-miembro.model';
@@ -127,10 +127,11 @@ export class DetallesMiembroPage implements OnInit {
     await this.globalSer.presentLoading('Actualizando, por favor espere ...');
 
     const data: any = {...this.formData};
-    if (data.documentType) data.document = `${data.documentType}${data.document}`;
+    if (data.documentType) data.document = `${data.documentType.toUpperCase()}${data.document}`;
     data.company = data.company === 'Si';
     data.baptized = data.baptized === 'Si';
     if (data.birthday) data.birthday = dayjs(data.birthday).format('YYYY-MM-DD');
+    if (data.position) data.position = data.position.trim().toUpperCase();
 
     const updated = await this.detallesMiembroService.updateDataUser(this.id, data);
 
