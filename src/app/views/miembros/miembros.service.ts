@@ -19,7 +19,7 @@ export class MiembrosService {
     return this.globalSer.altResponse(res);
   }
 
-  async getUsersList(query = {}): Promise<any> {
+  async getUsersList(query: any = {}): Promise<any> {
     const res: any = await this.axios.getData('/admin/users', query);
 
     if (res && res.success) return res.data.users || [];
@@ -30,6 +30,21 @@ export class MiembrosService {
     const res: any = await this.axios.postData('/admin/users', data);
 
     if (res && res.success) return res.data;
+    return this.globalSer.altResponse(res);
+  }
+
+  // to register member modals
+  async getMembersList(query: any = {}): Promise<any> {
+    const res: any = await this.axios.getData('/members', query);
+
+    if (res && res.success) return res.data.members || [];
+    return this.globalSer.altResponse(res);
+  }
+
+  async getFamiliesGroupsList(query: any = {}): Promise<any> {
+    const res: any = await this.axios.getData('/families-groups', query);
+
+    if (res && res.success) return res.data.groups || [];
     return this.globalSer.altResponse(res);
   }
 }

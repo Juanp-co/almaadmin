@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'asignar-consolidador',
     loadChildren: () => import('./asignar-consolidador/asignar-consolidador.module').then( m => m.AsignarConsolidadorPageModule)
   },
+  {
+    path: 'asignar-grupo-familiar',
+    loadChildren: () => import('./asignar-grupo-familiar/asignar-grupo-familiar.module').then( m => m.AsignarGrupoFamiliarPageModule)
+  },
 ];
 
 @NgModule({

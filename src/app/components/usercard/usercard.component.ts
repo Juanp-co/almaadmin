@@ -12,6 +12,8 @@ export class UsercardComponent implements OnInit {
 
   @Input() data: any;
   @Input() list = false;
+  @Input() goDetails = true;
+  sessionUserId: any;
   showButton = false;
   member: any = null;
 
@@ -19,21 +21,16 @@ export class UsercardComponent implements OnInit {
     private router: Router,
     private cookiesService: CookiesService,
     public globalSer: GlobalService,
-  ) { }
+  ) {
+    const dataLogin: any = this.cookiesService.getCookie('data');
+    if (dataLogin) this.sessionUserId = dataLogin._id;
+  }
 
   ngOnInit() {
     this.member = this.data;
-    if (this.member && this.member._id) {
-      this.showButton = this.checkIdMember(this.member._id);
+    if (this.member && this.member._id && this.goDetails) {
+      this.showButton = this.sessionUserId !== this.member._id;
     }
-  }
-
-  checkIdMember(id: string): boolean {
-    const dataLogin: any = this.cookiesService.getCookie('data');
-    if (dataLogin) {
-      return dataLogin._id !== id;
-    }
-    return false;
   }
 
   async goToDetails(id: string|null = null) {

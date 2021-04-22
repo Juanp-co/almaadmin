@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
 import {DetallesMiembroService} from './detalles-miembro.service';
@@ -130,7 +131,6 @@ export class DetallesMiembroPage implements OnInit {
     if (data.documentType) data.document = `${data.documentType.toUpperCase()}${data.document}`;
     data.company = data.company === 'Si';
     data.baptized = data.baptized === 'Si';
-    if (data.birthday) data.birthday = dayjs(data.birthday).format('YYYY-MM-DD');
     if (data.position) data.position = data.position.trim().toUpperCase();
 
     const updated = await this.detallesMiembroService.updateDataUser(this.id, data);
@@ -206,7 +206,16 @@ export class DetallesMiembroPage implements OnInit {
     this.user = {...this.staticData} as IDetallesMiembro;
     this.title = `Detalles: ${this.user.names} ${this.user.lastNames}`;
 
-    this.user.birthday = this.user.birthday ? dayjs(this.user.birthday).format('DD-MM-YYYY') : null;
+    this.user.birthday = this.user.birthday ?
+      dayjs(this.user.birthday, 'YYYY-MM-DD', true)
+        .locale('es')
+        .format('DD [de] MMMM [de] YYYY')
+      : null;
+    this.user.created_at = this.user.created_at ?
+      dayjs(this.user.created_at, 'YYYY-MM-DD HH:mm:ss', true)
+        .locale('es')
+        .format('DD [de] MMMM [de] YYYY')
+      : null;
     this.user.bloodType = this.bloodType[this.user.bloodType] || null;
     this.user.profession = this.professions[this.user.profession] || null;
     this.user.educationLevel = this.educationLevel[this.user.educationLevel] || null;
