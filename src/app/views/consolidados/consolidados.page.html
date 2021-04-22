@@ -166,7 +166,7 @@
           <ng-template #noConsolidates>
             <ion-row class="ion-margin-top ion-margin-bottom">
               <ion-col size="12">
-                <ion-text>
+                <ion-text color="medium">
                   <p class="ion-text-center">
                     <ion-icon name="alert-circle-outline"></ion-icon> No se encontraron visitas.
                   </p>
@@ -198,7 +198,7 @@
           <ng-template #noMembers>
             <ion-row class="ion-margin-top ion-margin-bottom">
               <ion-col size="12">
-                <ion-text>
+                <ion-text color="medium">
                   <p class="ion-text-center">
                     <ion-icon name="alert-circle-outline"></ion-icon> No existen miembros.
                   </p>
@@ -224,13 +224,13 @@
         <ion-card-content class="{{ views.pending ? '' : 'ion-hide'}} ion-no-padding">
           <ion-row *ngIf="pendingMembers && pendingMembers.length > 0; else noPending" class="{{ sizeElems === 6 ? 'max-height-250' : 'max-height-450'}}">
             <ion-col size="12" [sizeSm]="sizeElems === 6 ? 12 : 4" *ngFor="let pm of pendingMembers;">
-              <app-usercard [data]="pm"></app-usercard>
+              <app-usercard [data]="pm" [goDetails]="false"></app-usercard>
             </ion-col>
           </ion-row>
           <ng-template #noPending>
             <ion-row class="ion-margin-top ion-margin-bottom">
               <ion-col size="12">
-                <ion-text>
+                <ion-text color="medium">
                   <p class="ion-text-center">
                     <ion-icon name="alert-circle-outline"></ion-icon> No existen miembros pendientes por visitas.
                   </p>

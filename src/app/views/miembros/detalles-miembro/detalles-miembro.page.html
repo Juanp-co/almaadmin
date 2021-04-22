@@ -96,7 +96,7 @@
                     max="{{maxDate}}"
                     doneText="Listo"
                     cancelText="Cancelar"
-                    (change)="setDate()"
+                    (ionChange)="setDate()"
                   >
                   </ion-datetime>
                 </ion-item>
@@ -403,11 +403,6 @@
                   <ion-col size="7">
                     <ion-text>{{user.position || 'No indicado'}}</ion-text>
                   </ion-col>
-                </ion-row>
-              </ion-col>
-
-              <ion-col class="ion-no-padding" size="12" size-sm="6">
-                <ion-row>
                   <ion-col size="5">
                     <ion-text><b>Nivel educativo</b></ion-text>
                   </ion-col>
@@ -420,6 +415,11 @@
                   <ion-col size="7">
                     <ion-text>{{user.profession || 'No indicado'}}</ion-text>
                   </ion-col>
+                </ion-row>
+              </ion-col>
+
+              <ion-col class="ion-no-padding" size="12" size-sm="6">
+                <ion-row>
                   <ion-col size="5">
                     <ion-text><b>Tipo de sangre</b></ion-text>
                   </ion-col>
@@ -467,6 +467,24 @@
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{user.direction || 'No indicado'}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5" *ngIf="user.consolidated">
+                    <ion-text><b>Consolidado</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7" *ngIf="user.consolidated">
+                    <ion-text>{{user.consolidated ? 'Si' : 'No'}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5" *ngIf="user.petition">
+                    <ion-text><b>Petición</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7" *ngIf="user.petition">
+                    <ion-text>{{user.petition || 'No indicado'}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5" *ngIf="user.created_at">
+                    <ion-text><b>Fecha de registro</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7" *ngIf="user.created_at">
+                    <ion-text>{{user.created_at || 'No indicado'}}</ion-text>
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -520,7 +538,7 @@
         <ng-template #noReferrals>
           <ion-row class="ion-margin-top">
             <ion-col size="12">
-              <ion-text>
+              <ion-text color="medium">
                 <p class="ion-text-center">
                   <ion-icon name="alert-circle-outline"></ion-icon>
                   Este miembro no posee hijos espirituales.
@@ -553,7 +571,7 @@
         <ng-template #noCourses>
           <ion-row class="ion-margin-top">
             <ion-col size="12">
-              <ion-text>
+              <ion-text color="medium">
                 <p class="ion-text-center">
                   <ion-icon name="alert-circle-outline"></ion-icon>
                   Este miembro no posee cursos en su cuenta.

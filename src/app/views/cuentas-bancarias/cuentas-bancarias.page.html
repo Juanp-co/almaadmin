@@ -70,13 +70,10 @@
           </ion-row>
         </ion-card-content>
       </ion-card>
-
     </ion-col>
 
     <ion-col size="12" *ngIf="!edit">
-
       <ion-row *ngIf="banks && banks.length > 0; else noBanks">
-
         <ion-col size="12" size-sm="4" *ngFor="let bank of banks" (click)="showDetails(bank._id)">
           <ion-card
             class="ion-no-padding ion-no-margin ion-margin-start ion-margin-end ion-margin-bottom card-item"
@@ -90,47 +87,23 @@
                 <ion-col size="12">
                   <ion-text color="primary" class="ion-margin-top ion-margin-bottom"><b>{{ bank.title }}</b></ion-text>
                   <br/>
-
                   <i class="toSmall">Clic para más información.</i>
-
                 </ion-col>
               </ion-row>
             </ion-card-content>
           </ion-card>
-
-
         </ion-col>
-
       </ion-row>
 
       <ng-template #noBanks>
         <ion-card>
-          <ion-text>
+          <ion-text color="medium">
             <p class="ion-text-center no-selected-text">
               <ion-icon name="alert-circle-outline"></ion-icon> No existen cuentas bancarias registradas.
             </p>
           </ion-text>
         </ion-card>
       </ng-template>
-
-
     </ion-col>
-
-    <!--<ion-col size="12" *ngIf="banks && banks.length > 0; else noBanks">-->
-      <!--<div class="row header">-->
-        <!--<div class="col">#</div>-->
-        <!--<div class="col">Imagen</div>-->
-        <!--<div class="col">Título</div>-->
-        <!--<div class="col"></div>-->
-      <!--</div>-->
-      <!--<div class="row" *ngFor="let bank in banks; let i = index">-->
-        <!--<div class="col">{{i + 1}}</div>-->
-        <!--<div class="col">{{bank.picture}}</div>-->
-        <!--<div class="col">{{bank.title}}</div>-->
-        <!--<div class="col"><button class="button">Add</button></div>-->
-      <!--</div>-->
-    <!--</ion-col>-->
   </ion-row>
-
-
 </ion-content>

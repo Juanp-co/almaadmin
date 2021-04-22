@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IMiembros} from '../miembros.model';
 import {AlertController, ModalController} from '@ionic/angular';
+import {IMiembros} from '../miembros.model';
+import {MiembrosService} from '../miembros.service';
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
 
@@ -13,11 +14,8 @@ export class AsignarConsolidadorPage implements OnInit {
   @Input() selectedId: any;
   @Input() role: any;
   users: IMiembros[] = [];
-  totals = 0;
-  pages = 0;
-  page = 1;
-  showRegisterButton = false;
   selectedUser = null;
+  init = true;
   queryParams: any = {
     limit: 100,
     page: 1,
@@ -34,13 +32,12 @@ export class AsignarConsolidadorPage implements OnInit {
     private alertCtrl: AlertController,
     private axios: AxiosService,
     private globalSer: GlobalService,
+    private miembrosService: MiembrosService,
     private modalCtrl: ModalController,
-  ) {
-  }
+  ) { }
 
   async ngOnInit() {
     if (this.selectedId) this.queryParams.ignoreIds = this.selectedId;
-    await this.getMembers();
   }
 
   async closeModal(data: any = null) {
@@ -49,16 +46,20 @@ export class AsignarConsolidadorPage implements OnInit {
 
   async getMembers() {
     await this.globalSer.presentLoading();
-    const res: any = await this.axios.getData('/admin/users', this.queryParams);
+    if (this.init) this.init = false;
+    this.users = [];
+    this.selectedUser = null;
+    const data: any = await this.miembrosService.getMembersList(this.queryParams);
 
-    if (res && res.success) {
-      this.users = res.data.users;
+    if (data && !data.error) {
+      this.users = data || [];
       await this.globalSer.dismissLoading();
     }
-    else {
+    else if (data && data.error) {
       await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', res && res.error ? res.error : 'Error desconocido.');
+      await this.globalSer.errorSession();
     }
+    else await this.globalSer.dismissLoading();
   }
 
   async findData() {
@@ -74,16 +75,19 @@ export class AsignarConsolidadorPage implements OnInit {
     this.selectedUser = null;
   }
 
+  cleanData() {
+    this.users = [];
+    this.queryParams.word = null;
+    this.selectedUser = null;
+    this.init = true;
+  }
+
   checkAdded(id: string) {
     return this.selectedUser ? this.selectedUser._id === id : false;
   }
 
   async confirmSaveNewMembers() {
-    if (this.selectedUser) {
-      await this.closeModal(this.selectedUser);
-    }
-    else {
-      await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no debe seleccionar a un miembro.');
-    }
+    if (this.selectedUser) await this.closeModal(this.selectedUser);
+    else await this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe seleccionar a un miembro.');
   }
 }

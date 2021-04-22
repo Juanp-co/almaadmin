@@ -13,14 +13,18 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 export class DetallesConsolidadoPage implements OnInit {
   @Input() data: any;
 
-  constructor(private modalCtrl: ModalController,) {
+  constructor(private modalCtrl: ModalController) {
     dayjs.extend(duration);
     dayjs.extend(relativeTime);
   }
 
   async ngOnInit() {
     if (!this.data) await this.closeModal();
-    else this.data.date = this.data.date ? dayjs(this.data.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY') : 'No encontrada.';
+    else this.data.date = this.data.date ?
+      dayjs(this.data.date, 'YYYY-MM-DD', true)
+        .locale('es')
+        .format('dddd, DD [de] MMMM [de] YYYY')
+      : 'No encontrada.';
   }
 
   async closeModal() {

@@ -64,6 +64,63 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item>
+                <ion-label position="floating" color="medium">Fecha de nacimiento</ion-label>
+                <ion-datetime
+                  [(ngModel)]="formData.birthday"
+                  displayFormat="DD/MM/YYYY"
+                  min="1910-03-14"
+                  max="{{maxDate}}"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                  (ionChange)="setDate()"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Correo electrónico</ion-label>
+                <ion-input [(ngModel)]="formData.email" autocomplete="off" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Sexo</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="gender[formData.gender] || ''"
+                  autocomplete="off"
+                  class="no-selected-text"
+                  (click)="showAlertList('gender', 'gender', formData.gender)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Estado civil</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="civilStatus[formData.civilStatus] || ''"
+                  autocomplete="off"
+                  class="no-selected-text"
+                  (click)="showAlertList('civilStatus', 'civilStatus', formData.civilStatus)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Barrio o localidad</ion-label>
+                <ion-input [(ngModel)]="formData.locality" autocomplete="off" maxlength="100" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Dirección</ion-label>
+                <ion-input [(ngModel)]="formData.direction" autocomplete="off" maxlength="250" class="ion-text-uppercase"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
                 <ion-label position="floating" color="medium">Rol (*)</ion-label>
                 <ion-input
                   [readonly]="true"
@@ -76,34 +133,66 @@
             </ion-col>
             <ion-col size="12" size-sm="6">
               <ion-item lines="none">
-                <ion-label color="medium">Asignar padre espiritual</ion-label>
-                <ion-checkbox
-                  slot="start"
-                  [checked]="formData.addReferral"
-                  (ionChange)="checkReferralMember()"
-                ></ion-checkbox>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12" size-sm="6" *ngIf="formData.addReferral">
-              <ion-item>
-                <ion-label position="floating" color="medium">Seleccione un miembro (*)</ion-label>
-                <ion-input
-                  [readonly]="true"
-                  [value]="getReferredNames()"
-                  autocomplete="off"
-                  class="no-selected-text"
-                  (click)="modalMember()"
-                ></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12" size-sm="6">
-              <ion-item lines="none">
                 <ion-label color="medium">El miembro es consolidado</ion-label>
                 <ion-checkbox
                   slot="start"
                   [checked]="formData.consolidated"
-                  (ionChange)="setConsolidatedValue()"
+                  (ionChange)="setCheckedValue('consolidated')"
                 ></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" *ngIf="formData.consolidated">
+              <ion-row>
+                <ion-col size="12" size-sm="6">
+                  <ion-item lines="none">
+                    <ion-label color="medium">Yo soy el consolidador</ion-label>
+                    <ion-checkbox
+                      slot="start"
+                      [checked]="formData.iAmConsolidator"
+                      (ionChange)="setCheckedValue('iAmConsolidator')"
+                    ></ion-checkbox>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6" *ngIf="formData.consolidated && !formData.iAmConsolidator">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Seleccione un miembro (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="getReferredNames()"
+                      autocomplete="off"
+                      class="no-selected-text"
+                      (click)="modalMember()"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-sm="6" *ngIf="formData.consolidated">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Petición (opcional)</ion-label>
+                    <ion-input [(ngModel)]="formData.petition" autocomplete="off" class="ion-text-uppercase"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item lines="none">
+                <ion-label color="medium">¿Asiste a un grupo familiar?</ion-label>
+                <ion-checkbox
+                  slot="start"
+                  [checked]="formData.attendGroup"
+                  (ionChange)="setCheckedValue('attendGroup')"
+                ></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6" *ngIf="formData.attendGroup">
+              <ion-item>
+                <ion-label position="floating" color="medium">Seleccione un grupo familiar (*)</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="getGroupLabel()"
+                  autocomplete="off"
+                  class="no-selected-text"
+                  (click)="modalGroups()"
+                ></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="12" class="ion-margin-top">

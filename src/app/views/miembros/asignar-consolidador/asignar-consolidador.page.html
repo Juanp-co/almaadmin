@@ -18,21 +18,22 @@
   <ion-row>
     <ion-col size="12">
       <ion-row>
-        <ion-col [size]="12" size-sm="7">
+        <ion-col [size]="12">
           <ion-toolbar>
-            <ion-button color="light" (click)="queryParams.word = null; findData()" slot="start" *ngIf="queryParams.word">
+            <ion-button color="light" (click)="cleanData()" slot="start" *ngIf="queryParams.word">
               <ion-icon name="backspace-outline"></ion-icon>
             </ion-button>
             <ion-item>
-              <ion-label position="floating" color="medium">Buscar</ion-label>
+              <ion-label position="floating" color="medium">Buscar por teléfono o nombre</ion-label>
               <ion-input
                 [(ngModel)]="queryParams.word"
                 autocomplete="off"
                 class="ion-text-uppercase"
               ></ion-input>
             </ion-item>
-            <ion-button color="light" (click)="queryParams.word !== null || queryParams.word !== '' ? findData() : null" slot="end">
-              <ion-icon name="search-outline"></ion-icon>
+            <ion-button color="light" (click)="queryParams.word ? findData() : null" slot="end">
+              <ion-icon name="search-outline" slot="start"></ion-icon>
+              <ion-text>Buscar</ion-text>
             </ion-button>
           </ion-toolbar>
         </ion-col>
@@ -40,7 +41,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="users && users.length > 0">
+  <ion-row *ngIf="users && users.length > 0; else noMembers">
     <ion-col size="12" size-sm="6" *ngFor="let u of users">
       <app-user-group-card
         [user]="u"
@@ -51,18 +52,20 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="users.length === 0">
-    <ion-col>
-      <ion-card>
-        <ion-card-content class="ion-text-center">
-          <ion-text>
-            <p class="ion-text-center">
-              <ion-icon name="alert-circle-outline"></ion-icon>
-              No se encontraron resultados.
-            </p>
-          </ion-text>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>
+  <ng-template #noMembers>
+    <ion-card>
+      <ion-card-content class="">
+        <ion-row>
+          <ion-col size="12">
+            <ion-text color="medium">
+              <p class="ion-text-center">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                {{ init ? 'Busque a un miembro por número de teléfono o por su nomber y seleccionelo.' : 'No se encontraron grupos.' }}
+              </p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>

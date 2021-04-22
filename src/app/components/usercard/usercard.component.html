@@ -1,7 +1,7 @@
 <ion-card
   class="min-height-100 ion-no-padding ion-no-margin ion-margin-bottom pointer"
   *ngIf="member"
-  (click)="member._id && showButton ? goToDetails(member._id) : null"
+  (click)="member._id && showButton && goDetails ? goToDetails(member._id) : null"
 >
   <ion-card-content class="ion-no-margin ion-no-padding">
     <ion-row>
@@ -30,7 +30,7 @@
             <ion-icon name="accessibility-outline"></ion-icon>
             {{ this.globalSer.getRoleValue(member.role) }}<br>
           </ion-text>
-          <div *ngIf="showButton">
+          <div *ngIf="showButton && goDetails">
             <i class="toSmall">Clic para más información.</i>
           </div>
         </div>

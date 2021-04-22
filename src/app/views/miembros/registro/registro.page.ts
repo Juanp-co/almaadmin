@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {NavController} from '@ionic/angular';
+import dayjs from 'dayjs';
 import {DetallesMiembroService} from '../detalles-miembro/detalles-miembro.service';
 import {MiembrosService} from '../miembros.service';
 import {AsignarConsolidadorPage} from '../asignar-consolidador/asignar-consolidador.page';
@@ -12,6 +13,7 @@ import {
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
+import {AsignarGrupoFamiliarPage} from '../asignar-grupo-familiar/asignar-grupo-familiar.page';
 
 @Component({
   selector: 'app-registro',
@@ -21,17 +23,30 @@ import {
 export class RegistroPage implements OnInit {
 
   roles = [];
+  civilStatus = [];
+  gender = [];
   successRegister = false;
   successData: any = null;
   referralData: any = null;
+  groupData: any = null;
+  maxDate: any = null;
   formData: any = {
     phone: null,
     names: null,
     lastNames: null,
+    email: null,
+    birthday: null,
+    civilStatus: null,
+    gender: null,
+    locality: null,
+    direction: null,
+    petition: null,
+    attendGroup: false,
+    groupId: null,
     role: null,
     referred: null,
-    addReferral: false,
     consolidated: false,
+    iAmConsolidator: true,
   };
 
   constructor(
@@ -46,6 +61,9 @@ export class RegistroPage implements OnInit {
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
     else {
       this.roles = this.globalSer.roles;
+      this.civilStatus = detallesMiembroService.civilStatusList;
+      this.gender = detallesMiembroService.genderList;
+      this.maxDate = dayjs().format('YYYY-MM-DD');
     }
   }
 
@@ -78,17 +96,38 @@ export class RegistroPage implements OnInit {
     await this.navCtrl.back();
   }
 
-  checkReferralMember() {
-    if (this.formData.addReferral) this.referralData = null;
-    this.formData.addReferral = !this.formData.addReferral;
-  }
-
-  setConsolidatedValue() {
-    this.formData.consolidated = !this.formData.consolidated;
+  setCheckedValue(input) {
+    this.formData[input] = !this.formData[input];
+    if (input === 'attendGroup' && !this.formData.attendGroup) {
+      this.formData.groupId = null;
+      this.groupData = null;
+    }
+    if (input === 'consolidated' && !this.formData.consolidated) {
+      this.formData.iAmConsolidator = true;
+      this.formData.petition = null;
+      this.formData.referred = null;
+      this.referralData = null;
+    }
+    if (input === 'iAmConsolidator' && !this.formData.iAmConsolidator) {
+      this.formData.referred = null;
+      this.referralData = null;
+    }
   }
 
   getReferredNames() {
     return this.referralData ? `${this.referralData.names} ${this.referralData.lastNames}` : null;
+  }
+
+  getGroupLabel() {
+    return this.groupData ?
+      `Sector: ${this.groupData.sector} / Sub-sector: ${this.groupData.subSector} / Grupo #: ${this.groupData.number}`
+      : null;
+  }
+
+  setDate() {
+    if (this.formData.birthday) {
+      this.formData.birthday = dayjs(this.formData.birthday).format('YYYY-MM-DD');
+    }
   }
 
   validateOnlyNumbers(event: any) {
@@ -100,7 +139,6 @@ export class RegistroPage implements OnInit {
   }
 
   // Alerts
-
   async showRoleListAlert(selected: any = null) {
     const inputs: any[] = [];
     for (const [i, value] of this.roles.entries()) {
@@ -122,6 +160,27 @@ export class RegistroPage implements OnInit {
     });
   }
 
+  async showAlertList(input: string, nameArray: string, selected: any = null) {
+    const inputs: any[] = [];
+    for (const [i, value] of this[nameArray].entries()) {
+      inputs.push({
+        name: `value-${i}`,
+        type: 'radio',
+        label: value,
+        value: i,
+        checked: selected !== null && selected.toString() === i.toString(),
+      });
+    }
+
+    await this.globalSer.alertWithList({
+      header: 'Seleccione',
+      inputs,
+      confirmAction: (selectedValue) => {
+        this.formData[input] = selectedValue;
+      }
+    });
+  }
+
   async confirmCancel() {
     await this.globalSer.alertConfirm({
       header: 'Confirme',
@@ -130,7 +189,7 @@ export class RegistroPage implements OnInit {
     });
   }
 
-  // members
+  // Modals
   async modalMember() {
     const updateData = (member: any) => {
       this.referralData = member || null;
@@ -139,7 +198,21 @@ export class RegistroPage implements OnInit {
 
     await this.globalSer.loadModal(
       AsignarConsolidadorPage,
-      { selectedId: this.referralData ? this.referralData._id : null },
+      { selectedId: this.formData.referred },
+      false,
+      updateData
+    );
+  }
+
+  async modalGroups() {
+    const updateData = (group: any) => {
+      this.groupData = group || null;
+      this.formData.groupId = group ? group._id : null;
+    };
+
+    await this.globalSer.loadModal(
+      AsignarGrupoFamiliarPage,
+      { selectedId: this.formData.groupId },
       false,
       updateData
     );
@@ -150,8 +223,10 @@ export class RegistroPage implements OnInit {
     if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
     if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
     if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el miembro.';
-    if (this.formData.addReferral && (!this.formData.referred || (this.formData.referred && this.formData.referred.length < 5)))
+    if (this.formData.consolidated && !this.formData.iAmConsolidator && !this.formData.referred)
       return 'Disculpe, pero debe seleccionar un miembro consolidador.';
+    if (this.formData.attendGroup && !this.formData.groupId)
+      return 'Disculpe, pero debe seleccionar un grupo familiar.';
 
     return null;
   }
