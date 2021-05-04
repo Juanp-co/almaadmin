@@ -16,8 +16,10 @@ export class RegistrarVisitaPage implements OnInit {
   formData: any = {
     userId: null,
     observation: null,
+    action: '0',
     date: null
   };
+  listActions: string[] = ['Visita', 'Llamada'];
   memberSelected: any = null;
   members: any[] = [];
   minInitDate: string = dayjs('2020-01-01').format('YYYY-MM-DD');
@@ -97,6 +99,10 @@ export class RegistrarVisitaPage implements OnInit {
       true,
       update
     );
+  }
+
+  async setActionValue(index: number) {
+    this.formData.action = index || 0;
   }
 
   getConsolidatorsNames() {
