@@ -43,7 +43,7 @@ export class RegistroPage implements OnInit {
     petition: null,
     attendGroup: false,
     groupId: null,
-    role: null,
+    role: 5,
     referred: null,
     consolidated: false,
     iAmConsolidator: true,
@@ -222,7 +222,7 @@ export class RegistroPage implements OnInit {
     if (!checkPhone(this.formData.phone)) return 'Disculpe, pero debe indicar un número de teléfono válido.';
     if (!checkNameOrLastName(this.formData.names)) return 'Disculpe, pero debe indicar un nombre válido.';
     if (!checkNameOrLastName(this.formData.lastNames)) return 'Disculpe, pero debe indicar un apellido válido.';
-    if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el miembro.';
+    // if (!checkIfValueIsNumber(`${this.formData.role}`)) return 'Disculpe, pero debe seleccionar un rol para el miembro.';
     if (this.formData.consolidated && !this.formData.iAmConsolidator && !this.formData.referred)
       return 'Disculpe, pero debe seleccionar un miembro consolidador.';
     if (this.formData.attendGroup && !this.formData.groupId)

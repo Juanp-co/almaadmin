@@ -4,6 +4,7 @@ import {AxiosService} from '../../services/axios.service';
 import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
 import {AppComponent} from '../../app.component';
+import {onlyNumbersInputValidation2} from '../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-ingresar',
@@ -41,6 +42,10 @@ export class IngresarPage implements OnInit {
       this.globalComponent.session = false;
       this.globalComponent.userData = null;
     }
+  }
+
+  validateOnlyNumbers(event: any) {
+    onlyNumbersInputValidation2(event);
   }
 
   async ingresar() {
