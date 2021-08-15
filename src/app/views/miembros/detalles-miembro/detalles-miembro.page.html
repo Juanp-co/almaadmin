@@ -296,10 +296,10 @@
             <ion-row>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Rol actual</ion-label>
+                  <ion-label position="floating" color="medium">Roles actuales</ion-label>
                   <ion-input
                     [readonly]="true"
-                    [value]="this.globalSer.getRoleValue(staticData.role)"
+                    [value]="this.globalSer.getRoleValue(staticData.roles)"
                     autocomplete="off"
                     class="no-selected-text"
                   ></ion-input>
@@ -307,13 +307,13 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Nuevo rol (*)</ion-label>
+                  <ion-label position="floating" color="medium">Nuevos roles (*)</ion-label>
                   <ion-input
                     [readonly]="true"
-                    [value]="this.globalSer.getRoleValue(formDataRole.role)"
+                    [value]="this.globalSer.getRoleValue(formDataRole.roles)"
                     autocomplete="off"
                     class="no-selected-text"
-                    (click)="showRolesListAlert(formDataRole.role)"
+                    (click)="showRolesListAlert(formDataRole.roles)"
                   ></ion-input>
                 </ion-item>
               </ion-col>
@@ -341,7 +341,7 @@
                     <ion-text><b>Rol</b></ion-text>
                   </ion-col>
                   <ion-col size="7">
-                    <ion-text>{{this.globalSer.getRoleValue(user.role)}}</ion-text>
+                    <ion-text>{{this.globalSer.getRoleValue(user.roles, true)}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
                     <ion-text><b>Consolidado</b></ion-text>

@@ -51,9 +51,7 @@ export class MiembrosPage implements OnInit {
       this.router.navigate(['/ingresar']);
     else {
       // get role to show register button
-      if (this.globalSer.checkRoleToEnableAddOrUpdate()) {
-        this.showRegisterButton = true;
-      }
+      this.showRegisterButton = this.globalSer.checkRoleToEnableAddOrUpdate();
       // init get totals
       await this.getTotals();
     }

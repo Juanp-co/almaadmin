@@ -20,7 +20,7 @@ export interface IDetallesMiembro {
   company: string | boolean | null;
   companyType: any;
   baptized: string | boolean | null;
-  role: any;
+  roles: any[];
   referred: any;
   consolidated: boolean;
   department: any;

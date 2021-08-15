@@ -15,7 +15,6 @@ import {ModalEditarContenidoPage} from './modal-editar-contenido/modal-editar-co
   styleUrls: ['./detalles-curso.page.scss'],
 })
 export class DetallesCursoPage implements OnInit {
-  roles: string[] = [];
   title = 'Cargando...';
 
   id: any = null;
@@ -24,7 +23,6 @@ export class DetallesCursoPage implements OnInit {
   course: any = null;
 
   edit = false;
-  editBanner = false;
   banner: string|null = null;
   totalsUsers = 0;
   views: any = {
@@ -59,7 +57,6 @@ export class DetallesCursoPage implements OnInit {
   ) {
     // check if exist session
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
-    else this.roles = this.cursosService.roles;
   }
 
   async ngOnInit() {

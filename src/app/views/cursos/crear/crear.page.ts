@@ -3,6 +3,7 @@ import {NavController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {GlobalService} from '../../../services/global.service';
 import {CursosService} from '../cursos.service';
+import {rolesListTextWithoutAdmin} from '../../../../Utils/data.static';
 
 @Component({
   selector: 'app-crear',
@@ -18,30 +19,18 @@ export class CrearPage implements OnInit {
     level: null,
     toRoles: []
   };
-  roles: string[] = [
-    'Pastores',
-    'Supervisores',
-    'Líderes',
-    'Padres espirituales',
-    'Personas',
-  ];
 
   constructor(
     private globalSer: GlobalService,
     private navCtrl: NavController,
     private cursosService: CursosService,
     private router: Router
-  ) {
-    // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
-    else {
-      this.levels = this.cursosService.levelsList;
-    }
-  }
+  ) { }
 
   async ngOnInit() {
     // check if exist session
     if (!this.globalSer.checkSession()) await this.router.navigate(['/ingresar']);
+    else this.levels = this.cursosService.levelsList;
   }
 
   async back() {
@@ -80,11 +69,10 @@ export class CrearPage implements OnInit {
     let ret = '';
     if (rolesList.length > 0) {
       for (const v of rolesList) {
-        if (ret === '') ret = this.roles[v - 1];
-        else ret += `, ${this.roles[v - 1]}`;
+        if (ret === '') ret = rolesListTextWithoutAdmin[v - 1];
+        else ret += `, ${rolesListTextWithoutAdmin[v - 1]}`;
       }
     }
-
     return ret;
   }
 
@@ -109,7 +97,7 @@ export class CrearPage implements OnInit {
 
   async showRoleListAlert(selected: any = []) {
     const inputs: any[] = [];
-    for (const [i, value] of this.roles.entries()) {
+    for (const [i, value] of rolesListTextWithoutAdmin.entries()) {
       inputs.push({
         name: `roles`,
         type: 'checkbox',

@@ -2,18 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
-import {DetallesMiembroService} from '../detalles-miembro/detalles-miembro.service';
 import {MiembrosService} from '../miembros.service';
 import {AsignarConsolidadorPage} from '../asignar-consolidador/asignar-consolidador.page';
+import {AsignarGrupoFamiliarPage} from '../asignar-grupo-familiar/asignar-grupo-familiar.page';
+import {DetallesMiembroService} from '../detalles-miembro/detalles-miembro.service';
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
 import {
-  checkIfValueIsNumber,
   checkNameOrLastName, checkPhone,
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
-import {AsignarGrupoFamiliarPage} from '../asignar-grupo-familiar/asignar-grupo-familiar.page';
 
 @Component({
   selector: 'app-registro',
@@ -22,7 +21,6 @@ import {AsignarGrupoFamiliarPage} from '../asignar-grupo-familiar/asignar-grupo-
 })
 export class RegistroPage implements OnInit {
 
-  roles = [];
   civilStatus = [];
   gender = [];
   successRegister = false;
@@ -43,7 +41,7 @@ export class RegistroPage implements OnInit {
     petition: null,
     attendGroup: false,
     groupId: null,
-    role: 5,
+    roles: [5],
     referred: null,
     consolidated: false,
     iAmConsolidator: true,
@@ -57,14 +55,7 @@ export class RegistroPage implements OnInit {
     private miembrosService: MiembrosService,
     private router: Router,
   ) {
-    // check if exist session
-    if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
-    else {
-      this.roles = this.globalSer.roles;
-      this.civilStatus = detallesMiembroService.civilStatusList;
-      this.gender = detallesMiembroService.genderList;
-      this.maxDate = dayjs().format('YYYY-MM-DD');
-    }
+    this.maxDate = dayjs().format('YYYY-MM-DD');
   }
 
   async ngOnInit() {
@@ -73,6 +64,10 @@ export class RegistroPage implements OnInit {
     else if (!this.globalSer.checkRoleToEnableAddOrUpdate()) {
       await this.globalSer.presentAlert('Alerta', 'Disculpe, pero no cuenta con privilegios para registrar nuevos miembros.');
       await this.navCtrl.back();
+    }
+    else {
+      this.civilStatus = this.detallesMiembroService.civilStatusList;
+      this.gender = this.detallesMiembroService.genderList;
     }
   }
 
@@ -139,27 +134,6 @@ export class RegistroPage implements OnInit {
   }
 
   // Alerts
-  async showRoleListAlert(selected: any = null) {
-    const inputs: any[] = [];
-    for (const [i, value] of this.roles.entries()) {
-      inputs.push({
-        name: `roles`,
-        type: 'radio',
-        label: value,
-        value: i,
-        checked: selected !== null && selected === i,
-      });
-    }
-
-    await this.globalSer.alertWithList({
-      header: 'Seleccione un rol',
-      inputs,
-      confirmAction: (selectedValue) => {
-        this.formData.role = selectedValue;
-      }
-    });
-  }
-
   async showAlertList(input: string, nameArray: string, selected: any = null) {
     const inputs: any[] = [];
     for (const [i, value] of this[nameArray].entries()) {
