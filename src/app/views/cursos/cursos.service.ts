@@ -6,6 +6,7 @@ import {
   checkTitlesOrDescriptions,
   checkYoutubeUrl
 } from '../../../Utils/validations.functions';
+import {rolesListTextWithoutAdmin} from '../../../Utils/data.static';
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +28,6 @@ export class CursosService {
     { val: 5, label: 'Nivel 5' },
   ];
 
-  roles: string[] = [
-    'Pastores',
-    'Supervisores',
-    'Líderes',
-    'Padres espirituales',
-    'Personas',
-  ];
-
   constructor(
     private axios: AxiosService,
     private globalSer: GlobalService
@@ -48,8 +41,8 @@ export class CursosService {
     let ret = '';
     if (rolesList.length > 0) {
       for (const v of rolesList) {
-        if (ret === '') ret = this.roles[v - 1];
-        else ret += `, ${this.roles[v - 1]}`;
+        if (ret === '') ret = rolesListTextWithoutAdmin[v - 1];
+        else ret += `, ${rolesListTextWithoutAdmin[v - 1]}`;
       }
     }
 

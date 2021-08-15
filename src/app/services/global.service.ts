@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AlertController, LoadingController, ModalController, NavController} from '@ionic/angular';
 import {CookiesService} from './cookies.service';
+import {rolesListSingleText} from '../../Utils/data.static';
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +31,6 @@ export class GlobalService {
     shouldNotGroupWhenFull: true,
     placeholder: 'Indica la descripción aquí ...'
   };
-  roles: string[] = [
-    'Administrador',
-    'Pastor',
-    'Supervisor',
-    'Líder',
-    'Padre espiritual',
-    'Persona',
-  ];
 
   constructor(
     private alertCtrl: AlertController,
@@ -148,19 +141,27 @@ export class GlobalService {
     return !!token;
   }
 
-  getRole() {
+  getRoles() {
     const data = this.cookieService.getCookie('data');
-    return data && data.role !== null && data.role !== undefined ? data.role : null;
+    return data?.roles || [];
   }
 
-  getRoleValue(role: any): string {
-    if (role === null || role === undefined) return 'No se encontró el rol.';
-    return this.roles[role] || 'No se encontró el rol.';
+  getRoleValue(rolesList: number[], staticMsg = false): string {
+    let ret = staticMsg ? 'NO TIENE ASIGNADO NINGÚN ROL.' : '';
+    if (rolesList.length > 0) {
+      ret = '';
+      for (const v of rolesList) {
+        if (ret === '') ret = rolesListSingleText[v];
+        else ret += `, ${rolesListSingleText[v]}`;
+      }
+    }
+    return ret;
   }
 
   checkRoleToEnableAddOrUpdate() {
-    const limits = ['0', '1'];
-    return limits.indexOf(`${this.getRole()}`) > -1;
+    const limits = [0, 1];
+    const roles = this.getRoles();
+    return roles.some(r => limits.includes(r));
   }
 
   clearAllData() {

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AlertController, NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
+import {IDetallesMiembro, IDetallesMiembroEdit, IDetallesMiembroTotals} from './detalles-miembro.model';
+import {DetallesMiembroService} from './detalles-miembro.service';
 import {AxiosService} from '../../../services/axios.service';
 import {GlobalService} from '../../../services/global.service';
-import {DetallesMiembroService} from './detalles-miembro.service';
-import {AlertController, NavController} from '@ionic/angular';
+import {rolesListSingleText} from '../../../../Utils/data.static';
 import {
   checkDate, checkEmail,
   checkIfValueIsNumber,
@@ -14,7 +16,6 @@ import {
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
-import {IDetallesMiembro, IDetallesMiembroEdit, IDetallesMiembroTotals} from './detalles-miembro.model';
 
 @Component({
   selector: 'app-detalles-miembro',
@@ -23,7 +24,6 @@ import {IDetallesMiembro, IDetallesMiembroEdit, IDetallesMiembroTotals} from './
 })
 export class DetallesMiembroPage implements OnInit {
   // static data to edit values
-  roles = [];
   professions = [];
   companyType = [];
   educationLevel = [];
@@ -46,7 +46,7 @@ export class DetallesMiembroPage implements OnInit {
   editRole = false;
   formData: IDetallesMiembroEdit | null = null;
   formDataRole: any = {
-    role: null
+    roles: []
   };
 
   views: any = {
@@ -81,7 +81,6 @@ export class DetallesMiembroPage implements OnInit {
     // check if exist session
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
     else {
-      this.roles = this.globalSer.roles;
       this.documentTypes = detallesMiembroService.documentTypesList;
       this.educationLevel = detallesMiembroService.educationLevel;
       this.professions = detallesMiembroService.professionsList;
@@ -91,8 +90,7 @@ export class DetallesMiembroPage implements OnInit {
       this.gender = detallesMiembroService.genderList;
       this.departments = detallesMiembroService.departmentsList.map(d => d.department);
       this.maxDate = dayjs().format('YYYY-MM-DD');
-
-      if (this.globalSer.checkRoleToEnableAddOrUpdate()) this.enableActions = true;
+      this.enableActions = this.globalSer.checkRoleToEnableAddOrUpdate();
     }
   }
 
@@ -156,8 +154,8 @@ export class DetallesMiembroPage implements OnInit {
     const updated = await this.detallesMiembroService.updateRoleUser(this.id, data);
 
     if (updated && !updated.error) {
-      this.user.role = data.role;
-      this.staticData.role = data.role;
+      this.user.roles = data.roles;
+      this.staticData.roles = data.roles;
       this.showFormEditRole();
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
@@ -222,6 +220,7 @@ export class DetallesMiembroPage implements OnInit {
     this.user.companyType = this.companyType[this.user.companyType] || null;
     this.user.civilStatus = this.civilStatus[this.user.civilStatus] || null;
     this.user.gender = this.gender[this.user.gender] || null;
+    this.user.roles = this.user.roles || [];
 
     const depto: any = this.detallesMiembroService.departmentsList[this.user.department] || null;
     this.user.department = depto ? depto.department : null;
@@ -295,7 +294,7 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   showFormEditRole() {
-    this.formDataRole.role = !this.editRole ? this.staticData.role : null;
+    this.formDataRole.roles = !this.editRole ? [...this.staticData.roles] : [];
     this.editRole = !this.editRole;
   }
 
@@ -321,23 +320,23 @@ export class DetallesMiembroPage implements OnInit {
     });
   }
 
-  async showRolesListAlert(selected: any = null) {
+  async showRolesListAlert(selected: any = []) {
     const inputs: any[] = [];
-    for (const [i, value] of this.globalSer.roles.entries()) {
+    for (const [i, value] of rolesListSingleText.entries()) {
       inputs.push({
         name: `value-${i}`,
-        type: 'radio',
+        type: 'checkbox',
         label: value,
         value: i,
-        checked: selected !== null && selected.toString() === i.toString(),
+        checked: selected.includes(i),
       });
     }
 
     await this.globalSer.alertWithList({
       header: 'Seleccione',
       inputs,
-      confirmAction: (selectedValue) => {
-        this.formDataRole.role = selectedValue;
+      confirmAction: (selectedValues) => {
+        this.formDataRole.roles = selectedValues || [];
       }
     });
   }
@@ -401,8 +400,14 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   validateRoleData(): string|null {
-    if (!/^[012345]{1}/.test(`${this.formDataRole.role}`))
+    const { roles } = this.formDataRole;
+
+    if (!roles || roles?.length === 0) {
       return 'Disculpe, pero el rol seleccionado es incorrecto.';
+    }
+    if (!roles.some(r => [0, 1, 2, 3, 4].includes(r))) {
+      return 'Disculpe, pero el rol seleccionado es incorrecto.';
+    }
     return null;
   }
 

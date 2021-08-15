@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CursosService} from '../../../views/cursos/cursos.service';
 import {GlobalService} from '../../../services/global.service';
+import {rolesListTextWithoutAdmin} from '../../../../Utils/data.static';
 import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
 
 @Component({
@@ -81,7 +82,7 @@ export class EditarInfoCursoComponent implements OnInit {
   async showRoleListAlert(selected: any = []) {
     const inputs: any[] = [];
 
-    for (const [i, value] of this.cursosService.roles.entries()) {
+    for (const [i, value] of rolesListTextWithoutAdmin.entries()) {
       inputs.push({
         name: `roles`,
         type: 'checkbox',

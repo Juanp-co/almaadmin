@@ -5,6 +5,6 @@ export interface IMiembros {
   lastNames: string | null;
   gender: number | null;
   phone: string | null;
-  role: number | null;
+  roles: number[];
   created_at: string | null;
 }

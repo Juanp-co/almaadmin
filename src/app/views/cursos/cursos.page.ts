@@ -12,7 +12,6 @@ export class CursosPage implements OnInit {
 
   courses: any[] = [];
   totals = 0;
-  pages = 0;
   page = 1;
   queryParams: any = {
     input: 'level',

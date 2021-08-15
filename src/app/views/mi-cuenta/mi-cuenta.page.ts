@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {NavController} from '@ionic/angular';
 import dayjs from 'dayjs';
+import {MiCuentaService} from './mi-cuenta.service';
 import {
   checkDate,
   checkEmail,
   checkIfValueIsNumber, checkNameOrLastName,
   checkPassword,
   checkPhone,
-  checkTitlesOrDescriptions, onlyLettersInputValidation, onlyNumbersInputValidation
+  onlyLettersInputValidation, onlyNumbersInputValidation
 } from '../../../Utils/validations.functions';
-import {GlobalService} from '../../services/global.service';
-import {MiCuentaService} from './mi-cuenta.service';
-import {NavController} from '@ionic/angular';
-import {Router} from '@angular/router';
 import {CookiesService} from '../../services/cookies.service';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-mi-cuenta',
@@ -84,7 +84,6 @@ export class MiCuentaPage implements OnInit {
     // check if exist session
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
     else {
-      this.roles = this.globalSer.roles;
       this.documentTypes = miCuentaService.documentTypesList;
       this.educationLevel = miCuentaService.educationLevel;
       this.professions = miCuentaService.professionsList;

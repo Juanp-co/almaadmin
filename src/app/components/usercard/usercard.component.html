@@ -28,7 +28,7 @@
           </ion-text>
           <ion-text *ngIf="list">
             <ion-icon name="accessibility-outline"></ion-icon>
-            {{ this.globalSer.getRoleValue(member.role) }}<br>
+            {{ this.globalSer.getRoleValue(member.roles, true) }}<br>
           </ion-text>
           <div *ngIf="showButton && goDetails">
             <i class="toSmall">Clic para más información.</i>
