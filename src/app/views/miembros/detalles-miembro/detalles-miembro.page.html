@@ -276,11 +276,23 @@
                   <ion-input [(ngModel)]="formData.direction" autocomplete="off" maxlength="250" class="ion-text-uppercase"></ion-input>
                 </ion-item>
               </ion-col>
+              <ion-col size="12" size-sm="6">
+                <ion-item>
+                  <ion-label position="floating" color="medium">¿Asitió al curso de nuevo ingreso?</ion-label>
+                  <ion-input
+                    [readonly]="true"
+                    [value]="formData.meetingNew"
+                    autocomplete="off"
+                    class="no-selected-text"
+                    (click)="showAlertYesOrNotList('meetingNew', formData.meetingNew)"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
               <ion-col size="12" size-sm="12" class="ion-margin-top">
                 <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
               </ion-col>
               <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
-                <ion-button color="light" (click)="showFormEdit()">
+                <ion-button color="medium" (click)="showFormEdit()">
                   <ion-icon name="close-outline" slot="start"></ion-icon>
                   <ion-text>Cancelar</ion-text>
                 </ion-button>
@@ -321,7 +333,7 @@
                 <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
               </ion-col>
               <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
-                <ion-button color="light" (click)="showFormEditRole()">
+                <ion-button color="medium" (click)="showFormEditRole()">
                   <ion-icon name="close-outline" slot="start"></ion-icon>
                   <ion-text>Cancelar</ion-text>
                 </ion-button>
@@ -342,12 +354,6 @@
                   </ion-col>
                   <ion-col size="7">
                     <ion-text>{{this.globalSer.getRoleValue(user.roles, true)}}</ion-text>
-                  </ion-col>
-                  <ion-col size="5">
-                    <ion-text><b>Consolidado</b></ion-text>
-                  </ion-col>
-                  <ion-col size="7">
-                    <ion-text>{{user.consolidated ? 'Si' : 'No'}}</ion-text>
                   </ion-col>
                   <ion-col size="5">
                     <ion-text><b>Teléfono</b></ion-text>
@@ -473,6 +479,12 @@
                   </ion-col>
                   <ion-col size="7" *ngIf="user.consolidated">
                     <ion-text>{{user.consolidated ? 'Si' : 'No'}}</ion-text>
+                  </ion-col>
+                  <ion-col size="5">
+                    <ion-text><b>¿Curso de nuevo ingreso?</b></ion-text>
+                  </ion-col>
+                  <ion-col size="7">
+                    <ion-text>{{user.meetingNew ? 'Si' : 'No'}}</ion-text>
                   </ion-col>
                   <ion-col size="5" *ngIf="user.petition">
                     <ion-text><b>Petición</b></ion-text>

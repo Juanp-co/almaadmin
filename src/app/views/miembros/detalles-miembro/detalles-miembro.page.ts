@@ -129,6 +129,7 @@ export class DetallesMiembroPage implements OnInit {
     if (data.documentType) data.document = `${data.documentType.toUpperCase()}${data.document}`;
     data.company = data.company === 'Si';
     data.baptized = data.baptized === 'Si';
+    data.meetingNew = data.meetingNew === 'Si';
     if (data.position) data.position = data.position.trim().toUpperCase();
 
     const updated = await this.detallesMiembroService.updateDataUser(this.id, data);
@@ -201,32 +202,34 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   setUserParams() {
-    this.user = {...this.staticData} as IDetallesMiembro;
-    this.title = `Detalles: ${this.user.names} ${this.user.lastNames}`;
+    if (this.staticData) {
 
-    this.user.birthday = this.user.birthday ?
-      dayjs(this.user.birthday, 'YYYY-MM-DD', true)
-        .locale('es')
-        .format('DD [de] MMMM [de] YYYY')
-      : null;
-    this.user.created_at = this.user.created_at ?
-      dayjs(this.user.created_at, 'YYYY-MM-DD HH:mm:ss', true)
-        .locale('es')
-        .format('DD [de] MMMM [de] YYYY')
-      : null;
-    this.user.bloodType = this.bloodType[this.user.bloodType] || null;
-    this.user.profession = this.professions[this.user.profession] || null;
-    this.user.educationLevel = this.educationLevel[this.user.educationLevel] || null;
-    this.user.companyType = this.companyType[this.user.companyType] || null;
-    this.user.civilStatus = this.civilStatus[this.user.civilStatus] || null;
-    this.user.gender = this.gender[this.user.gender] || null;
-    this.user.roles = this.user.roles || [];
+      this.user = {...this.staticData} as IDetallesMiembro;
+      this.title = `Detalles: ${this.user.names} ${this.user.lastNames}`;
 
-    const depto: any = this.detallesMiembroService.departmentsList[this.user.department] || null;
-    this.user.department = depto ? depto.department : null;
-    if (depto) {
-      this.cities = depto.cities || null;
-      this.user.city = depto.cities[this.user.city] || null;
+      this.user.birthday = this.user.birthday ?
+        dayjs(this.user.birthday, 'YYYY-MM-DD', true)
+          .locale('es')
+          .format('DD [de] MMMM [de] YYYY')
+        : null;
+      this.user.created_at = this.user.created_at ?
+        dayjs(this.user.created_at, 'YYYY-MM-DD HH:mm:ss', true)
+          .locale('es')
+          .format('DD [de] MMMM [de] YYYY')
+        : null;
+      this.user.bloodType = this.bloodType[this.user.bloodType] || null;
+      this.user.profession = this.professions[this.user.profession] || null;
+      this.user.educationLevel = this.educationLevel[this.user.educationLevel] || null;
+      this.user.companyType = this.companyType[this.user.companyType] || null;
+      this.user.civilStatus = this.civilStatus[this.user.civilStatus] || null;
+      this.user.gender = this.gender[this.user.gender] || null;
+
+      const depto: any = this.detallesMiembroService.departmentsList[this.user.department] || null;
+      this.user.department = depto ? depto.department : null;
+      if (depto) {
+        this.cities = depto.cities || null;
+        this.user.city = depto.cities[this.user.city] || null;
+      }
     }
   }
 
@@ -283,6 +286,7 @@ export class DetallesMiembroPage implements OnInit {
       this.formData.document = this.formData.document ? this.formData.document.replace(/[A-Za-z]{1,3}/, '') : null;
       this.formData.company = this.formData.company ? 'Si' : 'No';
       this.formData.baptized = this.formData.baptized ? 'Si' : 'No';
+      this.formData.meetingNew = this.formData.meetingNew ? 'Si' : 'No';
       if (!this.cities) this.getCity();
     }
     else {

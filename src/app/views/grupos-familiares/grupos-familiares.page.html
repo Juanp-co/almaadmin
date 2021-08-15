@@ -13,7 +13,7 @@
 <ion-content>
   <ion-row class="ion-margin">
     <ion-col size="12">
-      <ion-button color="light" (click)="setShowFilter()">
+      <ion-button color="medium" (click)="setShowFilter()">
         <ion-icon name="{{ showFilter ? 'close' : 'filter'}}-outline" slot="start"></ion-icon>
         <ion-text>Filtrar</ion-text>
       </ion-button>
@@ -26,7 +26,7 @@
       <ion-row>
         <ion-col [size]="12" size-sm="9">
           <ion-toolbar>
-            <ion-button color="light" (click)="setFindFor()" slot="start">
+            <ion-button color="medium" (click)="setFindFor()" slot="start">
               <ion-icon name="list-outline" slot="start"></ion-icon>
               <ion-text>Buscar por: {{ findFor.label }}</ion-text>
             </ion-button>
@@ -39,10 +39,10 @@
                 (keypress)="validateOnlyNumber($event)"
               ></ion-input>
             </ion-item>
-            <ion-button color="light" (click)="findData()" slot="end">
+            <ion-button color="medium" (click)="findData()" slot="end">
               <ion-icon name="search-outline"></ion-icon>
             </ion-button>
-            <ion-button color="light" (click)="cleanFilter()" slot="end">
+            <ion-button color="medium" (click)="cleanFilter()" slot="end">
               <ion-icon name="trash-outline" slot="start"></ion-icon>
               <ion-text>Limpiar</ion-text>
             </ion-button>
@@ -50,12 +50,12 @@
         </ion-col>
         <ion-col [size]="12" size-sm="3">
           <ion-toolbar>
-            <ion-button color="light" (click)="setSortOrder()">
+            <ion-button color="medium" (click)="setSortOrder()">
               <ion-icon name="arrow-up-outline" *ngIf="queryParams.value === 1" slot="start"></ion-icon>
               <ion-icon name="arrow-down-outline" *ngIf="queryParams.value === -1" slot="start"></ion-icon>
               <ion-text>{{ queryParams.value === 1 ? 'ASC' : 'DES' }}</ion-text>
             </ion-button>
-            <ion-button color="light" (click)="setQueryValues()">
+            <ion-button color="medium" (click)="setQueryValues()">
               <ion-icon name="filter-outline" slot="start"></ion-icon>&nbsp;
               <ion-text>{{ queryParams.limit }}</ion-text>
             </ion-button>

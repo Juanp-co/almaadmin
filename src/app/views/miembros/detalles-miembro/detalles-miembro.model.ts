@@ -23,6 +23,7 @@ export interface IDetallesMiembro {
   roles: any[];
   referred: any;
   consolidated: boolean;
+  meetingNew: boolean;
   department: any;
   city: any;
   locality: any;
@@ -47,6 +48,7 @@ export interface IDetallesMiembroEdit {
   educationLevel: number | string | null;
   profession: number | string | null;
   bloodType: number | string | null;
+  meetingNew: string | boolean | null;
   company: string | boolean | null;
   companyType: number | string | null;
   baptized: string | boolean | null;
