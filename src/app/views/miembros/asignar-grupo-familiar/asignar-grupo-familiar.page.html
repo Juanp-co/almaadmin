@@ -20,7 +20,7 @@
       <ion-row>
         <ion-col [size]="12">
           <ion-toolbar>
-            <ion-button color="light" (click)="setFindFor()" slot="start">
+            <ion-button color="medium" (click)="setFindFor()" slot="start">
               <ion-icon name="list-outline" slot="start"></ion-icon>
               <ion-text>{{ findFor.label }}</ion-text>
             </ion-button>
@@ -33,10 +33,10 @@
                 (keypress)="validateOnlyNumber($event)"
               ></ion-input>
             </ion-item>
-            <ion-button color="light" (click)="findData()" slot="end">
+            <ion-button color="medium" (click)="findData()" slot="end">
               <ion-icon name="search-outline"></ion-icon>
             </ion-button>
-            <ion-button color="light" (click)="cleanFilter()" slot="end">
+            <ion-button color="medium" (click)="cleanFilter()" slot="end">
               <ion-icon name="trash-outline" slot="start"></ion-icon>
               <ion-text>Limpiar</ion-text>
             </ion-button>
