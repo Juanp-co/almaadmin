@@ -19,6 +19,13 @@ export class EventosService {
     return this.globalSer.altResponse(res);
   }
 
+  async getDetailsEvent(id: string|null): Promise<any> {
+    const res: any = await this.axios.getData(`/admin/events/${id}`);
+
+    if (res && res.success) return res.data.event || {};
+    return this.globalSer.altResponse(res);
+  }
+
   async addEvent(data: any): Promise<any> {
     const res: any = await this.axios.postData(`/admin/events`, data);
 

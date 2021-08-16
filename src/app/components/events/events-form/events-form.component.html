@@ -1,0 +1,125 @@
+<ion-card-content>
+  <ion-row>
+    <ion-col [size]="12" size-sm="4" class="ion-text-center">
+      <ion-row class="ion-justify-content-center ion-margin">
+        <ion-col size="12" class="ion-text-center">
+          <label class="micursor ion-text-center w-100">
+            <input type='file' accept="image/x-png,image/gif,image/jpeg" (change)='openFile($event)' hidden>
+            <div
+              class="banner-event"
+              [ngStyle]="{backgroundImage: 'url('+formData.picture+')', height: '200px'}"
+              *ngIf="formData.picture"
+            ></div>
+            <img src="assets/photo.png" height="150" *ngIf="!formData.picture">
+          </label>
+        </ion-col>
+        <ion-col size="12" class="ion-text-center">
+          <ion-text><i class="toSmall">Clic para cargar una imagen para el evento (opcional)</i></ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="12" size-sm="8">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" color="medium">Título del evento (*)</ion-label>
+            <ion-input
+              [value]="formData.title"
+              autocomplete="off"
+              maxlength="100"
+              class="ion-text-uppercase"
+              (change)="setFormData('title', $event)"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Fecha del evento (*)</ion-label>
+            <ion-datetime
+              [value]="formData.date"
+              displayFormat="DD/MM/YYYY"
+              [min]="minDate"
+              [max]="maxDate"
+              doneText="Listo"
+              cancelText="Cancelar"
+              (ionChange)="setMinEndHour('date', $event)"
+            >
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Hora inicio (*)</ion-label>
+            <ion-datetime
+              [value]="formData.initHour"
+              [min]="minInitHour"
+              displayFormat="HH:mm"
+              minuteValues="00,15,30,45,59"
+              doneText="Listo"
+              cancelText="Cancelar"
+              (ionChange)="setMinEndHour('initHour', $event)"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <ion-item>
+            <ion-label position="floating" color="medium">Hora fin (*)</ion-label>
+            <ion-datetime
+              [value]="formData.endHour"
+              [min]="minEndHour"
+              displayFormat="HH:mm"
+              minuteValues="00,15,30,45"
+              doneText="Listo"
+              cancelText="Cancelar"
+              (ionChange)="setMinEndHour('endHour', $event)"
+            ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" color="medium">Dirigido a (*)</ion-label>
+            <ion-input
+              [value]="formData.rolesSelected"
+              [readonly]="true"
+              autocomplete="off"
+              class="ion-text-uppercase no-selected-text"
+              (click)="!showAlertRolesList(formData.toRoles)"
+            >
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="12">
+      <ion-item>
+        <ion-label color="medium">Descripción del evento (*)</ion-label>
+      </ion-item>
+      <ckeditor
+        [data]="formData.description"
+        [editor]="Editor"
+        [config]="configEditor"
+        (change)="onChangeEditor($event)"
+      ></ckeditor>
+    </ion-col>
+    <ion-col size="12" class="ion-margin-top">
+      <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-margin-top">
+    <ion-col size="12" class="ion-text-center">
+      <ion-button class="ion-text-center" color="medium" (click)="cancel()">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-text>Cancelar</ion-text>
+      </ion-button>
+      <ion-button
+        class="ion-text-center"
+        color="primary"
+        (click)="confirmAction(formData._id !== null)"
+      >
+        <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+        <ion-text>Guardar</ion-text>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-card-content>

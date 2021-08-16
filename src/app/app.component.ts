@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 import {AxiosService} from './services/axios.service';
 import {CookiesService} from './services/cookies.service';
-import {Router} from '@angular/router';
 import {GlobalService} from './services/global.service';
 
 @Component({
