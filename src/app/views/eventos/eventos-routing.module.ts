@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: EventosPage
+  },
+  {
+    path: 'crear-evento',
+    loadChildren: () => import('./crear-evento/crear-evento.module').then( m => m.CrearEventoPageModule)
+  },
+  {
+    path: ':_id',
+    loadChildren: () => import('./detalles-evento/detalles-evento.module').then( m => m.DetallesEventoPageModule)
   }
 ];
 

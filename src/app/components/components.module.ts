@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {IonicModule} from '@ionic/angular';
 
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 import {ChartComponent} from './chart/chart.component';
 import {CursoscardComponent} from './cursos/cursoscard/cursoscard.component';
 import {EditarInfoCursoComponent} from './cursos/editar-info-curso/editar-info-curso.component';
-import {EventcardComponent} from './eventcard/eventcard.component';
+import {EventcardComponent} from './events/eventcard/eventcard.component';
+import {EventsFormComponent} from './events/events-form/events-form.component';
 import {FamiliacardComponent} from './familiacard/familiacard.component';
 import {GroupcardComponent} from './groupcard/groupcard.component';
 import {PaginatorComponent} from './paginator/paginator.component';
@@ -20,6 +23,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     CursoscardComponent,
     EditarInfoCursoComponent,
     EventcardComponent,
+    EventsFormComponent,
     FamiliacardComponent,
     GroupcardComponent,
     PaginatorComponent,
@@ -29,13 +33,14 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     VideoPlayerComponent,
   ],
   imports: [
-    CommonModule, IonicModule
+    CommonModule, IonicModule, CKEditorModule
   ],
   exports: [
     ChartComponent,
     CursoscardComponent,
     EditarInfoCursoComponent,
     EventcardComponent,
+    EventsFormComponent,
     FamiliacardComponent,
     GroupcardComponent,
     PaginatorComponent,

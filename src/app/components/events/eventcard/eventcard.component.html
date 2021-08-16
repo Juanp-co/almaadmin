@@ -1,0 +1,29 @@
+<ion-card
+  class="min-height-120 ion-no-margin ion-margin-bottom"
+  *ngIf="eventData._id"
+  (click)="goToDetails(eventData._id)"
+>
+  <ion-card-content class="ion-no-margin ion-no-padding">
+    <ion-row>
+      <ion-col
+        size="12"
+        class="banner-event"
+        [ngStyle]="{backgroundImage: 'url('+eventData.picture+')', height: '150px'}"
+        *ngIf="eventData.picture"
+      >
+      </ion-col>
+      <ion-col size="12" *ngIf="!eventData.picture" class="ion-text-center">
+        <img class="" [src]="'/assets/icon/evento_lista.svg'" height="150" />
+      </ion-col>
+      <ion-col size="12">
+        <ion-text color="primary" class="ion-margin-top ion-margin-bottom">
+          <h3 [title]="eventData.titleLarge" [style]="{ minHeight: '35px' }">
+            {{ eventData.title ? eventData.title : '' }}
+          </h3>
+        </ion-text>
+        <ion-text><b>Fecha:</b> {{ eventData.date ? eventData.date : '' }}</ion-text><br/>
+        <ion-text class="ion-margin-top"><i class="toSmall">Clic para más información.</i></ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
