@@ -43,4 +43,11 @@ export class MiCuentaService {
     if (res && res.success) return res.data.data;
     return this.globalSer.altResponse(res);
   }
+
+  async updatePictureProfile(data = {}): Promise<any> {
+    const res: any = await this.axios.putData('/user/picture', data);
+
+    if (res && res.success) return res.data || {};
+    return this.globalSer.altResponse(res);
+  }
 }

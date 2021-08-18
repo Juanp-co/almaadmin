@@ -28,6 +28,7 @@ export class UserGroupCardComponent implements OnInit {
         document: this.user.document,
         phone: this.user.phone,
         gender: this.user.gender,
+        picture: this.user.picture,
       };
     }
   }

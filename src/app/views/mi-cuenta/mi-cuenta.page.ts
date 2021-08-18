@@ -12,6 +12,7 @@ import {
   onlyLettersInputValidation, onlyNumbersInputValidation
 } from '../../../Utils/validations.functions';
 import {CookiesService} from '../../services/cookies.service';
+import {DataService} from '../../services/data.service';
 import {GlobalService} from '../../services/global.service';
 
 @Component({
@@ -40,6 +41,7 @@ export class MiCuentaPage implements OnInit {
     info: {
       show: true,
       edit: false,
+      editPic: false,
       title: 'Mis datos',
       data: null
     },
@@ -68,6 +70,10 @@ export class MiCuentaPage implements OnInit {
     direction: null,
   };
 
+  formPic: any = {
+    picture: null
+  };
+
   formPass: any = {
     password: null,
     newPassword: null,
@@ -76,6 +82,7 @@ export class MiCuentaPage implements OnInit {
 
   constructor(
     private cookieService: CookiesService,
+    private dataService: DataService,
     private globalSer: GlobalService,
     private miCuentaService: MiCuentaService,
     private navCtrl: NavController,
@@ -144,6 +151,29 @@ export class MiCuentaPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
+  async updatePicture(remove = false) {
+    await this.globalSer.presentLoading('Actualizando foto de perfil, por favor espere ...');
+    const updated: any = await this.miCuentaService.updatePictureProfile({ ...this.formPic });
+
+    if (updated && !updated.error) {
+      const { data, msg } = updated;
+      this.cleanFormPassword();
+      this.staticData = {...this.staticData, ...data};
+      this.userData = { ...this.userData, ...this.staticData };
+      const dataCookie: any = this.cookieService.getCookie('data');
+      this.cookieService.setCookie('data', {...dataCookie, ...this.staticData});
+      this.setDataView();
+      if (!remove) this.editPicEnable();
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', msg || 'Se ha actualizado la foto de perfil exitosamente.');
+    }
+    else if (updated && updated.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
   // services actions
   async updatePassword() {
     await this.globalSer.presentLoading('Cambiando contraseña, por favor espere ...');
@@ -194,6 +224,11 @@ export class MiCuentaPage implements OnInit {
       this.cities = [];
     }
     this.views.info.edit = !this.views.info.edit;
+  }
+
+  editPicEnable() {
+    this.formPic.picture = null;
+    this.views.info.editPic = !this.views.info.editPic;
   }
 
   setShowView(input: string) {
@@ -288,6 +323,17 @@ export class MiCuentaPage implements OnInit {
     });
   }
 
+  openFile(event) {
+    const files = event.target.files;
+
+    if (typeof files[0] !== 'object') return false;
+    else {
+      this.dataService.resizePhoto(files[0], 900, 'dataURL',  (resizedFile) => {
+        this.formPic.picture = resizedFile;
+      });
+    }
+  }
+
   validateData(): string|null {
     const { formData } = this;
     if (!checkPhone(formData.phone))
@@ -335,6 +381,12 @@ export class MiCuentaPage implements OnInit {
     return null;
   }
 
+  validatePicture() {
+    return !this.formPic.picture ?
+      'Disculpe, pero debe seleccionar una imagen para el perfil.'
+      : null;
+  }
+
   async confirmChangePassword() {
     const validated = this.validatePassword();
 
@@ -346,5 +398,29 @@ export class MiCuentaPage implements OnInit {
         confirmAction: () => this.updatePassword()
       });
     }
+  }
+
+  async confirmUpdatePicture() {
+    const validated = this.validatePicture();
+
+    if (validated) await this.globalSer.presentAlert('Alerta', validated);
+    else {
+      await this.globalSer.alertConfirm({
+        header: 'Confirme',
+        message: '¿Está seguro qué desea cambiar la foto de perfil de su cuenta?',
+        confirmAction: () => this.updatePicture()
+      });
+    }
+  }
+
+  async confirmDeletePicture() {
+    await this.globalSer.alertConfirm({
+      header: 'Confirme',
+      message: '¿Está seguro qué desea eliminar su foto de perfil de su cuenta?',
+      confirmAction: () => {
+        this.formPic.picture = null;
+        this.updatePicture(true);
+      }
+    });
   }
 }

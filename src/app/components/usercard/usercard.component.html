@@ -7,7 +7,18 @@
     <ion-row>
       <ion-col size="3">
         <ion-avatar class="user-avatar ion-margin-top ion-margin-bottom">
-          <ion-img src="/assets/icon/{{member.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"></ion-img>
+          <img
+            [src]="member.picture"
+            height="150"
+            class="img-rounded"
+            *ngIf="member.picture"
+          >
+          <img
+            src="/assets/icon/{{member.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"
+            height="150"
+            class="img-rounded"
+            *ngIf="!member.picture"
+          >
         </ion-avatar>
       </ion-col>
       <ion-col>

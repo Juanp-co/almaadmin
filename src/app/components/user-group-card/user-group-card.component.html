@@ -3,7 +3,18 @@
     <ion-row>
       <ion-col size="3">
         <ion-avatar class="user-avatar ion-margin-top ion-margin-bottom">
-          <ion-img src="/assets/icon/{{u.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"></ion-img>
+          <img
+            [src]="u.picture"
+            height="150"
+            class="img-rounded"
+            *ngIf="u.picture"
+          >
+          <img
+            src="/assets/icon/{{u.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"
+            height="150"
+            class="img-rounded"
+            *ngIf="!u.picture"
+          >
         </ion-avatar>
       </ion-col>
       <ion-col>
@@ -27,7 +38,7 @@
             </ion-button>
           </div>
           <div *ngIf="!showButtonDetails">
-            <ion-button [color]="!added ? 'primary' : 'light'" (click)="!added ? handleAdd(u._id) : handleRemove(u._id)">
+            <ion-button [color]="!added ? 'primary' : 'medium'" (click)="!added ? handleAdd(u._id) : handleRemove(u._id)">
               <ion-icon name="{{ !added ? 'add' : 'close' }}-outline"></ion-icon>
               <ion-text>{{ !added ? 'Agregar' : 'Remover'}}</ion-text>
             </ion-button>
