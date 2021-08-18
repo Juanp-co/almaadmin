@@ -18,7 +18,7 @@
             <ion-title *ngIf="!views.info.edit">Mis datos</ion-title>
             <ion-title *ngIf="views.info.edit">Actualizar mis datos</ion-title>
             <ion-buttons slot="end">
-              <ion-button (click)="editEnable()">
+              <ion-button (click)="editEnable()" *ngIf="!views.info.editPic">
                 <ion-icon name="create-outline" slot="start" *ngIf="!views.info.edit"></ion-icon>
                 <ion-icon name="close-outline" slot="start" *ngIf="views.info.edit"></ion-icon>
                 <ion-text *ngIf="!views.info.edit">Editar</ion-text>
@@ -27,134 +27,221 @@
             </ion-buttons>
           </ion-toolbar>
         </ion-card-header>
-        <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}}">
+        <ion-card-content class="{{views.info.show ? '' : 'ion-hide'}} ion-no-padding">
 
           <ion-row>
-            <ion-col size="12" class="{{views.info.edit ? 'ion-hide' : '' }}">
-              <ion-row class="ion-margin-top" *ngIf="views.info.data">
-                <ion-row>
-                  <ion-col size="12" size-sm="6">
-                    <ion-row>
-                      <ion-col size="5">
-                        <ion-text><b>Teléfono:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Nombre(s):</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.names || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Apellido(s):</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Nº de documento:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.document || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Correo electrónico:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Fecha de nac.:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Sexo:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.gender || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Estado civil:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.civilStatus || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Nivel educativo:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.educationLevel || 'No indicado'}}</ion-text>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                  <ion-col size="12" size-sm="6">
-                    <ion-row>
-                      <ion-col size="5">
-                        <ion-text><b>Profesión:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.profession || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Tipo de sangre:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.bloodType || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Empresa:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.company ? 'Si' : 'No'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5" *ngIf="views.info.data.company">
-                        <ion-text><b>Tipo de empresa:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7" *ngIf="views.info.data.company">
-                        <ion-text>{{views.info.data.companyType}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Bautizado:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.baptized ? 'Si' : 'No'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Departamento:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{ views.info.data.department || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Cuidad:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{ views.info.data.city || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Barrio:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.locality || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="5">
-                        <ion-text><b>Dirección:</b></ion-text>
-                      </ion-col>
-                      <ion-col size="7">
-                        <ion-text>{{views.info.data.direction || 'No indicado'}}</ion-text>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
+            <ion-col size="12" class="{{views.info.edit || views.info.editPic ? 'ion-hide' : '' }} ion-margin-top">
+              <ion-row *ngIf="views.info.data">
+                <ion-col size="12" size-sm="6">
+                  <ion-row>
+                    <ion-col size="12" class="ion-text-center">
+                      <div>
+                        <img
+                          [src]="views.info.data.picture"
+                          height="150"
+                          class="img-rounded"
+                          *ngIf="views.info.data.picture"
+                        >
+                        <img
+                          src="assets/icon/{{views.info.data.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"
+                          height="150"
+                          class="img-rounded"
+                          *ngIf="!views.info.data.picture"
+                        >
+                      </div>
+                      <div>
+                        <ion-button size="small" (click)="editPicEnable()">
+                          <ion-icon name="image-outline" slot="start"></ion-icon>
+                          <ion-text>Cambiar</ion-text>
+                        </ion-button>
+                        <ion-button
+                          color="danger"
+                          size="small"
+                          (click)="confirmDeletePicture()"
+                          *ngIf="views.info.data.picture"
+                        >
+                          <ion-icon name="trash-outline"></ion-icon>
+                        </ion-button>
+                      </div>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-row>
+                        <ion-col size="12" size-sm="5">
+                          <ion-text><b>Teléfono:</b></ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="7">
+                          <ion-text>{{views.info.data.phone || 'No indicado'}}</ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="5">
+                          <ion-text><b>Nombre(s):</b></ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="7">
+                          <ion-text>{{views.info.data.names || 'No indicado'}}</ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="5">
+                          <ion-text><b>Apellido(s):</b></ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="7">
+                          <ion-text>{{views.info.data.lastNames || 'No indicado'}}</ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="5">
+                          <ion-text><b>Nº de documento:</b></ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="7">
+                          <ion-text>{{views.info.data.document || 'No indicado'}}</ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="5">
+                          <ion-text><b>Correo electrónico:</b></ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="7">
+                          <ion-text>{{views.info.data.email || 'No indicado'}}</ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="5">
+                          <ion-text><b>Fecha de nac.:</b></ion-text>
+                        </ion-col>
+                        <ion-col size="12" size-sm="7">
+                          <ion-text>{{views.info.data.birthday || 'No indicado'}}</ion-text>
+                        </ion-col>
+                      </ion-row>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size="12" size-sm="6">
+                  <ion-row>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Sexo:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.gender || 'No indicado'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Estado civil:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.civilStatus || 'No indicado'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Nivel educativo:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.educationLevel || 'No indicado'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Profesión:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.profession || 'No indicado'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Tipo de sangre:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.bloodType || 'No indicado'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Empresa:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.company ? 'Si' : 'No'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5" *ngIf="views.info.data.company">
+                      <ion-text><b>Tipo de empresa:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7" *ngIf="views.info.data.company">
+                      <ion-text>{{views.info.data.companyType}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Bautizado:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.baptized ? 'Si' : 'No'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Departamento:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{ views.info.data.department || 'No indicado'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Cuidad:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{ views.info.data.city || 'No indicado'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Barrio:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.locality || 'No indicado'}}</ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="5">
+                      <ion-text><b>Dirección:</b></ion-text>
+                    </ion-col>
+                    <ion-col size="12" size-sm="7">
+                      <ion-text>{{views.info.data.direction || 'No indicado'}}</ion-text>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+            <ion-col size="12" class="{{views.info.editPic ? '' : 'ion-hide' }}">
+              <ion-row class="ion-margin-top" *ngIf="formPic">
+                <ion-col size="12" size-sm="6" class="text-center">
+                  <ion-row class="ion-justify-content-center ion-margin">
+                    <ion-col size="12" class="ion-text-center">
+                      <div
+                        class="banner-event"
+                        [ngStyle]="{backgroundImage: 'url('+views.info?.data?.picture+')', height: '200px'}"
+                        *ngIf="views.info?.data?.picture"
+                      ></div>
+                      <img
+                        src="assets/icon/{{views.info?.data?.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"
+                        height="150"
+                        *ngIf="!views.info?.data?.picture"
+                      >
+                    </ion-col>
+                    <ion-col size="12" class="ion-text-center">
+                      <ion-text><i class="toSmall">Foto actual</i></ion-text>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="12" size-sm="6">
+                  <ion-row class="ion-justify-content-center ion-margin">
+                    <ion-col size="12" class="ion-text-center">
+                      <label class="micursor ion-text-center w-100">
+                        <input type='file' accept="image/x-png,image/gif,image/jpeg" (change)='openFile($event)' hidden>
+                        <div
+                          class="banner-event"
+                          [ngStyle]="{backgroundImage: 'url('+formPic.picture+')', height: '200px'}"
+                          *ngIf="formPic.picture"
+                        ></div>
+                        <img src="assets/photo.png" height="150" *ngIf="!formPic.picture">
+                      </label>
+                    </ion-col>
+                    <ion-col size="12" class="ion-text-center">
+                      <ion-text><i class="toSmall">Clic para cargar la nueva foto de perfil</i></ion-text>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="12" size-sm="12" class="ion-margin-top">
+                  <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+                </ion-col>
+                <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                  <ion-button color="medium" (click)="editPicEnable()">
+                    <ion-icon name="close-outline" slot="start"></ion-icon>
+                    <ion-text>Cancelar</ion-text>
+                  </ion-button>
+                  <ion-button color="primary" (click)="confirmUpdatePicture()">
+                    <ion-icon name="save-outline" slot="start"></ion-icon>
+                    <ion-text>Guardar</ion-text>
+                  </ion-button>
+                </ion-col>
               </ion-row>
             </ion-col>
 
             <ion-col size="12" class="{{views.info.edit ? '' : 'ion-hide' }}">
-
               <ion-row class="ion-margin-top" *ngIf="formData">
                 <ion-col size="12" size-sm="6">
                   <ion-item>
@@ -441,6 +528,8 @@
         </ion-card-content>
       </ion-card>
     </ion-col>
+
+    <ion-col size="12" class="ion-margin-bottom"><br></ion-col>
   </ion-row>
 
 </ion-content>

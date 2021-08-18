@@ -269,8 +269,6 @@ export class EventsFormComponent implements OnInit {
   async confirmAction(update = false) {
     const dataToSend: any = this.setDateFormToSend();
 
-    console.log('dataToSend', dataToSend);
-
     const validate = this.validateForm(dataToSend);
 
     if (!validate) {

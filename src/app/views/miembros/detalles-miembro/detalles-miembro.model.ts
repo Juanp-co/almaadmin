@@ -29,6 +29,7 @@ export interface IDetallesMiembro {
   locality: any;
   direction: any;
   petition: any;
+  picture: string|null;
   totals: IDetallesMiembroTotals;
   created_at?: string | null;
   updated_at?: string | null;
