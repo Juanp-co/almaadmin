@@ -20,6 +20,7 @@ export class AppComponent {
     { title: 'Eventos', url: '/eventos', icon: 'calendar-number' },
     { title: 'Cuentas bancarias', url: '/cuentas-bancarias', icon: 'cash' },
     { title: 'Mi cuenta', url: '/mi-cuenta', icon: 'person-circle' },
+    { title: 'Ajustes', url: '/ajustes', icon: 'settings' },
     // { title: 'Informes', url: '/informes', icon: 'bar-chart' },
   ];
   session: any = null;

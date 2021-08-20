@@ -55,6 +55,10 @@ const routes: Routes = [
     path: 'consolidados',
     loadChildren: () => import('./views/consolidados/consolidados.module').then( m => m.ConsolidadosPageModule)
   },
+  {
+    path: 'ajustes',
+    loadChildren: () => import('./views/ajustes/ajustes.module').then( m => m.AjustesPageModule)
+  },
 ];
 
 @NgModule({
