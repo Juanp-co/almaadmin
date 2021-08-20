@@ -1,0 +1,266 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ajustes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-button (click)="setShowView('links')">
+                <ion-icon name="chevron-{{views.links ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>Enlaces redes sociales</ion-title>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.links ? '' : 'ion-hide'}} ion-no-padding">
+          <ion-row class="ion-margin-top">
+            <ion-col size="12" class="ion-padding">
+              <ion-text>
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <i>
+                  Agregue en este apartado los enlaces a redes sociales que se mostrarán en la app.
+                  Asegúrese que las URLs que proporcione se encuentren activas antes de guardar los cambios.
+                </i>
+              </ion-text>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">URL Facebook</ion-label>
+                <ion-input [(ngModel)]="formLinks.facebook" type="url"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">URL Instagram</ion-label>
+                <ion-input [(ngModel)]="formLinks.instagram" type="url"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">URL Twitter</ion-label>
+                <ion-input [(ngModel)]="formLinks.twitter" type="url"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">URL Sitio Web</ion-label>
+                <ion-input [(ngModel)]="formLinks.web" type="url"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-item>
+                <ion-label position="floating" color="medium">URL Youtube</ion-label>
+                <ion-input [(ngModel)]="formLinks.youtube" type="url"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+              <ion-button color="primary" (click)="confirmUpdateLinks()">
+                <ion-icon name="save-outline" slot="start"></ion-icon>
+                <ion-text>Guardar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" size-md="6">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start" *ngIf="!formLogos">
+              <ion-button (click)="setShowView('logos')">
+                <ion-icon name="chevron-{{views.logos ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>Logos</ion-title>
+            <ion-buttons slot="end" *ngIf="!formBanners && views.logos">
+              <ion-button (click)="setShowFormLogosOrBanners('formLogos')">
+                <ion-icon name="{{formLogos ? 'close' : 'create'}}-outline" slot="start"></ion-icon>
+                <ion-text *ngIf="!formLogos">Nuevo logo</ion-text>
+                <ion-text *ngIf="formLogos">Cancelar</ion-text>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.logos ? '' : 'ion-hide'}} ion-no-padding">
+          <ion-row>
+            <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center" *ngIf="formLogos && !formBanners">
+              <ion-row class="ion-align-items-center">
+                <ion-col size="12" class="ion-padding">
+                  <ion-text>
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <i>
+                      En esta sección, deberá cargar el logo principal que se mostrará en la aplicación.
+                    </i>
+                  </ion-text>
+                </ion-col>
+                <ion-col size="12">
+                  <app-files-upload
+                    [picture]="formPic.picture"
+                    [showInImg]="true"
+                    [height]="150"
+                    [handleSave]="updatePictureValueForm"
+                  >
+                  </app-files-upload>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-toggle [(ngModel)]="formPic.active" slot="start" color="primary"></ion-toggle>
+                    <ion-label>Activar logo para mostrar en app.</ion-label>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                  <ion-button color="primary" (click)="confirmUploadPicture('formLogos')">
+                    <ion-icon name="save-outline" slot="start"></ion-icon>
+                    <ion-text>Guardar</ion-text>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12" *ngIf="!formLogos">
+              <ion-row>
+                <ion-col *ngIf="!params.logos">
+                  <app-loader-lists-images></app-loader-lists-images>
+                </ion-col>
+                <ion-col class="ion-no-margin ion-no-padding " *ngIf="params.banners">
+                  <ion-row>
+                    <ion-col *ngIf="params.logos.length > 0; else noLogos">
+                      <div class="max-height-400">
+                        <ion-list>
+                          <app-banners-logos-card
+                            *ngFor="let l of params.logos"
+                            [data]="l"
+                            [handleChangeStatus]="handleChangeStatusLogoOrBanner"
+                            [handleDeleteLogoOrBanner]="handleDeleteLogoOrBanner"
+                          ></app-banners-logos-card>
+                        </ion-list>
+                      </div>
+                    </ion-col>
+                    <ng-template #noLogos>
+                      <ion-col size="12" class="ion-margin-top ion-margin-bottom">
+                        <ion-text color="medium">
+                          <p class="ion-text-center">
+                            <ion-icon name="alert-circle-outline"></ion-icon> No se han cargado logos.
+                          </p>
+                        </ion-text>
+                      </ion-col>
+                    </ng-template>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" size-md="6">
+      <ion-card>
+        <ion-card-header class="ion-no-padding ion-no-margin">
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start" *ngIf="!formBanners">
+              <ion-button (click)="setShowView('banners')">
+                <ion-icon name="chevron-{{views.banners ? 'up' : 'down' }}-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>Portadas</ion-title>
+            <ion-buttons slot="end" *ngIf="!formLogos && views.banners">
+              <ion-button (click)="setShowFormLogosOrBanners('formBanners')">
+                <ion-icon name="{{formBanners ? 'close' : 'create'}}-outline" slot="start"></ion-icon>
+                <ion-text *ngIf="!formBanners">Nueva portada</ion-text>
+                <ion-text *ngIf="formBanners">Cancelar</ion-text>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-card-header>
+        <ion-card-content class="{{views.banners ? '' : 'ion-hide'}} ion-no-padding">
+          <ion-row>
+            <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center" *ngIf="!formLogos && formBanners">
+              <ion-row class="ion-align-items-center">
+                <ion-col size="12" class="ion-padding">
+                  <ion-text>
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <i>
+                      En esta sección, deberá cargar la foto de portada que se mostrará en la aplicación.
+                    </i>
+                  </ion-text>
+                </ion-col>
+                <ion-col size="12">
+                  <app-files-upload
+                    [picture]="formPic.picture"
+                    [showInImg]="true"
+                    [height]="150"
+                    [handleSave]="updatePictureValueForm"
+                  >
+                  </app-files-upload>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-toggle [(ngModel)]="formPic.active" slot="start" color="primary"></ion-toggle>
+                    <ion-label>Activar portada para mostrarla en app.</ion-label>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                  <ion-button color="primary" (click)="confirmUploadPicture('formBanners')">
+                    <ion-icon name="save-outline" slot="start"></ion-icon>
+                    <ion-text>Guardar</ion-text>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12" *ngIf="!formBanners">
+              <ion-row>
+                <ion-col *ngIf="!params.banners">
+                  <app-loader-lists-images></app-loader-lists-images>
+                </ion-col>
+                <ion-col class="ion-no-margin ion-no-padding " *ngIf="params.banners">
+                  <ion-row>
+                    <ion-col *ngIf="params.banners.length > 0;else noBanners">
+                      <div class="max-height-400">
+                        <ion-list>
+                          <app-banners-logos-card
+                            *ngFor="let b of params.banners"
+                            [data]="b"
+                            type="portada"
+                            [handleChangeStatus]="handleChangeStatusLogoOrBanner"
+                            [handleDeleteLogoOrBanner]="handleDeleteLogoOrBanner"
+                          ></app-banners-logos-card>
+                        </ion-list>
+                      </div>
+                    </ion-col>
+                    <ng-template #noBanners>
+                      <ion-col size="12" class="ion-margin-top ion-margin-bottom">
+                        <ion-text color="medium">
+                          <p class="ion-text-center">
+                            <ion-icon name="alert-circle-outline"></ion-icon> No se han cargado portadas.
+                          </p>
+                        </ion-text>
+                      </ion-col>
+                    </ng-template>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" class="ion-margin-top ion-margin-bottom">
+      <br>
+    </ion-col>
+  </ion-row>
+
+
+
+</ion-content>

@@ -1,0 +1,27 @@
+<ion-item *ngIf="data">
+  <ion-thumbnail slot="start">
+    <img src="{{data.picture}}" class="img-bordered">
+  </ion-thumbnail>
+  <ion-label>
+    <h3>
+      <b>Estado:</b> {{ data.active ? 'Activo' : 'Inactivo' }}
+    </h3>
+    <p>{{ data.created_at }}</p>
+  </ion-label>
+  <ion-buttons>
+    <ion-button
+      [color]="data.active ? 'danger' : 'primary'"
+      slot="end"
+      (click)="confirmChangeStatus()"
+    >
+      <ion-icon name="power-outline" slot="start"></ion-icon>
+    </ion-button>
+    <ion-button
+      color="danger"
+      slot="end"
+      (click)="confirmDelete()"
+    >
+      <ion-icon name="trash-outline" slot="start"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-item>
