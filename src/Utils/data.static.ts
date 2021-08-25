@@ -20,3 +20,5 @@ export const rolesListSingleText = [
   'Líder',
   'Persona',
 ];
+
+export const staticCoords = [ -73.630175, 4.134516 ];

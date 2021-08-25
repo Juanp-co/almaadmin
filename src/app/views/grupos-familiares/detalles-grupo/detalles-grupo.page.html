@@ -26,11 +26,11 @@
           <ion-title *ngIf="!views.data.edit">{{ views.data.label }}</ion-title>
           <ion-title *ngIf="views.data.edit">Editar grupo familiar</ion-title>
           <ion-buttons slot="end" *ngIf="views.data.show">
-            <ion-button color="primary" (click)="editEnable()" *ngIf="views.data.edit">
+            <ion-button color="light" (click)="editEnable()" *ngIf="views.data.edit">
               <ion-icon name="close-outline" slot="start"></ion-icon>
               <ion-text>Cancelar edición</ion-text>
             </ion-button>
-            <ion-button color="medium" expand="full" (click)="editEnable()" slot="end" *ngIf="!views.data.edit">
+            <ion-button color="light" expand="full" (click)="editEnable()" slot="end" *ngIf="!views.data.edit">
               <ion-icon name="create-outline" slot="start"></ion-icon>
               <ion-text>Editar</ion-text>
             </ion-button>
@@ -39,71 +39,18 @@
       </ion-card-header>
       <ion-card-content class="{{ views.data.show ? '' : 'ion-hide' }}">
         <ion-row>
-          <ion-col class="ion-no-margin" size="12" *ngIf="views.data.edit && formData">
-            <ion-row>
-              <ion-col size="12" size-sm="4">
-                <ion-item>
-                  <ion-label position="floating" color="medium">Sector (*)</ion-label>
-                  <ion-input
-                    [(ngModel)]="formData.sector"
-                    autocomplete="off"
-                    maxlength="4"
-                    (keypress)="validateOnlyNumber($event)"
-                  ></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="12" size-sm="4">
-                <ion-item>
-                  <ion-label position="floating" color="medium">Sub-sector (*)</ion-label>
-                  <ion-input
-                    [(ngModel)]="formData.subSector"
-                    autocomplete="off"
-                    maxlength="4"
-                    (keypress)="validateOnlyNumber($event)"
-                  ></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="12" size-sm="4">
-                <ion-item>
-                  <ion-label position="floating" color="medium">Número (*)</ion-label>
-                  <ion-input
-                    [(ngModel)]="formData.number"
-                    autocomplete="off"
-                    maxlength="4"
-                    (keypress)="validateOnlyNumber($event)"
-                  ></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="12" size-sm="6">
-                <ion-item>
-                  <ion-label position="floating" color="medium">Dirección (*)</ion-label>
-                  <ion-textarea
-                    [(ngModel)]="formData.direction"
-                    rows="5"
-                    class="ion-text-uppercase"
-                    placeholder="Indica la dirección del grupo familiar..."
-                  ></ion-textarea>
-                </ion-item>
-              </ion-col>
-              <ion-col size="12" size-sm="12" class="ion-margin-top">
-                <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
-              </ion-col>
-              <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
-                <ion-button color="medium" (click)="editEnable()">
-                  <ion-icon name="close-outline" slot="start"></ion-icon>
-                  <ion-text>Cancelar</ion-text>
-                </ion-button>
-                <ion-button color="primary" (click)="confirmUpdate()">
-                  <ion-icon name="save-outline" slot="start"></ion-icon>
-                  <ion-text>Guardar</ion-text>
-                </ion-button>
-              </ion-col>
-            </ion-row>
+          <ion-col class="ion-no-margin" size="12" *ngIf="views.data.edit">
+            <app-family-group-form
+              [data]="formData"
+              [handleSave]="handleSave"
+              [handleCancel]="handleCancel"
+            >
+            </app-family-group-form>
           </ion-col>
 
-          <ion-col size="12" *ngIf="!views.data.edit">
+          <ion-col size="12" size-md="6" *ngIf="!views.data.edit">
             <ion-row>
-              <ion-col class="ion-no-padding" size="12" size-sm="6">
+              <ion-col class="ion-no-padding" size="12">
                 <ion-row>
                   <ion-col size="5">
                     <ion-text><b>Número</b></ion-text>
@@ -125,7 +72,7 @@
                   </ion-col>
                 </ion-row>
               </ion-col>
-              <ion-col class="ion-no-padding" size="12" size-sm="6">
+              <ion-col class="ion-no-padding" size="12">
                 <ion-row>
                   <ion-col size="5">
                     <ion-text><b>Dirección</b></ion-text>
@@ -142,6 +89,16 @@
                 </ion-row>
               </ion-col>
             </ion-row>
+          </ion-col>
+
+          <ion-col size="12" size-md="6" *ngIf="!views.data.edit">
+            <div class="div-map">
+              <app-map
+                [coords]="getParamsToMap()"
+                [height]="'100%'"
+                [zoom]="13"
+              ></app-map>
+            </div>
           </ion-col>
         </ion-row>
       </ion-card-content>

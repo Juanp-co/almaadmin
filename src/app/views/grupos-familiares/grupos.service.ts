@@ -72,13 +72,4 @@ export class GruposService {
     if (res && res.success) return res.data.reports;
     return this.globalSer.altResponse(res);
   }
-
-  // validate
-  validateDataGroup(formData: any): string|null {
-    if (!checkIfValueIsNumber(`${formData.sector}`)) return 'Disculpe, pero debe indicar número del sector.';
-    if (!checkIfValueIsNumber(`${formData.subSector}`)) return 'Disculpe, pero debe indicar el número del sub-sector.';
-    if (!checkIfValueIsNumber(`${formData.number}`)) return 'Disculpe, pero debe indicar el número del grupo.';
-    if (!checkTitlesOrDescriptions(formData.direction)) return 'Disculpe, pero debe indicar una dirección.';
-    return null;
-  }
 }

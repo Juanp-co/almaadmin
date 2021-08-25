@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {GlobalService} from '../../services/global.service';
 import {AjustesService} from './ajustes.service';
+import {GlobalService} from '../../services/global.service';
 import {checkFacebookUrl, checkInstagramUrl, checkTwitterUrl, checkUrl, checkYoutubeUrl} from '../../../Utils/validations.functions';
 
 @Component({
@@ -11,7 +11,7 @@ import {checkFacebookUrl, checkInstagramUrl, checkTwitterUrl, checkUrl, checkYou
 export class AjustesPage implements OnInit {
 
   views: any = {
-    links: false,
+    links: true,
     logos: true,
     banners: true,
   };

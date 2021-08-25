@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NavController} from '@ionic/angular';
-import {AsignarMiembroPage} from '../asignar-miembro/asignar-miembro.page';
 import {GruposService} from '../grupos.service';
+import {AsignarMiembroPage} from '../asignar-miembro/asignar-miembro.page';
 import {GlobalService} from '../../../services/global.service';
-import {onlyNumbersInputValidation2} from '../../../../Utils/validations.functions';
+import {staticCoords} from '../../../../Utils/data.static';
 
 @Component({
   selector: 'app-detalles-grupo',
@@ -28,7 +28,7 @@ export class DetallesGrupoPage implements OnInit {
     },
     members: {
       label: 'Miembros',
-      show: false,
+      show: true,
       edit: false,
       data: {
         leader: null,
@@ -139,9 +139,7 @@ export class DetallesGrupoPage implements OnInit {
   // actions views
   async setShowView(input: string) {
     this.views[input].show = !this.views[input].show;
-    if (this.views[input].edit) {
-      await this.editEnable();
-    }
+    if (this.views[input].edit) await this.editEnable();
   }
 
   // actions
@@ -156,6 +154,10 @@ export class DetallesGrupoPage implements OnInit {
         subSector: this.views.data.data.subSector,
         number: this.views.data.data.number,
         direction: this.views.data.data.direction,
+        location: this.views.data.data.location || {
+          type: 'Point',
+          coordinates: staticCoords
+        },
       };
       this.title = this.getTitle(true);
     }
@@ -164,23 +166,6 @@ export class DetallesGrupoPage implements OnInit {
       this.formData = null;
     }
     if (!edited) await this.globalSer.dismissLoading();
-  }
-
-  validateOnlyNumber(event: any) {
-    onlyNumbersInputValidation2(event);
-  }
-
-  async confirmUpdate() {
-    const validated = this.gruposService.validateDataGroup(this.formData);
-
-    if (validated) await this.globalSer.presentAlert('Alerta', validated);
-    else {
-      await this.globalSer.alertConfirm({
-        header: 'Confirme',
-        message: '¿Está seguro qué desea actualizar información de este grupo?',
-        confirmAction: () => this.updateData()
-      });
-    }
   }
 
   // members
@@ -218,5 +203,24 @@ export class DetallesGrupoPage implements OnInit {
       confirmAction: () => confirm()
     });
   }
+
+  getParamsToMap() {
+    return [
+      {
+        type: 'Feature',
+        geometry: this.group.location
+      }
+    ];
+  }
+
+
+  setFormDataAndSave(formData: any) {
+    this.formData = formData;
+    this.updateData();
+  }
+
+
+  handleSave = (formData: any): void => this.setFormDataAndSave(formData);
+  handleCancel = async (): Promise<void> => this.editEnable();
 
 }

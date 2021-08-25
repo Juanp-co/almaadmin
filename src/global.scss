@@ -117,4 +117,42 @@ b {
   border-radius: 10px;
 }
 
+/* maps */
+.container-map {
+  position: relative;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.map-container {
+  position: absolute;
+  width: 100% !important;
+}
+
+.mapboxgl-canvas {
+  height: auto !important;
+}
+
+.mapboxgl-popup {
+  max-width: 640px;
+  font-size: 1rem/2rem;
+}
+
+.marker {
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.div-map {
+ position: relative;
+ height: 250px;
+ border: 1px solid #999 !important;
+ border-radius: 5px !important;
+}
+
+
+
 

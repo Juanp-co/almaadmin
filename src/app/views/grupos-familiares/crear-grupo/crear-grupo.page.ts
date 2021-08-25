@@ -3,6 +3,7 @@ import {NavController} from '@ionic/angular';
 import {GruposService} from '../grupos.service';
 import {GlobalService} from '../../../services/global.service';
 import {onlyNumbersInputValidation2} from '../../../../Utils/validations.functions';
+import {staticCoords} from '../../../../Utils/data.static';
 
 @Component({
   selector: 'app-crear-grupo',
@@ -16,6 +17,10 @@ export class CrearGrupoPage implements OnInit {
     subSector: null,
     number: null,
     direction: null,
+    location: {
+      type: 'Point',
+      coordinates: staticCoords
+    }
   };
 
   constructor(
@@ -59,17 +64,12 @@ export class CrearGrupoPage implements OnInit {
     });
   }
 
-  async confirmCreate() {
-    const validated = this.gruposService.validateDataGroup(this.formData);
-
-    if (validated) await this.globalSer.presentAlert('Alerta', validated);
-    else {
-      await this.globalSer.alertConfirm({
-        header: 'Confirme',
-        message: '¿Está seguro qué desea agregar el nuevo grupo con esta información?',
-        confirmAction: () => this.createGroup()
-      });
-    }
+  setFormDataAndSave(formData: any) {
+    this.formData = formData;
+    this.createGroup();
   }
+
+  handleSave = (formData: any): void => this.setFormDataAndSave(formData);
+  handleCancel = async (): Promise<void> => this.back();
 
 }

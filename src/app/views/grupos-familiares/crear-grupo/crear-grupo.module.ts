@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CrearGrupoPageRoutingModule } from './crear-grupo-routing.module';
 
 import { CrearGrupoPage } from './crear-grupo.page';
+import {ComponentsModule} from '../../../components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CrearGrupoPageRoutingModule
+    CrearGrupoPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [CrearGrupoPage]
 })
