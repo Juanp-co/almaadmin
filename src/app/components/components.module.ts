@@ -12,8 +12,11 @@ import {EventcardComponent} from './events/eventcard/eventcard.component';
 import {EventsFormComponent} from './events/events-form/events-form.component';
 import {FamiliacardComponent} from './familiacard/familiacard.component';
 import {FilesUploadComponent} from './files-upload/files-upload.component';
-import {GroupcardComponent} from './groupcard/groupcard.component';
+import {GroupcardComponent} from './family-groups/groupcard/groupcard.component';
+import {FamilyGroupFormComponent} from './family-groups/family-group-form/family-group-form.component';
 import {LoaderListsImagesComponent} from './ajustes/loader-lists-images/loader-lists-images.component';
+import {MapComponent} from './maps/map/map.component';
+import {Map2Component} from './maps/map2/map2.component';
 import {PaginatorComponent} from './paginator/paginator.component';
 import {TemarylistComponent} from './cursos/temarylist/temarylist.component';
 import {UsercardComponent} from './usercard/usercard.component';
@@ -29,9 +32,12 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     EventcardComponent,
     EventsFormComponent,
     FamiliacardComponent,
+    FamilyGroupFormComponent,
     FilesUploadComponent,
     GroupcardComponent,
     LoaderListsImagesComponent,
+    MapComponent,
+    Map2Component,
     PaginatorComponent,
     TemarylistComponent,
     UsercardComponent,
@@ -49,9 +55,12 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     EventcardComponent,
     EventsFormComponent,
     FamiliacardComponent,
+    FamilyGroupFormComponent,
     FilesUploadComponent,
     GroupcardComponent,
     LoaderListsImagesComponent,
+    MapComponent,
+    Map2Component,
     PaginatorComponent,
     TemarylistComponent,
     UsercardComponent,

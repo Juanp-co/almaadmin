@@ -1,0 +1,86 @@
+<ion-row>
+  <ion-col size="12">
+    <ion-row>
+      <ion-col size="12" class="ion-no-margin ion-no-padding">
+        <ion-row>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium"># Sector (*)</ion-label>
+              <ion-input
+                [value]="formData.sector"
+                (change)="setFormData('sector', $event.target?.value || null)"
+                autocomplete="off"
+                maxlength="4"
+                (keypress)="validateOnlyNumber($event)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium"># Sub-sector (*)</ion-label>
+              <ion-input
+                [value]="formData.subSector"
+                (change)="setFormData('subSector', $event.target?.value || null)"
+                autocomplete="off"
+                maxlength="4"
+                (keypress)="validateOnlyNumber($event)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-sm="4">
+            <ion-item>
+              <ion-label position="floating" color="medium">Número de grupo (*)</ion-label>
+              <ion-input
+                [value]="formData.number"
+                (change)="setFormData('number', $event.target?.value || null)"
+                autocomplete="off"
+                maxlength="4"
+                (keypress)="validateOnlyNumber($event)"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-item>
+          <ion-label position="floating" color="medium">Dirección (*)</ion-label>
+          <ion-textarea
+            [value]="formData.direction"
+            (change)="setFormData('direction', $event.target?.value || null)"
+            rows="5"
+            maxlength="150"
+            class="ion-text-uppercase"
+          ></ion-textarea>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-row>
+          <ion-col>
+            <ion-label>Arrastre el marcador para mostrar la ubicación del grupo</ion-label>
+            <div class="div-map">
+              <app-map-2
+                [coords]="getParamsToMap()"
+                [height]="'100%'"
+                [zoom]="this.data ? 13 : 8"
+                [handleSave]="handleUpdateCoords"
+              ></app-map-2>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="12" size-sm="12" class="ion-margin-top">
+        <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+      </ion-col>
+      <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+        <ion-button color="medium" (click)="confirmCancel()">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          <ion-text>Cancelar</ion-text>
+        </ion-button>
+        <ion-button color="primary" (click)="confirmAction()">
+          <ion-icon name="save-outline" slot="start"></ion-icon>
+          <ion-text>Guardar</ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-col>
+</ion-row>
