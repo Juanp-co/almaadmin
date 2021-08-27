@@ -7,6 +7,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {BannersLogosCardComponent} from './ajustes/banners-logos-card/banners-logos-card.component';
 import {ChartComponent} from './chart/chart.component';
 import {CursoscardComponent} from './cursos/cursoscard/cursoscard.component';
+import {DevocionalesCardComponent} from './devocionales/devocionales-card/devocionales-card.component';
+import {DevocionalesFormComponent} from './devocionales/devocionales-form/devocionales-form.component';
 import {EditarInfoCursoComponent} from './cursos/editar-info-curso/editar-info-curso.component';
 import {EventcardComponent} from './events/eventcard/eventcard.component';
 import {EventsFormComponent} from './events/events-form/events-form.component';
@@ -28,6 +30,8 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     BannersLogosCardComponent,
     ChartComponent,
     CursoscardComponent,
+    DevocionalesFormComponent,
+    DevocionalesCardComponent,
     EditarInfoCursoComponent,
     EventcardComponent,
     EventsFormComponent,
@@ -51,6 +55,8 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     BannersLogosCardComponent,
     ChartComponent,
     CursoscardComponent,
+    DevocionalesFormComponent,
+    DevocionalesCardComponent,
     EditarInfoCursoComponent,
     EventcardComponent,
     EventsFormComponent,

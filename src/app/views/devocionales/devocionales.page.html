@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Devocionales</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="goToCreate()">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <ion-text>Crear devocional</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="12">
+
+      <div class="ion-margin">
+        <ion-button color="medium" (click)="setShowFilter()">
+          <ion-icon name="{{showFilter ? 'close' : 'filter'}}-outline" slot="start"></ion-icon>
+          <ion-text>Filtrar</ion-text>
+        </ion-button>
+      </div>
+
+      <ion-card *ngIf="showFilter">
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12">
+              <h2>Filtrar resultados</h2>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating" color="medium">Título del devocional</ion-label>
+                <ion-input
+                  [value]="queryParams.search"
+                  autocomplete="off"
+                  maxlength="50"
+                  (ionChange)="setSearchParam($event)"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">Orden:</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  class="no-selected-text no-selected-text"
+                  [value]="queryParams.value === -1 ? 'Descendente' : 'Ascendente'"
+                  (click)="setOrderData()"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">A partir de:</ion-label>
+                <ion-datetime
+                  [value]="queryParams.initDate"
+                  displayFormat="DD/MM/YYYY"
+                  min="2021-01-01"
+                  [max]="currentMaxDate"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                  (ionChange)="setDate('initDate', $event)"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-sm="4">
+              <ion-item>
+                <ion-label position="floating" color="medium">Hasta:</ion-label>
+                <ion-datetime
+                  [value]="queryParams.endDate"
+                  displayFormat="DD/MM/YYYY"
+                  min="2021-01-01"
+                  [max]="currentMaxDate"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                  (ionChange)="setDate('endDate', $event)"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-margin-top">
+            <ion-col size="6" class="ion-justify-content-center">
+              <ion-button class="ion-text-center" color="medium" expand="full" (click)="resetQueryParams()">
+                <ion-icon name="trash-outline"></ion-icon>
+                <ion-text>Limpiar</ion-text>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6" class="ion-justify-content-center">
+              <ion-button class="ion-text-center" color="primary" expand="full" (click)="getTotalsDevotionals()">
+                <ion-icon name="checkmark-outline"></ion-icon>
+                <ion-text>Aplicar</ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="devotionals?.length > 0; else noDevotionals">
+    <ion-col size="12" size-sm="6" *ngFor="let item of devotionals">
+      <app-devocionales-card [item]="item"></app-devocionales-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12"><br></ion-col>
+    <ion-col size="12" *ngIf="pages > 1">
+      <app-paginator
+        [currentPage]="queryParams.page"
+        [totalPages]="pages"
+        [handlePage]="handlePage"
+      ></app-paginator>
+    </ion-col>
+  </ion-row>
+  <ng-template #noDevotionals>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="ion-no-padding ion-margin-top ion-margin-bottom">
+          <ion-text color="medium">
+            <p class="ion-text-center">
+              <ion-icon name="alert-circle-outline"></ion-icon> No existen devocionales registrados.
+            </p>
+          </ion-text>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+</ion-content>

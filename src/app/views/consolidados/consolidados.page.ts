@@ -23,9 +23,9 @@ export class ConsolidadosPage implements OnInit {
   pendingVisitsTotals = 0;
 
   sizeElems = 6;
-  minInitDate: string = dayjs('2020-01-01').format('YYYY-MM-DD');
+  minInitDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
   maxInitDate: string = dayjs().format('YYYY-MM-DD');
-  minEndDate: string = dayjs('2020-01-01').format('YYYY-MM-DD');
+  minEndDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
   maxEndDate: string = dayjs().format('YYYY-MM-DD');
   queryParams: any = {
     initDate: null,
