@@ -14,6 +14,7 @@ export class AppComponent {
     { title: 'Inicio', url: '/inicio', icon: 'home' },
     { title: 'Miembros', url: '/miembros', icon: 'people' },
     { title: 'Consolidados', url: '/consolidados', icon: 'id-card' },
+    { title: 'Devocionales', url: '/devocionales', icon: 'megaphone' },
     { title: 'Familias', url: '/familias', icon: 'people-circle' },
     { title: 'Grupos familiares', url: '/grupos-familiares', icon: 'list' },
     { title: 'Cursos', url: '/cursos', icon: 'desktop' },

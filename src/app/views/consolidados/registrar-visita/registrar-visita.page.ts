@@ -22,7 +22,7 @@ export class RegistrarVisitaPage implements OnInit {
   listActions: string[] = ['Visita', 'Llamada'];
   memberSelected: any = null;
   members: any[] = [];
-  minInitDate: string = dayjs('2020-01-01').format('YYYY-MM-DD');
+  minInitDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
   maxInitDate: string = dayjs().format('YYYY-MM-DD');
 
   constructor(
