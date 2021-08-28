@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {AlertController, ModalController} from '@ionic/angular';
-import dayjs from 'dayjs';
 import {EventosService} from './eventos.service';
 import {GlobalService} from '../../services/global.service';
 
@@ -15,7 +14,8 @@ export class EventosPage implements OnInit {
   queryParams: any = {
     input: 'date',
     value: -1,
-    initDate: dayjs().format('YYYY-MM-DD'),
+    limit: 50,
+    initDate: null,
     endDate: null,
   };
   formData: any = {
@@ -101,10 +101,8 @@ export class EventosPage implements OnInit {
     });
   }
 
-  setDate(input: string) {
-    if (this.queryParams[input]) {
-      this.queryParams[input] = dayjs(this.queryParams[input]).format('YYYY-MM-DD');
-    }
+  setDate(input: string, value) {
+    this.queryParams[input] = `${value}`.substr(0, 10);
   }
 
   getRoles(rolesList: number[]): string {
@@ -121,7 +119,7 @@ export class EventosPage implements OnInit {
   resetQueryParams() {
     this.queryParams.input = 'date';
     this.queryParams.value = -1;
-    this.queryParams.initDate = dayjs().format('YYYY-MM-DD');
+    this.queryParams.initDate = null;
     this.queryParams.endDate = null;
   }
 

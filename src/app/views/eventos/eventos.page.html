@@ -41,12 +41,12 @@
                 <ion-item>
                   <ion-label position="floating" color="medium">A partir de:</ion-label>
                   <ion-datetime
-                    [(ngModel)]="queryParams.initDate"
+                    [value]="queryParams.initDate"
                     displayFormat="DD/MM/YYYY"
                     min="2021-01-01"
                     doneText="Listo"
                     cancelText="Cancelar"
-                    onchange="setDate('initDate')"
+                    (ionChange)="setDate('initDate', $event.target.value)"
                   >
                   </ion-datetime>
                 </ion-item>
@@ -55,12 +55,12 @@
                 <ion-item>
                   <ion-label position="floating" color="medium">Hasta:</ion-label>
                   <ion-datetime
-                    [(ngModel)]="queryParams.endDate"
+                    [value]="queryParams.endDate"
                     displayFormat="DD/MM/YYYY"
                     min="2021-01-01"
                     doneText="Listo"
                     cancelText="Cancelar"
-                    onchange="setDate('endDate')"
+                    (ionChange)="setDate('endDate', $event.target.value)"
                   >
                   </ion-datetime>
                 </ion-item>
