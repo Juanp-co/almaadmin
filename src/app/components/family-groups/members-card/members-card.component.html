@@ -1,0 +1,29 @@
+<div class="w-100">
+  <!--<ion-text class="ion-margin-top"></ion-text>-->
+  <h2 class="title-members-section">{{title || ''}}</h2>
+  <div class="separate-members-section">
+    <app-user-group-card
+      [user]="data"
+      [handleRemove]="handleRemove"
+      [added]="true"
+      *ngIf="data; else noExist"
+    ></app-user-group-card>
+  </div>
+  <ng-template #noExist>
+    <ion-card>
+      <ion-card-content>
+        <ion-text>
+          <p class="ion-text-center">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            No se ha asignado ningún miembro a este rol.
+            <br>
+            <ion-button class="ion-margin-top" color="primary" (click)="handleAdd(role || 'leader')">
+              <ion-icon name="add-outline" slot="start"></ion-icon>
+              <ion-text>Asignar</ion-text>
+            </ion-button>
+          </p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</div>

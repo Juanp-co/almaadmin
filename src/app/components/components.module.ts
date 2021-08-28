@@ -19,6 +19,7 @@ import {FamilyGroupFormComponent} from './family-groups/family-group-form/family
 import {LoaderListsImagesComponent} from './ajustes/loader-lists-images/loader-lists-images.component';
 import {MapComponent} from './maps/map/map.component';
 import {Map2Component} from './maps/map2/map2.component';
+import {MembersCardComponent} from './family-groups/members-card/members-card.component';
 import {PaginatorComponent} from './paginator/paginator.component';
 import {TemarylistComponent} from './cursos/temarylist/temarylist.component';
 import {UsercardComponent} from './usercard/usercard.component';
@@ -42,6 +43,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     LoaderListsImagesComponent,
     MapComponent,
     Map2Component,
+    MembersCardComponent,
     PaginatorComponent,
     TemarylistComponent,
     UsercardComponent,
@@ -67,6 +69,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     LoaderListsImagesComponent,
     MapComponent,
     Map2Component,
+    MembersCardComponent,
     PaginatorComponent,
     TemarylistComponent,
     UsercardComponent,
