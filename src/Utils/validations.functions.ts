@@ -149,7 +149,7 @@ export function checkYoutubeUrl(value: string|null|undefined) {
 
 export function setSaltLinesOrBr(value: string|null, changeToBr = false): string {
   if (!value) return null;
-  return changeToBr ? value.replace(/\n/g, '<br/>') : value.replace(/<br ?\/?>/g, '\n');
+  return changeToBr ? value.replace(/\n/g, '<br/>') : value.replace(/<br ?\/?>|<BR ?\/?>/g, '\n');
 }
 
 

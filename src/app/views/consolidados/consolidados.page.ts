@@ -7,6 +7,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import {ConsolidadosService} from './consolidados.service';
 import {DetallesConsolidadoPage} from './detalles-consolidado/detalles-consolidado.page';
 import {GlobalService} from '../../services/global.service';
+import {setSaltLinesOrBr} from '../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-consolidados',
@@ -22,7 +23,7 @@ export class ConsolidadosPage implements OnInit {
   consolidatesPreview: any[] = [];
   pendingVisitsTotals = 0;
 
-  sizeElems = 6;
+  sizeElems = 12;
   minInitDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
   maxInitDate: string = dayjs().format('YYYY-MM-DD');
   minEndDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
@@ -30,6 +31,8 @@ export class ConsolidadosPage implements OnInit {
   queryParams: any = {
     initDate: null,
     endDate: null,
+    input: 'date',
+    value: '-1'
   };
   views: any = {
     filter: false,
@@ -139,8 +142,14 @@ export class ConsolidadosPage implements OnInit {
       data.forEach(c => {
         this.consolidatesPreview.push({
           member: c.member,
-          observation: c.observation && c.observation.length > 50 ? `${c.observation.substr(0, 50)} ...` : c.observation || 'No indicada.',
-          date: c.date ? dayjs(c.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY') : 'No encontrada.',
+          observation: c.observation.length > 50 ?
+            `${setSaltLinesOrBr(c.observation.substr(0, 50))} ...`
+            : (setSaltLinesOrBr(c.observation) || 'No indicada.'),
+          date: c.date ?
+            dayjs(c.date, 'YYYY-MM-DD', true)
+              .locale('es')
+              .format('dddd, DD [de] MMMM [de] YYYY')
+            : 'No encontrada.',
         });
       });
     }

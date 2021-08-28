@@ -5,6 +5,7 @@ import {GlobalService} from '../../../services/global.service';
 import {ConsolidadosService} from '../consolidados.service';
 import {Router} from '@angular/router';
 import {MiembrosConsolidadosPage} from '../miembros-consolidados/miembros-consolidados.page';
+import {setSaltLinesOrBr} from '../../../../Utils/validations.functions';
 
 @Component({
   selector: 'app-registrar-visita',
@@ -15,14 +16,16 @@ export class RegistrarVisitaPage implements OnInit {
 
   formData: any = {
     userId: null,
+    visitor: null,
     observation: null,
-    action: '0',
-    date: null
+    action: 0,
+    date: null,
   };
+  iAmVisitor = true;
   listActions: string[] = ['Visita', 'Llamada'];
   memberSelected: any = null;
+  memberVisitor: any = null;
   members: any[] = [];
-  minInitDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
   maxInitDate: string = dayjs().format('YYYY-MM-DD');
 
   constructor(
@@ -57,7 +60,10 @@ export class RegistrarVisitaPage implements OnInit {
   async saveVisit() {
     await this.globalSer.presentLoading('Guardando, por favor espere...');
     const data: any = {...this.formData};
-    data.date = dayjs(data.date).format('YYYY-MM-DD');
+    data.date = data.date.substr(0, 10);
+    data.observation = `${setSaltLinesOrBr(data.observation, true)}`.toUpperCase();
+    data.userId = this.memberSelected?._id;
+    data.visitor = this.memberVisitor?._id || null;
 
     const created = await this.consolidadosService.saveConsolidateReport(data);
 
@@ -81,12 +87,16 @@ export class RegistrarVisitaPage implements OnInit {
     await this.navCtrl.back();
   }
 
-  async showMembersModal() {
+  setCheckedValue() {
+    this.iAmVisitor = !this.iAmVisitor;
+  }
+
+  async showMembersModal(type = 'member') {
     await this.globalSer.presentLoading();
     const update = (data: any) => {
       if (data) {
-        this.memberSelected = data;
-        this.formData.userId = data._id;
+        if (type === 'member') this.memberSelected = data;
+        else this.memberVisitor = data;
       }
     };
     await this.globalSer.dismissLoading();
@@ -101,12 +111,24 @@ export class RegistrarVisitaPage implements OnInit {
     );
   }
 
-  async setActionValue(index: number) {
-    this.formData.action = index || 0;
-  }
-
   getConsolidatorsNames() {
     return this.memberSelected ? `${this.memberSelected.names} ${this.memberSelected.lastNames}` : null;
+  }
+
+  getMemberVisitorNames() {
+    return this.memberVisitor ?
+      `${this.memberVisitor.names} ${this.memberVisitor.lastNames}`
+      : null;
+  }
+
+  validate() {
+    const { action, date, observation } = this.formData;
+    if (!this.memberSelected) return 'Disculpe, pero seleccionar al miembro que fue visitado.';
+    if (!date) return 'Disculpe, pero debe indicar la fecha en la que se realizó la visita.';
+    if (action === null) return 'Disculpe, pero debe seleccionar la acción realizda en la visita.';
+    if (!observation || observation?.length < 5) return 'Disculpe, pero debe indicar una observación válida para la visita.';
+    if (!this.iAmVisitor && !this.memberVisitor) return 'Disculpe, pero debe seleccionar al miembro que realizó la visita.';
+    return null;
   }
 
   async confirmClose() {
@@ -117,9 +139,14 @@ export class RegistrarVisitaPage implements OnInit {
   }
 
   async confirmSave() {
-    await this.globalSer.alertConfirm({
-      message: `¿Está seguro qué desea guardar la información suministrada de la visita?`,
-      confirmAction: async () => { await this.saveVisit(); }
-    });
+    const validated = this.validate();
+
+    if (!validated) {
+      await this.globalSer.alertConfirm({
+        message: `¿Está seguro qué desea guardar la información suministrada de la visita?`,
+        confirmAction: async () => { await this.saveVisit(); }
+      });
+    }
+    else await this.globalSer.presentAlert('Alerta', validated);
   }
 }

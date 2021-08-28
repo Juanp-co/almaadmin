@@ -41,18 +41,18 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="listFilter && listFilter.length > 0">
-    <ion-col size="12" size-sm="6" *ngFor="let lf of listFilter">
+  <ion-row *ngIf="members?.length > 0">
+    <ion-col size="12" size-sm="6" *ngFor="let member of members">
       <app-user-group-card
-        [user]="lf"
+        [user]="member"
         [handleAdd]="handleAdd"
         [handleRemove]="handleRemove"
-        [added]="checkAdded(lf._id)"
+        [added]="checkAdded(member._id)"
       ></app-user-group-card>
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="listFilter.length === 0">
+  <ion-row *ngIf="members?.length === 0">
     <ion-col>
       <ion-card>
         <ion-card-content class="ion-text-center">
