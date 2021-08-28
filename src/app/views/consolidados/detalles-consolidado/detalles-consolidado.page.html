@@ -54,9 +54,7 @@
             <b>Observación: </b>
             <br><br>
           </ion-text>
-          <ion-text class="ion-margin-top" color="medium">
-            <i>{{ data.observation || 'No se ha indicado ninguna observación.' }}</i>
-          </ion-text>
+          <div [innerHTML]="data.observation"></div>
         </ion-col>
       </ion-row>
     </ion-col>

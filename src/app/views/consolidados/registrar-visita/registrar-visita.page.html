@@ -17,44 +17,77 @@
         <ion-col class="" size="12">
           <ion-row>
             <ion-col size="12" size-sm="6">
-              <ion-item>
-                <ion-label position="floating" color="medium">Miembro (*)</ion-label>
-                <ion-input
-                  [readonly]="true"
-                  [value]="getConsolidatorsNames()"
-                  autocomplete="off"
-                  class="no-selected-text"
-                  (click)="showMembersModal()"
-                ></ion-input>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12" size-sm="6">
-              <ion-item>
-                <ion-label position="floating" color="medium">Fecha de la visita (*)</ion-label>
-                <ion-datetime
-                  [(ngModel)]="formData.date"
-                  displayFormat="DD/MM/YYYY"
-                  [min]="minInitDate"
-                  [max]="maxInitDate"
-                  doneText="Listo"
-                  cancelText="Cancelar"
-                ></ion-datetime>
-              </ion-item>
-            </ion-col>
-            <ion-col size="12" size-sm="6">
-              <ion-list>
-                <ion-radio-group [(ngModel)]="formData.action">
-                  <ion-list-header>
-                    <ion-label>Acción</ion-label>
-                  </ion-list-header>
-                  <ion-item *ngFor="let a of listActions; let i=index">
-                    <ion-label>{{a}}</ion-label>
-                    <ion-radio slot="start" value="{{i}}"></ion-radio>
+              <ion-row class="ion-no-padding">
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Miembro (*)</ion-label>
+                    <ion-input
+                      [readonly]="true"
+                      [value]="getConsolidatorsNames()"
+                      autocomplete="off"
+                      class="no-selected-text"
+                      (click)="showMembersModal()"
+                    ></ion-input>
                   </ion-item>
-                </ion-radio-group>
-              </ion-list>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-row>
+                    <ion-col>
+                      <ion-item lines="none">
+                        <ion-label color="medium">Soy el visitador</ion-label>
+                        <ion-checkbox
+                          slot="start"
+                          [checked]="iAmVisitor"
+                          (ionChange)="setCheckedValue()"
+                        ></ion-checkbox>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col *ngIf="!iAmVisitor">
+                      <ion-item>
+                        <ion-label position="floating" color="medium">Miembro visitante (*)</ion-label>
+                        <ion-input
+                          [readonly]="true"
+                          [value]="getMemberVisitorNames()"
+                          autocomplete="off"
+                          (click)="showMembersModal('visitor')"
+                        ></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <ion-col size="12" size-sm="6">
+              <ion-row class="ion-no-padding">
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating" color="medium">Fecha de la visita (*)</ion-label>
+                    <ion-datetime
+                      [(ngModel)]="formData.date"
+                      displayFormat="DD/MM/YYYY"
+                      min="2021-01-01"
+                      [max]="maxInitDate"
+                      doneText="Listo"
+                      cancelText="Cancelar"
+                    ></ion-datetime>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-list>
+                    <ion-radio-group [(ngModel)]="formData.action">
+                      <ion-list-header>
+                        <ion-label>Acción</ion-label>
+                      </ion-list-header>
+                      <ion-item *ngFor="let a of listActions; let i=index">
+                        <ion-label>{{a}}</ion-label>
+                        <ion-radio slot="start" [value]="i"></ion-radio>
+                      </ion-item>
+                    </ion-radio-group>
+                  </ion-list>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12">
               <ion-item>
                 <ion-label position="floating" color="medium">Observaciones (*)</ion-label>
                 <ion-textarea
