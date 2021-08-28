@@ -108,110 +108,109 @@
       <ion-card-header class="ion-no-padding ion-no-margin">
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
-            <ion-button (click)="setShowView('members')">
-              <ion-icon name="chevron-{{views.members.show ? 'up' : 'down' }}-outline"></ion-icon>
+            <ion-button (click)="setShowView('members1')">
+              <ion-icon name="chevron-{{views.members1.show ? 'up' : 'down' }}-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
-          <ion-title>{{ views.members.label }}</ion-title>
+          <ion-title>{{ views.members1.label }}</ion-title>
         </ion-toolbar>
       </ion-card-header>
-      <ion-card-content class="{{ views.members.show ? '' : 'ion-hide' }}">
-        <ion-row class="ion-margin-bottom" *ngIf="views.members.data; else noMembers">
+      <ion-card-content class="{{ views.members1.show ? '' : 'ion-hide' }}">
+        <ion-row class="ion-margin-bottom" *ngIf="members; else noMembers">
           <ion-col size="12" size-sm="6" class="ion-margin-top">
-            <ion-text class="ion-margin-top"><h2><b>Líder:</b></h2></ion-text>
-            <app-user-group-card
-              [user]="views.members.data.leader"
+            <app-members-card
+              [data]="members.leader"
+              title="Líder"
+              role="leader"
+              [handleAdd]="handleAddMember"
               [handleRemove]="handleRemove"
-              [added]="true"
-              *ngIf="views.members.data.leader; else noleader"
-            ></app-user-group-card>
-            <ng-template #noleader>
-              <ion-card>
-                <ion-card-content>
-                  <ion-text>
-                    <p class="ion-text-center">
-                      <ion-icon name="alert-circle-outline"></ion-icon>
-                      No se ha asignado ningún miembro a este rol.
-                      <br>
-                      <ion-button color="primary" (click)="modalMember('leader')">
-                        <ion-icon name="add-outline" slot="start"></ion-icon>
-                        <ion-text>Asignar</ion-text>
-                      </ion-button>
-                    </p>
-                  </ion-text>
-                </ion-card-content>
-              </ion-card>
-            </ng-template>
+            ></app-members-card>
           </ion-col>
           <ion-col size="12" size-sm="6" class="ion-margin-top">
-            <ion-text class="ion-margin-top"><h2><b>Anfitrión:</b></h2></ion-text>
-            <app-user-group-card
-              [user]="views.members.data.host"
+            <app-members-card
+              [data]="members.host"
+              title="Anfitrión"
+              role="host"
+              [handleAdd]="handleAddMember"
               [handleRemove]="handleRemove"
-              [added]="true"
-              *ngIf="views.members.data.host; else nohost"
-            ></app-user-group-card>
-            <ng-template #nohost>
-              <ion-card>
-                <ion-card-content>
-                  <ion-text>
-                    <p class="ion-text-center">
-                      <ion-icon name="alert-circle-outline"></ion-icon>
-                      No se ha asignado ningún miembro a este rol.
-                      <br>
-                      <ion-button color="primary" (click)="modalMember('host')">
-                        <ion-icon name="add-outline" slot="start"></ion-icon>
-                        <ion-text>Asignar</ion-text>
-                      </ion-button>
-                    </p>
-                  </ion-text>
-                </ion-card-content>
-              </ion-card>
-            </ng-template>
+            ></app-members-card>
           </ion-col>
           <ion-col size="12" size-sm="6" class="ion-margin-top">
-            <ion-text class="ion-margin-top"><h2><b>Asistente:</b></h2></ion-text>
-            <app-user-group-card
-              [user]="views.members.data.assistant"
+            <app-members-card
+              [data]="members.helper"
+              title="Auxiliar"
+              role="helper"
+              [handleAdd]="handleAddMember"
               [handleRemove]="handleRemove"
-              [added]="true"
-              *ngIf="views.members.data.assistant; else noassistant"
-            ></app-user-group-card>
-            <ng-template #noassistant>
-              <ion-card>
-                <ion-card-content>
-                  <ion-text>
-                    <p class="ion-text-center">
-                      <ion-icon name="alert-circle-outline"></ion-icon>
-                      No se ha asignado ningún miembro a este rol.
-                      <br>
-                      <ion-button color="primary" (click)="modalMember('assistant')">
-                        <ion-icon name="add-outline" slot="start"></ion-icon>
-                        <ion-text>Asignar</ion-text>
-                      </ion-button>
-                    </p>
-                  </ion-text>
-                </ion-card-content>
-              </ion-card>
-            </ng-template>
+            ></app-members-card>
           </ion-col>
           <ion-col size="12" size-sm="6" class="ion-margin-top">
-            <ion-text class="ion-margin-top"><h2><b>Maestro:</b></h2></ion-text>
-            <app-user-group-card
-              [user]="views.members.data.master"
+            <app-members-card
+              [data]="members.master"
+              title="Maestro"
+              role="master"
+              [handleAdd]="handleAddMember"
               [handleRemove]="handleRemove"
-              [added]="true"
-              *ngIf="views.members.data.master; else nomaster"
-            ></app-user-group-card>
-            <ng-template #nomaster>
+            ></app-members-card>
+          </ion-col>
+        </ion-row>
+
+        <ng-template #noMembers>
+          <ion-row class="ion-margin-top">
+            <ion-col size="12">
+              <ion-text color="medium">
+                <p class="ion-text-center">
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+                  No se logró obtener los miembros de este grupo.
+                </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="{{ views.data.edit ? 'ion-hide' : '' }}">
+      <ion-card-header class="ion-no-padding ion-no-margin">
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-button (click)="setShowView('members2')">
+              <ion-icon name="chevron-{{views.members2.show ? 'up' : 'down' }}-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>{{ views.members2.label }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button
+              (click)="modalMember('assistants')"
+              *ngIf="members?.assistants?.length > 0"
+            >
+              <ion-icon name="add-outline"></ion-icon>
+              <ion-text>Agregar</ion-text>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content class="{{ views.members2.show ? '' : 'ion-hide' }}">
+        <ion-row class="ion-margin-bottom" *ngIf="members; else noMembers">
+          <ion-col size="12" class="ion-margin-top">
+            <ion-row *ngIf="members.assistants?.length > 0; else noAssistants">
+              <ion-col size="12" size-sm="6" *ngFor="let data of members.assistants">
+                <app-user-group-card
+                  [user]="data"
+                  [handleRemove]="handleRemove"
+                  [added]="true"
+                ></app-user-group-card>
+              </ion-col>
+            </ion-row>
+            <ng-template #noAssistants>
               <ion-card>
                 <ion-card-content>
                   <ion-text>
                     <p class="ion-text-center">
                       <ion-icon name="alert-circle-outline"></ion-icon>
-                      No se ha asignado ningún miembro a este rol.
+                      No se han agregado asistentes.
                       <br>
-                      <ion-button color="primary" (click)="modalMember('master')">
+                      <ion-button class="ion-margin-top" color="primary" (click)="modalMember('assistants')">
                         <ion-icon name="add-outline" slot="start"></ion-icon>
                         <ion-text>Asignar</ion-text>
                       </ion-button>

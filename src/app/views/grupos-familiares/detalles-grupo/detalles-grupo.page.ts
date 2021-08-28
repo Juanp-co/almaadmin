@@ -26,18 +26,18 @@ export class DetallesGrupoPage implements OnInit {
       edit: false,
       data: null,
     },
-    members: {
-      label: 'Miembros',
-      show: true,
-      edit: false,
-      data: {
-        leader: null,
-        host: null,
-        assistant: null,
-        master: null,
-      },
+    members1: {
+      label: 'Miembros principales',
+      show: true
+    },
+    members2: {
+      label: 'Asistentes',
+      show: true
     }
   };
+  members: any = null;
+
+  handleAddMember = (role: string): Promise<void> => this.modalMember(role);
   handleRemove = (id: string): void => this.removeMember(id);
 
   constructor(
@@ -55,7 +55,7 @@ export class DetallesGrupoPage implements OnInit {
     if (data && !data.error) {
       this.group = {...data};
       this.views.data.data = data;
-      this.views.members.data = data.members;
+      this.members = data.members;
       this.title = this.getTitle();
       await this.globalSer.dismissLoading();
     }
@@ -90,17 +90,18 @@ export class DetallesGrupoPage implements OnInit {
 
     // get ids
     const members = {
-      leaderId: data.leader ? (data.leader._id || null) : null,
-      hostId: data.host ? (data.host._id || null) : null,
-      assistantId: data.assistant ? (data.assistant._id || null) : null,
-      masterId: data.master ? (data.master._id || null) : null,
+      leaderId: data.leader?._id || null,
+      helperId: data.helper?._id || null,
+      hostId: data.host?._id || null,
+      assistantsIds: data.assistants?.map(a => a._id) || [],
+      masterId: data.master?._id || null,
     };
 
     const updated = await this.gruposService.updateMembersGroup(this.id, { members });
 
     if (updated && !updated.error) {
       this.group.members = {...updated};
-      this.views.members.data = {...updated};
+      this.members = {...updated};
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado la información exitosamente.');
     }
@@ -111,22 +112,22 @@ export class DetallesGrupoPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
-  async deleteUser() {
-    await this.globalSer.presentLoading('Eliminando, por favor espere ...');
-
-    const deleted = await this.gruposService.deleteGroup(this.id);
-
-    if (deleted && !deleted.error) {
-      await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('¡Éxito!', deleted || 'Se ha eliminado los datos del grupo exitosamente.');
-      await this.back();
-    }
-    else if (deleted && deleted.error) {
-      await this.globalSer.dismissLoading();
-      await this.globalSer.errorSession();
-    }
-    else await this.globalSer.dismissLoading();
-  }
+  // async deleteUser() {
+  //   await this.globalSer.presentLoading('Eliminando, por favor espere ...');
+  //
+  //   const deleted = await this.gruposService.deleteGroup(this.id);
+  //
+  //   if (deleted && !deleted.error) {
+  //     await this.globalSer.dismissLoading();
+  //     await this.globalSer.presentAlert('¡Éxito!', deleted || 'Se ha eliminado los datos del grupo exitosamente.');
+  //     await this.back();
+  //   }
+  //   else if (deleted && deleted.error) {
+  //     await this.globalSer.dismissLoading();
+  //     await this.globalSer.errorSession();
+  //   }
+  //   else await this.globalSer.dismissLoading();
+  // }
 
   getTitle(edit = false): string {
     return `${edit ? 'Editando' : 'Detalles'}: Sector #${this.group.sector}, Sub-sector #${this.group.subSector}, Grupo #${this.group.number}`;
@@ -173,15 +174,16 @@ export class DetallesGrupoPage implements OnInit {
     await this.globalSer.presentLoading();
     const updateData = (member: any) => {
       if (member) {
-        const data = {...this.views.members.data};
-        data[role] = member;
+        const data = {...this.members};
+        if (role === 'assistants') data[role].push(member);
+        else data[role] = member;
         this.updateMembers(data);
       }
     };
     await this.globalSer.dismissLoading();
     await this.globalSer.loadModal(
       AsignarMiembroPage,
-      { data: {...this.views.members.data} },
+      { data: {...this.members} },
       false,
       updateData
     );
@@ -189,12 +191,15 @@ export class DetallesGrupoPage implements OnInit {
 
   removeMember(id: string) {
     const confirm = () => {
-      const data = {...this.views.members.data};
-      if (data.assistant && data.assistant._id === id) data.assistant = null;
-      if (data.host && data.host._id === id) data.host = null;
-      if (data.leader && data.leader._id === id) data.leader = null;
-      if (data.master && data.master._id === id) data.master = null;
-      this.updateMembers(data);
+      const data: any = this.members ? {...this.members} : null;
+      if (data) {
+        if (data.host?._id === id) data.host = null;
+        if (data.helper?._id === id) data.helper = null;
+        if (data.leader?._id === id) data.leader = null;
+        if (data.master?._id === id) data.master = null;
+        data.assistants = data.assistants?.filter(a => a._id !== id) || [];
+        this.updateMembers(data);
+      }
     };
 
     this.globalSer.alertConfirm({

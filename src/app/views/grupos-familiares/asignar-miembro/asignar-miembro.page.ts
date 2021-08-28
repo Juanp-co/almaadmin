@@ -39,10 +39,11 @@ export class AsignarMiembroPage implements OnInit {
 
   async ngOnInit() {
     if (this.data) {
-      const listIds = [];
+      let listIds = [];
       if (this.data.leader) listIds.push(this.data.leader._id);
+      if (this.data.helper) listIds.push(this.data.helper._id);
       if (this.data.host) listIds.push(this.data.host._id);
-      if (this.data.assistant) listIds.push(this.data.assistant._id);
+      if (this.data.assistants) listIds = listIds.concat(this.data.assistants?.map(a => a._id) || []);
       if (this.data.master) listIds.push(this.data.master._id);
       if (listIds.length > 0) this.queryParams.ignoreIds = listIds.toString();
     }
