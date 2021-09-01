@@ -16,10 +16,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "tyNb");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
-/* harmony import */ var _asignar_miembro_asignar_miembro_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../asignar-miembro/asignar-miembro.page */ "G9AF");
-/* harmony import */ var _grupos_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../grupos.service */ "ai4U");
+/* harmony import */ var _grupos_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../grupos.service */ "ai4U");
+/* harmony import */ var _asignar_miembro_asignar_miembro_page__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../asignar-miembro/asignar-miembro.page */ "G9AF");
 /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
-/* harmony import */ var _Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../Utils/validations.functions */ "OmbT");
+/* harmony import */ var _Utils_data_static__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../Utils/data.static */ "lmIc");
 
 
 
@@ -48,19 +48,20 @@ let DetallesGrupoPage = class DetallesGrupoPage {
                 edit: false,
                 data: null,
             },
-            members: {
-                label: 'Miembros',
-                show: false,
-                edit: false,
-                data: {
-                    leader: null,
-                    host: null,
-                    assistant: null,
-                    master: null,
-                },
+            members1: {
+                label: 'Miembros principales',
+                show: true
+            },
+            members2: {
+                label: 'Asistentes',
+                show: true
             }
         };
+        this.members = null;
+        this.handleAddMember = (role) => this.modalMember(role);
         this.handleRemove = (id) => this.removeMember(id);
+        this.handleSave = (formData) => this.setFormDataAndSave(formData);
+        this.handleCancel = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () { return this.editEnable(); });
     }
     ngOnInit() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -70,7 +71,7 @@ let DetallesGrupoPage = class DetallesGrupoPage {
             if (data && !data.error) {
                 this.group = Object.assign({}, data);
                 this.views.data.data = data;
-                this.views.members.data = data.members;
+                this.members = data.members;
                 this.title = this.getTitle();
                 yield this.globalSer.dismissLoading();
             }
@@ -103,19 +104,21 @@ let DetallesGrupoPage = class DetallesGrupoPage {
         });
     }
     updateMembers(data) {
+        var _a, _b, _c, _d, _e;
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             yield this.globalSer.presentLoading('Actualizando, por favor espere ...');
             // get ids
             const members = {
-                leaderId: data.leader ? (data.leader._id || null) : null,
-                hostId: data.host ? (data.host._id || null) : null,
-                assistantId: data.assistant ? (data.assistant._id || null) : null,
-                masterId: data.master ? (data.master._id || null) : null,
+                leaderId: ((_a = data.leader) === null || _a === void 0 ? void 0 : _a._id) || null,
+                helperId: ((_b = data.helper) === null || _b === void 0 ? void 0 : _b._id) || null,
+                hostId: ((_c = data.host) === null || _c === void 0 ? void 0 : _c._id) || null,
+                assistantsIds: ((_d = data.assistants) === null || _d === void 0 ? void 0 : _d.map(a => a._id)) || [],
+                masterId: ((_e = data.master) === null || _e === void 0 ? void 0 : _e._id) || null,
             };
             const updated = yield this.gruposService.updateMembersGroup(this.id, { members });
             if (updated && !updated.error) {
                 this.group.members = Object.assign({}, updated);
-                this.views.members.data = Object.assign({}, updated);
+                this.members = Object.assign({}, updated);
                 yield this.globalSer.dismissLoading();
                 yield this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado la información exitosamente.');
             }
@@ -127,23 +130,22 @@ let DetallesGrupoPage = class DetallesGrupoPage {
                 yield this.globalSer.dismissLoading();
         });
     }
-    deleteUser() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            yield this.globalSer.presentLoading('Eliminando, por favor espere ...');
-            const deleted = yield this.gruposService.deleteGroup(this.id);
-            if (deleted && !deleted.error) {
-                yield this.globalSer.dismissLoading();
-                yield this.globalSer.presentAlert('¡Éxito!', deleted || 'Se ha eliminado los datos del grupo exitosamente.');
-                yield this.back();
-            }
-            else if (deleted && deleted.error) {
-                yield this.globalSer.dismissLoading();
-                yield this.globalSer.errorSession();
-            }
-            else
-                yield this.globalSer.dismissLoading();
-        });
-    }
+    // async deleteUser() {
+    //   await this.globalSer.presentLoading('Eliminando, por favor espere ...');
+    //
+    //   const deleted = await this.gruposService.deleteGroup(this.id);
+    //
+    //   if (deleted && !deleted.error) {
+    //     await this.globalSer.dismissLoading();
+    //     await this.globalSer.presentAlert('¡Éxito!', deleted || 'Se ha eliminado los datos del grupo exitosamente.');
+    //     await this.back();
+    //   }
+    //   else if (deleted && deleted.error) {
+    //     await this.globalSer.dismissLoading();
+    //     await this.globalSer.errorSession();
+    //   }
+    //   else await this.globalSer.dismissLoading();
+    // }
     getTitle(edit = false) {
         return `${edit ? 'Editando' : 'Detalles'}: Sector #${this.group.sector}, Sub-sector #${this.group.subSector}, Grupo #${this.group.number}`;
     }
@@ -156,9 +158,8 @@ let DetallesGrupoPage = class DetallesGrupoPage {
     setShowView(input) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             this.views[input].show = !this.views[input].show;
-            if (this.views[input].edit) {
+            if (this.views[input].edit)
                 yield this.editEnable();
-            }
         });
     }
     // actions
@@ -173,6 +174,10 @@ let DetallesGrupoPage = class DetallesGrupoPage {
                     subSector: this.views.data.data.subSector,
                     number: this.views.data.data.number,
                     direction: this.views.data.data.direction,
+                    location: this.views.data.data.location || {
+                        type: 'Point',
+                        coordinates: _Utils_data_static__WEBPACK_IMPORTED_MODULE_9__["staticCoords"]
+                    },
                 };
                 this.title = this.getTitle(true);
             }
@@ -184,50 +189,40 @@ let DetallesGrupoPage = class DetallesGrupoPage {
                 yield this.globalSer.dismissLoading();
         });
     }
-    validateOnlyNumber(event) {
-        Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__["onlyNumbersInputValidation2"])(event);
-    }
-    confirmUpdate() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const validated = this.gruposService.validateDataGroup(this.formData);
-            if (validated)
-                yield this.globalSer.presentAlert('Alerta', validated);
-            else {
-                yield this.globalSer.alertConfirm({
-                    header: 'Confirme',
-                    message: '¿Está seguro qué desea actualizar información de este grupo?',
-                    confirmAction: () => this.updateData()
-                });
-            }
-        });
-    }
     // members
     modalMember(role) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             yield this.globalSer.presentLoading();
             const updateData = (member) => {
                 if (member) {
-                    const data = Object.assign({}, this.views.members.data);
-                    data[role] = member;
+                    const data = Object.assign({}, this.members);
+                    if (role === 'assistants')
+                        data[role].push(member);
+                    else
+                        data[role] = member;
                     this.updateMembers(data);
                 }
             };
             yield this.globalSer.dismissLoading();
-            yield this.globalSer.loadModal(_asignar_miembro_asignar_miembro_page__WEBPACK_IMPORTED_MODULE_6__["AsignarMiembroPage"], { data: Object.assign({}, this.views.members.data) }, false, updateData);
+            yield this.globalSer.loadModal(_asignar_miembro_asignar_miembro_page__WEBPACK_IMPORTED_MODULE_7__["AsignarMiembroPage"], { data: Object.assign({}, this.members) }, false, updateData);
         });
     }
     removeMember(id) {
         const confirm = () => {
-            const data = Object.assign({}, this.views.members.data);
-            if (data.assistant && data.assistant._id === id)
-                data.assistant = null;
-            if (data.host && data.host._id === id)
-                data.host = null;
-            if (data.leader && data.leader._id === id)
-                data.leader = null;
-            if (data.master && data.master._id === id)
-                data.master = null;
-            this.updateMembers(data);
+            var _a, _b, _c, _d, _e;
+            const data = this.members ? Object.assign({}, this.members) : null;
+            if (data) {
+                if (((_a = data.host) === null || _a === void 0 ? void 0 : _a._id) === id)
+                    data.host = null;
+                if (((_b = data.helper) === null || _b === void 0 ? void 0 : _b._id) === id)
+                    data.helper = null;
+                if (((_c = data.leader) === null || _c === void 0 ? void 0 : _c._id) === id)
+                    data.leader = null;
+                if (((_d = data.master) === null || _d === void 0 ? void 0 : _d._id) === id)
+                    data.master = null;
+                data.assistants = ((_e = data.assistants) === null || _e === void 0 ? void 0 : _e.filter(a => a._id !== id)) || [];
+                this.updateMembers(data);
+            }
         };
         this.globalSer.alertConfirm({
             header: 'Confirme',
@@ -235,11 +230,23 @@ let DetallesGrupoPage = class DetallesGrupoPage {
             confirmAction: () => confirm()
         });
     }
+    getParamsToMap() {
+        return [
+            {
+                type: 'Feature',
+                geometry: this.group.location
+            }
+        ];
+    }
+    setFormDataAndSave(formData) {
+        this.formData = formData;
+        this.updateData();
+    }
 };
 DetallesGrupoPage.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] },
     { type: _services_global_service__WEBPACK_IMPORTED_MODULE_8__["GlobalService"] },
-    { type: _grupos_service__WEBPACK_IMPORTED_MODULE_7__["GruposService"] },
+    { type: _grupos_service__WEBPACK_IMPORTED_MODULE_6__["GruposService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_5__["NavController"] }
 ];
 DetallesGrupoPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -263,7 +270,7 @@ DetallesGrupoPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"back()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>{{ title }}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <div *ngIf=\"group\">\n    <ion-card *ngIf=\"views.data.data\">\n      <ion-card-header class=\"ion-no-padding ion-no-margin\">\n        <ion-toolbar color=\"primary\">\n          <ion-buttons slot=\"start\">\n            <ion-button (click)=\"setShowView('data')\" *ngIf=\"!views.data.edit\">\n              <ion-icon name=\"chevron-{{views.data.show ? 'up' : 'down' }}-outline\"></ion-icon>\n            </ion-button>\n            <ion-button (click)=\"editEnable()\" *ngIf=\"views.data.edit\">\n              <ion-icon name=\"close-outline\"></ion-icon>\n            </ion-button>\n          </ion-buttons>\n          <ion-title *ngIf=\"!views.data.edit\">{{ views.data.label }}</ion-title>\n          <ion-title *ngIf=\"views.data.edit\">Editar grupo familiar</ion-title>\n          <ion-buttons slot=\"end\" *ngIf=\"views.data.show\">\n            <ion-button color=\"primary\" (click)=\"editEnable()\" *ngIf=\"views.data.edit\">\n              <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n              <ion-text>Cancelar edición</ion-text>\n            </ion-button>\n            <ion-button color=\"light\" expand=\"full\" (click)=\"editEnable()\" slot=\"end\" *ngIf=\"!views.data.edit\">\n              <ion-icon name=\"create-outline\" slot=\"start\"></ion-icon>\n              <ion-text>Editar</ion-text>\n            </ion-button>\n          </ion-buttons>\n        </ion-toolbar>\n      </ion-card-header>\n      <ion-card-content class=\"{{ views.data.show ? '' : 'ion-hide' }}\">\n        <ion-row>\n          <ion-col class=\"ion-no-margin\" size=\"12\" *ngIf=\"views.data.edit && formData\">\n            <ion-row>\n              <ion-col size=\"12\" size-sm=\"4\">\n                <ion-item>\n                  <ion-label position=\"floating\" color=\"medium\">Sector (*)</ion-label>\n                  <ion-input\n                    [(ngModel)]=\"formData.sector\"\n                    autocomplete=\"off\"\n                    maxlength=\"4\"\n                    (keypress)=\"validateOnlyNumber($event)\"\n                  ></ion-input>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"12\" size-sm=\"4\">\n                <ion-item>\n                  <ion-label position=\"floating\" color=\"medium\">Sub-sector (*)</ion-label>\n                  <ion-input\n                    [(ngModel)]=\"formData.subSector\"\n                    autocomplete=\"off\"\n                    maxlength=\"4\"\n                    (keypress)=\"validateOnlyNumber($event)\"\n                  ></ion-input>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"12\" size-sm=\"4\">\n                <ion-item>\n                  <ion-label position=\"floating\" color=\"medium\">Número (*)</ion-label>\n                  <ion-input\n                    [(ngModel)]=\"formData.number\"\n                    autocomplete=\"off\"\n                    maxlength=\"4\"\n                    (keypress)=\"validateOnlyNumber($event)\"\n                  ></ion-input>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"12\" size-sm=\"6\">\n                <ion-item>\n                  <ion-label position=\"floating\" color=\"medium\">Dirección (*)</ion-label>\n                  <ion-textarea\n                    [(ngModel)]=\"formData.direction\"\n                    rows=\"5\"\n                    class=\"ion-text-uppercase\"\n                    placeholder=\"Indica la dirección del grupo familiar...\"\n                  ></ion-textarea>\n                </ion-item>\n              </ion-col>\n              <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n                <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n              </ion-col>\n              <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n                <ion-button color=\"light\" (click)=\"editEnable()\">\n                  <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n                  <ion-text>Cancelar</ion-text>\n                </ion-button>\n                <ion-button color=\"primary\" (click)=\"confirmUpdate()\">\n                  <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n                  <ion-text>Guardar</ion-text>\n                </ion-button>\n              </ion-col>\n            </ion-row>\n          </ion-col>\n\n          <ion-col size=\"12\" *ngIf=\"!views.data.edit\">\n            <ion-row>\n              <ion-col class=\"ion-no-padding\" size=\"12\" size-sm=\"6\">\n                <ion-row>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Número</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.number}}</ion-text>\n                  </ion-col>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Sector:</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.sector || 'No indicado.'}}</ion-text>\n                  </ion-col>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Sub-sector:</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.subSector || 'No indicado.'}}</ion-text>\n                  </ion-col>\n                </ion-row>\n              </ion-col>\n              <ion-col class=\"ion-no-padding\" size=\"12\" size-sm=\"6\">\n                <ion-row>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Dirección</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.direction || 'No indicado.'}}</ion-text>\n                  </ion-col>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Fecha de creación:</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.created_at || 'No indicado'}}</ion-text>\n                  </ion-col>\n                </ion-row>\n              </ion-col>\n            </ion-row>\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-card class=\"{{ views.data.edit ? 'ion-hide' : '' }}\">\n      <ion-card-header class=\"ion-no-padding ion-no-margin\">\n        <ion-toolbar color=\"primary\">\n          <ion-buttons slot=\"start\">\n            <ion-button (click)=\"setShowView('members')\">\n              <ion-icon name=\"chevron-{{views.members.show ? 'up' : 'down' }}-outline\"></ion-icon>\n            </ion-button>\n          </ion-buttons>\n          <ion-title>{{ views.members.label }}</ion-title>\n        </ion-toolbar>\n      </ion-card-header>\n      <ion-card-content class=\"{{ views.members.show ? '' : 'ion-hide' }}\">\n        <ion-row class=\"ion-margin-bottom\" *ngIf=\"views.members.data; else noMembers\">\n          <ion-col size=\"12\" size-sm=\"6\" class=\"ion-margin-top\">\n            <ion-text class=\"ion-margin-top\"><h2><b>Líder:</b></h2></ion-text>\n            <app-user-group-card\n              [user]=\"views.members.data.leader\"\n              [handleRemove]=\"handleRemove\"\n              [added]=\"true\"\n              *ngIf=\"views.members.data.leader; else noleader\"\n            ></app-user-group-card>\n            <ng-template #noleader>\n              <ion-card>\n                <ion-card-content>\n                  <ion-text>\n                    <p class=\"ion-text-center\">\n                      <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                      No se ha asignado ningún miembro a este rol.\n                      <br>\n                      <ion-button color=\"primary\" (click)=\"modalMember('leader')\">\n                        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n                        <ion-text>Asignar</ion-text>\n                      </ion-button>\n                    </p>\n                  </ion-text>\n                </ion-card-content>\n              </ion-card>\n            </ng-template>\n          </ion-col>\n          <ion-col size=\"12\" size-sm=\"6\" class=\"ion-margin-top\">\n            <ion-text class=\"ion-margin-top\"><h2><b>Anfitrión:</b></h2></ion-text>\n            <app-user-group-card\n              [user]=\"views.members.data.host\"\n              [handleRemove]=\"handleRemove\"\n              [added]=\"true\"\n              *ngIf=\"views.members.data.host; else nohost\"\n            ></app-user-group-card>\n            <ng-template #nohost>\n              <ion-card>\n                <ion-card-content>\n                  <ion-text>\n                    <p class=\"ion-text-center\">\n                      <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                      No se ha asignado ningún miembro a este rol.\n                      <br>\n                      <ion-button color=\"primary\" (click)=\"modalMember('host')\">\n                        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n                        <ion-text>Asignar</ion-text>\n                      </ion-button>\n                    </p>\n                  </ion-text>\n                </ion-card-content>\n              </ion-card>\n            </ng-template>\n          </ion-col>\n          <ion-col size=\"12\" size-sm=\"6\" class=\"ion-margin-top\">\n            <ion-text class=\"ion-margin-top\"><h2><b>Asistente:</b></h2></ion-text>\n            <app-user-group-card\n              [user]=\"views.members.data.assistant\"\n              [handleRemove]=\"handleRemove\"\n              [added]=\"true\"\n              *ngIf=\"views.members.data.assistant; else noassistant\"\n            ></app-user-group-card>\n            <ng-template #noassistant>\n              <ion-card>\n                <ion-card-content>\n                  <ion-text>\n                    <p class=\"ion-text-center\">\n                      <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                      No se ha asignado ningún miembro a este rol.\n                      <br>\n                      <ion-button color=\"primary\" (click)=\"modalMember('assistant')\">\n                        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n                        <ion-text>Asignar</ion-text>\n                      </ion-button>\n                    </p>\n                  </ion-text>\n                </ion-card-content>\n              </ion-card>\n            </ng-template>\n          </ion-col>\n          <ion-col size=\"12\" size-sm=\"6\" class=\"ion-margin-top\">\n            <ion-text class=\"ion-margin-top\"><h2><b>Maestro:</b></h2></ion-text>\n            <app-user-group-card\n              [user]=\"views.members.data.master\"\n              [handleRemove]=\"handleRemove\"\n              [added]=\"true\"\n              *ngIf=\"views.members.data.master; else nomaster\"\n            ></app-user-group-card>\n            <ng-template #nomaster>\n              <ion-card>\n                <ion-card-content>\n                  <ion-text>\n                    <p class=\"ion-text-center\">\n                      <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                      No se ha asignado ningún miembro a este rol.\n                      <br>\n                      <ion-button color=\"primary\" (click)=\"modalMember('master')\">\n                        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n                        <ion-text>Asignar</ion-text>\n                      </ion-button>\n                    </p>\n                  </ion-text>\n                </ion-card-content>\n              </ion-card>\n            </ng-template>\n          </ion-col>\n        </ion-row>\n\n        <ng-template #noMembers>\n          <ion-row class=\"ion-margin-top\">\n            <ion-col size=\"12\">\n              <ion-text>\n                <p class=\"ion-text-center\">\n                  <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                  No se logró obtener los miembros de este grupo.\n                </p>\n              </ion-text>\n            </ion-col>\n          </ion-row>\n        </ng-template>\n      </ion-card-content>\n    </ion-card>\n\n    <div class=\"ion-margin\"><br/></div>\n  </div>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"back()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>{{ title }}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <div *ngIf=\"group\">\n    <ion-card *ngIf=\"views.data.data\">\n      <ion-card-header class=\"ion-no-padding ion-no-margin\">\n        <ion-toolbar color=\"primary\">\n          <ion-buttons slot=\"start\">\n            <ion-button (click)=\"setShowView('data')\" *ngIf=\"!views.data.edit\">\n              <ion-icon name=\"chevron-{{views.data.show ? 'up' : 'down' }}-outline\"></ion-icon>\n            </ion-button>\n            <ion-button (click)=\"editEnable()\" *ngIf=\"views.data.edit\">\n              <ion-icon name=\"close-outline\"></ion-icon>\n            </ion-button>\n          </ion-buttons>\n          <ion-title *ngIf=\"!views.data.edit\">{{ views.data.label }}</ion-title>\n          <ion-title *ngIf=\"views.data.edit\">Editar grupo familiar</ion-title>\n          <ion-buttons slot=\"end\" *ngIf=\"views.data.show\">\n            <ion-button color=\"light\" (click)=\"editEnable()\" *ngIf=\"views.data.edit\">\n              <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n              <ion-text>Cancelar edición</ion-text>\n            </ion-button>\n            <ion-button color=\"light\" expand=\"full\" (click)=\"editEnable()\" slot=\"end\" *ngIf=\"!views.data.edit\">\n              <ion-icon name=\"create-outline\" slot=\"start\"></ion-icon>\n              <ion-text>Editar</ion-text>\n            </ion-button>\n          </ion-buttons>\n        </ion-toolbar>\n      </ion-card-header>\n      <ion-card-content class=\"{{ views.data.show ? '' : 'ion-hide' }}\">\n        <ion-row>\n          <ion-col class=\"ion-no-margin\" size=\"12\" *ngIf=\"views.data.edit\">\n            <app-family-group-form\n              [data]=\"formData\"\n              [handleSave]=\"handleSave\"\n              [handleCancel]=\"handleCancel\"\n            >\n            </app-family-group-form>\n          </ion-col>\n\n          <ion-col size=\"12\" size-md=\"6\" *ngIf=\"!views.data.edit\">\n            <ion-row>\n              <ion-col class=\"ion-no-padding\" size=\"12\">\n                <ion-row>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Número</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.number}}</ion-text>\n                  </ion-col>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Sector:</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.sector || 'No indicado.'}}</ion-text>\n                  </ion-col>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Sub-sector:</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.subSector || 'No indicado.'}}</ion-text>\n                  </ion-col>\n                </ion-row>\n              </ion-col>\n              <ion-col class=\"ion-no-padding\" size=\"12\">\n                <ion-row>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Dirección</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.direction || 'No indicado.'}}</ion-text>\n                  </ion-col>\n                  <ion-col size=\"5\">\n                    <ion-text><b>Fecha de creación:</b></ion-text>\n                  </ion-col>\n                  <ion-col size=\"7\">\n                    <ion-text>{{group.created_at || 'No indicado'}}</ion-text>\n                  </ion-col>\n                </ion-row>\n              </ion-col>\n            </ion-row>\n          </ion-col>\n\n          <ion-col size=\"12\" size-md=\"6\" *ngIf=\"!views.data.edit\">\n            <div class=\"div-map\">\n              <app-map\n                [coords]=\"getParamsToMap()\"\n                [height]=\"'100%'\"\n                [zoom]=\"13\"\n              ></app-map>\n            </div>\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-card class=\"{{ views.data.edit ? 'ion-hide' : '' }}\">\n      <ion-card-header class=\"ion-no-padding ion-no-margin\">\n        <ion-toolbar color=\"primary\">\n          <ion-buttons slot=\"start\">\n            <ion-button (click)=\"setShowView('members1')\">\n              <ion-icon name=\"chevron-{{views.members1.show ? 'up' : 'down' }}-outline\"></ion-icon>\n            </ion-button>\n          </ion-buttons>\n          <ion-title>{{ views.members1.label }}</ion-title>\n        </ion-toolbar>\n      </ion-card-header>\n      <ion-card-content class=\"{{ views.members1.show ? '' : 'ion-hide' }}\">\n        <ion-row class=\"ion-margin-bottom\" *ngIf=\"members; else noMembers\">\n          <ion-col size=\"12\" size-sm=\"6\" class=\"ion-margin-top\">\n            <app-members-card\n              [data]=\"members.leader\"\n              title=\"Líder\"\n              role=\"leader\"\n              [handleAdd]=\"handleAddMember\"\n              [handleRemove]=\"handleRemove\"\n            ></app-members-card>\n          </ion-col>\n          <ion-col size=\"12\" size-sm=\"6\" class=\"ion-margin-top\">\n            <app-members-card\n              [data]=\"members.host\"\n              title=\"Anfitrión\"\n              role=\"host\"\n              [handleAdd]=\"handleAddMember\"\n              [handleRemove]=\"handleRemove\"\n            ></app-members-card>\n          </ion-col>\n          <ion-col size=\"12\" size-sm=\"6\" class=\"ion-margin-top\">\n            <app-members-card\n              [data]=\"members.helper\"\n              title=\"Auxiliar\"\n              role=\"helper\"\n              [handleAdd]=\"handleAddMember\"\n              [handleRemove]=\"handleRemove\"\n            ></app-members-card>\n          </ion-col>\n          <ion-col size=\"12\" size-sm=\"6\" class=\"ion-margin-top\">\n            <app-members-card\n              [data]=\"members.master\"\n              title=\"Maestro\"\n              role=\"master\"\n              [handleAdd]=\"handleAddMember\"\n              [handleRemove]=\"handleRemove\"\n            ></app-members-card>\n          </ion-col>\n        </ion-row>\n\n        <ng-template #noMembers>\n          <ion-row class=\"ion-margin-top\">\n            <ion-col size=\"12\">\n              <ion-text color=\"medium\">\n                <p class=\"ion-text-center\">\n                  <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                  No se logró obtener los miembros de este grupo.\n                </p>\n              </ion-text>\n            </ion-col>\n          </ion-row>\n        </ng-template>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-card class=\"{{ views.data.edit ? 'ion-hide' : '' }}\">\n      <ion-card-header class=\"ion-no-padding ion-no-margin\">\n        <ion-toolbar color=\"primary\">\n          <ion-buttons slot=\"start\">\n            <ion-button (click)=\"setShowView('members2')\">\n              <ion-icon name=\"chevron-{{views.members2.show ? 'up' : 'down' }}-outline\"></ion-icon>\n            </ion-button>\n          </ion-buttons>\n          <ion-title>{{ views.members2.label }}</ion-title>\n          <ion-buttons slot=\"end\">\n            <ion-button\n              (click)=\"modalMember('assistants')\"\n              *ngIf=\"members?.assistants?.length > 0\"\n            >\n              <ion-icon name=\"add-outline\"></ion-icon>\n              <ion-text>Agregar</ion-text>\n            </ion-button>\n          </ion-buttons>\n        </ion-toolbar>\n      </ion-card-header>\n      <ion-card-content class=\"{{ views.members2.show ? '' : 'ion-hide' }}\">\n        <ion-row class=\"ion-margin-bottom\" *ngIf=\"members; else noMembers\">\n          <ion-col size=\"12\" class=\"ion-margin-top\">\n            <ion-row *ngIf=\"members.assistants?.length > 0; else noAssistants\">\n              <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let data of members.assistants\">\n                <app-user-group-card\n                  [user]=\"data\"\n                  [handleRemove]=\"handleRemove\"\n                  [added]=\"true\"\n                ></app-user-group-card>\n              </ion-col>\n            </ion-row>\n            <ng-template #noAssistants>\n              <ion-card>\n                <ion-card-content>\n                  <ion-text>\n                    <p class=\"ion-text-center\">\n                      <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                      No se han agregado asistentes.\n                      <br>\n                      <ion-button class=\"ion-margin-top\" color=\"primary\" (click)=\"modalMember('assistants')\">\n                        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n                        <ion-text>Asignar</ion-text>\n                      </ion-button>\n                    </p>\n                  </ion-text>\n                </ion-card-content>\n              </ion-card>\n            </ng-template>\n          </ion-col>\n        </ion-row>\n\n        <ng-template #noMembers>\n          <ion-row class=\"ion-margin-top\">\n            <ion-col size=\"12\">\n              <ion-text color=\"medium\">\n                <p class=\"ion-text-center\">\n                  <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                  No se logró obtener los miembros de este grupo.\n                </p>\n              </ion-text>\n            </ion-col>\n          </ion-row>\n        </ng-template>\n      </ion-card-content>\n    </ion-card>\n\n    <div class=\"ion-margin\"><br/></div>\n  </div>\n</ion-content>\n");
 
 /***/ }),
 

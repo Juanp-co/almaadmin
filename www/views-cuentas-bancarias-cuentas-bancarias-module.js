@@ -1,76 +1,5 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["views-cuentas-bancarias-cuentas-bancarias-module"],{
 
-/***/ "EnSQ":
-/*!******************************************!*\
-  !*** ./src/app/services/data.service.ts ***!
-  \******************************************/
-/*! exports provided: DataService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-
-
-let DataService = class DataService {
-    constructor() { }
-    resizePhoto(file, maxSize, outputType, callback) {
-        const reader = new FileReader();
-        reader.onload = (readerEvent) => {
-            this.resizeReresize(readerEvent.target.result, maxSize, outputType, callback);
-        };
-        reader.readAsDataURL(file);
-    }
-    resizeReresize(dataURL, maxSize, outputType, callback) {
-        const image = new Image();
-        image.onload = (imageEvent) => {
-            // Resize image
-            const canvas = document.createElement('canvas');
-            let width = image.width;
-            let height = image.height;
-            if (width > height) {
-                if (width > maxSize) {
-                    height *= maxSize / width;
-                    width = maxSize;
-                }
-            }
-            else if (height > maxSize) {
-                width *= maxSize / height;
-                height = maxSize;
-            }
-            canvas.width = width;
-            canvas.height = height;
-            canvas.getContext('2d').drawImage(image, 0, 0, width, height);
-            this.resizeOuput(canvas, outputType, callback);
-        };
-        image.src = dataURL;
-    }
-    resizeOuput(canvas, outputType, callback) {
-        switch (outputType) {
-            case 'file':
-                canvas.toBlob((blob) => {
-                    callback(blob);
-                }, 'image/jpeg', 0.8);
-                break;
-            case 'dataURL':
-                callback(canvas.toDataURL('image/jpeg', 0.8));
-                break;
-        }
-    }
-};
-DataService.ctorParameters = () => [];
-DataService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
-    })
-], DataService);
-
-
-
-/***/ }),
-
 /***/ "KAO9":
 /*!*****************************************************************************!*\
   !*** ./src/app/views/cuentas-bancarias/cuentas-bancarias-routing.module.ts ***!
@@ -188,7 +117,7 @@ CuentasBancariasService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .max-width-640 {\n  --width: 640px;\n}\n::ng-deep .ck-editor__editable_inline {\n  min-height: 250px;\n}\n::ng-deep .max-height-pic {\n  max-height: 120px;\n  margin: 0 auto !important;\n}\n::ng-deep .card-item {\n  height: 100%;\n}\n::ng-deep .pictureIcon {\n  width: auto !important;\n  height: 150px !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2N1ZW50YXMtYmFuY2FyaWFzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDRTtFQUNFLGNBQUE7QUFBSjtBQUVFO0VBQ0UsaUJBQUE7QUFBSjtBQUVFO0VBQ0UsaUJBQUE7RUFDQSx5QkFBQTtBQUFKO0FBR0U7RUFDRSxZQUFBO0FBREo7QUFJRTtFQUNFLHNCQUFBO0VBQ0Esd0JBQUE7QUFGSiIsImZpbGUiOiJjdWVudGFzLWJhbmNhcmlhcy5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6Om5nLWRlZXAge1xyXG4gIC5tYXgtd2lkdGgtNjQwIHtcclxuICAgIC0td2lkdGg6IDY0MHB4O1xyXG4gIH1cclxuICAuY2stZWRpdG9yX19lZGl0YWJsZV9pbmxpbmUge1xyXG4gICAgbWluLWhlaWdodDogMjUwcHg7XHJcbiAgfVxyXG4gIC5tYXgtaGVpZ2h0LXBpYyB7XHJcbiAgICBtYXgtaGVpZ2h0OiAxMjBweDtcclxuICAgIG1hcmdpbjogMCBhdXRvICFpbXBvcnRhbnQ7XHJcbiAgfVxyXG5cclxuICAuY2FyZC1pdGVtIHtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICB9XHJcblxyXG4gIC5waWN0dXJlSWNvbiB7XHJcbiAgICB3aWR0aDogYXV0byAhaW1wb3J0YW50O1xyXG4gICAgaGVpZ2h0OiAxNTBweCAhaW1wb3J0YW50O1xyXG4gICAgLy9tYXJnaW46IDAgYXV0byAhaW1wb3J0YW50O1xyXG4gIH1cclxufVxyXG4iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .max-width-640 {\n  --width: 640px;\n}\n::ng-deep .ck-editor__editable_inline {\n  min-height: 250px;\n  color: #333333 !important;\n}\n::ng-deep .max-height-pic {\n  max-height: 120px;\n  margin: 0 auto !important;\n}\n::ng-deep .card-item {\n  height: 100%;\n}\n::ng-deep .pictureIcon {\n  width: auto !important;\n  height: 150px !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2N1ZW50YXMtYmFuY2FyaWFzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDRTtFQUNFLGNBQUE7QUFBSjtBQUVFO0VBQ0UsaUJBQUE7RUFDQSx5QkFBQTtBQUFKO0FBRUU7RUFDRSxpQkFBQTtFQUNBLHlCQUFBO0FBQUo7QUFHRTtFQUNFLFlBQUE7QUFESjtBQUlFO0VBQ0Usc0JBQUE7RUFDQSx3QkFBQTtBQUZKIiwiZmlsZSI6ImN1ZW50YXMtYmFuY2FyaWFzLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIjo6bmctZGVlcCB7XHJcbiAgLm1heC13aWR0aC02NDAge1xyXG4gICAgLS13aWR0aDogNjQwcHg7XHJcbiAgfVxyXG4gIC5jay1lZGl0b3JfX2VkaXRhYmxlX2lubGluZSB7XHJcbiAgICBtaW4taGVpZ2h0OiAyNTBweDtcclxuICAgIGNvbG9yOiAjMzMzMzMzICFpbXBvcnRhbnQ7XHJcbiAgfVxyXG4gIC5tYXgtaGVpZ2h0LXBpYyB7XHJcbiAgICBtYXgtaGVpZ2h0OiAxMjBweDtcclxuICAgIG1hcmdpbjogMCBhdXRvICFpbXBvcnRhbnQ7XHJcbiAgfVxyXG5cclxuICAuY2FyZC1pdGVtIHtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICB9XHJcblxyXG4gIC5waWN0dXJlSWNvbiB7XHJcbiAgICB3aWR0aDogYXV0byAhaW1wb3J0YW50O1xyXG4gICAgaGVpZ2h0OiAxNTBweCAhaW1wb3J0YW50O1xyXG4gICAgLy9tYXJnaW46IDAgYXV0byAhaW1wb3J0YW50O1xyXG4gIH1cclxufVxyXG4iXX0= */");
 
 /***/ }),
 
@@ -528,7 +457,7 @@ CuentasBancariasPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decora
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Cuentas bancarias</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"showForm({ clean: true })\" *ngIf=\"!edit\">\n        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Agregar cuenta</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row class=\"ion-margin-bottom\">\n\n    <ion-col [size]=\"12\" class=\"ion-no-margin ion-no-padding\" *ngIf=\"edit\">\n      <ion-card>\n        <ion-card-header>\n          <ion-card-title>{{ formData._id ? 'Editar datos' : 'Agregar cuenta' }}</ion-card-title>\n        </ion-card-header>\n        <ion-card-content>\n          <ion-row>\n            <ion-col [size]=\"12\" size-sm=\"8\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nombre del banco (*)</ion-label>\n                    <ion-input\n                      [(ngModel)]=\"formData.title\"\n                      class=\"ion-text-uppercase\"\n                      maxlength=\"30\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\" class=\"editor\">\n                  <ckeditor\n                    [(ngModel)]=\"formData.description\"\n                    [editor]=\"Editor\"\n                    [config]=\"configEditor\"\n                  ></ckeditor>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col [size]=\"12\" size-sm=\"4\">\n              <ion-row class=\"ion-justify-content-center ion-margin\">\n                <ion-col size=\"12\" class=\"ion-text-center\">\n                  <label class=\"micursor ion-text-center w-100\">\n                    <input type='file' accept=\"image/x-png,image/gif,image/jpeg\" (change)='openFile($event)' hidden>\n                    <img [src]=\"formData.picture || 'assets/photo.png'\" class=\"img-fluid\">\n                  </label>\n                </ion-col>\n                <ion-col size=\"12\" class=\"ion-text-center\">\n                  <ion-text><i class=\"toSmall\">Clic para cargar una imagen del banco (*)</i></ion-text>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n              <ion-button color=\"light\" (click)=\"showForm({ clean: true })\">\n                <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmForm(formData._id)\">\n                <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n\n    </ion-col>\n\n    <ion-col size=\"12\" *ngIf=\"!edit\">\n\n      <ion-row *ngIf=\"banks && banks.length > 0; else noBanks\">\n\n        <ion-col size=\"12\" size-sm=\"4\" *ngFor=\"let bank of banks\" (click)=\"showDetails(bank._id)\">\n          <ion-card\n            class=\"ion-no-padding ion-no-margin ion-margin-start ion-margin-end ion-margin-bottom card-item\"\n            *ngIf=\"bank\"\n          >\n            <ion-card-content class=\"ion-no-margin ion-no-padding\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-img class=\"pictureIcon\" [src]=\"bank.picture\"></ion-img>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-text color=\"primary\" class=\"ion-margin-top ion-margin-bottom\"><b>{{ bank.title }}</b></ion-text>\n                  <br/>\n\n                  <i class=\"toSmall\">Clic para más información.</i>\n\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n\n\n        </ion-col>\n\n      </ion-row>\n\n      <ng-template #noBanks>\n        <ion-card>\n          <ion-text>\n            <p class=\"ion-text-center no-selected-text\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon> No existen cuentas bancarias registradas.\n            </p>\n          </ion-text>\n        </ion-card>\n      </ng-template>\n\n\n    </ion-col>\n\n    <!--<ion-col size=\"12\" *ngIf=\"banks && banks.length > 0; else noBanks\">-->\n      <!--<div class=\"row header\">-->\n        <!--<div class=\"col\">#</div>-->\n        <!--<div class=\"col\">Imagen</div>-->\n        <!--<div class=\"col\">Título</div>-->\n        <!--<div class=\"col\"></div>-->\n      <!--</div>-->\n      <!--<div class=\"row\" *ngFor=\"let bank in banks; let i = index\">-->\n        <!--<div class=\"col\">{{i + 1}}</div>-->\n        <!--<div class=\"col\">{{bank.picture}}</div>-->\n        <!--<div class=\"col\">{{bank.title}}</div>-->\n        <!--<div class=\"col\"><button class=\"button\">Add</button></div>-->\n      <!--</div>-->\n    <!--</ion-col>-->\n  </ion-row>\n\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Cuentas bancarias</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"showForm({ clean: true })\" *ngIf=\"!edit\">\n        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Agregar cuenta</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row class=\"ion-margin-bottom\">\n\n    <ion-col [size]=\"12\" class=\"ion-no-margin ion-no-padding\" *ngIf=\"edit\">\n      <ion-card>\n        <ion-card-header>\n          <ion-card-title>{{ formData._id ? 'Editar datos' : 'Agregar cuenta' }}</ion-card-title>\n        </ion-card-header>\n        <ion-card-content>\n          <ion-row>\n            <ion-col [size]=\"12\" size-sm=\"8\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nombre del banco (*)</ion-label>\n                    <ion-input\n                      [(ngModel)]=\"formData.title\"\n                      class=\"ion-text-uppercase\"\n                      maxlength=\"30\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\" class=\"editor\">\n                  <ckeditor\n                    [(ngModel)]=\"formData.description\"\n                    [editor]=\"Editor\"\n                    [config]=\"configEditor\"\n                  ></ckeditor>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col [size]=\"12\" size-sm=\"4\">\n              <ion-row class=\"ion-justify-content-center ion-margin\">\n                <ion-col size=\"12\" class=\"ion-text-center\">\n                  <label class=\"micursor ion-text-center w-100\">\n                    <input type='file' accept=\"image/x-png,image/gif,image/jpeg\" (change)='openFile($event)' hidden>\n                    <img [src]=\"formData.picture || 'assets/photo.png'\" class=\"img-fluid\">\n                  </label>\n                </ion-col>\n                <ion-col size=\"12\" class=\"ion-text-center\">\n                  <ion-text><i class=\"toSmall\">Clic para cargar una imagen del banco (*)</i></ion-text>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n              <ion-button color=\"medium\" (click)=\"showForm({ clean: true })\">\n                <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmForm(formData._id)\">\n                <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n\n    <ion-col size=\"12\" *ngIf=\"!edit\">\n      <ion-row *ngIf=\"banks && banks.length > 0; else noBanks\">\n        <ion-col size=\"12\" size-sm=\"4\" *ngFor=\"let bank of banks\" (click)=\"showDetails(bank._id)\">\n          <ion-card\n            class=\"ion-no-padding ion-no-margin ion-margin-start ion-margin-end ion-margin-bottom card-item\"\n            *ngIf=\"bank\"\n          >\n            <ion-card-content class=\"ion-no-margin ion-no-padding\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-img class=\"pictureIcon\" [src]=\"bank.picture\"></ion-img>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-text color=\"primary\" class=\"ion-margin-top ion-margin-bottom\"><b>{{ bank.title }}</b></ion-text>\n                  <br/>\n                  <i class=\"toSmall\">Clic para más información.</i>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </ion-col>\n      </ion-row>\n\n      <ng-template #noBanks>\n        <ion-card>\n          <ion-text color=\"medium\">\n            <p class=\"ion-text-center no-selected-text\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon> No existen cuentas bancarias registradas.\n            </p>\n          </ion-text>\n        </ion-card>\n      </ng-template>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ })
 

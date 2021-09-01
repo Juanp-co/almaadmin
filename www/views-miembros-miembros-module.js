@@ -93,6 +93,10 @@ const routes = [
         path: 'asignar-consolidador',
         loadChildren: () => Promise.all(/*! import() | asignar-consolidador-asignar-consolidador-module */[__webpack_require__.e("common"), __webpack_require__.e("asignar-consolidador-asignar-consolidador-module")]).then(__webpack_require__.bind(null, /*! ./asignar-consolidador/asignar-consolidador.module */ "F1ym")).then(m => m.AsignarConsolidadorPageModule)
     },
+    {
+        path: 'asignar-grupo-familiar',
+        loadChildren: () => Promise.all(/*! import() | asignar-grupo-familiar-asignar-grupo-familiar-module */[__webpack_require__.e("common"), __webpack_require__.e("asignar-grupo-familiar-asignar-grupo-familiar-module")]).then(__webpack_require__.bind(null, /*! ./asignar-grupo-familiar/asignar-grupo-familiar.module */ "Cvgr")).then(m => m.AsignarGrupoFamiliarPageModule)
+    },
 ];
 let MiembrosPageRoutingModule = class MiembrosPageRoutingModule {
 };
@@ -116,69 +120,7 @@ MiembrosPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorat
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Miembros</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"goToRegister()\" *ngIf=\"showRegisterButton\">\n        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Registrar miembro</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid class=\"\">\n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-row>\n          <ion-col [size]=\"12\" size-sm=\"7\">\n            <ion-toolbar>\n              <ion-button color=\"light\" (click)=\"queryParams.word = null; findData()\" slot=\"start\" *ngIf=\"queryParams.word\">\n                <ion-icon name=\"backspace-outline\"></ion-icon>\n              </ion-button>\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n                <ion-input\n                  [(ngModel)]=\"queryParams.word\"\n                  autocomplete=\"off\"\n                  class=\"ion-text-uppercase\"\n                ></ion-input>\n              </ion-item>\n              <ion-button color=\"light\" (click)=\"queryParams.word !== null || queryParams.word !== '' ? findData() : null\" slot=\"end\">\n                <ion-icon name=\"search-outline\"></ion-icon>\n              </ion-button>\n            </ion-toolbar>\n          </ion-col>\n          <ion-col [size]=\"12\" size-sm=\"5\">\n            <ion-toolbar>\n              <ion-button color=\"light\" (click)=\"setSortOrder()\">\n                <!--<ion-icon name=\"funnel-outline\" slot=\"start\"></ion-icon>-->\n                <ion-icon name=\"arrow-up-outline\" *ngIf=\"queryParams.value === 1\"></ion-icon>\n                <ion-icon name=\"arrow-down-outline\" *ngIf=\"queryParams.value === -1\"></ion-icon>&nbsp;\n                <ion-text>{{ queryParams.value === 1 ? 'ASC' : 'DES' }}</ion-text>\n              </ion-button>\n              <ion-button color=\"light\" (click)=\"setQueryValues()\">\n                <ion-icon name=\"filter-outline\"></ion-icon>&nbsp;\n                <ion-text>{{ queryParams.limit }}</ion-text>\n              </ion-button>\n            </ion-toolbar>\n          </ion-col>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngIf=\"users && users.length > 0\">\n      <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let user of users\">\n        <app-usercard [data]=\"user\" [list]=\"true\"></app-usercard>\n      </ion-col>\n    </ion-row>\n\n    <div *ngIf=\"users && users.length > 0 && pages > 0\">\n      <app-paginator\n        [totalPages]=\"pages\"\n        [currentPage]=\"queryParams.page\"\n        [handlePage]=\"handlePage\"\n      ></app-paginator>\n    </div>\n\n    <ion-row *ngIf=\"users !== null && users.length === 0\">\n      <ion-col>\n        <ion-card>\n          <ion-card-content class=\"ion-text-center\">\n            <ion-card-subtitle>\n              <ion-text>\n                <ion-icon name=\"alert-circle-outline\"></ion-icon>&nbsp;\n                No se encontraron resultados.\n              </ion-text>\n            </ion-card-subtitle>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
-
-/***/ }),
-
-/***/ "wJOZ":
-/*!****************************************************!*\
-  !*** ./src/app/views/miembros/miembros.service.ts ***!
-  \****************************************************/
-/*! exports provided: MiembrosService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MiembrosService", function() { return MiembrosService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/axios.service */ "1Ldg");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/global.service */ "4WDQ");
-
-
-
-
-let MiembrosService = class MiembrosService {
-    constructor(axios, globalSer) {
-        this.axios = axios;
-        this.globalSer = globalSer;
-    }
-    getUsersCounters(query = {}) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.getData('/admin/users/counters', query);
-            if (res && res.success)
-                return res.data.totals;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    getUsersList(query = {}) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.getData('/admin/users', query);
-            if (res && res.success)
-                return res.data.users || [];
-            return this.globalSer.altResponse(res);
-        });
-    }
-    registerUser(data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.postData('/admin/users', data);
-            if (res && res.success)
-                return res.data;
-            return this.globalSer.altResponse(res);
-        });
-    }
-};
-MiembrosService.ctorParameters = () => [
-    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_2__["AxiosService"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
-];
-MiembrosService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
-    })
-], MiembrosService);
-
-
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Miembros</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"goToRegister()\" *ngIf=\"showRegisterButton\">\n        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Registrar miembro</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-grid class=\"\">\n    <ion-row>\n      <ion-col size=\"12\">\n        <ion-row>\n          <ion-col [size]=\"12\" size-sm=\"7\">\n            <ion-toolbar>\n              <ion-button color=\"medium\" (click)=\"queryParams.word = null; findData()\" slot=\"start\" *ngIf=\"queryParams.word\">\n                <ion-icon name=\"backspace-outline\"></ion-icon>\n              </ion-button>\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n                <ion-input\n                  [(ngModel)]=\"queryParams.word\"\n                  autocomplete=\"off\"\n                  class=\"ion-text-uppercase\"\n                ></ion-input>\n              </ion-item>\n              <ion-button color=\"medium\" (click)=\"queryParams.word !== null || queryParams.word !== '' ? findData() : null\" slot=\"end\">\n                <ion-icon name=\"search-outline\"></ion-icon>\n              </ion-button>\n            </ion-toolbar>\n          </ion-col>\n          <ion-col [size]=\"12\" size-sm=\"5\">\n            <ion-toolbar>\n              <ion-button color=\"medium\" (click)=\"setSortOrder()\">\n                <!--<ion-icon name=\"funnel-outline\" slot=\"start\"></ion-icon>-->\n                <ion-icon name=\"arrow-up-outline\" *ngIf=\"queryParams.value === 1\"></ion-icon>\n                <ion-icon name=\"arrow-down-outline\" *ngIf=\"queryParams.value === -1\"></ion-icon>&nbsp;\n                <ion-text>{{ queryParams.value === 1 ? 'ASC' : 'DES' }}</ion-text>\n              </ion-button>\n              <ion-button color=\"medium\" (click)=\"setQueryValues()\">\n                <ion-icon name=\"filter-outline\"></ion-icon>&nbsp;\n                <ion-text>{{ queryParams.limit }}</ion-text>\n              </ion-button>\n            </ion-toolbar>\n          </ion-col>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n\n    <ion-row *ngIf=\"users && users.length > 0\">\n      <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let user of users\">\n        <app-usercard [data]=\"user\" [list]=\"true\"></app-usercard>\n      </ion-col>\n    </ion-row>\n\n    <div *ngIf=\"users && users.length > 0 && pages > 0\">\n      <app-paginator\n        [totalPages]=\"pages\"\n        [currentPage]=\"queryParams.page\"\n        [handlePage]=\"handlePage\"\n      ></app-paginator>\n    </div>\n\n    <ion-row *ngIf=\"users !== null && users.length === 0\">\n      <ion-col>\n        <ion-card>\n          <ion-card-content class=\"ion-text-center\">\n            <ion-card-subtitle>\n              <ion-text>\n                <ion-icon name=\"alert-circle-outline\"></ion-icon>&nbsp;\n                No se encontraron resultados.\n              </ion-text>\n            </ion-card-subtitle>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
 
 /***/ }),
 
@@ -250,9 +192,7 @@ let MiembrosPage = class MiembrosPage {
                 this.router.navigate(['/ingresar']);
             else {
                 // get role to show register button
-                if (this.globalSer.checkRoleToEnableAddOrUpdate()) {
-                    this.showRegisterButton = true;
-                }
+                this.showRegisterButton = this.globalSer.checkRoleToEnableAddOrUpdate();
                 // init get totals
                 yield this.getTotals();
             }

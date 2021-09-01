@@ -91,7 +91,7 @@ CrearPageRoutingModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"confirmCancel()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Crear curso</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col [size]=\"12\" class=\"ion-no-margin ion-no-padding\">\n      <ion-card>\n        <ion-card-header>\n          <ion-card-title>Complete el formulario para nuevos cursos</ion-card-title>\n        </ion-card-header>\n        <ion-card-content>\n          <ion-row>\n\n            <ion-col [size]=\"6\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nombre del curso (*)</ion-label>\n                    <ion-input\n                      [(ngModel)]=\"formData.title\"\n                      class=\"ion-text-uppercase\"\n                      maxlength=\"25\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Descripcion del curso (*)</ion-label>\n                    <ion-textarea\n                      [(ngModel)]=\"formData.description\"\n                      rows=\"5\"\n                    ></ion-textarea>\n                  </ion-item>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col [size]=\"6\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nivel del curso (*)</ion-label>\n                    <ion-input\n                      [readonly]=\"true\"\n                      [value]=\"getLevel(formData.level)\"\n                      autocomplete=\"off\"\n                      class=\"no-selected-text\"\n                      (click)=\"showLevelsListAlert(formData.level)\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Roles a los que va dirigido (*)</ion-label>\n                    <ion-input\n                      [readonly]=\"true\"\n                      [value]=\"getRoles(formData.toRoles)\"\n                      autocomplete=\"off\"\n                      class=\"no-selected-text\"\n                      (click)=\"showRoleListAlert(formData.toRoles)\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n              <ion-button color=\"light\" (click)=\"confirmCancel()\">\n                <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmRegister()\">\n                <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"confirmCancel()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Crear curso</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col [size]=\"12\" class=\"ion-no-margin ion-no-padding\">\n      <ion-card>\n        <ion-card-header>\n          <ion-card-title>Complete el formulario para nuevos cursos</ion-card-title>\n        </ion-card-header>\n        <ion-card-content>\n          <ion-row>\n\n            <ion-col [size]=\"6\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nombre del curso (*)</ion-label>\n                    <ion-input\n                      [(ngModel)]=\"formData.title\"\n                      class=\"ion-text-uppercase\"\n                      maxlength=\"25\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Descripcion del curso (*)</ion-label>\n                    <ion-textarea\n                      [(ngModel)]=\"formData.description\"\n                      rows=\"5\"\n                    ></ion-textarea>\n                  </ion-item>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col [size]=\"6\">\n              <ion-row>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Nivel del curso (*)</ion-label>\n                    <ion-input\n                      [readonly]=\"true\"\n                      [value]=\"getLevel(formData.level)\"\n                      autocomplete=\"off\"\n                      class=\"no-selected-text\"\n                      (click)=\"showLevelsListAlert(formData.level)\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n                <ion-col size=\"12\">\n                  <ion-item>\n                    <ion-label position=\"floating\" color=\"medium\">Roles a los que va dirigido (*)</ion-label>\n                    <ion-input\n                      [readonly]=\"true\"\n                      [value]=\"getRoles(formData.toRoles)\"\n                      autocomplete=\"off\"\n                      class=\"no-selected-text\"\n                      (click)=\"showRoleListAlert(formData.toRoles)\"\n                    ></ion-input>\n                  </ion-item>\n                </ion-col>\n              </ion-row>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n              <ion-button color=\"medium\" (click)=\"confirmCancel()\">\n                <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmRegister()\">\n                <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -126,6 +126,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "tyNb");
 /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
 /* harmony import */ var _cursos_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cursos.service */ "BpEJ");
+/* harmony import */ var _Utils_data_static__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../Utils/data.static */ "lmIc");
+
 
 
 
@@ -147,25 +149,14 @@ let CrearPage = class CrearPage {
             level: null,
             toRoles: []
         };
-        this.roles = [
-            'Pastores',
-            'Supervisores',
-            'Líderes',
-            'Padres espirituales',
-            'Personas',
-        ];
-        // check if exist session
-        if (!this.globalSer.checkSession())
-            this.router.navigate(['/ingresar']);
-        else {
-            this.levels = this.cursosService.levelsList;
-        }
     }
     ngOnInit() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             // check if exist session
             if (!this.globalSer.checkSession())
                 yield this.router.navigate(['/ingresar']);
+            else
+                this.levels = this.cursosService.levelsList;
         });
     }
     back() {
@@ -202,9 +193,9 @@ let CrearPage = class CrearPage {
         if (rolesList.length > 0) {
             for (const v of rolesList) {
                 if (ret === '')
-                    ret = this.roles[v - 1];
+                    ret = _Utils_data_static__WEBPACK_IMPORTED_MODULE_8__["rolesListTextWithoutAdmin"][v - 1];
                 else
-                    ret += `, ${this.roles[v - 1]}`;
+                    ret += `, ${_Utils_data_static__WEBPACK_IMPORTED_MODULE_8__["rolesListTextWithoutAdmin"][v - 1]}`;
             }
         }
         return ret;
@@ -231,7 +222,7 @@ let CrearPage = class CrearPage {
     showRoleListAlert(selected = []) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             const inputs = [];
-            for (const [i, value] of this.roles.entries()) {
+            for (const [i, value] of _Utils_data_static__WEBPACK_IMPORTED_MODULE_8__["rolesListTextWithoutAdmin"].entries()) {
                 inputs.push({
                     name: `roles`,
                     type: 'checkbox',

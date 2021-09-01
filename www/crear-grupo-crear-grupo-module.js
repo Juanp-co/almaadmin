@@ -67,6 +67,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _crear_grupo_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./crear-grupo-routing.module */ "TtW/");
 /* harmony import */ var _crear_grupo_page__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./crear-grupo.page */ "z3IH");
+/* harmony import */ var _components_components_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../components/components.module */ "j1ZV");
+
 
 
 
@@ -82,7 +84,8 @@ CrearGrupoPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])(
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
             _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["IonicModule"],
-            _crear_grupo_routing_module__WEBPACK_IMPORTED_MODULE_5__["CrearGrupoPageRoutingModule"]
+            _crear_grupo_routing_module__WEBPACK_IMPORTED_MODULE_5__["CrearGrupoPageRoutingModule"],
+            _components_components_module__WEBPACK_IMPORTED_MODULE_7__["ComponentsModule"]
         ],
         declarations: [_crear_grupo_page__WEBPACK_IMPORTED_MODULE_6__["CrearGrupoPage"]]
     })
@@ -101,7 +104,7 @@ CrearGrupoPageModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])(
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"confirmCancel()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Crear grupo familiar</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card>\n    <ion-card-content>\n      <ion-row>\n        <ion-col class=\"ion-no-margin\" size=\"12\">\n          <ion-row>\n            <ion-col size=\"12\" size-sm=\"4\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Sector (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.sector\"\n                  autocomplete=\"off\"\n                  maxlength=\"4\"\n                  (keypress)=\"validateOnlyNumber($event)\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"4\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Sub-sector (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.subSector\"\n                  autocomplete=\"off\"\n                  maxlength=\"4\"\n                  (keypress)=\"validateOnlyNumber($event)\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"4\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Número (*)</ion-label>\n                <ion-input\n                  [(ngModel)]=\"formData.number\"\n                  autocomplete=\"off\"\n                  maxlength=\"4\"\n                  (keypress)=\"validateOnlyNumber($event)\"\n                ></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"6\">\n              <ion-item>\n                <ion-label position=\"floating\" color=\"medium\">Dirección (*)</ion-label>\n                <ion-textarea\n                  [(ngModel)]=\"formData.direction\"\n                  rows=\"5\"\n                  class=\"ion-text-uppercase\"\n                ></ion-textarea>\n              </ion-item>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top\">\n              <ion-text color=\"medium\"><i class=\"toSmall\">(*) Campos requeridos.</i></ion-text>\n            </ion-col>\n            <ion-col size=\"12\" size-sm=\"12\" class=\"ion-margin-top ion-margin-bottom ion-text-center\">\n              <ion-button color=\"light\" (click)=\"confirmCancel()\">\n                <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Cancelar</ion-text>\n              </ion-button>\n              <ion-button color=\"primary\" (click)=\"confirmCreate()\">\n                <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n                <ion-text>Guardar</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-col>\n      </ion-row>\n    </ion-card-content>\n  </ion-card>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-button (click)=\"confirmCancel()\">\n        <ion-icon name=\"arrow-back-outline\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n    <ion-title>Crear grupo familiar</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-card>\n    <ion-card-content>\n      <app-family-group-form\n        [handleSave]=\"handleSave\"\n        [handleCancel]=\"handleCancel\"\n      >\n      </app-family-group-form>\n    </ion-card-content>\n  </ion-card>\n\n</ion-content>\n");
 
 /***/ }),
 
@@ -123,6 +126,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _grupos_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../grupos.service */ "ai4U");
 /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
 /* harmony import */ var _Utils_validations_functions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../Utils/validations.functions */ "OmbT");
+/* harmony import */ var _Utils_data_static__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../Utils/data.static */ "lmIc");
+
 
 
 
@@ -141,7 +146,13 @@ let CrearGrupoPage = class CrearGrupoPage {
             subSector: null,
             number: null,
             direction: null,
+            location: {
+                type: 'Point',
+                coordinates: _Utils_data_static__WEBPACK_IMPORTED_MODULE_8__["staticCoords"]
+            }
         };
+        this.handleSave = (formData) => this.setFormDataAndSave(formData);
+        this.handleCancel = () => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () { return this.back(); });
     }
     ngOnInit() {
     }
@@ -179,19 +190,9 @@ let CrearGrupoPage = class CrearGrupoPage {
             });
         });
     }
-    confirmCreate() {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const validated = this.gruposService.validateDataGroup(this.formData);
-            if (validated)
-                yield this.globalSer.presentAlert('Alerta', validated);
-            else {
-                yield this.globalSer.alertConfirm({
-                    header: 'Confirme',
-                    message: '¿Está seguro qué desea agregar el nuevo grupo con esta información?',
-                    confirmAction: () => this.createGroup()
-                });
-            }
-        });
+    setFormDataAndSave(formData) {
+        this.formData = formData;
+        this.createGroup();
     }
 };
 CrearGrupoPage.ctorParameters = () => [

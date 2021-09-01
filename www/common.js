@@ -137,6 +137,19 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
+/***/ "7Odz":
+/*!****************************************************************************************!*\
+  !*** ./src/app/views/miembros/asignar-grupo-familiar/asignar-grupo-familiar.page.scss ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhc2lnbmFyLWdydXBvLWZhbWlsaWFyLnBhZ2Uuc2NzcyJ9 */");
+
+/***/ }),
+
 /***/ "CV5h":
 /*!************************************************************************************!*\
   !*** ./src/app/views/miembros/asignar-consolidador/asignar-consolidador.page.scss ***!
@@ -147,6 +160,19 @@ const openURL = async (url, ev, direction, animation) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhc2lnbmFyLWNvbnNvbGlkYWRvci5wYWdlLnNjc3MifQ== */");
+
+/***/ }),
+
+/***/ "F+Ct":
+/*!******************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/views/miembros/asignar-grupo-familiar/asignar-grupo-familiar.page.html ***!
+  \******************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Asignar grupo familiar</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmSaveNewMembers()\" [disabled]=\"!group\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Seleccionar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\">\n          <ion-toolbar>\n            <ion-button color=\"medium\" (click)=\"setFindFor()\" slot=\"start\">\n              <ion-icon name=\"list-outline\" slot=\"start\"></ion-icon>\n              <ion-text>{{ findFor.label }}</ion-text>\n            </ion-button>\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar por {{ findFor.label }}</ion-label>\n              <ion-input\n                [(ngModel)]=\"queryParams[findFor.key]\"\n                autocomplete=\"off\"\n                maxlength=\"4\"\n                (keypress)=\"validateOnlyNumber($event)\"\n              ></ion-input>\n            </ion-item>\n            <ion-button color=\"medium\" (click)=\"findData()\" slot=\"end\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </ion-button>\n            <ion-button color=\"medium\" (click)=\"cleanFilter()\" slot=\"end\">\n              <ion-icon name=\"trash-outline\" slot=\"start\"></ion-icon>\n              <ion-text>Limpiar</ion-text>\n            </ion-button>\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"groups && groups.length > 0; else noGroups\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let group of groups; let i=index\">\n      <ion-card>\n        <ion-card-content class=\"\">\n          <ion-row>\n            <ion-col size=\"12\">\n              <ion-text><b>Grupo #:</b> {{ group.number }}</ion-text><br/>\n              <ion-text><b>Sector:</b> {{ group.sector }}</ion-text><br/>\n              <ion-text><b>Sub-Sector:</b> {{ group.subSector }}</ion-text><br/>\n              <ion-button\n                [color]=\"selected !== i ? 'primary' : 'light'\"\n                (click)=\"selected !== i ? selectGroup(i) : removeSelected()\"\n              >\n                <ion-icon name=\"{{ selected !== i ? 'add' : 'close' }}-outline\"></ion-icon>\n                <ion-text>{{ selected !== i ? 'Agregar' : 'Remover'}}</ion-text>\n              </ion-button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n\n  <ng-template #noGroups>\n    <ion-card>\n      <ion-card-content class=\"\">\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-text color=\"medium\">\n              <p class=\"ion-text-center\">\n                <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                {{ init ? 'Busque a un grupo por sector, sub-sector o número y seleccionelo.' : 'No se encontraron grupos.' }}\n              </p>\n            </ion-text>\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n  </ng-template>\n</ion-content>\n\n");
 
 /***/ }),
 
@@ -165,8 +191,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _asignar_consolidador_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./asignar-consolidador.page.scss */ "CV5h");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
-/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+/* harmony import */ var _miembros_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../miembros.service */ "wJOZ");
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+
 
 
 
@@ -175,17 +203,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AsignarConsolidadorPage = class AsignarConsolidadorPage {
-    constructor(alertCtrl, axios, globalSer, modalCtrl) {
+    constructor(alertCtrl, axios, globalSer, miembrosService, modalCtrl) {
         this.alertCtrl = alertCtrl;
         this.axios = axios;
         this.globalSer = globalSer;
+        this.miembrosService = miembrosService;
         this.modalCtrl = modalCtrl;
         this.users = [];
-        this.totals = 0;
-        this.pages = 0;
-        this.page = 1;
-        this.showRegisterButton = false;
         this.selectedUser = null;
+        this.init = true;
         this.queryParams = {
             limit: 100,
             page: 1,
@@ -202,7 +228,6 @@ let AsignarConsolidadorPage = class AsignarConsolidadorPage {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (this.selectedId)
                 this.queryParams.ignoreIds = this.selectedId;
-            yield this.getMembers();
         });
     }
     closeModal(data = null) {
@@ -213,15 +238,21 @@ let AsignarConsolidadorPage = class AsignarConsolidadorPage {
     getMembers() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             yield this.globalSer.presentLoading();
-            const res = yield this.axios.getData('/admin/users', this.queryParams);
-            if (res && res.success) {
-                this.users = res.data.users;
+            if (this.init)
+                this.init = false;
+            this.users = [];
+            this.selectedUser = null;
+            const data = yield this.miembrosService.getMembersList(this.queryParams);
+            if (data && !data.error) {
+                this.users = data || [];
                 yield this.globalSer.dismissLoading();
             }
-            else {
+            else if (data && data.error) {
                 yield this.globalSer.dismissLoading();
-                yield this.globalSer.presentAlert('Alerta', res && res.error ? res.error : 'Error desconocido.');
+                yield this.globalSer.errorSession();
             }
+            else
+                yield this.globalSer.dismissLoading();
         });
     }
     findData() {
@@ -237,24 +268,29 @@ let AsignarConsolidadorPage = class AsignarConsolidadorPage {
     removeOfSelected() {
         this.selectedUser = null;
     }
+    cleanData() {
+        this.users = [];
+        this.queryParams.word = null;
+        this.selectedUser = null;
+        this.init = true;
+    }
     checkAdded(id) {
         return this.selectedUser ? this.selectedUser._id === id : false;
     }
     confirmSaveNewMembers() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            if (this.selectedUser) {
+            if (this.selectedUser)
                 yield this.closeModal(this.selectedUser);
-            }
-            else {
-                yield this.globalSer.presentAlert('Alerta', 'Disculpe, pero no debe seleccionar a un miembro.');
-            }
+            else
+                yield this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe seleccionar a un miembro.');
         });
     }
 };
 AsignarConsolidadorPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
-    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_5__["AxiosService"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] },
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_6__["AxiosService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"] },
+    { type: _miembros_service__WEBPACK_IMPORTED_MODULE_5__["MiembrosService"] },
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] }
 ];
 AsignarConsolidadorPage.propDecorators = {
@@ -282,7 +318,7 @@ AsignarConsolidadorPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Asignar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmSaveNewMembers()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Guardar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\" size-sm=\"7\">\n          <ion-toolbar>\n            <ion-button color=\"light\" (click)=\"queryParams.word = null; findData()\" slot=\"start\" *ngIf=\"queryParams.word\">\n              <ion-icon name=\"backspace-outline\"></ion-icon>\n            </ion-button>\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n              <ion-input\n                [(ngModel)]=\"queryParams.word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n              ></ion-input>\n            </ion-item>\n            <ion-button color=\"light\" (click)=\"queryParams.word !== null || queryParams.word !== '' ? findData() : null\" slot=\"end\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </ion-button>\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users && users.length > 0\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let u of users\">\n      <app-user-group-card\n        [user]=\"u\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(u._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users.length === 0\">\n    <ion-col>\n      <ion-card>\n        <ion-card-content class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-text-center\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon>\n              No se encontraron resultados.\n            </p>\n          </ion-text>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Asignar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmSaveNewMembers()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Seleccionar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\">\n          <ion-toolbar>\n            <ion-button color=\"medium\" (click)=\"cleanData()\" slot=\"start\" *ngIf=\"queryParams.word\">\n              <ion-icon name=\"backspace-outline\"></ion-icon>\n            </ion-button>\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar por teléfono o nombre</ion-label>\n              <ion-input\n                [(ngModel)]=\"queryParams.word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n              ></ion-input>\n            </ion-item>\n            <ion-button color=\"medium\" (click)=\"queryParams.word ? findData() : null\" slot=\"end\">\n              <ion-icon name=\"search-outline\" slot=\"start\"></ion-icon>\n              <ion-text>Buscar</ion-text>\n            </ion-button>\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users && users.length > 0; else noMembers\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let u of users\">\n      <app-user-group-card\n        [user]=\"u\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(u._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ng-template #noMembers>\n    <ion-card>\n      <ion-card-content class=\"\">\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-text color=\"medium\">\n              <p class=\"ion-text-center\">\n                <ion-icon name=\"alert-circle-outline\"></ion-icon>\n                {{ init ? 'Busque a un miembro por número de teléfono o por su nomber y seleccionelo.' : 'No se encontraron grupos.' }}\n              </p>\n            </ion-text>\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n  </ng-template>\n</ion-content>\n");
 
 /***/ }),
 
@@ -335,15 +371,18 @@ let AsignarMiembroPage = class AsignarMiembroPage {
         this.handleRemove = () => this.removeOfSelected();
     }
     ngOnInit() {
+        var _a;
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (this.data) {
-                const listIds = [];
+                let listIds = [];
                 if (this.data.leader)
                     listIds.push(this.data.leader._id);
+                if (this.data.helper)
+                    listIds.push(this.data.helper._id);
                 if (this.data.host)
                     listIds.push(this.data.host._id);
-                if (this.data.assistant)
-                    listIds.push(this.data.assistant._id);
+                if (this.data.assistants)
+                    listIds = listIds.concat(((_a = this.data.assistants) === null || _a === void 0 ? void 0 : _a.map(a => a._id)) || []);
                 if (this.data.master)
                     listIds.push(this.data.master._id);
                 if (listIds.length > 0)
@@ -424,6 +463,175 @@ AsignarMiembroPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
+/***/ "Hx5O":
+/*!**************************************************************************************!*\
+  !*** ./src/app/views/miembros/asignar-grupo-familiar/asignar-grupo-familiar.page.ts ***!
+  \**************************************************************************************/
+/*! exports provided: AsignarGrupoFamiliarPage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AsignarGrupoFamiliarPage", function() { return AsignarGrupoFamiliarPage; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _raw_loader_asignar_grupo_familiar_page_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./asignar-grupo-familiar.page.html */ "F+Ct");
+/* harmony import */ var _asignar_grupo_familiar_page_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./asignar-grupo-familiar.page.scss */ "7Odz");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
+/* harmony import */ var _miembros_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../miembros.service */ "wJOZ");
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+/* harmony import */ var _Utils_validations_functions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../Utils/validations.functions */ "OmbT");
+
+
+
+
+
+
+
+
+
+let AsignarGrupoFamiliarPage = class AsignarGrupoFamiliarPage {
+    constructor(alertCtrl, axios, globalSer, miembrosService, modalCtrl) {
+        this.alertCtrl = alertCtrl;
+        this.axios = axios;
+        this.globalSer = globalSer;
+        this.miembrosService = miembrosService;
+        this.modalCtrl = modalCtrl;
+        this.list = [
+            { key: 'sector', label: 'sector' },
+            { key: 'subSector', label: 'sub-sector' },
+            { key: 'number', label: 'número' },
+        ];
+        this.selected = null;
+        this.groups = [];
+        this.group = null;
+        this.init = true;
+        this.findFor = { key: 'sector', label: 'sector' };
+        this.queryParams = {
+            input: 'number',
+            value: 1,
+            page: 1,
+            limit: 50,
+            sector: null,
+            subSector: null,
+            number: null
+        };
+    }
+    ngOnInit() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () { });
+    }
+    closeModal(data = null) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.modalCtrl.dismiss(data);
+        });
+    }
+    getFamiliesGroups() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.globalSer.presentLoading();
+            if (this.init)
+                this.init = false;
+            this.groups = [];
+            this.group = null;
+            this.selected = null;
+            const data = yield this.miembrosService.getFamiliesGroupsList(this.queryParams);
+            if (data && !data.error) {
+                this.groups = data || [];
+                yield this.globalSer.dismissLoading();
+            }
+            else if (data && data.error) {
+                yield this.globalSer.dismissLoading();
+                yield this.globalSer.errorSession();
+            }
+            else
+                yield this.globalSer.dismissLoading();
+        });
+    }
+    findData() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            yield this.getFamiliesGroups();
+        });
+    }
+    validateOnlyNumber(event) {
+        Object(_Utils_validations_functions__WEBPACK_IMPORTED_MODULE_8__["onlyNumbersInputValidation2"])(event);
+    }
+    setFindFor() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const inputs = [];
+            for (const value of this.list) {
+                inputs.push({
+                    name: `find-for`,
+                    type: 'radio',
+                    label: value.label.toUpperCase(),
+                    value: value.key,
+                    checked: this.findFor.key === value.key,
+                });
+            }
+            yield this.globalSer.alertWithList({
+                header: 'Seleccione',
+                inputs,
+                confirmAction: (selectedValue) => {
+                    const index = this.list.findIndex(l => l.key === selectedValue);
+                    this.findFor = this.list[index];
+                    this.queryParams.sector = null;
+                    this.queryParams.subSector = null;
+                    this.queryParams.number = null;
+                }
+            });
+        });
+    }
+    cleanFilter() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            this.queryParams.input = 'sector';
+            this.findFor = this.list[0];
+            this.queryParams.sector = null;
+            this.queryParams.subSector = null;
+            this.queryParams.number = null;
+            this.selected = null;
+            this.group = null;
+            this.groups = [];
+            this.init = true;
+        });
+    }
+    selectGroup(index) {
+        this.group = this.groups[index] || null;
+        this.selected = this.group ? index : null;
+    }
+    removeSelected() {
+        this.group = null;
+        this.selected = null;
+    }
+    confirmSaveNewMembers() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.group)
+                yield this.closeModal(this.group);
+            else
+                yield this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe seleccionar un grupo.');
+        });
+    }
+};
+AsignarGrupoFamiliarPage.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_6__["AxiosService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"] },
+    { type: _miembros_service__WEBPACK_IMPORTED_MODULE_5__["MiembrosService"] },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] }
+];
+AsignarGrupoFamiliarPage.propDecorators = {
+    selectedId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }]
+};
+AsignarGrupoFamiliarPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        selector: 'app-asignar-grupo-familiar',
+        template: _raw_loader_asignar_grupo_familiar_page_html__WEBPACK_IMPORTED_MODULE_1__["default"],
+        styles: [_asignar_grupo_familiar_page_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
+    })
+], AsignarGrupoFamiliarPage);
+
+
+
+/***/ }),
+
 /***/ "R3bu":
 /*!******************************************************************************************!*\
   !*** ./src/app/views/consolidados/miembros-consolidados/miembros-consolidados.page.scss ***!
@@ -495,7 +703,7 @@ const detachComponent = (delegate, element) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Seleccionar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmAdd()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Seleccioar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\" size-sm=\"7\">\n          <ion-toolbar>\n            <!--<ion-button color=\"light\" (click)=\"word = null; findData()\" slot=\"start\" *ngIf=\"word\">-->\n              <!--<ion-icon name=\"backspace-outline\"></ion-icon>-->\n            <!--</ion-button>-->\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n              <ion-input\n                [(ngModel)]=\"word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n                (keyup)=\"findMember()\"\n              ></ion-input>\n            </ion-item>\n            <!--<ion-button color=\"light\" (click)=\"word !== null || word !== '' ?  : null\" slot=\"end\">-->\n              <!--<ion-icon name=\"search-outline\"></ion-icon>-->\n            <!--</ion-button>-->\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"listFilter && listFilter.length > 0\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let lf of listFilter\">\n      <app-user-group-card\n        [user]=\"lf\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(lf._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"listFilter.length === 0\">\n    <ion-col>\n      <ion-card>\n        <ion-card-content class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-text-center\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon>\n              No se encontraron resultados.\n            </p>\n          </ion-text>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Seleccionar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmAdd()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Seleccionar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\" size-sm=\"7\">\n          <ion-toolbar>\n            <!--<ion-button color=\"medium\" (click)=\"word = null; findData()\" slot=\"start\" *ngIf=\"word\">-->\n              <!--<ion-icon name=\"backspace-outline\"></ion-icon>-->\n            <!--</ion-button>-->\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n              <ion-input\n                [(ngModel)]=\"word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n                (keyup)=\"findMember()\"\n              ></ion-input>\n            </ion-item>\n            <!--<ion-button color=\"medium\" (click)=\"word !== null || word !== '' ?  : null\" slot=\"end\">-->\n              <!--<ion-icon name=\"search-outline\"></ion-icon>-->\n            <!--</ion-button>-->\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"members?.length > 0\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let member of members\">\n      <app-user-group-card\n        [user]=\"member\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(member._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"members?.length === 0\">\n    <ion-col>\n      <ion-card>\n        <ion-card-content class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-text-center\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon>\n              No se encontraron resultados.\n            </p>\n          </ion-text>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -730,7 +938,7 @@ DetallesMiembroService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Asignar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmSaveNewMembers()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Guardar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\" size-sm=\"7\">\n          <ion-toolbar>\n            <ion-button color=\"light\" (click)=\"queryParams.word = null; findData()\" slot=\"start\" *ngIf=\"queryParams.word\">\n              <ion-icon name=\"backspace-outline\"></ion-icon>\n            </ion-button>\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n              <ion-input\n                [(ngModel)]=\"queryParams.word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n              ></ion-input>\n            </ion-item>\n            <ion-button color=\"light\" (click)=\"queryParams.word !== null || queryParams.word !== '' ? findData() : null\" slot=\"end\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </ion-button>\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users && users.length > 0\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let u of users\">\n      <app-user-group-card\n        [user]=\"u\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(u._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users.length === 0\">\n    <ion-col>\n      <ion-card>\n        <ion-card-content class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-text-center\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon>\n              No se encontraron resultados.\n            </p>\n          </ion-text>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Asignar miembro</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"confirmSaveNewMembers()\" [disabled]=\"!selectedUser\">\n        <ion-icon name=\"save-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Guardar</ion-text>\n      </ion-button>\n      <ion-button (click)=\"closeModal()\">\n        <ion-icon name=\"close-outline\" slot=\"start\"></ion-icon>\n        <ion-text>Cancelar</ion-text>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-row>\n    <ion-col size=\"12\">\n      <ion-row>\n        <ion-col [size]=\"12\" size-sm=\"7\">\n          <ion-toolbar>\n            <ion-button color=\"medium\" (click)=\"queryParams.word = null; findData()\" slot=\"start\" *ngIf=\"queryParams.word\">\n              <ion-icon name=\"backspace-outline\"></ion-icon>\n            </ion-button>\n            <ion-item>\n              <ion-label position=\"floating\" color=\"medium\">Buscar</ion-label>\n              <ion-input\n                [(ngModel)]=\"queryParams.word\"\n                autocomplete=\"off\"\n                class=\"ion-text-uppercase\"\n              ></ion-input>\n            </ion-item>\n            <ion-button color=\"medium\" (click)=\"queryParams.word !== null || queryParams.word !== '' ? findData() : null\" slot=\"end\">\n              <ion-icon name=\"search-outline\"></ion-icon>\n            </ion-button>\n          </ion-toolbar>\n        </ion-col>\n      </ion-row>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users && users.length > 0\">\n    <ion-col size=\"12\" size-sm=\"6\" *ngFor=\"let u of users\">\n      <app-user-group-card\n        [user]=\"u\"\n        [handleAdd]=\"handleAdd\"\n        [handleRemove]=\"handleRemove\"\n        [added]=\"checkAdded(u._id)\"\n      ></app-user-group-card>\n    </ion-col>\n  </ion-row>\n\n  <ion-row *ngIf=\"users.length === 0\">\n    <ion-col>\n      <ion-card>\n        <ion-card-content class=\"ion-text-center\">\n          <ion-text>\n            <p class=\"ion-text-center\">\n              <ion-icon name=\"alert-circle-outline\"></ion-icon>\n              No se encontraron resultados.\n            </p>\n          </ion-text>\n        </ion-card-content>\n      </ion-card>\n    </ion-col>\n  </ion-row>\n</ion-content>\n");
 
 /***/ }),
 
@@ -888,6 +1096,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
 /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
+/* harmony import */ var _miembros_miembros_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../miembros/miembros.service */ "wJOZ");
+
 
 
 
@@ -896,19 +1106,45 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let MiembrosConsolidadosPage = class MiembrosConsolidadosPage {
-    constructor(alertCtrl, axios, globalSer, modalCtrl) {
+    constructor(alertCtrl, axios, globalSer, modalCtrl, miembrosService) {
         this.alertCtrl = alertCtrl;
         this.axios = axios;
         this.globalSer = globalSer;
         this.modalCtrl = modalCtrl;
+        this.miembrosService = miembrosService;
         this.selectedUser = null;
         this.word = null;
         this.listFilter = [];
+        this.queryParams = {
+            limit: 50,
+            page: 1,
+            word: null,
+            input: 'names',
+            value: 1
+        };
+        this.members = [];
         this.handleAdd = (id) => this.addToSelected(id);
         this.handleRemove = () => this.removeOfSelected();
     }
     ngOnInit() {
-        this.listFilter = this.data || [];
+        // this.listFilter = this.data || [];
+        this.getMembers();
+    }
+    getMembers() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            // if (this.init) this.init = false;
+            // this.searching = true;
+            const data = yield this.miembrosService.getUsersList(this.queryParams);
+            if (data && !data.error)
+                this.members = data || [];
+            else if (data && data.error) {
+                yield this.globalSer.errorSession();
+                this.members = [];
+            }
+            else
+                this.members = [];
+            // this.searching = false;
+        });
     }
     closeModal(data = null) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -916,9 +1152,7 @@ let MiembrosConsolidadosPage = class MiembrosConsolidadosPage {
         });
     }
     addToSelected(id) {
-        const user = this.data.find(u => u._id === id);
-        if (user)
-            this.selectedUser = user;
+        this.selectedUser = this.members.find(u => u._id === id) || null;
     }
     removeOfSelected() {
         this.selectedUser = null;
@@ -927,14 +1161,25 @@ let MiembrosConsolidadosPage = class MiembrosConsolidadosPage {
         return this.selectedUser ? this.selectedUser._id === id : false;
     }
     findMember() {
-        if (this.word) {
-            const term = new RegExp(this.word, 'i');
-            this.listFilter = this.data.filter(d => {
-                return term.exec(d.names) || term.exec(d.lastNames) || term.exec(d.phone) || term.exec(d.document);
-            });
-        }
-        else
-            this.listFilter = this.data;
+        if (this.timer)
+            clearTimeout(this.timer);
+        this.timer = setTimeout(() => Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            if (this.word) {
+                this.queryParams.word = this.word.toString().trim();
+                yield this.getMembers();
+            }
+            else {
+                this.queryParams.word = null;
+                this.members = [];
+            }
+        }), 300);
+        // if (this.word) {
+        //   const term = new RegExp(this.word, 'i');
+        //   this.listFilter = this.data.filter(d => {
+        //     return term.exec(d.names) || term.exec(d.lastNames) || term.exec(d.phone) || term.exec(d.document);
+        //   });
+        // }
+        // else this.listFilter = this.data;
     }
     confirmAdd() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
@@ -950,7 +1195,8 @@ MiembrosConsolidadosPage.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["AlertController"] },
     { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_5__["AxiosService"] },
     { type: _services_global_service__WEBPACK_IMPORTED_MODULE_6__["GlobalService"] },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] }
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_4__["ModalController"] },
+    { type: _miembros_miembros_service__WEBPACK_IMPORTED_MODULE_7__["MiembrosService"] }
 ];
 MiembrosConsolidadosPage.propDecorators = {
     data: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Input"] }],
@@ -963,6 +1209,85 @@ MiembrosConsolidadosPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate
         styles: [_miembros_consolidados_page_scss__WEBPACK_IMPORTED_MODULE_2__["default"]]
     })
 ], MiembrosConsolidadosPage);
+
+
+
+/***/ }),
+
+/***/ "wJOZ":
+/*!****************************************************!*\
+  !*** ./src/app/views/miembros/miembros.service.ts ***!
+  \****************************************************/
+/*! exports provided: MiembrosService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MiembrosService", function() { return MiembrosService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/axios.service */ "1Ldg");
+/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/global.service */ "4WDQ");
+
+
+
+
+let MiembrosService = class MiembrosService {
+    constructor(axios, globalSer) {
+        this.axios = axios;
+        this.globalSer = globalSer;
+    }
+    getUsersCounters(query = {}) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const res = yield this.axios.getData('/admin/users/counters', query);
+            if (res && res.success)
+                return res.data.totals;
+            return this.globalSer.altResponse(res);
+        });
+    }
+    getUsersList(query = {}) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const res = yield this.axios.getData('/admin/users', query);
+            if (res && res.success)
+                return res.data.users || [];
+            return this.globalSer.altResponse(res);
+        });
+    }
+    registerUser(data) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const res = yield this.axios.postData('/admin/users', data);
+            if (res && res.success)
+                return res.data;
+            return this.globalSer.altResponse(res);
+        });
+    }
+    // to register member modals
+    getMembersList(query = {}) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const res = yield this.axios.getData('/members', query);
+            if (res && res.success)
+                return res.data.members || [];
+            return this.globalSer.altResponse(res);
+        });
+    }
+    getFamiliesGroupsList(query = {}) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const res = yield this.axios.getData('/families-groups', query);
+            if (res && res.success)
+                return res.data.groups || [];
+            return this.globalSer.altResponse(res);
+        });
+    }
+};
+MiembrosService.ctorParameters = () => [
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_2__["AxiosService"] },
+    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
+];
+MiembrosService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], MiembrosService);
 
 
 

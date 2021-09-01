@@ -70,11 +70,11 @@ const routes = [
     },
     {
         path: 'crear',
-        loadChildren: () => Promise.all(/*! import() | crear-crear-module */[__webpack_require__.e("default~crear-crear-module~modal-editar-contenido-modal-editar-contenido-module~modal-editar-pregunt~d06b41f1"), __webpack_require__.e("crear-crear-module")]).then(__webpack_require__.bind(null, /*! ./crear/crear.module */ "PDbM")).then(m => m.CrearPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | crear-crear-module */ "crear-crear-module").then(__webpack_require__.bind(null, /*! ./crear/crear.module */ "PDbM")).then(m => m.CrearPageModule)
     },
     {
         path: ':id',
-        loadChildren: () => Promise.all(/*! import() | detalles-curso-detalles-curso-module */[__webpack_require__.e("default~detalles-curso-detalles-curso-module~views-cuentas-bancarias-cuentas-bancarias-module~views-~916dc538"), __webpack_require__.e("detalles-curso-detalles-curso-module")]).then(__webpack_require__.bind(null, /*! ./detalles-curso/detalles-curso.module */ "v0qv")).then(m => m.DetallesCursoPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() | detalles-curso-detalles-curso-module */ "detalles-curso-detalles-curso-module").then(__webpack_require__.bind(null, /*! ./detalles-curso/detalles-curso.module */ "v0qv")).then(m => m.DetallesCursoPageModule)
     },
 ];
 let CursosPageRoutingModule = class CursosPageRoutingModule {
@@ -134,7 +134,6 @@ let CursosPage = class CursosPage {
         this.router = router;
         this.courses = [];
         this.totals = 0;
-        this.pages = 0;
         this.page = 1;
         this.queryParams = {
             input: 'level',
@@ -209,7 +208,7 @@ CursosPage = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Cursos</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"goToCreate()\">\n        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n        Nuevo curso\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-row class=\"ion-justify-content-center\" *ngIf=\"courses && courses.length > 0; else noCourses\">\n    <ion-col size=\"12\" size-sm=\"6\" size-md=\"4\" *ngFor=\"let course of courses\">\n      <app-cursoscard [course]=\"course\" [list]=\"true\"></app-cursoscard>\n    </ion-col>\n  </ion-row>\n\n  <ng-template #noCourses>\n    <ion-card class=\"ion-no-padding\">\n      <ion-text>\n        <p class=\"ion-text-center\">\n          <ion-icon name=\"alert-circle-outline\"></ion-icon> No existen cursos registrados.\n        </p>\n      </ion-text>\n    </ion-card>\n  </ng-template>\n\n</ion-content>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Cursos</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button color=\"primary\" (click)=\"goToCreate()\">\n        <ion-icon name=\"add-outline\" slot=\"start\"></ion-icon>\n        Nuevo curso\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <ion-row class=\"ion-justify-content-center\" *ngIf=\"courses && courses.length > 0; else noCourses\">\n    <ion-col size=\"12\" size-sm=\"6\" size-md=\"4\" *ngFor=\"let course of courses\">\n      <app-cursoscard [course]=\"course\" [list]=\"true\"></app-cursoscard>\n    </ion-col>\n  </ion-row>\n\n  <ng-template #noCourses>\n    <ion-card class=\"ion-no-padding\">\n      <ion-text color=\"medium\">\n        <p class=\"ion-text-center\">\n          <ion-icon name=\"alert-circle-outline\"></ion-icon> No existen cursos registrados.\n        </p>\n      </ion-text>\n    </ion-card>\n  </ng-template>\n\n</ion-content>\n");
 
 /***/ })
 

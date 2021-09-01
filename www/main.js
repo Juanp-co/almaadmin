@@ -175,6 +175,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ "TEn/");
 /* harmony import */ var _cookies_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cookies.service */ "QTu/");
+/* harmony import */ var _Utils_data_static__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Utils/data.static */ "lmIc");
+
 
 
 
@@ -208,14 +210,6 @@ let GlobalService = class GlobalService {
             shouldNotGroupWhenFull: true,
             placeholder: 'Indica la descripción aquí ...'
         };
-        this.roles = [
-            'Administrador',
-            'Pastor',
-            'Supervisor',
-            'Líder',
-            'Padre espiritual',
-            'Persona',
-        ];
     }
     /*
       ALERTS
@@ -318,18 +312,27 @@ let GlobalService = class GlobalService {
             this.clearAllData();
         return !!token;
     }
-    getRole() {
+    getRoles() {
         const data = this.cookieService.getCookie('data');
-        return data && data.role !== null && data.role !== undefined ? data.role : null;
+        return (data === null || data === void 0 ? void 0 : data.roles) || [];
     }
-    getRoleValue(role) {
-        if (role === null || role === undefined)
-            return 'No se encontró el rol.';
-        return this.roles[role] || 'No se encontró el rol.';
+    getRoleValue(rolesList, staticMsg = false) {
+        let ret = staticMsg ? 'NO TIENE ASIGNADO NINGÚN ROL.' : '';
+        if (rolesList.length > 0) {
+            ret = '';
+            for (const v of rolesList) {
+                if (ret === '')
+                    ret = _Utils_data_static__WEBPACK_IMPORTED_MODULE_4__["rolesListSingleText"][v];
+                else
+                    ret += `, ${_Utils_data_static__WEBPACK_IMPORTED_MODULE_4__["rolesListSingleText"][v]}`;
+            }
+        }
+        return ret;
     }
     checkRoleToEnableAddOrUpdate() {
-        const limits = ['0', '1'];
-        return limits.indexOf(`${this.getRole()}`) > -1;
+        const limits = [0, 1];
+        const roles = this.getRoles();
+        return roles.some(r => limits.includes(r));
     }
     clearAllData() {
         this.cookieService.removeCookie('token');
@@ -396,8 +399,9 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    // urlApi: 'http://localhost:7000/api'
-    urlApi: 'https://api.ccadv.co/api'
+    // urlApi: 'http://localhost:7000/api',
+    urlApi: 'https://api.ccadv.co/api',
+    mapBoxToken: 'pk.eyJ1IjoianVhbm1pbGVjbyIsImEiOiJjanc5YzMxamowZHQzNDlxbXM4OXYxNGFoIn0.bcpNZZMOPprjnWeRu5v_vg',
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -472,9 +476,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _raw_loader_app_component_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! raw-loader!./app.component.html */ "VzVu");
 /* harmony import */ var _app_component_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component.scss */ "ynWL");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/axios.service */ "1Ldg");
-/* harmony import */ var _services_cookies_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/cookies.service */ "QTu/");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/axios.service */ "1Ldg");
+/* harmony import */ var _services_cookies_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/cookies.service */ "QTu/");
 /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/global.service */ "4WDQ");
 
 
@@ -494,12 +498,14 @@ let AppComponent = class AppComponent {
             { title: 'Inicio', url: '/inicio', icon: 'home' },
             { title: 'Miembros', url: '/miembros', icon: 'people' },
             { title: 'Consolidados', url: '/consolidados', icon: 'id-card' },
+            { title: 'Devocionales', url: '/devocionales', icon: 'megaphone' },
             { title: 'Familias', url: '/familias', icon: 'people-circle' },
             { title: 'Grupos familiares', url: '/grupos-familiares', icon: 'list' },
             { title: 'Cursos', url: '/cursos', icon: 'desktop' },
             { title: 'Eventos', url: '/eventos', icon: 'calendar-number' },
             { title: 'Cuentas bancarias', url: '/cuentas-bancarias', icon: 'cash' },
             { title: 'Mi cuenta', url: '/mi-cuenta', icon: 'person-circle' },
+            { title: 'Ajustes', url: '/ajustes', icon: 'settings' },
         ];
         this.session = null;
         this.userData = null;
@@ -548,10 +554,10 @@ let AppComponent = class AppComponent {
     }
 };
 AppComponent.ctorParameters = () => [
-    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_4__["AxiosService"] },
-    { type: _services_cookies_service__WEBPACK_IMPORTED_MODULE_5__["CookiesService"] },
+    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_5__["AxiosService"] },
+    { type: _services_cookies_service__WEBPACK_IMPORTED_MODULE_6__["CookiesService"] },
     { type: _services_global_service__WEBPACK_IMPORTED_MODULE_7__["GlobalService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"] }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }
 ];
 AppComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
@@ -574,7 +580,7 @@ AppComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-split-pane contentId=\"main-content\">\n    <ion-menu contentId=\"main-content\" type=\"overlay\">\n      <ion-content >\n        <ion-row class=\"fondoCool ion-justify-content-end ion-padding \">\n          <ion-col size=\"8\" class=\"ion-margin-top ion-padding-top no-selected-text\">\n            <br><br>\n            <ion-text color=\"light\" class=\"titulo1\">Bienvenido</ion-text> <br>\n            <ion-text color=\"light\" class=\"titulo2\" *ngIf=\"!userData\">Usuario anónimo</ion-text>\n            <ion-text color=\"light\" class=\"titulo2\" *ngIf=\"userData\">{{ userData.names }} {{ userData.lastNames }}</ion-text>\n          </ion-col>\n          <ion-col size=\"4\">\n            <img src=\"assets/logo.png\" class=\"logo\">\n          </ion-col>\n        </ion-row>\n        <br>\n        <ion-menu-toggle auto-hide=\"false\" *ngIf=\"session\">\n          <ion-item\n            *ngFor=\"let p of appPages; let i = index\"\n            routerDirection=\"root\"\n            [routerLink]=\"[p.url]\"\n            lines=\"none\"\n            detail=\"false\"\n            routerLinkActive=\"selected\"\n          >\n            <ion-icon slot=\"start\" [ios]=\"p.icon + '-outline'\" [md]=\"p.icon + '-sharp'\"></ion-icon>\n            <ion-label>{{ p.title }}</ion-label>\n          </ion-item>\n          <ion-item button (click)=\"salir()\" lines=\"none\">\n            <ion-icon slot=\"start\" name=\"log-out\"></ion-icon>\n            <ion-label>Salir</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle auto-hide=\"false\" *ngIf=\"!session\">\n          <ion-item\n            button\n            lines=\"none\"\n            [routerLink]=\"['/ingresar']\"\n            routerLinkActive=\"selected\"\n          >\n            <ion-icon slot=\"start\" name=\"log-in\"></ion-icon>\n            <ion-label>Ingresar</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      </ion-content>\n    </ion-menu>\n    <ion-router-outlet id=\"main-content\"></ion-router-outlet>\n  </ion-split-pane>\n</ion-app>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ion-app>\n  <ion-split-pane contentId=\"main-content\">\n    <ion-menu contentId=\"main-content\" type=\"overlay\">\n      <ion-content >\n        <ion-row class=\"fondoCool ion-justify-content-end ion-padding \">\n          <ion-col size=\"8\" class=\"ion-margin-top ion-padding-top no-selected-text\">\n            <br><br>\n            <ion-text color=\"light\" class=\"titulo1\">Bienvenido</ion-text> <br>\n            <ion-text color=\"light\" class=\"titulo2\" *ngIf=\"!userData\">Accede con tu cuenta</ion-text>\n            <ion-text color=\"light\" class=\"titulo2\" *ngIf=\"userData\">{{ userData.names }} {{ userData.lastNames }}</ion-text>\n          </ion-col>\n          <ion-col size=\"4\">\n            <img src=\"assets/logo.png\" class=\"logo\">\n          </ion-col>\n        </ion-row>\n        <br>\n        <ion-menu-toggle auto-hide=\"false\" *ngIf=\"session\">\n          <ion-item\n            *ngFor=\"let p of appPages; let i = index\"\n            routerDirection=\"root\"\n            [routerLink]=\"[p.url]\"\n            lines=\"none\"\n            detail=\"false\"\n            routerLinkActive=\"selected\"\n          >\n            <ion-icon slot=\"start\" [ios]=\"p.icon + '-outline'\" [md]=\"p.icon + '-sharp'\"></ion-icon>\n            <ion-label>{{ p.title }}</ion-label>\n          </ion-item>\n          <ion-item button (click)=\"salir()\" lines=\"none\">\n            <ion-icon slot=\"start\" name=\"log-out\"></ion-icon>\n            <ion-label>Salir</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n        <ion-menu-toggle auto-hide=\"false\" *ngIf=\"!session\">\n          <ion-item\n            button\n            lines=\"none\"\n            [routerLink]=\"['/ingresar']\"\n            routerLinkActive=\"selected\"\n          >\n            <ion-icon slot=\"start\" name=\"log-in\"></ion-icon>\n            <ion-label>Ingresar</ion-label>\n          </ion-item>\n        </ion-menu-toggle>\n      </ion-content>\n    </ion-menu>\n    <ion-router-outlet id=\"main-content\"></ion-router-outlet>\n  </ion-split-pane>\n</ion-app>\n");
 
 /***/ }),
 
@@ -865,6 +871,44 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
+/***/ "lmIc":
+/*!**********************************!*\
+  !*** ./src/Utils/data.static.ts ***!
+  \**********************************/
+/*! exports provided: allRolesListText, rolesListTextWithoutAdmin, rolesListSingleText, staticCoords */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allRolesListText", function() { return allRolesListText; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rolesListTextWithoutAdmin", function() { return rolesListTextWithoutAdmin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rolesListSingleText", function() { return rolesListSingleText; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticCoords", function() { return staticCoords; });
+const allRolesListText = [
+    'Admin',
+    'Pastores',
+    'Supervisores',
+    'Líderes',
+    'Personas',
+];
+const rolesListTextWithoutAdmin = [
+    'Pastores',
+    'Supervisores',
+    'Líderes',
+    'Personas',
+];
+const rolesListSingleText = [
+    'Administrador',
+    'Pastor',
+    'Supervisor',
+    'Líder',
+    'Persona',
+];
+const staticCoords = [-73.630175, 4.134516];
+
+
+/***/ }),
+
 /***/ "vY5A":
 /*!***************************************!*\
   !*** ./src/app/app-routing.module.ts ***!
@@ -889,19 +933,19 @@ const routes = [
     },
     {
         path: 'inicio',
-        loadChildren: () => Promise.all(/*! import() | views-inicio-inicio-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-inicio-inicio-module")]).then(__webpack_require__.bind(null, /*! ./views/inicio/inicio.module */ "Wtct")).then(m => m.InicioPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-inicio-inicio-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-inicio-inicio-module")]).then(__webpack_require__.bind(null, /*! ./views/inicio/inicio.module */ "Wtct")).then(m => m.InicioPageModule)
     },
     {
         path: 'familias',
-        loadChildren: () => Promise.all(/*! import() | views-familias-familias-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-familias-familias-module")]).then(__webpack_require__.bind(null, /*! ./views/familias/familias.module */ "c9Jc")).then(m => m.FamiliasPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-familias-familias-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-familias-familias-module")]).then(__webpack_require__.bind(null, /*! ./views/familias/familias.module */ "c9Jc")).then(m => m.FamiliasPageModule)
     },
     {
         path: 'eventos',
-        loadChildren: () => Promise.all(/*! import() | views-eventos-eventos-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("default~crear-crear-module~modal-editar-contenido-modal-editar-contenido-module~modal-editar-pregunt~d06b41f1"), __webpack_require__.e("default~detalles-curso-detalles-curso-module~views-cuentas-bancarias-cuentas-bancarias-module~views-~916dc538"), __webpack_require__.e("views-eventos-eventos-module")]).then(__webpack_require__.bind(null, /*! ./views/eventos/eventos.module */ "TjVE")).then(m => m.EventosPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-eventos-eventos-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-eventos-eventos-module")]).then(__webpack_require__.bind(null, /*! ./views/eventos/eventos.module */ "TjVE")).then(m => m.EventosPageModule)
     },
     {
         path: 'cursos',
-        loadChildren: () => Promise.all(/*! import() | views-cursos-cursos-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-cursos-cursos-module")]).then(__webpack_require__.bind(null, /*! ./views/cursos/cursos.module */ "8C+O")).then(m => m.CursosPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-cursos-cursos-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-cursos-cursos-module")]).then(__webpack_require__.bind(null, /*! ./views/cursos/cursos.module */ "8C+O")).then(m => m.CursosPageModule)
     },
     {
         path: 'ofrendas',
@@ -913,7 +957,7 @@ const routes = [
     // },
     {
         path: 'miembros',
-        loadChildren: () => Promise.all(/*! import() | views-miembros-miembros-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-miembros-miembros-module")]).then(__webpack_require__.bind(null, /*! ./views/miembros/miembros.module */ "PI0l")).then(m => m.MiembrosPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-miembros-miembros-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("common"), __webpack_require__.e("views-miembros-miembros-module")]).then(__webpack_require__.bind(null, /*! ./views/miembros/miembros.module */ "PI0l")).then(m => m.MiembrosPageModule)
     },
     {
         path: 'ingresar',
@@ -921,19 +965,27 @@ const routes = [
     },
     {
         path: 'cuentas-bancarias',
-        loadChildren: () => Promise.all(/*! import() | views-cuentas-bancarias-cuentas-bancarias-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("default~crear-crear-module~modal-editar-contenido-modal-editar-contenido-module~modal-editar-pregunt~d06b41f1"), __webpack_require__.e("default~detalles-curso-detalles-curso-module~views-cuentas-bancarias-cuentas-bancarias-module~views-~916dc538"), __webpack_require__.e("views-cuentas-bancarias-cuentas-bancarias-module")]).then(__webpack_require__.bind(null, /*! ./views/cuentas-bancarias/cuentas-bancarias.module */ "Y16Y")).then(m => m.CuentasBancariasPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-cuentas-bancarias-cuentas-bancarias-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-cuentas-bancarias-cuentas-bancarias-module")]).then(__webpack_require__.bind(null, /*! ./views/cuentas-bancarias/cuentas-bancarias.module */ "Y16Y")).then(m => m.CuentasBancariasPageModule)
     },
     {
         path: 'mi-cuenta',
-        loadChildren: () => Promise.all(/*! import() | views-mi-cuenta-mi-cuenta-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("default~detalles-miembro-detalles-miembro-module~registro-registro-module~views-mi-cuenta-mi-cuenta-module"), __webpack_require__.e("views-mi-cuenta-mi-cuenta-module")]).then(__webpack_require__.bind(null, /*! ./views/mi-cuenta/mi-cuenta.module */ "1LWO")).then(m => m.MiCuentaPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-mi-cuenta-mi-cuenta-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("default~detalles-miembro-detalles-miembro-module~registro-registro-module~views-mi-cuenta-mi-cuenta-module"), __webpack_require__.e("views-mi-cuenta-mi-cuenta-module")]).then(__webpack_require__.bind(null, /*! ./views/mi-cuenta/mi-cuenta.module */ "1LWO")).then(m => m.MiCuentaPageModule)
     },
     {
         path: 'grupos-familiares',
-        loadChildren: () => Promise.all(/*! import() | views-grupos-familiares-grupos-familiares-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-grupos-familiares-grupos-familiares-module")]).then(__webpack_require__.bind(null, /*! ./views/grupos-familiares/grupos-familiares.module */ "DOPO")).then(m => m.GruposFamiliaresPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-grupos-familiares-grupos-familiares-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-grupos-familiares-grupos-familiares-module")]).then(__webpack_require__.bind(null, /*! ./views/grupos-familiares/grupos-familiares.module */ "DOPO")).then(m => m.GruposFamiliaresPageModule)
     },
     {
         path: 'consolidados',
-        loadChildren: () => Promise.all(/*! import() | views-consolidados-consolidados-module */[__webpack_require__.e("default~views-consolidados-consolidados-module~views-cuentas-bancarias-cuentas-bancarias-module~view~c5e1501c"), __webpack_require__.e("views-consolidados-consolidados-module")]).then(__webpack_require__.bind(null, /*! ./views/consolidados/consolidados.module */ "V5HN")).then(m => m.ConsolidadosPageModule)
+        loadChildren: () => Promise.all(/*! import() | views-consolidados-consolidados-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-consolidados-consolidados-module")]).then(__webpack_require__.bind(null, /*! ./views/consolidados/consolidados.module */ "V5HN")).then(m => m.ConsolidadosPageModule)
+    },
+    {
+        path: 'ajustes',
+        loadChildren: () => Promise.all(/*! import() | views-ajustes-ajustes-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-ajustes-ajustes-module")]).then(__webpack_require__.bind(null, /*! ./views/ajustes/ajustes.module */ "tY4H")).then(m => m.AjustesPageModule)
+    },
+    {
+        path: 'devocionales',
+        loadChildren: () => Promise.all(/*! import() | views-devocionales-devocionales-module */[__webpack_require__.e("default~views-ajustes-ajustes-module~views-consolidados-consolidados-module~views-cuentas-bancarias-~291b62ff"), __webpack_require__.e("views-devocionales-devocionales-module")]).then(__webpack_require__.bind(null, /*! ./views/devocionales/devocionales.module */ "vOhD")).then(m => m.DevocionalesPageModule)
     },
 ];
 let AppRoutingModule = class AppRoutingModule {
