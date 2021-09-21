@@ -19,7 +19,7 @@
           <ion-label position="floating" color="medium">Título devocional (*)</ion-label>
           <ion-input
             [value]="formData.title"
-            (change)="setFormData('title', $event.target.value)"
+            (change)="setFormData('title', $event)"
             name="title"
             class="ion-text-uppercase"
           ></ion-input>
@@ -30,7 +30,7 @@
           <ion-label position="floating" color="medium">URL video Youtube</ion-label>
           <ion-input
             [value]="formData.urlVideo"
-            (change)="setFormData('urlVideo', $event.target.value)"
+            (change)="setFormData('urlVideo', $event)"
             name="urlYoutube"
           ></ion-input>
         </ion-item>

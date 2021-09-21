@@ -13,6 +13,7 @@ import {
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
+import {CookiesService} from '../../../services/cookies.service';
 
 @Component({
   selector: 'app-registro',
@@ -23,6 +24,7 @@ export class RegistroPage implements OnInit {
 
   civilStatus = [];
   gender = [];
+  myId: string|null = null;
   successRegister = false;
   successData: any = null;
   referralData: any = null;
@@ -49,6 +51,7 @@ export class RegistroPage implements OnInit {
 
   constructor(
     private axios: AxiosService,
+    private cookiesService: CookiesService,
     private globalSer: GlobalService,
     private navCtrl: NavController,
     private detallesMiembroService: DetallesMiembroService,
@@ -59,6 +62,8 @@ export class RegistroPage implements OnInit {
   }
 
   async ngOnInit() {
+    const data = await this.cookiesService.getCookie('data');
+    if (data) this.myId = data._id;
     // check if exist session
     if (!this.globalSer.checkSession()) await this.router.navigate(['/ingresar']);
     else if (!this.globalSer.checkRoleToEnableAddOrUpdate()) {
@@ -73,7 +78,9 @@ export class RegistroPage implements OnInit {
 
   async registerMember() {
     await this.globalSer.presentLoading('Registrando, por favor espere ...');
-    const res = await this.miembrosService.registerUser({...this.formData});
+    const data: any = {...this.formData};
+    if (data.iAmConsolidator) data.referred = this.myId;
+    const res = await this.miembrosService.registerUser(data);
 
     if (res && !res.error) {
       this.successData = res;

@@ -101,8 +101,8 @@ export class EventosPage implements OnInit {
     });
   }
 
-  setDate(input: string, value) {
-    this.queryParams[input] = `${value}`.substr(0, 10);
+  setDate(input: string, ev: any) {
+    this.queryParams[input] = ev?.target?.value ? `${ev?.target?.value}`.substr(0, 10) : null;
   }
 
   getRoles(rolesList: number[]): string {

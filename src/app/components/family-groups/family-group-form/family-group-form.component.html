@@ -8,7 +8,7 @@
               <ion-label position="floating" color="medium"># Sector (*)</ion-label>
               <ion-input
                 [value]="formData.sector"
-                (change)="setFormData('sector', $event.target?.value || null)"
+                (change)="setFormData('sector', $event)"
                 autocomplete="off"
                 maxlength="4"
                 (keypress)="validateOnlyNumber($event)"
@@ -20,7 +20,7 @@
               <ion-label position="floating" color="medium"># Sub-sector (*)</ion-label>
               <ion-input
                 [value]="formData.subSector"
-                (change)="setFormData('subSector', $event.target?.value || null)"
+                (change)="setFormData('subSector', $event)"
                 autocomplete="off"
                 maxlength="4"
                 (keypress)="validateOnlyNumber($event)"
@@ -32,7 +32,7 @@
               <ion-label position="floating" color="medium">Número de grupo (*)</ion-label>
               <ion-input
                 [value]="formData.number"
-                (change)="setFormData('number', $event.target?.value || null)"
+                (change)="setFormData('number', $event)"
                 autocomplete="off"
                 maxlength="4"
                 (keypress)="validateOnlyNumber($event)"
@@ -46,7 +46,7 @@
           <ion-label position="floating" color="medium">Dirección (*)</ion-label>
           <ion-textarea
             [value]="formData.direction"
-            (change)="setFormData('direction', $event.target?.value || null)"
+            (change)="setFormData('direction', $event)"
             rows="5"
             maxlength="150"
             class="ion-text-uppercase"
