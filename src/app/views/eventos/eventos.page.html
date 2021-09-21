@@ -46,7 +46,7 @@
                     min="2021-01-01"
                     doneText="Listo"
                     cancelText="Cancelar"
-                    (ionChange)="setDate('initDate', $event.target.value)"
+                    (ionChange)="setDate('initDate', $event)"
                   >
                   </ion-datetime>
                 </ion-item>
@@ -60,7 +60,7 @@
                     min="2021-01-01"
                     doneText="Listo"
                     cancelText="Cancelar"
-                    (ionChange)="setDate('endDate', $event.target.value)"
+                    (ionChange)="setDate('endDate', $event)"
                   >
                   </ion-datetime>
                 </ion-item>

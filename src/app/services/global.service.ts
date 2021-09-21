@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AlertController, LoadingController, ModalController, NavController} from '@ionic/angular';
 import {CookiesService} from './cookies.service';
 import {rolesListSingleText} from '../../Utils/data.static';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class GlobalService {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private modalController: ModalController,
-    private navCtrl: NavController,
+    private router: Router,
     private cookieService: CookiesService
   ) { }
 
@@ -172,7 +173,7 @@ export class GlobalService {
   }
 
   async altResponse(res: any): Promise<any> {
-    if (res && res.status && res.status === 401) {
+    if (res && res.status && [401, 403].includes(res.status)) {
       this.clearAllData();
       return { error: 401 };
     }
@@ -183,7 +184,7 @@ export class GlobalService {
 
   async errorSession() {
     await this.presentAlert('Alerta', 'Disculpe, pero no se encontró una sesión activa.');
-    await this.navCtrl.navigateBack(['/ingresar']);
+    await this.router.navigate(['/ingresar']);
   }
 
   /*

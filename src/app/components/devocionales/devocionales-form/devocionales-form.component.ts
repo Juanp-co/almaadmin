@@ -79,8 +79,8 @@ export class DevocionalesFormComponent implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
-  setFormData(input: string, value: any) {
-    this.formData[input] = value || null;
+  setFormData(input: string, ev: any) {
+    this.formData[input] = ev.target.value || null;
   }
 
   onChangeEditor({ editor }: ChangeEvent ) {

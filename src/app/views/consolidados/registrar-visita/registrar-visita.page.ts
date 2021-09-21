@@ -88,6 +88,10 @@ export class RegistrarVisitaPage implements OnInit {
   }
 
   setCheckedValue() {
+    if (!this.iAmVisitor) {
+      this.formData.visitor = null;
+      this.memberVisitor = null;
+    }
     this.iAmVisitor = !this.iAmVisitor;
   }
 

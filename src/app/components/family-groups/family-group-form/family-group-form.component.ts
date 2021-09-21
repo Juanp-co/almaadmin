@@ -46,8 +46,8 @@ export class FamilyGroupFormComponent implements OnInit {
     onlyNumbersInputValidation2(event);
   }
 
-  setFormData(input, value) {
-    this.formData[input] = value || null;
+  setFormData(input: string, ev: any) {
+    this.formData[input] = ev?.target?.value || null;
   }
 
   setCoordinates(coords: number[] = []) {

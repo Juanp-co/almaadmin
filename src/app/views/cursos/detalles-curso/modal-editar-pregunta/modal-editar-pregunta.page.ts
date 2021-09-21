@@ -210,7 +210,7 @@ export class ModalEditarPreguntaPage implements OnInit {
     });
   }
 
-  async showRequireAlert(index) {
+  async showRequireAlert(index: number) {
     const inputs: any[] = [];
     for (const value of [true, false]) {
       inputs.push({
