@@ -23,13 +23,13 @@ export class MiembrosPage implements OnInit {
     page: 1,
     input: 'names',
     value: 1,
-    word: null
+    search: null
   };
 
   handlePage = (page: number): void => {
     this.queryParams.page = page;
     this.getData();
-  }
+  };
 
   constructor(
     private alertCtrl: AlertController,
