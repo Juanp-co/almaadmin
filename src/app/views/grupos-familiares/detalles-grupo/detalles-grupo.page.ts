@@ -16,7 +16,7 @@ export class DetallesGrupoPage implements OnInit {
   // info profile
   title = 'Cargando...';
   id: string|null = null;
-  group: any|null = null;
+  group: any = null;
   formData: any|null = null;
 
   views: any = {
@@ -85,7 +85,7 @@ export class DetallesGrupoPage implements OnInit {
     else await this.globalSer.dismissLoading();
   }
 
-  async updateMembers(data) {
+  async updateMembers(data: any = {}) {
     await this.globalSer.presentLoading('Actualizando, por favor espere ...');
 
     // get ids
@@ -210,22 +210,14 @@ export class DetallesGrupoPage implements OnInit {
   }
 
   getParamsToMap() {
-    return [
-      {
-        type: 'Feature',
-        geometry: this.group.location
-      }
-    ];
+    return [ { type: 'Feature', geometry: this.group.location } ];
   }
-
 
   setFormDataAndSave(formData: any) {
     this.formData = formData;
     this.updateData();
   }
 
-
   handleSave = (formData: any): void => this.setFormDataAndSave(formData);
   handleCancel = async (): Promise<void> => this.editEnable();
-
 }
