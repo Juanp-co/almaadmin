@@ -71,6 +71,7 @@ export class ConsolidadosPage implements OnInit {
 
     if (data && !data.error) {
       this.reports = data;
+      console.log('data', data);
       this.members = data.members || [];
       this.setConsolidatesValues(data.consolidates || []);
       this.setPendingMembers(data.pendingVisits || []);
@@ -191,6 +192,35 @@ export class ConsolidadosPage implements OnInit {
   // register visit
   async goToVisitRegisterForm() {
     await this.router.navigate([`consolidados/registrar-visita`]);
+  }
+
+  downloadData() {
+    if (this.consolidates.length > 0) {
+      const model = [];
+      // const keys = [
+      //   { key: 'date', key2: 'Fecha' },
+      //   { key: 'consolidator', key2: 'Visitante' },
+      //   { key: 'member', key2: 'Visitado' },
+      //   { key: 'observation', key2: 'Observacion' },
+      // ];
+      const getNames = (member: any = null) => {
+        return member ? `${member.names} ${member.lastNames} - ${member.phone}` : null;
+      };
+      this.consolidates.forEach(c => {
+        const m: any = {
+          Fecha: c.date,
+          Visitador: getNames(c.consolidator || null),
+          Visitado: getNames(c.member || null),
+          Observacion: c.observation?.replaceAll(',', ';;'),
+        };
+        model.push(m);
+      });
+
+      this.globalSer.downloadCSVFromJson(
+        `VISITAS_CONSOLIDADOS_CCADV_${dayjs().format('YYYY-MM-DD[_]HH:mm:ss')}.csv`,
+        model
+      );
+    }
   }
 
 }

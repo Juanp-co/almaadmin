@@ -163,6 +163,70 @@ export class FamiliesGroupsReportsComponent implements OnInit {
     return this.selected?.groupName || 'Desconocido';
   }
 
+  downloadData() {
+    const data = this.data.find(d => d._id === this.selected?._id) || null;
+
+    if (data) {
+      const keys = [
+        { key: 'brethren', key2: 'Hermanos' },
+        { key: 'friends', key2: 'Amigos' },
+        { key: 'scheduledVisits', key2: 'VisitasProgramadas' },
+        { key: 'discipleshipVisits', key2: 'VisitasAlDisipulado' },
+        { key: 'christianChildren', key2: 'NinnosCristianos' },
+        { key: 'christianChildrenFriends', key2: 'NinnosCristianosAmigos' },
+        { key: 'offering', key2: 'Ofrendas' },
+        { key: 'churchAttendance', key2: 'AsistenciasALaIglesia' },
+        { key: 'churchAttendanceChildren', key2: 'AsistenciasNinnosIglesia' },
+        { key: 'conversions', key2: 'Conversiones' },
+        { key: 'reconciliations', key2: 'Reconciliaciones' },
+        { key: 'conversionsChildren', key2: 'ConversionesNinnos' },
+        { key: 'brethrenPlanning', key2: 'PlanificacionHnos' },
+        { key: 'bibleReading', key2: 'LecturaBiblica' },
+        { key: 'consolidated', key2: 'Consolidados' },
+        { key: 'total', key2: 'TotalPersonas' },
+      ];
+
+      const model: any[] = [];
+
+      this.data.forEach(dt => {
+        const m: any = {
+          Grupo: dt.groupName,
+          Hermanos: 0,
+          Amigos: 0,
+          VisitasProgramadas: 0,
+          VisitasAlDisipulado: 0,
+          NinnosCristianos: 0,
+          NinnosCristianosAmigos: 0,
+          Ofrendas: 0,
+          AsistenciasALaIglesia: 0,
+          AsistenciasNinnosIglesia: 0,
+          Conversiones: 0,
+          Reconciliaciones: 0,
+          ConversionesNinnos: 0,
+          PlanificacionHnos: 0,
+          LecturaBiblica: 0,
+          Consolidados: 0,
+          TotalPersonas: 0,
+        };
+
+        keys.forEach(k => {
+          if (data.report[k.key]) m[k.key2] = dt.report[k.key];
+        });
+
+        model.push(m);
+      });
+      this.globalSer.downloadCSVFromJson(
+        `Reporte_Grupos_Familiares_-_${dayjs().format('YYYY-MM-DD[_]HH:mm:ss')}.csv`,
+        model
+      );
+    }
+    else
+      this.globalSer.presentAlert(
+        'Error',
+        `Disculpe, pero ha ocurrido un error al momento de descargar la información.`
+      );
+  }
+
   async showListGroups(id: any) {
     const inputs: any[] = [];
     for (const lg of this.listGroups) {

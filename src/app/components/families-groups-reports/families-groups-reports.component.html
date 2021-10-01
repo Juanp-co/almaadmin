@@ -12,6 +12,12 @@
       ></ion-input>
     </ion-item>
   </ion-col>
+  <ion-col>
+    <ion-button (click)="downloadData()">
+      <ion-icon name="download-outline" slot="start"></ion-icon>
+      <ion-text>Descargar datos</ion-text>
+    </ion-button>
+  </ion-col>
 </ion-row>
 
 <ion-row class="ion-justify-content-center ion-margin-top ion-margin-bottom ion-padding-bottom" *ngIf="dataToReport">

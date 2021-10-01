@@ -23,6 +23,10 @@
           <ion-icon name="clipboard-outline" slot="start"></ion-icon>
           <ion-text>Registrar visita</ion-text>
         </ion-button>
+        <ion-button (click)="downloadData()">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          <ion-text>Descargar datos</ion-text>
+        </ion-button>
       </div>
     </ion-col>
     <ion-col size="12" *ngIf="views.filter">

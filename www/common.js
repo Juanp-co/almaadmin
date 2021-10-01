@@ -831,104 +831,6 @@ const SPINNERS = spinners;
 
 /***/ }),
 
-/***/ "iN9u":
-/*!*****************************************************************************!*\
-  !*** ./src/app/views/miembros/detalles-miembro/detalles-miembro.service.ts ***!
-  \*****************************************************************************/
-/*! exports provided: DetallesMiembroService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DetallesMiembroService", function() { return DetallesMiembroService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "mrSG");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _services_axios_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/axios.service */ "1Ldg");
-/* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
-/* harmony import */ var _Utils_profile_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../Utils/profile.data */ "0ox5");
-/* harmony import */ var _Utils_locations_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../Utils/locations.data */ "ZrT4");
-
-
-
-
-
-
-let DetallesMiembroService = class DetallesMiembroService {
-    constructor(axios, globalSer) {
-        this.axios = axios;
-        this.globalSer = globalSer;
-        this.professionsList = _Utils_profile_data__WEBPACK_IMPORTED_MODULE_4__["professions"];
-        this.companyTypeList = _Utils_profile_data__WEBPACK_IMPORTED_MODULE_4__["companyType"];
-        this.departmentsList = _Utils_locations_data__WEBPACK_IMPORTED_MODULE_5__["departments"];
-        this.educationLevel = _Utils_profile_data__WEBPACK_IMPORTED_MODULE_4__["educationLevels"];
-        this.bloodTypeList = _Utils_profile_data__WEBPACK_IMPORTED_MODULE_4__["bloodType"];
-        this.civilStatusList = _Utils_profile_data__WEBPACK_IMPORTED_MODULE_4__["civilStatus"];
-        this.genderList = _Utils_profile_data__WEBPACK_IMPORTED_MODULE_4__["gender"];
-        this.documentTypesList = _Utils_profile_data__WEBPACK_IMPORTED_MODULE_4__["documentType"];
-    }
-    getUserDetails(id) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.getData(`/admin/users/${id}`);
-            if (res && res.success)
-                return res.data.user;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    updateDataUser(id, data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.putData(`/admin/users/${id}`, data);
-            if (res && res.success)
-                return res.data.user;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    updateRoleUser(id, data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.putData(`/admin/users/${id}/role`, data);
-            if (res && res.success)
-                return res.data.msg || 'Se asignado el nuevo rol al miembro exitosamente.';
-            return this.globalSer.altResponse(res);
-        });
-    }
-    deleteUser(id) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.deleteData(`/admin/users/${id}`);
-            if (res && res.success)
-                return res.data.msg;
-            return this.globalSer.altResponse(res);
-        });
-    }
-    getUsersCourses(id) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.getData(`/admin/users/${id}/courses`);
-            if (res && res.success)
-                return res.data.courses || [];
-            return this.globalSer.altResponse(res);
-        });
-    }
-    getUsersReferrals(id) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            const res = yield this.axios.getData(`/admin/users/${id}/referrals`);
-            if (res && res.success)
-                return res.data.referrals || [];
-            return this.globalSer.altResponse(res);
-        });
-    }
-};
-DetallesMiembroService.ctorParameters = () => [
-    { type: _services_axios_service__WEBPACK_IMPORTED_MODULE_2__["AxiosService"] },
-    { type: _services_global_service__WEBPACK_IMPORTED_MODULE_3__["GlobalService"] }
-];
-DetallesMiembroService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
-    })
-], DetallesMiembroService);
-
-
-
-/***/ }),
-
 /***/ "izRr":
 /*!*************************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/views/grupos-familiares/asignar-miembro/asignar-miembro.page.html ***!
@@ -1250,6 +1152,14 @@ let MiembrosService = class MiembrosService {
             const res = yield this.axios.getData('/admin/users', query);
             if (res && res.success)
                 return res.data.users || [];
+            return this.globalSer.altResponse(res);
+        });
+    }
+    getAllUsers() {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const res = yield this.axios.getData('/admin/users/download');
+            if (res && res.success)
+                return res.data.members || null;
             return this.globalSer.altResponse(res);
         });
     }

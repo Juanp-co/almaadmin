@@ -21,8 +21,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _grupos_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../grupos.service */ "ai4U");
 /* harmony import */ var _services_global_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/global.service */ "4WDQ");
 /* harmony import */ var _Utils_validations_functions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../Utils/validations.functions */ "OmbT");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "ofXK");
-
 
 
 
@@ -162,124 +160,6 @@ let ReportesPage = class ReportesPage {
                 yield this.getData();
             else
                 this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe indicar una fecha inicial');
-        });
-    }
-    setDataToReport(data = null) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            yield this.globalSer.presentLoading();
-            this.dataToReport = null;
-            this.dataToReport = !data ? null : {
-                data1: {
-                    title: 'Hermanos',
-                    data: [
-                        {
-                            label: 'Hermanos',
-                            qty: data.brethren
-                        },
-                        {
-                            label: 'Amigos',
-                            qty: data.friends
-                        }
-                    ]
-                },
-                data2: {
-                    title: 'Niños',
-                    data: [
-                        {
-                            label: 'Niños',
-                            qty: data.christianChildren
-                        },
-                        {
-                            label: 'Amigos',
-                            qty: data.christianChildrenFriends
-                        },
-                    ]
-                },
-                data3: {
-                    title: 'Visitas',
-                    data: [
-                        {
-                            label: 'Programadas',
-                            qty: data.scheduledVisits
-                        },
-                        {
-                            label: 'Disipulado',
-                            qty: data.discipleshipVisits
-                        },
-                    ]
-                },
-                data4: {
-                    title: 'Asistencia',
-                    data: [
-                        {
-                            label: 'Hermanos',
-                            qty: data.churchAttendance
-                        },
-                        {
-                            label: 'Niños',
-                            qty: data.churchAttendanceChildren
-                        },
-                    ]
-                },
-                data5: {
-                    title: 'Conversiones y reconcilaciones',
-                    data: [
-                        {
-                            label: 'Reconciliaciones',
-                            qty: data.reconciliations
-                        },
-                        {
-                            label: 'Conversiones',
-                            qty: data.conversions
-                        },
-                        {
-                            label: 'Conversiones de niños',
-                            qty: data.conversionsChildren
-                        },
-                    ]
-                },
-                data6: {
-                    title: 'Otros',
-                    data: [
-                        {
-                            label: 'Planificación de hnos.',
-                            qty: data.brethrenPlanning
-                        },
-                        {
-                            label: 'Lectura bíblica',
-                            qty: data.bibleReading
-                        },
-                        {
-                            label: 'Consolidados',
-                            qty: data.consolidated
-                        },
-                    ]
-                },
-                totals: {
-                    title: 'Total de hermanos y niños',
-                    qty: data.total
-                },
-                offering: {
-                    title: 'Total de ofrendas',
-                    qty: Object(_angular_common__WEBPACK_IMPORTED_MODULE_10__["formatCurrency"])(data.offering, 'es-CO', 'COP')
-                },
-            };
-            yield this.globalSer.dismissLoading();
-        });
-    }
-    setObservationsValues(data) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            this.observations = [];
-            this.observationsPreview = [];
-            if (data && data.length > 0) {
-                this.observations = data;
-                data.forEach(o => {
-                    this.observationsPreview.push({
-                        observation: o.observations.length > 50 ? `${o.observations.substr(0, 50)} ...` : o.observations,
-                        date: dayjs__WEBPACK_IMPORTED_MODULE_6___default()(o.date).format('DD-MM-YYYY HH:mm'),
-                    });
-                });
-            }
         });
     }
     // actions inputs
