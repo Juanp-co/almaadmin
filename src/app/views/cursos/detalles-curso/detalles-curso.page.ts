@@ -46,6 +46,7 @@ export class DetallesCursoPage implements OnInit {
     temary: { show: false, title: 'Temas del curso' },
     test: { show: false, title: 'Pruebas' },
   };
+  showAddButton = false;
   formDataInfo = null;
 
   constructor(
@@ -60,6 +61,7 @@ export class DetallesCursoPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.showAddButton = this.globalSer.checkRoleToEnableAddOrUpdate();
     this.id = this.activateRoute.snapshot.paramMap.get('id');
     await this.globalSer.presentLoading();
     const data: any = await this.cursosService.getCourse(this.id);

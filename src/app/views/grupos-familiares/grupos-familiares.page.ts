@@ -15,6 +15,7 @@ export class GruposFamiliaresPage implements OnInit {
     { key: 'subSector', label: 'sub-sector' },
     { key: 'number', label: 'número' },
   ];
+  showAddButton = false;
   showFilter = false;
   groups: any = [];
   totals = 0;
@@ -38,7 +39,7 @@ export class GruposFamiliaresPage implements OnInit {
   handlePage = (page: number): void => {
     this.queryParams.page = page;
     this.getGroupList();
-  }
+  };
 
   constructor(
     private globalSer: GlobalService,
@@ -50,6 +51,7 @@ export class GruposFamiliaresPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.showAddButton = this.globalSer.checkRoleToEnableAddOrUpdate();
   }
 
   async ionViewWillEnter() {

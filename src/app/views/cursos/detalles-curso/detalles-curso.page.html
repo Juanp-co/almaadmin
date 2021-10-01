@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{ title }}</ion-title>
-    <ion-buttons slot="end" *ngIf="staticData && !views.info.edit && !staticData.enable">
+    <ion-buttons slot="end" *ngIf="showAddButton && staticData && !views.info.edit && !staticData.enable">
       <ion-button color="danger" (click)="confirmCourseDelete()">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-text>Eliminar curso</ion-text>
@@ -28,7 +28,7 @@
             </ion-buttons>
             <ion-title *ngIf="!views.info.edit">{{ views.info.title }}</ion-title>
             <ion-title *ngIf="views.info.edit">Editar datos principales del curso</ion-title>
-            <ion-buttons slot="end" *ngIf="views.info.show && !staticData.enable">
+            <ion-buttons slot="end" *ngIf="showAddButton && views.info.show && !staticData.enable">
               <ion-button (click)="setShowEditInfo('info')" *ngIf="!views.info.edit">
                 <ion-icon name="create-outline"></ion-icon>
                 <ion-text>Editar</ion-text>
@@ -88,7 +88,7 @@
             </ion-row>
           </div>
 
-          <div *ngIf="views.info.edit && formDataInfo && !staticData.enable">
+          <div *ngIf="showAddButton && views.info.edit && formDataInfo && !staticData.enable">
             <app-editar-info-curso
               [data]="formDataInfo"
               [handleCancel]="cancelEditInfo"
@@ -112,7 +112,7 @@
             <ion-title>
               {{ views.temary.title }} ({{ views.temary.data.length }})
             </ion-title>
-            <ion-buttons slot="end" *ngIf="views.temary.show && !staticData.enable">
+            <ion-buttons slot="end" *ngIf="showAddButton && views.temary.show && !staticData.enable">
               <ion-button (click)="modalTheme()">
                 <ion-icon name="add-outline" slot="start"></ion-icon>
                 <ion-text>Agregar tema</ion-text>
@@ -149,7 +149,7 @@
       </ion-card>
     </ion-col>
 
-    <ion-col class="ion-margin-bottom ion-padding-bottom" [size]="12" *ngIf="!views.info.edit">
+    <ion-col class="ion-margin-bottom ion-padding-bottom" [size]="12" *ngIf="showAddButton && !views.info.edit">
       <ion-card>
         <ion-card-header class="ion-no-padding ion-no-margin">
           <ion-toolbar color="primary">

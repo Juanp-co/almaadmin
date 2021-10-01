@@ -43,7 +43,7 @@ export class RegistroPage implements OnInit {
     petition: null,
     attendGroup: false,
     groupId: null,
-    roles: [5],
+    roles: [4],
     referred: null,
     consolidated: false,
     iAmConsolidator: true,

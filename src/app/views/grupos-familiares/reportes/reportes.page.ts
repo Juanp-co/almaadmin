@@ -14,7 +14,9 @@ import {formatCurrency} from '@angular/common';
 })
 export class ReportesPage implements OnInit {
 
+  opts = ['Ninguno', 'Sub-sector', 'Sector'];
   reports: any[]|null = null;
+  reportsAlt: any[]|null = null;
   listGroups: any[]|null = null;
   selected: any|null = null;
   report: any|null = null;
@@ -22,6 +24,7 @@ export class ReportesPage implements OnInit {
   observationsPreview: any[]|null = null;
   dataToReport: any|null = null;
 
+  totalityOpt = 0;
   sizeElems = 6;
   showFilter = false;
   showTotals = true;
@@ -61,13 +64,8 @@ export class ReportesPage implements OnInit {
     const data = await this.gruposService.getFamiliesGroupsReports(this.queryParams);
     if (data && !data.error) {
       this.reports = data;
-      this.listGroups = this.reports.map(r => r.group);
-      if (this.listGroups.length > 0) {
-        this.selected = this.listGroups[0];
-      }
-      await this.setObservationsValues(this.reports.length > 0 ? this.reports[0].observations : null);
       await this.globalSer.dismissLoading();
-      await this.setDataToReport(this.selected ? this.reports[0].report : null);
+      await this.setTotalityData(true);
     }
     else if (data && data.error) {
       await this.globalSer.dismissLoading();
@@ -109,14 +107,6 @@ export class ReportesPage implements OnInit {
     this.showFilter = !this.showFilter;
   }
 
-  setShowTotals() {
-    this.showTotals = !this.showTotals;
-  }
-
-  setShowObservations() {
-    this.showObservations = !this.showObservations;
-  }
-
   async resetQueryParams() {
     this.queryParams.initDate = null;
     this.queryParams.endDate = null;
@@ -145,7 +135,7 @@ export class ReportesPage implements OnInit {
     else this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe indicar una fecha inicial');
   }
 
-  async setDataToReport(data: any) {
+  async setDataToReport(data: any = null) {
     await this.globalSer.presentLoading();
     this.dataToReport = null;
     this.dataToReport = !data ? null : {
@@ -261,57 +251,126 @@ export class ReportesPage implements OnInit {
     }
   }
 
-  async showObservation(index: number) {
-    const ob = this.observations[index] || null;
-    if (ob) {
-      await this.globalSer.presentAlert(
-        'Observación',
-        `<b>Fecha: </b>${dayjs(ob.date).format('DD-MM-YYYY HH:mm')} <br><br> ${ob.observations}`
-      );
-    }
-    else
-      await this.globalSer.presentAlert(
-        'Error',
-        `Disculpe, pero ha ocurrido un error al momento de cargar la observación.`
-      );
-  }
-
   // actions inputs
   validateOnlyNumber(event: any) {
     onlyNumbersInputValidation2(event);
   }
 
-  getNumberGroup() {
-    return this.selected ?
-      `Sector #${this.selected.sector} / Sub-sector #${this.selected.subSector} / Grupo #${this.selected.number}`
-      : null;
-  }
-
-  async showListGroups(id: string|null) {
+  async showListTotality() {
     const inputs: any[] = [];
-    for (const lg of this.listGroups) {
+    for (const [index, value] of this.opts.entries()) {
       inputs.push( {
-        name: `list-groups`,
+        name: `list-opts`,
         type: 'radio',
-        label: `S: ${lg.sector} / SS: ${lg.subSector} Nº ${lg.number}`,
-        value: lg._id,
-        checked: lg._id === id,
+        label: value,
+        value: index,
+        checked: index === this.totalityOpt,
       });
     }
 
     await this.globalSer.alertWithList({
-      header: 'Seleccione un grupo',
+      header: 'Totalizar por',
       inputs,
       confirmAction: async (value) => {
-        if (value !== id) {
-          this.dataToReport = null;
-          const data = this.reports.find(r => r.group && r.group._id === value) || null;
-          await this.setDataToReport(data ? data.report : null);
-          this.selected = data ? data.group : null;
-          await this.setObservationsValues(data ? data.observations : null);
-        }
+        this.totalityOpt = value;
+        this.reportsAlt = null;
+        await this.setTotalityData(true);
       }
     });
+  }
+
+  async setTotalityData(showLoader = false) {
+    if (showLoader) await this.globalSer.presentLoading();
+    const data: any[] = [];
+    const model = () => ({
+      _id: null,
+      groupName: null,
+      observations: [],
+      report: {
+        bibleReading: 0,
+        brethren: 0,
+        brethrenPlanning: 0,
+        christianChildren: 0,
+        christianChildrenFriends: 0,
+        churchAttendance: 0,
+        churchAttendanceChildren: 0,
+        consolidated: 0,
+        conversions: 0,
+        conversionsChildren: 0,
+        discipleshipVisits: 0,
+        friends: 0,
+        offering: 0,
+        reconciliations: 0,
+        scheduledVisits: 0,
+        total: 0,
+      }
+    });
+    const getReportCounter = (report: any, rData: any) => {
+      report.bibleReading += rData?.bibleReading || 0;
+      report.brethren += rData?.brethren || 0;
+      report.brethrenPlanning += rData?.brethrenPlanning || 0;
+      report.christianChildren += rData?.christianChildren || 0;
+      report.christianChildrenFriends += rData?.christianChildrenFriends || 0;
+      report.churchAttendance += rData?.churchAttendance || 0;
+      report.churchAttendanceChildren += rData?.churchAttendanceChildren || 0;
+      report.consolidated += rData?.consolidated || 0;
+      report.conversions += rData?.conversions || 0;
+      report.conversionsChildren += rData?.conversionsChildren || 0;
+      report.discipleshipVisits += rData?.discipleshipVisits || 0;
+      report.friends += rData?.friends || 0;
+      report.offering += rData?.offering || 0;
+      report.reconciliations += rData?.reconciliations || 0;
+      report.scheduledVisits += rData?.scheduledVisits || 0;
+      report.total += rData?.total || 0;
+      return report;
+    };
+    let currentGroup: number|null = null;
+    this.reportsAlt = null;
+    const { length } = this.reports;
+
+    if (length > 0) {
+      if (this.totalityOpt !== 0) {
+        let modelData: any = model();
+        this.reports.forEach((d: any, i: number) => {
+          if (d.group[this.totalityOpt === 1 ? 'subSector' : 'sector'] !== currentGroup) {
+            if (currentGroup !== null) data.push(modelData);
+            currentGroup = d.group[this.totalityOpt === 1 ? 'subSector' : 'sector'];
+            modelData = model();
+            modelData._id = i;
+            modelData.groupName = `Sector: ${d.group.sector}`;
+            if (this.totalityOpt === 1)
+              modelData.groupName += ` - SS: ${d.group.subSector}`;
+          }
+
+          // concat observations list
+          modelData.observations = modelData.observations?.concat(d.observations || []);
+          // set data reports
+          modelData.report = getReportCounter(modelData.report, d.report);
+        });
+
+        if (length > 0 && data.length === 0 && modelData) data.push(modelData);
+      }
+      else {
+        let modelData: any = model();
+        this.reports.forEach(d => {
+          modelData = model();
+          modelData._id = d.group._id;
+          modelData.groupName = `S: ${d.group.sector}`;
+          modelData.groupName += ` - SS: ${d.group.subSector}`;
+          modelData.groupName += ` - #: ${d.group.number}`;
+
+          // concat observations list
+          modelData.observations = modelData.observations?.concat(d.observations || []);
+
+          // set data reports
+          modelData.report = getReportCounter(modelData.report, d.report);
+          data.push(modelData);
+        });
+      }
+      this.reportsAlt = data;
+    }
+
+    if (showLoader) await this.globalSer.dismissLoading();
   }
 
 }

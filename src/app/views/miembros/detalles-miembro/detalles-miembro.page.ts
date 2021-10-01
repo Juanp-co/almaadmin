@@ -44,6 +44,7 @@ export class DetallesMiembroPage implements OnInit {
   totals: IDetallesMiembroTotals | null = null;
   enableActions = false;
   editRole = false;
+  showAdminButtons = false;
   formData: IDetallesMiembroEdit | null = null;
   formDataRole: any = {
     roles: []
@@ -95,6 +96,7 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.showAdminButtons = this.globalSer.checkRoleToEnableAddOrUpdate();
     this.id = this.activateRoute.snapshot.paramMap.get('userid');
     await this.globalSer.presentLoading();
     const data: any = await this.detallesMiembroService.getUserDetails(this.id);

@@ -15,6 +15,7 @@ export class CrearDevocionalesPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (!this.globalSer.checkRoleToEnableAddOrUpdate()) this.back();
   }
 
   async confirmCancel() {

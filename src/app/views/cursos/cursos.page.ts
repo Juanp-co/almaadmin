@@ -13,6 +13,7 @@ export class CursosPage implements OnInit {
   courses: any[] = [];
   totals = 0;
   page = 1;
+  showAddButton = false;
   queryParams: any = {
     input: 'level',
     value: 1,
@@ -24,7 +25,7 @@ export class CursosPage implements OnInit {
   handlePage = (page: number): void => {
     this.queryParams.page = page;
     this.getCoursesList();
-  }
+  };
 
   constructor(
     private cursosService: CursosService,
@@ -35,7 +36,9 @@ export class CursosPage implements OnInit {
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.showAddButton = this.globalSer.checkRoleToEnableAddOrUpdate();
+  }
 
   async ionViewWillEnter() {
     if (!this.globalSer.checkSession())

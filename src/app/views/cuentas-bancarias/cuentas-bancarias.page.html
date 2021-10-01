@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Cuentas bancarias</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="showAddButton">
       <ion-button color="primary" (click)="showForm({ clean: true })" *ngIf="!edit">
         <ion-icon name="add-outline" slot="start"></ion-icon>
         <ion-text>Agregar cuenta</ion-text>
@@ -13,7 +13,7 @@
 <ion-content>
   <ion-row class="ion-margin-bottom">
 
-    <ion-col [size]="12" class="ion-no-margin ion-no-padding" *ngIf="edit">
+    <ion-col [size]="12" class="ion-no-margin ion-no-padding" *ngIf="showAddButton && edit">
       <ion-card>
         <ion-card-header>
           <ion-card-title>{{ formData._id ? 'Editar datos' : 'Agregar cuenta' }}</ion-card-title>
