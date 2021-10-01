@@ -26,6 +26,13 @@ export class MiembrosService {
     return this.globalSer.altResponse(res);
   }
 
+  async getAllUsers(): Promise<any> {
+    const res: any = await this.axios.getData('/admin/users/download');
+
+    if (res && res.success) return res.data.members || null;
+    return this.globalSer.altResponse(res);
+  }
+
   async registerUser(data: any): Promise<any> {
     const res: any = await this.axios.postData('/admin/users', data);
 
