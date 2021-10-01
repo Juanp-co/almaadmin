@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Familias</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="showAddButton">
       <ion-button color="primary" (click)="setShowForm()" *ngIf="!showForm">
         <ion-icon name="{{showForm ? 'close' : 'add'}}-outline" slot="start"></ion-icon>
         <ion-text>{{ showForm ? 'Cancelar' : 'Agregar grupo'}}</ion-text>

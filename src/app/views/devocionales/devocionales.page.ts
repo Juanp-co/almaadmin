@@ -14,6 +14,7 @@ export class DevocionalesPage implements OnInit {
   currentMaxDate = dayjs().format('YYYY-MM-DD');
   devotionals: any = null;
   showFilter = false;
+  showAddButton = false;
   totals = 0;
   pages = 0;
   queryParams: any = {
@@ -38,6 +39,7 @@ export class DevocionalesPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.showAddButton = this.globalSer.checkRoleToEnableAddOrUpdate();
   }
 
   async ionViewDidEnter() {

@@ -1,0 +1,156 @@
+
+<ion-row class="ion-no-padding ion-margin-start ion-margin-end ion-margin-top" *ngIf="data">
+  <ion-col size="6" *ngIf="listGroups && listGroups.length > 0">
+    <ion-item>
+      <ion-label position="floating" color="medium">Grupo seleccionado</ion-label>
+      <ion-input
+        [readonly]="true"
+        [value]="getNumberGroup()"
+        autocomplete="off"
+        class="no-selected-text"
+        (click)="showListGroups(selected?._id)"
+      ></ion-input>
+    </ion-item>
+  </ion-col>
+</ion-row>
+
+<ion-row class="ion-justify-content-center ion-margin-top ion-margin-bottom ion-padding-bottom" *ngIf="dataToReport">
+  <ion-col size="12" [sizeSm]="sizeElems">
+    <ion-card class="ion-no-padding">
+      <ion-card-header class="ion-no-padding">
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-button (click)="setShowTotals()">
+              <ion-icon name="chevron-{{showTotals ? 'up' : 'down' }}-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Totales</ion-title>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content class="{{ showTotals ? '' : 'ion-hide'}} ion-no-padding ">
+        <ion-row class="ion-margin-bottom ion-margin-top">
+          <ion-col size="12" *ngIf="dataToReport">
+            <ion-row class="ion-align-items-center">
+              <ion-col size="5" class="ion-text-center">
+                <ion-text>
+                  <ion-icon name="body-outline" class="bigIcon"></ion-icon>
+                  <br>
+                  <span class="textTotals">Hermanos y niños</span>
+                </ion-text>
+              </ion-col>
+              <ion-col size="7" class="ion-text-center ion-align-items-center">
+                <ion-text>
+                  <p class="bigNumber">
+                    {{ dataToReport.totals.qty }}
+                  </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col size="12" *ngIf="dataToReport">
+            <ion-row class="ion-align-items-center">
+              <ion-col size="5" class="ion-text-center">
+                <ion-text class="ion-text-center">
+                  <ion-icon name="cash-outline" class="bigIcon"></ion-icon>
+                  <br>
+                  <span class="textTotals">Ofrendas</span>
+                </ion-text>
+              </ion-col>
+              <ion-col size="7" class="ion-text-center ion-align-items-center">
+                <ion-text class="ion-text-center">
+                  <p class="bigNumber">
+                    {{ dataToReport.offering.qty }}
+                  </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-col>
+  <ion-col size="12" [sizeSm]="sizeElems" *ngIf="dataToReport?.data1">
+    <app-chart
+      [data]="dataToReport.data1"
+      [sizeElem]="sizeElems"
+      title="{{dataToReport.data1.title}}"
+      typeChart="bar"
+    ></app-chart>
+  </ion-col>
+  <ion-col size="12" [sizeSm]="sizeElems" *ngIf="dataToReport?.data2">
+    <app-chart
+      [data]="dataToReport.data2"
+      [sizeElem]="sizeElems"
+      title="{{dataToReport.data2.title}}"
+      typeChart="bar"
+    ></app-chart>
+  </ion-col>
+  <ion-col size="12" [sizeSm]="sizeElems" *ngIf="dataToReport?.data3">
+    <app-chart
+      [data]="dataToReport.data3"
+      [sizeElem]="sizeElems"
+      title="{{dataToReport.data3.title}}"
+      typeChart="bar"
+    ></app-chart>
+  </ion-col>
+  <ion-col size="12" [sizeSm]="sizeElems" *ngIf="dataToReport?.data4">
+    <app-chart
+      [data]="dataToReport.data4"
+      [sizeElem]="sizeElems"
+      title="{{dataToReport.data4.title}}"
+      typeChart="bar"
+    ></app-chart>
+  </ion-col>
+  <ion-col size="12" [sizeSm]="sizeElems" *ngIf="dataToReport?.data5">
+    <app-chart
+      [data]="dataToReport.data5"
+      [sizeElem]="sizeElems"
+      title="{{dataToReport.data5.title}}"
+      typeChart="bar"
+    ></app-chart>
+  </ion-col>
+  <ion-col size="12" [sizeSm]="sizeElems" *ngIf="dataToReport?.data6">
+    <app-chart
+      [data]="dataToReport.data6"
+      [sizeElem]="sizeElems"
+      title="{{dataToReport.data6.title}}"
+      typeChart="bar"
+    ></app-chart>
+  </ion-col>
+  <ion-col size="12" [sizeSm]="sizeElems">
+    <ion-card class="ion-no-padding">
+      <ion-card-header class="ion-no-padding">
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-button (click)="setShowObservations()">
+              <ion-icon name="chevron-{{showObservations ? 'up' : 'down' }}-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Observaciones</ion-title>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content class="{{ showObservations ? '' : 'ion-hide'}} ion-no-padding">
+        <ion-row
+          class="{{ sizeElems === 6 ? 'max-height-250' : 'max-height-450'}}"
+          *ngIf="observationsPreview?.length > 0"
+        >
+          <ion-col size="12" size-sm="6" *ngFor="let o of observationsPreview; let i=index">
+            <ion-card (click)="showObservation(i)">
+              <ion-card-content>
+                <ion-text>
+                  <p>{{ o.observation }}</p>
+                </ion-text>
+                <ion-text>
+                  <span>{{ o.date }}</span><br>
+                </ion-text>
+                <ion-text>
+                  <i class="toSmall">Clic para más detalles.</i>
+                </ion-text>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-col>
+</ion-row>

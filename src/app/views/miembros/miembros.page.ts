@@ -44,14 +44,14 @@ export class MiembrosPage implements OnInit {
   }
 
   async ngOnInit() {
+    // get role to show register button
+    this.showRegisterButton = this.globalSer.checkRoleToEnableAddOrUpdate();
   }
 
   async ionViewWillEnter() {
     if (!this.globalSer.checkSession())
       this.router.navigate(['/ingresar']);
     else {
-      // get role to show register button
-      this.showRegisterButton = this.globalSer.checkRoleToEnableAddOrUpdate();
       // init get totals
       await this.getTotals();
     }

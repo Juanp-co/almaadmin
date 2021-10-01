@@ -37,6 +37,7 @@ export class EventosPage implements OnInit {
   ];
   events: any = [];
   showFilter = false;
+  showAddButton = false;
   rolesSelected = '';
 
   constructor(
@@ -48,6 +49,7 @@ export class EventosPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.showAddButton = this.globalSer.checkRoleToEnableAddOrUpdate();
   }
 
   async ionViewDidEnter() {

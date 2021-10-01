@@ -25,6 +25,7 @@ export class CuentasBancariasPage implements OnInit {
   Editor = ClassicEditor;
   configEditor: any = null;
   edit = false;
+  showAddButton = false;
 
   constructor(
     private alertCtrl: AlertController,
@@ -43,6 +44,7 @@ export class CuentasBancariasPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.showAddButton = this.globalSer.checkRoleToEnableAddOrUpdate();
     await this.getBanks();
   }
 
@@ -173,21 +175,23 @@ export class CuentasBancariasPage implements OnInit {
     const bank = this.banks.find(b => b._id === id);
 
     if (bank) {
-      const buttons = [
-        {
-          text: 'Eliminar',
-          handler: () => this.confirmForm(id, true)
-        },
-        {
-          text: 'Editar',
-          handler: () => this.showForm({ id, clean: true })
-        },
-        {
-          text: 'Cerrar',
-          role: 'cancel',
-          handler: () => { }
-        }
-      ];
+      const buttons = this.showAddButton ?
+        [
+          {
+            text: 'Eliminar',
+            handler: () => this.confirmForm(id, true)
+          },
+          {
+            text: 'Editar',
+            handler: () => this.showForm({ id, clean: true })
+          },
+        ]
+        : [];
+      buttons.push({
+        text: 'Cerrar',
+        // role: 'cancel',
+        handler: () => { }
+      });
 
       const message = `<img src="${bank.picture}" alt="bank_img" class="max-height-pic"> <br/>${setSaltLinesOrBr(bank.description, true)}`;
 

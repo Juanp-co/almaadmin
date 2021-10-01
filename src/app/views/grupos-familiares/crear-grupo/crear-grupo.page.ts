@@ -30,6 +30,9 @@ export class CrearGrupoPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (!this.globalSer.checkRoleToEnableAddOrUpdate()) {
+      this.back();
+    }
   }
 
   async createGroup() {

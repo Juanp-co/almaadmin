@@ -29,12 +29,13 @@ export class CrearPage implements OnInit {
 
   async ngOnInit() {
     // check if exist session
+    if (!this.globalSer.checkRoleToEnableAddOrUpdate()) this.back();
     if (!this.globalSer.checkSession()) await this.router.navigate(['/ingresar']);
     else this.levels = this.cursosService.levelsList;
   }
 
-  async back() {
-    await this.navCtrl.back();
+  back() {
+    this.navCtrl.back();
   }
 
   async registerCourse() {

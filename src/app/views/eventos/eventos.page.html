@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Eventos</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary" (click)="goToCreate()">
+      <ion-button color="primary" (click)="goToCreate()" *ngIf="showAddButton">
         <ion-icon name="add-outline" slot="start"></ion-icon>
         <ion-text>Agregar evento</ion-text>
       </ion-button>

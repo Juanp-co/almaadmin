@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{ title }}</ion-title>
-    <ion-buttons slot="end" *ngIf="user && enableActions">
+    <ion-buttons slot="end" *ngIf="user && enableActions && showAdminButtons">
       <ion-button expand="full" (click)="confirmDelete()" slot="end" *ngIf="!views.data.edit">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-text>Eliminar miembro</ion-text>
@@ -35,7 +35,7 @@
           <ion-title *ngIf="!views.data.edit && !editRole">{{ views.data.label }}</ion-title>
           <ion-title *ngIf="views.data.edit">Editar perfil del miembro</ion-title>
           <ion-title *ngIf="editRole">Cambiar rol del miembro</ion-title>
-          <ion-buttons slot="end" *ngIf="views.data.show">
+          <ion-buttons slot="end" *ngIf="views.data.show && showAdminButtons">
             <ion-button color="light" expand="full" (click)="showFormEdit()" slot="end" *ngIf="!views.data.edit && !editRole">
               <ion-icon name="create-outline" slot="start"></ion-icon>
               <ion-text>Editar</ion-text>

@@ -13,6 +13,7 @@ import {AlertController} from '@ionic/angular';
   styleUrls: ['./familias.page.scss'],
 })
 export class FamiliasPage implements OnInit {
+  showAddButton = false;
   showFilter = false;
   showForm = false;
   groups: any = [];
@@ -50,6 +51,7 @@ export class FamiliasPage implements OnInit {
 
   async ngOnInit() {
     // await this.getTotals();
+    this.showAddButton = this.globalSer.checkRoleToEnableAddOrUpdate();
   }
 
   async ionViewWillEnter() {
