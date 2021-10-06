@@ -151,6 +151,7 @@ export const civilStatus: string[] = [
   'Casado',
   'Divorciado',
   'Separado',
+  'Unión Libre',
   'Prefiero no indicar',
 ];
 
