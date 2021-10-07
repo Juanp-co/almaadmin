@@ -133,7 +133,7 @@ export class ModalEditarPreguntaPage implements OnInit {
     const data = {
       title: this.formData.title,
       description: this.formData.description,
-      urlVideo: this.formData.description,
+      urlVideo: null,
       quiz: this.quiz,
     };
     const updated: any = await this.cursosService.updateThemeCourse(this.id, this.themeId, data);
