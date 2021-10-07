@@ -16,15 +16,14 @@ export class AsignarMiembroPage implements OnInit {
   totals = 0;
   pages = 0;
   page = 1;
-  showRegisterButton = false;
   selectedUser = null;
   queryParams: any = {
     limit: 100,
     page: 1,
     input: 'names',
     value: 1,
-    word: null,
-    admins: 'true',
+    search: null,
+    // admins: 'true',
     ignoreIds: null
   };
   handleAdd = (id: string): void => this.addToSelected(id);
