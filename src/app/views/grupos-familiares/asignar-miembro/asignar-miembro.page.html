@@ -20,18 +20,18 @@
       <ion-row>
         <ion-col [size]="12" size-sm="7">
           <ion-toolbar>
-            <ion-button color="medium" (click)="queryParams.word = null; findData()" slot="start" *ngIf="queryParams.word">
+            <ion-button color="medium" (click)="queryParams.search = null; findData()" slot="start" *ngIf="queryParams.search">
               <ion-icon name="backspace-outline"></ion-icon>
             </ion-button>
             <ion-item>
               <ion-label position="floating" color="medium">Buscar</ion-label>
               <ion-input
-                [(ngModel)]="queryParams.word"
+                [(ngModel)]="queryParams.search"
                 autocomplete="off"
                 class="ion-text-uppercase"
               ></ion-input>
             </ion-item>
-            <ion-button color="medium" (click)="queryParams.word !== null || queryParams.word !== '' ? findData() : null" slot="end">
+            <ion-button color="medium" (click)="queryParams.search !== null || queryParams.search !== '' ? findData() : null" slot="end">
               <ion-icon name="search-outline"></ion-icon>
             </ion-button>
           </ion-toolbar>
