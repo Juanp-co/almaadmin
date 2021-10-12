@@ -165,6 +165,16 @@ export class GlobalService {
     return roles.some(r => limits.includes(r));
   }
 
+  checkRoleIsSuperAdmin() {
+    const limits = [0];
+    const roles = this.getRoles();
+    return roles.some(r => limits.includes(r));
+  }
+
+  checkRoles(roles: number[] = [], limits: number[] = [0, 1]) {
+    return roles?.some(r => limits.includes(r)) || false;
+  }
+
   clearAllData() {
     this.cookieService.removeCookie('token');
     this.cookieService.removeCookie('data');
@@ -173,12 +183,12 @@ export class GlobalService {
   }
 
   async altResponse(res: any): Promise<any> {
-    if (res && res.status && [401, 403].includes(res.status)) {
+    if (res?.status === 401) {
       this.clearAllData();
       return { error: 401 };
     }
 
-    await this.presentAlert('Alerta', res && res.error ? res.error : 'Error desconocido.');
+    await this.presentAlert('Alerta', res?.error || 'Error desconocido.');
     return null;
   }
 

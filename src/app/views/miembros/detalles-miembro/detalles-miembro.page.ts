@@ -44,7 +44,9 @@ export class DetallesMiembroPage implements OnInit {
   totals: IDetallesMiembroTotals | null = null;
   enableActions = false;
   editRole = false;
+  isAdmin = false;
   showAdminButtons = false;
+  showDeleteButton = false;
   formData: IDetallesMiembroEdit | null = null;
   formDataRole: any = {
     roles: []
@@ -96,9 +98,10 @@ export class DetallesMiembroPage implements OnInit {
   }
 
   async ngOnInit() {
+    await this.globalSer.presentLoading();
+    this.isAdmin = this.globalSer.checkRoleIsSuperAdmin();
     this.showAdminButtons = this.globalSer.checkRoleToEnableAddOrUpdate();
     this.id = this.activateRoute.snapshot.paramMap.get('userid');
-    await this.globalSer.presentLoading();
     const data: any = await this.detallesMiembroService.getUserDetails(this.id);
 
     if (data && !data.error) {
@@ -106,6 +109,7 @@ export class DetallesMiembroPage implements OnInit {
       this.views.data.data = this.staticData;
       this.views.referrals.referred = this.staticData.referred;
       this.totals = this.staticData.totals;
+      this.showDeleteButton = (this.isAdmin && !this.globalSer.checkRoles(data.roles, [0]));
 
       this.setUserParams();
       this.getCourses();
@@ -328,21 +332,27 @@ export class DetallesMiembroPage implements OnInit {
 
   async showRolesListAlert(selected: any = []) {
     const inputs: any[] = [];
+    const getValue = (i, v) => ({
+      name: `value-${i}`,
+      type: 'checkbox',
+      label: v,
+      value: i,
+      checked: selected.includes(i),
+    });
+
     for (const [i, value] of rolesListSingleText.entries()) {
-      inputs.push({
-        name: `value-${i}`,
-        type: 'checkbox',
-        label: value,
-        value: i,
-        checked: selected.includes(i),
-      });
+      if (i === 0) {
+        if (this.isAdmin) inputs.push(getValue(i, value));
+      }
+      else inputs.push(getValue(i, value));
     }
 
     await this.globalSer.alertWithList({
       header: 'Seleccione',
       inputs,
-      confirmAction: (selectedValues) => {
-        this.formDataRole.roles = selectedValues || [];
+      confirmAction: (selectedValues: number[] = []) => {
+        if (this.formDataRole.roles.includes(0)) this.formDataRole.roles = [0, ...selectedValues];
+        else this.formDataRole.roles = selectedValues || [];
       }
     });
   }
@@ -407,13 +417,8 @@ export class DetallesMiembroPage implements OnInit {
 
   validateRoleData(): string|null {
     const { roles } = this.formDataRole;
-
-    if (!roles || roles?.length === 0) {
-      return 'Disculpe, pero el rol seleccionado es incorrecto.';
-    }
-    if (!roles.some(r => [0, 1, 2, 3, 4].includes(r))) {
-      return 'Disculpe, pero el rol seleccionado es incorrecto.';
-    }
+    if (!roles || roles?.length === 0) return 'Disculpe, pero el rol seleccionado es incorrecto.';
+    if (!roles.some(r => [0, 1, 2, 3, 4].includes(r))) return 'Disculpe, pero el rol seleccionado es incorrecto.';
     return null;
   }
 

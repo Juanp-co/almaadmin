@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>{{ title }}</ion-title>
-    <ion-buttons slot="end" *ngIf="user && enableActions && showAdminButtons">
+    <ion-buttons slot="end" *ngIf="user && enableActions && showAdminButtons && showDeleteButton">
       <ion-button expand="full" (click)="confirmDelete()" slot="end" *ngIf="!views.data.edit">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-text>Eliminar miembro</ion-text>
