@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ showForm ? 'Agregar iglesia' : 'Iglesias' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="setShowForm()" *ngIf="showForm">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-text>Cancelar</ion-text>
+      </ion-button>
+      <ion-button color="primary" (click)="setShowForm()" *ngIf="!showForm">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        <ion-text>Agregar</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row *ngIf="!showForm">
+    <ion-col size="12" size-sm="6" *ngFor="let church of churches">
+      <app-iglesias-card
+        [church]="church"
+      ></app-iglesias-card>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="showForm">
+    <ion-col size="12">
+      <app-iglesias-form
+        [handleCancel]="handleCancel"
+        [handleSave]="handleSubmit"
+      ></app-iglesias-form>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

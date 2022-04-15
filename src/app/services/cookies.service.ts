@@ -22,7 +22,7 @@ export class CookiesService {
 
   setCookie(key: string, value: any) {
     cookie.set(key, value, {
-      expires: 1,
+      expires: 465,
       path: '/'
     });
   }

@@ -1,0 +1,112 @@
+<ion-card>
+  <ion-card-content>
+    <ion-row>
+      <ion-col size="12" size-sm="6" class="ion-text-center">
+        <div class="">
+          <label class="micursor ion-text-center">
+            <div
+              class="{{!formData.picture ? 'picture-default' : 'picture-loaded'}}"
+              [ngStyle]="{backgroundImage: 'url('+ (formData.picture || 'assets/photo.png') +')', height: '250px'}"
+            >
+              <input type='file' accept="image/x-png,image/gif,image/jpeg,image/jpg" (change)='openFile($event)' hidden>
+            </div>
+          </label>
+          <ion-text><i>Clic para {{ !data ? 'cargar' : 'cambiar'}} una imagen</i></ion-text>
+        </div>
+      </ion-col>
+      <ion-col size="12" size-sm="6">
+        <ion-row class="ion-no-margin ion-no-padding">
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Nombre de la iglésia (*)</ion-label>
+              <ion-input
+                [value]="formData.name"
+                (change)="setFormData('name', $event)"
+                name="name"
+                class="ion-text-uppercase"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Teléfono principal (*)</ion-label>
+              <ion-input
+                [value]="formData.phone1"
+                autocomplete="off"
+                maxlength="10"
+                (change)="setFormData('phone1', $event)"
+                (keypress)="validateOnlyNumber($event)"
+                class="ion-text-uppercase"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" color="medium">Teléfono secundario</ion-label>
+              <ion-input
+                [value]="formData.phone2"
+                autocomplete="off"
+                maxlength="10"
+                (change)="setFormData('phone2', $event)"
+                (keypress)="validateOnlyNumber($event)"
+                class="ion-text-uppercase"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="12" size-sm="4">
+        <ion-item>
+          <ion-label position="floating" color="medium">Descripción (*)</ion-label>
+          <ion-textarea
+            [value]="formData.description"
+            (change)="setFormData('description', $event)"
+            rows="5"
+            class="ion-text-uppercase"
+          ></ion-textarea>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="4">
+        <ion-item>
+          <ion-label position="floating" color="medium">Dirección (*)</ion-label>
+          <ion-textarea
+            [value]="formData.address"
+            (change)="setFormData('address', $event)"
+            rows="5"
+            class="ion-text-uppercase"
+          ></ion-textarea>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-sm="4">
+        <ion-row>
+          <ion-col>
+            <ion-label>Arrastre el marcador para mostrar la ubicación del grupo</ion-label>
+            <div class="div-map">
+              <app-map-2
+                [coords]="getParamsToMap()"
+                [height]="'100%'"
+                [zoom]="this.data ? 13 : 8"
+                [handleSave]="handleUpdateCoords"
+              ></app-map-2>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="12" size-sm="12" class="ion-margin-top">
+        <ion-text color="medium"><i class="toSmall">(*) Campos requeridos.</i></ion-text>
+      </ion-col>
+      <ion-col size="12" size-sm="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+        <ion-button color="medium" (click)="handleCancel()">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          <ion-text>Cancelar</ion-text>
+        </ion-button>
+        <ion-button color="primary" (click)="confirmAction()">
+          <ion-icon name="save-outline" slot="start"></ion-icon>
+          <ion-text>Guardar</ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

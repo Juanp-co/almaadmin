@@ -28,9 +28,7 @@ export class CrearDevocionalesPage implements OnInit {
     });
   }
 
-  back() {
-    this.navCtrl.back();
-  }
+  back() { this.navCtrl.back(); }
 
   handleCancel = (): void => this.back();
 

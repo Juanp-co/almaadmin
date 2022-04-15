@@ -40,7 +40,10 @@ export class InicioPage implements OnInit {
 
   async ionViewWillEnter() {
     if (!this.globalSer.checkSession()) this.router.navigate(['/ingresar']);
-    else await this.getData();
+    else {
+      this.getData();
+      this.getChurches();
+    }
   }
 
   async getData() {
@@ -57,6 +60,11 @@ export class InicioPage implements OnInit {
       await this.globalSer.errorSession();
     }
     else await this.globalSer.dismissLoading();
+  }
+
+  async getChurches() {
+    const data = await this.inicioService.getChurches();
+    await this.cookieService.setCookie('churches', data || []);
   }
 
   // actions views

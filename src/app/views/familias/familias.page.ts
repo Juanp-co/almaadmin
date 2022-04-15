@@ -4,7 +4,7 @@ import {AxiosService} from '../../services/axios.service';
 import {CookiesService} from '../../services/cookies.service';
 import {GlobalService} from '../../services/global.service';
 import {FamiliasService} from './familias.service';
-import {checkCodeValue, checkTitlesOrDescriptions} from '../../../Utils/validations.functions';
+import {checkTitlesOrDescriptions} from '../../../Utils/validations.functions';
 import {AlertController} from '@ionic/angular';
 
 @Component({
@@ -13,6 +13,7 @@ import {AlertController} from '@ionic/angular';
   styleUrls: ['./familias.page.scss'],
 })
 export class FamiliasPage implements OnInit {
+  timer;
   showAddButton = false;
   showFilter = false;
   showForm = false;
@@ -92,18 +93,14 @@ export class FamiliasPage implements OnInit {
 
   async getGroupList() {
     if (this.showFilter) this.showFilter = false;
-    await this.globalSer.presentLoading();
     const data: any = await this.familiasService.getGroups(this.queryParams);
 
     if (data && !data.error) {
       this.groups = data;
-      await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
-      await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else await this.globalSer.dismissLoading();
   }
 
   async addGroup() {
@@ -148,6 +145,16 @@ export class FamiliasPage implements OnInit {
       this.showForm = false;
     }
     else this.showForm = true;
+  }
+
+  searchInput(value) {
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(async () => {
+      this.pages = 0;
+      this.queryParams.page = 1;
+      this.queryParams.word = value.target.value || null ;
+      await this.getTotals();
+    }, 200);
   }
 
   async setSortOrder() {

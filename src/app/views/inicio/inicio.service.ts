@@ -19,4 +19,12 @@ export class InicioService {
     if (res && res.success) return res.data.report;
     return this.globalSer.altResponse(res);
   }
+
+  async getChurches(): Promise<any> {
+    const res: any = await this.axios.getData('/churches');
+
+    if (res && res.success) return res.data.churches || [];
+
+    return [];
+  }
 }
