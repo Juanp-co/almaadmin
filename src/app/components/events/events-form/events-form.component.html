@@ -33,9 +33,9 @@
             </ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size="12" size-sm="4">
+        <ion-col size="12" size-sm="6">
           <ion-item>
-            <ion-label position="floating" color="medium">Fecha del evento (*)</ion-label>
+            <ion-label position="floating" color="medium">Fecha de inicio (*)</ion-label>
             <ion-datetime
               [value]="formData.date"
               displayFormat="DD/MM/YYYY"
@@ -48,7 +48,7 @@
             </ion-datetime>
           </ion-item>
         </ion-col>
-        <ion-col size="12" size-sm="4">
+        <ion-col size="12" size-sm="6">
           <ion-item>
             <ion-label position="floating" color="medium">Hora inicio (*)</ion-label>
             <ion-datetime
@@ -62,7 +62,22 @@
             ></ion-datetime>
           </ion-item>
         </ion-col>
-        <ion-col size="12" size-sm="4">
+        <ion-col size="12" size-sm="6" *ngIf="minDateEnd">
+          <ion-item>
+            <ion-label position="floating" color="medium">Fecha fin (*)</ion-label>
+            <ion-datetime
+              [value]="formData.dateEnd"
+              displayFormat="DD/MM/YYYY"
+              [min]="minDateEnd"
+              [max]="maxDate"
+              doneText="Listo"
+              cancelText="Cancelar"
+              (ionChange)="setMinEndHour('dateEnd', $event)"
+            >
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-sm="6">
           <ion-item>
             <ion-label position="floating" color="medium">Hora fin (*)</ion-label>
             <ion-datetime

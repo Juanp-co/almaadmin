@@ -26,6 +26,7 @@ export class EventsFormComponent implements OnInit {
     title: null,
     description: null,
     date: null,
+    dateEnd: null,
     initHour: null,
     endHour: null,
     picture: null,
@@ -40,6 +41,7 @@ export class EventsFormComponent implements OnInit {
     'Personas',
   ];
   minDate: string = dayjs().add(1, 'd').format('YYYY-MM-DD');
+  minDateEnd: string = this.minDate;
   maxDate: string = dayjs().add(5, 'y').format('YYYY-MM-DD');
   minInitHour: string = dayjs().add(1, 'd').startOf('d').format('HH:[00]');
   minEndHour: string = dayjs().startOf('d').add(1, 'd').format('HH:[00]');
@@ -100,6 +102,7 @@ export class EventsFormComponent implements OnInit {
       this.formData.title = ev ? ev.title : null;
       this.formData.description = ev ? replaceNbsp(ev.description) : null;
       this.formData.date = ev ? ev.date : null;
+      this.formData.dateEnd = ev ? ev.dateEnd : null;
       this.formData.initHour = ev ? ev.initHour : null;
       this.formData.endHour = ev ? ev.endHour : null;
       this.formData.toRoles = ev ? ev.toRoles : [];
@@ -116,7 +119,7 @@ export class EventsFormComponent implements OnInit {
             .format('YYYY-MM-DDTHH:mm:ssZ');
         }
         if (ev.endHour) {
-          this.formData.endHour = dayjs(`${this.formData.date} ${this.formData.endHour}`)
+          this.formData.endHour = dayjs(`${this.formData.dateEnd} ${this.formData.endHour}`)
             .format('YYYY-MM-DDTHH:mm:ssZ');
         }
         else {
@@ -124,6 +127,17 @@ export class EventsFormComponent implements OnInit {
             .format('YYYY-MM-DDTHH:mm:ssZ');
         }
       }
+    }
+    else {
+      const dayjsCurrentDate = dayjs().add(1, 'd');
+      this.formData.date = dayjsCurrentDate.startOf('d').format('YYYY-MM-DDTHH:[00]:ssZ');
+      this.formData.dateEnd = dayjsCurrentDate.endOf('d').format('YYYY-MM-DDTHH:mm:ssZ');
+      this.formData.initHour = dayjsCurrentDate.startOf('d').format('YYYY-MM-DDTHH:[00]:ssZ');
+      this.formData.endHour = dayjs(`${this.formData.initHour}`).add(1, 'h').format('YYYY-MM-DDTHH:[00]:ssZ');
+      // reset min limit
+      this.minInitHour = dayjsCurrentDate.startOf('d').format('HH:[00]');
+      this.minEndHour = dayjs(`${this.formData.initHour}`).add(1, 'h').format('HH:[00]');
+      this.minDateEnd = dayjsCurrentDate.startOf('d').format('YYYY-MM-DD');
     }
   }
 
@@ -162,47 +176,61 @@ export class EventsFormComponent implements OnInit {
   }
 
   setMinEndHour(input: string, ev: any) {
-    this.formData[input] = ev.target.value;
+    if (['date', 'dateEnd', 'initHour', 'endHour'].includes(input)) {
+      const date = ev.target.value;
 
-    if (input === 'date') {
-      this.minInitHour = dayjs(`${this.formData[input]}`)
-        .startOf('d')
-        .format('HH:[00]');
+      if (input === 'date') {
+        const dayjsCurrentDate = dayjs(date);
+        // set new params
+        this.formData.date = date;
+        this.formData.dateEnd = dayjsCurrentDate.endOf('d').format('YYYY-MM-DDTHH:mm:ssZ');
+        this.formData.initHour = dayjsCurrentDate.startOf('d').format('YYYY-MM-DDTHH:[00]:ssZ');
+        this.formData.endHour = dayjs(`${this.formData.initHour}`).add(1, 'h').format('YYYY-MM-DDTHH:[00]:ssZ');
+        // reset min limit
+        this.minInitHour = dayjsCurrentDate.startOf('d').format('HH:[00]');
+        this.minEndHour = dayjs(`${this.formData.initHour}`).add(1, 'h').format('HH:[00]');
+        this.minDateEnd = dayjsCurrentDate.startOf('d').format('YYYY-MM-DD');
+      }
+      else if (input === 'dateEnd') {
+        this.minEndHour = null;
+        const initD = dayjs(this.formData.date);
+        const endD = dayjs(date);
 
-      if (!this.formData.initHour) {
-        this.formData.initHour = dayjs(`${this.formData[input]}`)
-          .startOf('d')
-          .format('YYYY-MM-DDTHH:[00]:ssZ');
+        if (initD.format('YYYY-MM-DD') === endD.format('YYYY-MM-DD')) {
+          this.formData.dateEnd = date;
+          this.formData.endHour = endD.startOf('d').add(1, 'h').format('YYYY-MM-DDTHH:[00]:ssZ');
+          this.minEndHour = endD.startOf('d').add(1, 'h').format('HH:[00]');
+        }
+        else {
+          this.formData.dateEnd = endD.endOf('d').format('YYYY-MM-DDTHH:mm:ssZ');
+          this.formData.endHour = endD.startOf('d').format('YYYY-MM-DDTHH:[00]:ssZ');
+          this.minEndHour = endD.startOf('d').format('HH:[00]');
+        }
       }
-      if (!this.formData.endHour) {
-        this.minEndHour = dayjs(`${this.formData.initHour}`)
-          .startOf('d').add(1, 'h')
-          .format('HH:[00]');
-        this.formData.endHour = dayjs(`${this.formData.initHour}`)
-          .add(1, 'h')
-          .format('YYYY-MM-DDTHH:[00]:ssZ');
+      else if (input === 'initHour') {
+        const initD = dayjs(date);
+        const endD = dayjs(this.formData.endHour);
+
+        if (initD.isSame(endD) || initD.isAfter(endD)) {
+          this.minEndHour = null;
+          this.formData.endHour = initD.add(1, 'h').format('YYYY-MM-DDTHH:[00]:ssZ');
+          this.minEndHour = initD.add(1, 'h').format('HH:[00]');
+        }
+        else this.formData.initHour = date;
       }
-      else {
-        this.minEndHour = dayjs(`${this.formData.initHour}`)
-          .add(1, 'h')
-          .format('HH:[00]');
+      else if (input === 'endHour') {
+        const initD = dayjs(this.formData.initHour);
+        const endD = dayjs(date);
+
+        if (initD.isSame(endD)) {
+          this.formData.endHour = initD.add(1, 'h').format('YYYY-MM-DDTHH:[00]:ssZ');
+          this.minEndHour = initD.add(1, 'h').format('HH:[00]');
+          ev.target.value = this.formData.endHour;
+        }
+        else this.formData.endHour = date;
       }
     }
-    else if (input === 'initHour') {
-      if (dayjs(`${this.formData[input]}`).isAfter(dayjs(`${this.formData.endHour}`))) {
-        this.minEndHour = dayjs(`${this.formData[input]}`)
-          .add(1, 'h')
-          .format('HH:[00]');
-        this.formData.endHour = dayjs(`${this.formData.initHour}`)
-          .add(1, 'h')
-          .format('YYYY-MM-DDTHH:[00]:ssZ');
-      }
-      else {
-        this.minEndHour = dayjs(`${this.formData[input]}`)
-          .add(1, 'h')
-          .format('HH:[00]');
-      }
-    }
+    else this.formData[input] = ev.target.value;
   }
 
   setDateFormToSend() {
@@ -210,6 +238,7 @@ export class EventsFormComponent implements OnInit {
       title: this.formData.title?.toUpperCase() || null,
       description: replaceNbsp(this.formData.description?.toUpperCase()) || null,
       date: this.formData.date ? dayjs(this.formData.date).format('YYYY-MM-DD') : null,
+      dateEnd: this.formData.date ? dayjs(this.formData.dateEnd).format('YYYY-MM-DD') : null,
       initHour: this.getHours(this.formData.initHour),
       endHour: this.getHours(this.formData.endHour),
       toRoles: this.formData.toRoles || [],
@@ -233,7 +262,8 @@ export class EventsFormComponent implements OnInit {
     if (!checkTitlesOrDescriptions(validate.title)) return 'Disculpe, pero debe indicar el título correcto para el evento.';
     if (!validate.description || validate.description?.length < 5)
       return 'Disculpe, pero debe indicar una descripción para el evento válida.';
-    if (!checkDate(validate.date)) return 'Disculpe, pero debe indicar la fecha del evento.';
+    if (!checkDate(validate.date)) return 'Disculpe, pero debe indicar la inicial fecha del evento.';
+    if (!checkDate(validate.dateEnd)) return 'Disculpe, pero debe indicar la final fecha del evento.';
     if (!checkHour(validate.initHour)) return 'Disculpe, pero debe indicar la hora de inicio del evento.';
     if (!checkHour(validate.endHour))
       return 'Disculpe, pero debe indicar una hora correcta para la finalización del evento.';
