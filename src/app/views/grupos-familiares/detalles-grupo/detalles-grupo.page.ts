@@ -48,8 +48,8 @@ export class DetallesGrupoPage implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.id = this.activateRoute.snapshot.paramMap.get('id');
     await this.globalSer.presentLoading();
+    this.id = this.activateRoute.snapshot.paramMap.get('id');
     const data: any = await this.gruposService.getGroupDetails(this.id);
 
     if (data && !data.error) {

@@ -168,3 +168,11 @@ export const documentType: any[] = [
   { val: 'CE', label: 'Cédula de extrajería' },
   { val: 'PE', label: 'Permiso Especial de Permanencia' },
 ];
+
+export const rolesListSingleText = [
+  'Administrador',
+  'Pastor',
+  'Supervisor',
+  'Líder',
+  'Persona',
+];

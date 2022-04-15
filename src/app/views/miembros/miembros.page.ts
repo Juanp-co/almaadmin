@@ -15,6 +15,7 @@ import {DetallesMiembroService} from './detalles-miembro/detalles-miembro.servic
   styleUrls: ['./miembros.page.scss'],
 })
 export class MiembrosPage implements OnInit {
+  timer;
   professions = [];
   companyType = [];
   educationLevel = [];
@@ -24,7 +25,6 @@ export class MiembrosPage implements OnInit {
   civilStatus = [];
   gender = [];
   documentTypes = [];
-  yesOrNotValues = ['No', 'Si'];
 
   users: IMiembros[] | null = null;
   totals = 0;
@@ -110,24 +110,21 @@ export class MiembrosPage implements OnInit {
   }
 
   async getData() {
-    await this.globalSer.presentLoading();
+    // await this.globalSer.presentLoading();
     const data: any = await this.miembrosServices.getUsersList(this.queryParams);
 
     if (data && !data.error) {
       this.users = data as IMiembros[];
-      await this.globalSer.dismissLoading();
     }
     else if (data && data.error) {
       this.users = [];
       this.pages = 0;
       await this.globalSer.dismissLoading();
-      await this.globalSer.errorSession();
     }
     else {
       this.users = [];
       this.pages = 0;
-      await this.globalSer.dismissLoading();
-      await this.globalSer.presentAlert('Alerta', data ? data.error : '¡Error desconocido!');
+      await this.globalSer.presentAlert('Alerta', data?.error || '¡Error desconocido!');
     }
   }
 
@@ -237,6 +234,16 @@ export class MiembrosPage implements OnInit {
     this.queryParams.page = 1;
     this.users = null;
     await this.getData();
+  }
+
+  searchInput(value) {
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(async () => {
+      this.pages = 0;
+      this.queryParams.page = 1;
+      this.queryParams.search = value.target.value || null ;
+      await this.getTotals();
+    }, 200);
   }
 
   async findData() {

@@ -127,17 +127,17 @@ b {
 /* maps */
 .container-map {
   position: relative;
-  width: 100% !important;
   height: 100% !important;
 }
 
 .map-container {
-  position: absolute;
-  width: 100% !important;
+  //position: absolute;
+  //width: 100% !important;
 }
 
 .mapboxgl-canvas {
   height: auto !important;
+  width: auto !important;
 }
 
 .mapboxgl-popup {
@@ -154,10 +154,20 @@ b {
 }
 
 .div-map {
- position: relative;
- height: 250px;
- border: 1px solid #999 !important;
- border-radius: 5px !important;
+  position: relative;
+  height: 250px;
+  border: 1px solid #999 !important;
+  border-radius: 5px !important;
+  overflow: hidden;
+}
+
+.img-profile-card {
+  height: 80px;
+  width: 80px;
+  border-radius: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+  margin: 0 auto;
 }
 
 

@@ -16,8 +16,7 @@
 </ion-header>
 
 <ion-content>
-
-  <div *ngIf="user">
+  <div *ngIf="staticData">
     <ion-card *ngIf="views.data.data">
       <ion-card-header class="ion-no-padding ion-no-margin">
         <ion-toolbar color="primary">
@@ -49,6 +48,14 @@
       </ion-card-header>
       <ion-card-content class="{{ views.data.show ? '' : 'ion-hide' }} ion-no-padding">
         <ion-row>
+
+          <ion-col size="12" *ngIf="!views.data.edit && !editRole">
+            <app-resume-profile
+              [member]="staticData"
+              [handleConsolidator]="handleSetAsConsolidator"
+            ></app-resume-profile>
+          </ion-col>
+
           <ion-col class="ion-no-margin" size="12" *ngIf="views.data.edit && formData">
             <ion-row>
               <ion-col size="12" size-sm="6">
@@ -242,6 +249,18 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
+                  <ion-label position="floating" color="medium">Iglesia</ion-label>
+                  <ion-input
+                    [readonly]="true"
+                    [value]="church?.name || ''"
+                    autocomplete="off"
+                    class="ion-text-uppercase no-selected-text"
+                    (click)="showAlertChurchesList()"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="6">
+                <ion-item>
                   <ion-label position="floating" color="medium">Departamento</ion-label>
                   <ion-input
                     [readonly]="true"
@@ -344,184 +363,6 @@
               </ion-col>
             </ion-row>
           </ion-col>
-
-          <ion-col size="12" *ngIf="!views.data.edit && !editRole">
-            <ion-row>
-              <ion-col size="12" size-sm="6">
-                <ion-row>
-                  <ion-col size="12" class="ion-text-center">
-                    <div>
-                      <img
-                        [src]="user.picture"
-                        height="150"
-                        class="img-rounded"
-                        *ngIf="user.picture"
-                      >
-                      <img
-                        src="assets/icon/{{user.gender === 1 ? 'mujer_lista' : 'hombre_lista'}}.svg"
-                        height="150"
-                        class="img-rounded"
-                        *ngIf="!user.picture"
-                      >
-                    </div>
-                  </ion-col>
-                  <ion-col size="12">
-                    <ion-row>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Nombre(s)</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.names}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Apellido(s)</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.lastNames}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Nº de documento</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.document || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Teléfono</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.phone || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Correo electrónico</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.email || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Rol</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{this.globalSer.getRoleValue(user.roles, true)}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Fecha de nac.</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.birthday || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Sexo</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.gender || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Estado civil</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.civilStatus || 'No indicado'}}</ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="5">
-                        <ion-text><b>Cargo(s) o posición</b></ion-text>
-                      </ion-col>
-                      <ion-col size="12" size-sm="7">
-                        <ion-text>{{user.position || 'No indicado'}}</ion-text>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-
-              <ion-col size="12" size-sm="6">
-                <ion-row>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Nivel educativo</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.educationLevel || 'No indicado'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Profesión</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.profession || 'No indicado'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Empresa</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.company ? 'Si' : 'No'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5" *ngIf="user.company">
-                    <ion-text><b>Tipo de empresa</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7" *ngIf="user.company">
-                    <ion-text>{{user.companyType}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Tipo de sangre</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.bloodType || 'No indicado'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Bautizado</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.baptized ? 'Si' : 'No'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Departamento</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.department || 'No indicado'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Cuidad</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.city || 'No indicado'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Barrio</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.locality || 'No indicado'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>Dirección</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.direction || 'No indicado'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5" *ngIf="user.consolidated">
-                    <ion-text><b>Consolidado</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7" *ngIf="user.consolidated">
-                    <ion-text>{{user.consolidated ? 'Si' : 'No'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5">
-                    <ion-text><b>¿Curso de nuevo ingreso?</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7">
-                    <ion-text>{{user.meetingNew ? 'Si' : 'No'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5" *ngIf="user.petition">
-                    <ion-text><b>Petición</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7" *ngIf="user.petition">
-                    <ion-text>{{user.petition || 'No indicado'}}</ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="5" *ngIf="user.created_at">
-                    <ion-text><b>Fecha de registro</b></ion-text>
-                  </ion-col>
-                  <ion-col size="12" size-sm="7" *ngIf="user.created_at">
-                    <ion-text>{{user.created_at || 'No indicado'}}</ion-text>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
-            </ion-row>
-          </ion-col>
         </ion-row>
       </ion-card-content>
     </ion-card>
@@ -539,8 +380,6 @@
       </ion-card-header>
       <ion-card-content class="{{ views.referrals.show ? '' : 'ion-hide' }}">
         <ion-row class="ion-margin-bottom">
-          <!--<ion-col size="12" class="ion-margin-top">-->
-          <!--</ion-col>-->
           <ion-col size="12" size-sm="5" class="{{ views.referrals.referred ? '' : 'ion-hide' }} ion-margin-top" *ngIf="views.referrals.referred">
             <ion-text class="ion-margin-top"><h2><b>Padre espiritual:</b></h2></ion-text>
             <app-usercard [data]="views.referrals.referred"></app-usercard>
@@ -548,7 +387,6 @@
           <ion-col size="12" [sizeSm]="views.referrals.referred ? 7 : 12" class="ion-text-center ion-margin-top">
             <h2 class="numberTitle ion-margin-bottom">{{ totals.totalsReferrals }}</h2>
             <h1 class="ion-margin-top ion-margin-bottom">Total de hijos</h1>
-            <!--<ion-img class="pictureLogo" [src]="'/assets/icon/padres_menu.svg'"></ion-img><br>-->
             <ion-text class="ion-margin-top" color="medium" *ngIf="totals.totalsReferrals">
               <p class="ion-margin-top">
                 <ion-icon name="alert-circle-outline"></ion-icon>
@@ -562,7 +400,7 @@
           <ion-col size="12">
             <ion-text><h2><b>Hijos espirituales:</b></h2></ion-text>
           </ion-col>
-          <ion-col size="12" size-sm="6" size-md="4" *ngFor="let ref of views.referrals.data">
+          <ion-col size="12" size-sm="6" *ngFor="let ref of views.referrals.data">
             <app-usercard [data]="ref"></app-usercard>
           </ion-col>
         </ion-row>

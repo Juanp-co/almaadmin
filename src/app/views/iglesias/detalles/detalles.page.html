@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="!showEditForm">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ showEditForm ? 'Editar iglesia' : title }}</ion-title>
+    <ion-buttons slot="end" *ngIf="church">
+      <ion-button color="medium" (click)="setShowEditForm()" *ngIf="showEditForm">
+        <ion-icon name="close-outline" slot="start"></ion-icon>
+        <ion-text>Cancelar</ion-text>
+      </ion-button>
+      <ion-button color="primary" (click)="setShowEditForm()" *ngIf="!showEditForm">
+        <ion-icon name="create-outline" slot="start"></ion-icon>
+        <ion-text>Editar</ion-text>
+      </ion-button>
+      <ion-button color="danger" (click)="confirmDeleteAction()" *ngIf="!showEditForm && id !== '624a357644f15f3ce8200c2f'">
+        <ion-icon name="trash-outline" slot="start"></ion-icon>
+        <ion-text>Eliminar</ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row class="ion-margin" *ngIf="church && !showEditForm">
+    <ion-col size="12">
+      <div
+        class="img-church-card"
+        [ngStyle]="{height: '300px', 'background-image': 'url('+church.picture+'), url(/assets/cruz.png)'}"
+        *ngIf="church.picture"
+      >
+      </div>
+      <div
+        class="img-church-card"
+        [ngStyle]="{height: '300px', 'background-image': 'url(/assets/cruz.png)'}"
+        *ngIf="!church.picture"
+      ></div>
+    </ion-col>
+
+
+    <ion-col size="12">
+      <ion-row>
+
+        <ion-col size="12" [sizeSm]="8">
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                <h2>{{ church.name || '????' }}</h2>
+              </ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium"><b>Teléfono(s):</b></ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium">{{ church.phone1 || 'No indicado'}}{{ church.phone2 ? (' - ' + church.phone2) : ''}}</ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium"><b>Resumen:</b></ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium">{{ church?.description || 'No indicado.' }}</ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium"><b>Dirección:</b></ion-text>
+            </ion-col>
+            <ion-col size="12">
+              <ion-text color="medium">{{ church.address || 'No indicado'}}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="12" size-sm="4">
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="medium"><b>Ubicación:</b></ion-text>
+            </ion-col>
+            <ion-col>
+              <div class="div-map">
+                <app-map
+                  [coords]="getParamsToMap()"
+                  [height]="'100%'"
+                  [zoom]="13"
+                ></app-map>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+
+  <app-iglesias-form
+    [data]="church"
+    [handleCancel]="handleCancel"
+    [handleSave]="handleSubmit"
+    *ngIf="church && showEditForm"
+  ></app-iglesias-form>
+
+  <ion-row class="ion-margin" *ngIf="church && !showEditForm">
+
+  </ion-row>
+
+  <ion-row class="ion-margin" *ngIf="!church && !showEditForm">
+    <ion-col size="12">
+      <ion-card class="ion-no-margin ion-no-padding">
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12" class="ion-text-center">
+              <ion-text>
+                <p><ion-icon name="alert-circle-outline"></ion-icon> Disculpe, pero no se logró obtener la información de la iglesia.</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

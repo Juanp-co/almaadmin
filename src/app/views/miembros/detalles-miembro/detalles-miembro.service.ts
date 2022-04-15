@@ -23,6 +23,13 @@ export class DetallesMiembroService {
     private globalSer: GlobalService,
   ) {  }
 
+  async getChurches() {
+    const res: any = await this.axios.getData(`/churches`);
+
+    if (res && res.success) return res.data.churches || [];
+    return [];
+  }
+
   async getUserDetails(id: string) {
     const res: any = await this.axios.getData(`/admin/users/${id}`);
 
@@ -41,6 +48,13 @@ export class DetallesMiembroService {
     const res: any = await this.axios.putData(`/admin/users/${id}/role`, data);
 
     if (res && res.success) return res.data.msg || 'Se asignado el nuevo rol al miembro exitosamente.';
+    return this.globalSer.altResponse(res);
+  }
+
+  async setAsConsolidator(id) {
+    const res: any = await this.axios.putData(`admin/users/${id}/consolidator`);
+
+    if (res && res.success) return res.data.msg;
     return this.globalSer.altResponse(res);
   }
 

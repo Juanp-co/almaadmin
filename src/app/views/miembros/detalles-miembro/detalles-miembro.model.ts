@@ -23,6 +23,7 @@ export interface IDetallesMiembro {
   roles: any[];
   referred: any;
   consolidated: boolean;
+  consolidator: boolean;
   meetingNew: boolean;
   department: any;
   city: any;
@@ -30,6 +31,7 @@ export interface IDetallesMiembro {
   direction: any;
   petition: any;
   picture: string|null;
+  church: string|null;
   totals: IDetallesMiembroTotals;
   created_at?: string | null;
   updated_at?: string | null;
@@ -57,4 +59,5 @@ export interface IDetallesMiembroEdit {
   city: number | string | null;
   locality: number | string | null;
   direction: number | string | null;
+  church: string | null;
 }

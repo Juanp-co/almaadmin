@@ -8,7 +8,7 @@
               class="{{!formData.picture ? 'banner-default' : 'banner-loaded'}}"
               [ngStyle]="{backgroundImage: 'url('+ (formData.picture || 'assets/photo.png') +')', height: '260px'}"
             >
-              <input type='file' accept="image/x-png,image/gif,image/jpeg" (change)='openFile($event)' hidden>
+              <input type='file' accept="image/x-png,image/gif,image/jpeg,image/jpg" (change)='openFile($event)' hidden>
             </div>
           </label>
           <ion-text><i>Clic para {{ !data ? 'cargar' : 'cambiar'}} una imagen</i></ion-text>

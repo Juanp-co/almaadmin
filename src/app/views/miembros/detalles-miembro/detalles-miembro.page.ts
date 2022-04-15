@@ -16,6 +16,7 @@ import {
   onlyLettersInputValidation,
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
+import {CookiesService} from '../../../services/cookies.service';
 
 @Component({
   selector: 'app-detalles-miembro',
@@ -35,6 +36,8 @@ export class DetallesMiembroPage implements OnInit {
   documentTypes = [];
   yesOrNotValues = ['No', 'Si'];
   maxDate: any = null;
+  churches: any = null;
+  church: any = null;
 
   // info profile
   title = 'Cargando...';
@@ -76,7 +79,8 @@ export class DetallesMiembroPage implements OnInit {
     private activateRoute: ActivatedRoute,
     private alertCtrl: AlertController,
     private axios: AxiosService,
-    public globalSer: GlobalService,
+    private cookiesService: CookiesService,
+    private globalSer: GlobalService,
     private detallesMiembroService: DetallesMiembroService,
     private navCtrl: NavController,
     private router: Router,
@@ -102,6 +106,11 @@ export class DetallesMiembroPage implements OnInit {
     this.isAdmin = this.globalSer.checkRoleIsSuperAdmin();
     this.showAdminButtons = this.globalSer.checkRoleToEnableAddOrUpdate();
     this.id = this.activateRoute.snapshot.paramMap.get('userid');
+    this.churches = await this.cookiesService.getCookie('churches');
+    if (!this.churches) {
+      this.churches = await this.detallesMiembroService.getChurches();
+      await this.cookiesService.setCookie('churches', this.churches || []);
+    }
     const data: any = await this.detallesMiembroService.getUserDetails(this.id);
 
     if (data && !data.error) {
@@ -110,8 +119,9 @@ export class DetallesMiembroPage implements OnInit {
       this.views.referrals.referred = this.staticData.referred;
       this.totals = this.staticData.totals;
       this.showDeleteButton = (this.isAdmin && !this.globalSer.checkRoles(data.roles, [0]));
+      this.title = `Detalles: ${this.staticData.names} ${this.staticData.lastNames}`;
 
-      this.setUserParams();
+      // this.setUserParams();
       this.getCourses();
       this.getReferrals();
       await this.globalSer.dismissLoading();
@@ -143,7 +153,8 @@ export class DetallesMiembroPage implements OnInit {
     if (updated && !updated.error) {
       this.user = {...updated} as IDetallesMiembro;
       this.staticData = {...updated} as IDetallesMiembro;
-      await this.setUserParams();
+      // await this.setUserParams();
+      this.title = `Detalles: ${this.staticData.names} ${this.staticData.lastNames}`;
       await this.showFormEdit(true);
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
@@ -166,6 +177,25 @@ export class DetallesMiembroPage implements OnInit {
       this.showFormEditRole();
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
+    }
+    else if (updated && updated.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
+  async setAsConsolidator() {
+    await this.globalSer.presentLoading('Cargando. Por favor, espere...');
+    const updated: any = await this.detallesMiembroService.setAsConsolidator(this.staticData._id);
+
+    if (updated && !updated.error) {
+      this.staticData.consolidator = !this.staticData.consolidator;
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert(
+        '¡Éxito!',
+        updated || 'Se ha actualizado la información del miembro exitosamente.'
+      );
     }
     else if (updated && updated.error) {
       await this.globalSer.dismissLoading();
@@ -205,38 +235,6 @@ export class DetallesMiembroPage implements OnInit {
     if (data && !data.error) this.views.referrals.data = data;
     else if (data && data.error) await this.globalSer.errorSession();
     else await this.globalSer.dismissLoading();
-  }
-
-  setUserParams() {
-    if (this.staticData) {
-
-      this.user = {...this.staticData} as IDetallesMiembro;
-      this.title = `Detalles: ${this.user.names} ${this.user.lastNames}`;
-
-      this.user.birthday = this.user.birthday ?
-        dayjs(this.user.birthday, 'YYYY-MM-DD', true)
-          .locale('es')
-          .format('DD [de] MMMM [de] YYYY')
-        : null;
-      this.user.created_at = this.user.created_at ?
-        dayjs(this.user.created_at, 'YYYY-MM-DD HH:mm:ss', true)
-          .locale('es')
-          .format('DD [de] MMMM [de] YYYY')
-        : null;
-      this.user.bloodType = this.bloodType[this.user.bloodType] || null;
-      this.user.profession = this.professions[this.user.profession] || null;
-      this.user.educationLevel = this.educationLevel[this.user.educationLevel] || null;
-      this.user.companyType = this.companyType[this.user.companyType] || null;
-      this.user.civilStatus = this.civilStatus[this.user.civilStatus] || null;
-      this.user.gender = this.gender[this.user.gender] || null;
-
-      const depto: any = this.detallesMiembroService.departmentsList[this.user.department] || null;
-      this.user.department = depto ? depto.department : null;
-      if (depto) {
-        this.cities = depto.cities || null;
-        this.user.city = depto.cities[this.user.city] || null;
-      }
-    }
   }
 
   async back() {
@@ -281,11 +279,11 @@ export class DetallesMiembroPage implements OnInit {
 
   // actions
   async showFormEdit(edited = false) {
-    if (!edited) await this.globalSer.presentLoading();
 
     this.views.data.edit = !this.views.data.edit;
 
     if (this.views.data.edit) {
+      if (!edited) await this.globalSer.presentLoading();
       this.formData = {documentType: null, ...this.staticData} as IDetallesMiembroEdit;
       this.title = `Editar datos de: ${this.formData.names} ${this.formData.lastNames}`;
       this.formData.documentType = this.formData.document ? this.formData.document.replace(/[0-9]{5,12}/, '') : null;
@@ -294,13 +292,13 @@ export class DetallesMiembroPage implements OnInit {
       this.formData.baptized = this.formData.baptized ? 'Si' : 'No';
       this.formData.meetingNew = this.formData.meetingNew ? 'Si' : 'No';
       if (!this.cities) this.getCity();
+
+      if (!edited) await this.globalSer.dismissLoading();
     }
     else {
       this.title = `Detalles: ${this.user.names} ${this.user.lastNames}`;
       this.formData = null;
     }
-
-    if (!edited) await this.globalSer.dismissLoading();
   }
 
   showFormEditRole() {
@@ -326,6 +324,28 @@ export class DetallesMiembroPage implements OnInit {
       confirmAction: (selectedValue) => {
         this.formData[input] = selectedValue;
         if (input === 'department') this.getCity(true);
+      }
+    });
+  }
+
+  async showAlertChurchesList() {
+    const inputs: any[] = [];
+    for (const church of this.churches) {
+      inputs.push({
+        name: `value-${church._id}`,
+        type: 'radio',
+        label: church.name,
+        value: church._id,
+        checked: this.formData.church === church._id,
+      });
+    }
+
+    await this.globalSer.alertWithList({
+      header: 'Seleccione',
+      inputs,
+      confirmAction: (selectedValue) => {
+        this.church = this.churches.find(c => c._id === selectedValue);
+        this.formData.church = selectedValue;
       }
     });
   }
@@ -455,5 +475,7 @@ export class DetallesMiembroPage implements OnInit {
       confirmAction: () => this.deleteUser()
     });
   }
+
+  handleSetAsConsolidator = (): void => { this.setAsConsolidator(); };
 
 }
