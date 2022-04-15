@@ -24,8 +24,6 @@
 </ion-header>
 
 <ion-content>
-
-
   <ion-row *ngIf="eventDataForm && showEditForm">
     <ion-col size="12">
       <app-events-form
@@ -62,36 +60,70 @@
           <hr class="border">
         </ion-col>
 
-        <ion-col size="12" [sizeSm]="6">
+        <ion-col size="12" *ngIf="this.eventDataForm.dateEnd">
           <ion-row>
-            <ion-col size="12">
-              <ion-text color="medium"><b>Fecha:</b></ion-text>
+            <ion-col size="12" [sizeSm]="6">
+              <ion-text><b>Fecha inicio:</b></ion-text><br>
+              <ion-text color="medium">{{ eventData.date || '????' }}</ion-text>
             </ion-col>
-            <ion-col size="12">
+            <ion-col size="12" [sizeSm]="6">
+              <ion-text><b>Fecha fin:</b></ion-text><br>
+              <ion-text color="medium">{{ eventData.dateEnd || '????' }}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="12" *ngIf="!this.eventDataForm.dateEnd">
+          <ion-row>
+            <ion-col size="12" [sizeSm]="6">
+              <ion-text><b>Fecha:</b></ion-text><br>
               <ion-text color="medium">{{ eventData.date ? eventData.date : '????' }}</ion-text>
             </ion-col>
-          </ion-row>
-        </ion-col>
-        <ion-col size="12" [sizeSm]="3">
-          <ion-row>
-            <ion-col size="12">
-              <ion-text color="medium"><b>Hora inicio:</b></ion-text>
-            </ion-col>
-            <ion-col size="12">
-              <ion-text color="medium">{{ eventData?.initHour || '????' }}</ion-text>
-            </ion-col>
-          </ion-row>
-        </ion-col>
-        <ion-col size="12" [sizeSm]="3">
-          <ion-row>
-            <ion-col size="12" *ngIf="eventData?.endHour">
-              <ion-text color="medium"><b>Hora fin:</b></ion-text>
-            </ion-col>
-            <ion-col size="12" *ngIf="eventData?.endHour">
-              <ion-text color="medium">{{ eventData.endHour || '????' }}</ion-text>
+            <ion-col size="12" [sizeSm]="6" class="ion-no-padding">
+              <ion-row>
+                <ion-col size="6">
+                  <ion-text><b>Hora inicio:</b></ion-text><br>
+                  <ion-text color="medium">{{ eventData?.initHour || '????' }}</ion-text>
+                </ion-col>
+                <ion-col size="6" *ngIf="eventData?.endHour">
+                  <ion-text><b>Hora fin:</b></ion-text><br>
+                  <ion-text color="medium">{{ eventData.endHour || '????' }}</ion-text>
+                </ion-col>
+              </ion-row>
             </ion-col>
           </ion-row>
         </ion-col>
+
+        <!--<ion-col size="12" [sizeSm]="6">-->
+          <!--<ion-row>-->
+            <!--<ion-col size="12">-->
+              <!--<ion-text color="medium"><b>Fecha:</b></ion-text>-->
+            <!--</ion-col>-->
+            <!--<ion-col size="12">-->
+              <!--<ion-text color="medium">{{ eventData.date ? eventData.date : '????' }}</ion-text>-->
+            <!--</ion-col>-->
+          <!--</ion-row>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="12" [sizeSm]="3">-->
+          <!--<ion-row>-->
+            <!--<ion-col size="12">-->
+              <!--<ion-text color="medium"><b>Hora inicio:</b></ion-text>-->
+            <!--</ion-col>-->
+            <!--<ion-col size="12">-->
+              <!--<ion-text color="medium">{{ eventData?.initHour || '????' }}</ion-text>-->
+            <!--</ion-col>-->
+          <!--</ion-row>-->
+        <!--</ion-col>-->
+        <!--<ion-col size="12" [sizeSm]="3">-->
+          <!--<ion-row>-->
+            <!--<ion-col size="12" *ngIf="eventData?.endHour">-->
+              <!--<ion-text color="medium"><b>Hora fin:</b></ion-text>-->
+            <!--</ion-col>-->
+            <!--<ion-col size="12" *ngIf="eventData?.endHour">-->
+              <!--<ion-text color="medium">{{ eventData.endHour || '????' }}</ion-text>-->
+            <!--</ion-col>-->
+          <!--</ion-row>-->
+        <!--</ion-col>-->
 
         <ion-col size="12" [sizeSm]="6">
           <ion-row>

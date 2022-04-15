@@ -93,10 +93,19 @@ export class DetallesEventoPage implements OnInit {
   setDataToParams(data: any) {
     this.eventDataForm = {...this.eventDataForm, ...data};
     this.eventData = {...this.eventData, ...data};
-    this.eventData.date = dayjs(data.date, 'YYYY-MM-DD', true).locale('es').format('dddd, DD [de] MMMM [de] YYYY');
-    this.eventData.initHour = dayjs(`${data.date} ${data.initHour}`, 'YYYY-MM-DD HH:mm', true).format('hh:mm a');
+    const initFormat = `${data.date} ${data.initHour}`;
+    const endFormat = `${data.dateEnd || data.date} ${data.endHour}`;
+    const formatDateRet = 'dddd, DD [de] MMMM [de] YYYY, hh:mm a';
+    const formatDateWithOutHoursRet = 'dddd, DD [de] MMMM [de] YYYY';
+    this.eventData.date = dayjs(initFormat, 'YYYY-MM-DD HH:mm', true)
+      .locale('es')
+      .format(data.dateEnd ? formatDateRet : formatDateWithOutHoursRet);
+    this.eventData.dateEnd = dayjs(endFormat, 'YYYY-MM-DD HH:mm', true)
+      .locale('es')
+      .format(formatDateRet);
+    this.eventData.initHour = dayjs(initFormat, 'YYYY-MM-DD HH:mm', true).format('hh:mm a');
     this.eventData.endHour = data.endHour ?
-      dayjs(`${data.date} ${data.endHour}`, 'YYYY-MM-DD HH:mm', true).format('hh:mm a')
+      dayjs(`${data.dateEnd || data.date} ${data.endHour}`, 'YYYY-MM-DD HH:mm', true).format('hh:mm a')
       : null;
 
     if (this.showEditForm) this.showEditForm = false;
