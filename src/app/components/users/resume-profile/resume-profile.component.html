@@ -13,20 +13,6 @@
           [ngStyle]="{width: '120px', height: '120px', 'background-image': 'url(assets/icon/'+ (member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
           *ngIf="!member.picture"
         ></div>
-        <div *ngIf="picButtons">
-          <ion-button size="small" (click)="!!handleChangePhoto ? handleChangePhoto() : null">
-            <ion-icon name="image-outline" slot="start"></ion-icon>
-            <ion-text>Cambiar</ion-text>
-          </ion-button>
-          <ion-button
-            color="danger"
-            size="small"
-            (click)="!!handleDeletePic ? handleDeletePic() : null"
-            *ngIf="member.picture"
-          >
-            <ion-icon name="trash-outline"></ion-icon>
-          </ion-button>
-        </div>
       </ion-col>
       <ion-col size="12" class="ion-padding-top">
         <ion-row class="ion-no-margin ion-no-padding">
