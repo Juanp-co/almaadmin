@@ -80,7 +80,7 @@ export class DetallesMiembroPage implements OnInit {
     private alertCtrl: AlertController,
     private axios: AxiosService,
     private cookiesService: CookiesService,
-    private globalSer: GlobalService,
+    public globalSer: GlobalService,
     private detallesMiembroService: DetallesMiembroService,
     private navCtrl: NavController,
     private router: Router,
