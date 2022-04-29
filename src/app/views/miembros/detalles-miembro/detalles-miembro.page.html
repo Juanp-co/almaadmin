@@ -213,25 +213,25 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">¿Posee una empresa?</ion-label>
+                  <ion-label position="floating" color="medium">Iglesia a la que asiste</ion-label>
                   <ion-input
                     [readonly]="true"
-                    [value]="formData.company"
+                    [value]="churchForm?.name || ''"
                     autocomplete="off"
-                    class="no-selected-text"
-                    (click)="showAlertYesOrNotList('company', formData.company)"
+                    class="ion-text-uppercase no-selected-text"
+                    (click)="showAlertChurchesList()"
                   ></ion-input>
                 </ion-item>
               </ion-col>
-              <ion-col size="6" size-sm="6" *ngIf="formData.company === 'Si';">
+              <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">Tipo de empresa</ion-label>
+                  <ion-label position="floating" color="medium">¿Asitió al curso de nuevo ingreso?</ion-label>
                   <ion-input
                     [readonly]="true"
-                    [value]="companyType[formData.companyType] || ''"
+                    [value]="formData.meetingNew"
                     autocomplete="off"
-                    class="ion-text-uppercase no-selected-text"
-                    (click)="showAlertList('companyType', 'companyType', formData.companyType)"
+                    class="no-selected-text"
+                    (click)="showAlertYesOrNotList('meetingNew', formData.meetingNew)"
                   ></ion-input>
                 </ion-item>
               </ion-col>
@@ -244,18 +244,6 @@
                     autocomplete="off"
                     class="no-selected-text"
                     (click)="showAlertYesOrNotList('baptized', formData.baptized)"
-                  ></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col size="12" size-sm="6">
-                <ion-item>
-                  <ion-label position="floating" color="medium">Iglesia</ion-label>
-                  <ion-input
-                    [readonly]="true"
-                    [value]="church?.name || ''"
-                    autocomplete="off"
-                    class="ion-text-uppercase no-selected-text"
-                    (click)="showAlertChurchesList()"
                   ></ion-input>
                 </ion-item>
               </ion-col>
@@ -297,13 +285,25 @@
               </ion-col>
               <ion-col size="12" size-sm="6">
                 <ion-item>
-                  <ion-label position="floating" color="medium">¿Asitió al curso de nuevo ingreso?</ion-label>
+                  <ion-label position="floating" color="medium">¿Posee una empresa?</ion-label>
                   <ion-input
                     [readonly]="true"
-                    [value]="formData.meetingNew"
+                    [value]="formData.company"
                     autocomplete="off"
                     class="no-selected-text"
-                    (click)="showAlertYesOrNotList('meetingNew', formData.meetingNew)"
+                    (click)="showAlertYesOrNotList('company', formData.company)"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="6" size-sm="6" *ngIf="formData.company === 'Si';">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Tipo de empresa</ion-label>
+                  <ion-input
+                    [readonly]="true"
+                    [value]="companyType[formData.companyType] || ''"
+                    autocomplete="off"
+                    class="ion-text-uppercase no-selected-text"
+                    (click)="showAlertList('companyType', 'companyType', formData.companyType)"
                   ></ion-input>
                 </ion-item>
               </ion-col>

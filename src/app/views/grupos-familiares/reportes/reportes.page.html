@@ -6,12 +6,6 @@
       </ion-button>
     </ion-buttons>
     <ion-title>Reportes de grupos familiares</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="showListResizeAlert()">
-        <ion-icon name="resize-outline" slot="start"></ion-icon>
-        <ion-text>Visualización</ion-text>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -119,9 +113,8 @@
   </ion-row>
 
   <app-families-groups-reports
-    [data]="reportsAlt"
-    [sizeElems]="sizeElems"
-    *ngIf="reportsAlt; else noReports"
+    [data]="dataAlt"
+    *ngIf="dataAlt; else noReports"
   ></app-families-groups-reports>
 
   <ng-template #noReports>

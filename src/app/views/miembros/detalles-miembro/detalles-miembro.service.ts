@@ -25,7 +25,6 @@ export class DetallesMiembroService {
 
   async getChurches() {
     const res: any = await this.axios.getData(`/churches`);
-
     if (res && res.success) return res.data.churches || [];
     return [];
   }

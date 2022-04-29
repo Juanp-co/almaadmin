@@ -10,7 +10,6 @@ import {GlobalService} from '../../services/global.service';
 export class FamiliesGroupsReportsComponent implements OnInit {
 
   @Input() data: any[]|null = null;
-  @Input() sizeElems = 6;
 
   listGroups: any[]|null = null;
   selected: any|null = null;
@@ -18,8 +17,10 @@ export class FamiliesGroupsReportsComponent implements OnInit {
   observations: any[]|null = null;
   observationsPreview: any[]|null = null;
   dataToReport: any|null = null;
+  dataToReportText: any|null = null;
   showTotals = true;
   showObservations = true;
+  onlyText = true;
 
   constructor(
     private globalSer: GlobalService
@@ -49,16 +50,19 @@ export class FamiliesGroupsReportsComponent implements OnInit {
     if (data && data.length > 0) {
       this.observations = data;
       data.forEach(o => {
+        const date = dayjs(o.date, 'YYYY-MM-DD HH:mm:ss', true)
+          .locale('es')
+          .format('ddd, DD [de] MMM [de] YYYY - H:mm a');
         this.observationsPreview.push({
           observation: o.observations.length > 50 ? `${o.observations.substr(0, 50)} ...` : o.observations,
-          date: dayjs(o.date).format('DD-MM-YYYY HH:mm'),
+          member: o.member,
+          date,
         });
       });
     }
   }
 
   async setDataToReport(data: any) {
-    await this.globalSer.presentLoading();
     this.dataToReport = null;
     this.dataToReport = !data ? null : {
       data1: {
@@ -156,11 +160,57 @@ export class FamiliesGroupsReportsComponent implements OnInit {
         qty: this.globalSer.getCurrency(data.offering || 0)
       },
     };
-    await this.globalSer.dismissLoading();
+    this.dataToReportText = !data ? null : [
+      { label: 'Hermanos', value: data.brethren },
+      { label: 'Amigos', value: data.friends },
+      { label: 'Niños', value: data.christianChildren },
+      { label: 'Niños (amigos)', value: data.christianChildrenFriends },
+      { label: 'Visitas programadas', value: data.scheduledVisits },
+      { label: 'Visitas disipulado', value: data.discipleshipVisits },
+      { label: 'Visitas', value: data.discipleshipVisits },
+      { label: 'Asistencia de hnos.', value: data.churchAttendance },
+      { label: 'Asistencia de niños', value: data.churchAttendanceChildren },
+      { label: 'Reconciliaciones', value: data.reconciliations },
+      { label: 'Conversiones', value: data.conversions },
+      { label: 'Conversiones de niños', value: data.conversionsChildren },
+      { label: 'Visitas', value: data.discipleshipVisits },
+      { label: 'Planif. de hermanos', value: data.discipleshipVisits },
+      { label: 'Lectura bíblica', value: data.brethrenPlanning },
+      { label: 'Consolidaciones', value: data.bibleReading },
+      { label: 'Total de hnos. y niños', value: data.total },
+      { label: 'Total de ofrendas', value: this.globalSer.getCurrency(data.offering || 0) },
+    ];
   }
 
   getNumberGroup() {
     return this.selected?.groupName || 'Desconocido';
+  }
+
+  async showListGroups(id: any) {
+    const inputs: any[] = [];
+    for (const lg of this.listGroups) {
+      inputs.push( {
+        name: `list-groups`,
+        type: 'radio',
+        label: lg.groupName,
+        value: lg._id,
+        checked: lg._id === id,
+      });
+    }
+
+    await this.globalSer.alertWithList({
+      header: 'Seleccione un grupo',
+      inputs,
+      confirmAction: async (value) => {
+        if (value !== id) {
+          this.dataToReport = null;
+          const data = this.data.find(r => r?._id === value) || null;
+          await this.setDataToReport(data?.report || null);
+          this.selected = data || null;
+          await this.setObservationsValues(data?.observations || null);
+        }
+      }
+    });
   }
 
   downloadData() {
@@ -227,39 +277,36 @@ export class FamiliesGroupsReportsComponent implements OnInit {
       );
   }
 
-  async showListGroups(id: any) {
+  async showListModelDataOpt() {
     const inputs: any[] = [];
-    for (const lg of this.listGroups) {
+    for (const lg of [{ label: 'Texto', value: true }, { label: 'Gráfico', value: false }]) {
       inputs.push( {
-        name: `list-groups`,
+        name: `show-mode-data`,
         type: 'radio',
-        label: lg.groupName,
-        value: lg._id,
-        checked: lg._id === id,
+        label: lg.label,
+        value: lg.value,
+        checked: lg.value === this.onlyText,
       });
     }
 
     await this.globalSer.alertWithList({
-      header: 'Seleccione un grupo',
+      header: 'Seleccione',
       inputs,
-      confirmAction: async (value) => {
-        if (value !== id) {
-          this.dataToReport = null;
-          const data = this.data.find(r => r?._id === value) || null;
-          await this.setDataToReport(data?.report || null);
-          this.selected = data || null;
-          await this.setObservationsValues(data?.observations || null);
-        }
-      }
+      confirmAction: async (value) => { this.onlyText = value || false; }
     });
   }
 
   async showObservation(index: number) {
     const ob = this.observations[index] || null;
     if (ob) {
+      const date = dayjs(ob.date, 'YYYY-MM-DD HH:mm:ss', true)
+        .locale('es')
+        .format('ddd, DD [de] MMM [de] YYYY - H:mm a');
+      const member = ob.member ? `<b>Por:</b> ${ob.member.names} ${ob.member.lastNames}` : null;
+
       await this.globalSer.presentAlert(
         'Observación',
-        `<b>Fecha: </b>${dayjs(ob.date).format('DD-MM-YYYY HH:mm')} <br><br> ${ob.observations}`
+        `${member} <br><br>${date}<br><br>${ob.observations}`
       );
     }
     else

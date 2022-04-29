@@ -54,4 +54,9 @@ export class MiembrosService {
     if (res && res.success) return res.data.groups || [];
     return this.globalSer.altResponse(res);
   }
+
+  async getChurches(): Promise<any | null> {
+    const res: any = await this.axios.getData('/churches');
+    return res && res.success ? (res.data.churches || []) : [];
+  }
 }

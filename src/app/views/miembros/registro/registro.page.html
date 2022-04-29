@@ -107,19 +107,48 @@
                 ></ion-input>
               </ion-item>
             </ion-col>
-            <ion-col size="12" size-sm="6">
+            <ion-col size="12" size-sm="6" *ngIf="churches?.length > 1">
+              <ion-item>
+                <ion-label position="floating" color="medium">Iglesia a la que asiste</ion-label>
+                <ion-input
+                  [readonly]="true"
+                  [value]="church?.name || ''"
+                  autocomplete="off"
+                  class="ion-text-uppercase"
+                  (click)="showListChurches()"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" [sizeSm]="churches?.length > 1 ? 4 : 6">
               <ion-item>
                 <ion-label position="floating" color="medium">Barrio o localidad</ion-label>
                 <ion-input [(ngModel)]="formData.locality" autocomplete="off" maxlength="100" class="ion-text-uppercase"></ion-input>
               </ion-item>
             </ion-col>
-            <ion-col size="12" size-sm="6">
+            <ion-col size="12" [sizeSm]="churches?.length > 1 ? 4 : 6">
               <ion-item>
                 <ion-label position="floating" color="medium">Dirección</ion-label>
                 <ion-input [(ngModel)]="formData.direction" autocomplete="off" maxlength="250" class="ion-text-uppercase"></ion-input>
               </ion-item>
             </ion-col>
+            <ion-col size="12" [sizeSm]="churches?.length > 1 ? 4 : 6">
+              <ion-item>
+                <ion-label position="floating" color="medium">Fecha de incorporación</ion-label>
+                <ion-datetime
+                  [(ngModel)]="formData.created_at"
+                  displayFormat="DD/MM/YYYY"
+                  min="2010-01-01"
+                  max="{{maxDate}}"
+                  doneText="Listo"
+                  cancelText="Cancelar"
+                  (ionChange)="setDate()"
+                >
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+
             <ion-col size="12">&nbsp;</ion-col>
+
             <ion-col size="12" size-sm="6">
               <ion-item lines="none">
                 <ion-label color="medium">¿Asiste a un grupo familiar?</ion-label>

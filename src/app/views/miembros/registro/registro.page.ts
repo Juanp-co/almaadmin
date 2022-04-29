@@ -30,6 +30,8 @@ export class RegistroPage implements OnInit {
   referralData: any = null;
   groupData: any = null;
   maxDate: any = null;
+  churches: any[] = [];
+  church: any = null;
   formData: any = {
     phone: null,
     names: null,
@@ -46,7 +48,9 @@ export class RegistroPage implements OnInit {
     roles: [4],
     referred: null,
     consolidated: false,
+    church: null,
     iAmConsolidator: true,
+    created_at: null
   };
 
   constructor(
@@ -73,6 +77,16 @@ export class RegistroPage implements OnInit {
     else {
       this.civilStatus = this.detallesMiembroService.civilStatusList;
       this.gender = this.detallesMiembroService.genderList;
+    }
+    await this.getChurches();
+  }
+
+  async getChurches() {
+    this.churches = await this.miembrosService.getChurches();
+    await this.cookiesService.setCookie('churches', this.churches);
+    if (this.churches.length === 1) {
+      this.formData.church = this.churches[0]._id;
+      this.church = this.churches[0];
     }
   }
 
@@ -141,6 +155,29 @@ export class RegistroPage implements OnInit {
   }
 
   // Alerts
+
+  async showListChurches() {
+    const inputs: any = [];
+    for (const [index, value] of this.churches.entries()) {
+      inputs.push({
+        name: `documentType`,
+        type: 'radio',
+        label: value.name,
+        value: index,
+        checked: this.church?._id === value._id,
+      });
+    }
+
+    await this.globalSer.alertWithList({
+      header: 'Seleccione',
+      inputs,
+      confirmAction: (selectedValue) => {
+        this.formData.church = this.churches[selectedValue]?._id || null;
+        this.church = this.churches[selectedValue] || null;
+      }
+    });
+  }
+
   async showAlertList(input: string, nameArray: string, selected: any = null) {
     const inputs: any[] = [];
     for (const [i, value] of this[nameArray].entries()) {

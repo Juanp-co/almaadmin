@@ -1,31 +1,31 @@
-<ion-row *ngIf="member">
+<ion-row *ngIf="data">
   <ion-col size="12" size-sm="6" class="ion-no-margin ion-no-padding">
     <ion-row class="ion-no-margin ion-no-padding">
       <ion-col size="12" class="ion-text-center">
         <div
           class="img-profile-card"
-          [ngStyle]="{width: '120px', height: '120px', 'background-image': 'url('+member.picture+'), url(assets/icon/'+ (member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
-          *ngIf="member.picture"
+          [ngStyle]="{width: '120px', height: '120px', 'background-image': 'url('+data.picture+'), url(assets/icon/'+ (data.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
+          *ngIf="data.picture"
         >
         </div>
         <div
           class="img-profile-card"
-          [ngStyle]="{width: '120px', height: '120px', 'background-image': 'url(assets/icon/'+ (member.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
-          *ngIf="!member.picture"
+          [ngStyle]="{width: '120px', height: '120px', 'background-image': 'url(assets/icon/'+ (data.gender === 1 ? 'mujer_lista' : 'hombre_lista') + '.svg)'}"
+          *ngIf="!data.picture"
         ></div>
       </ion-col>
       <ion-col size="12" class="ion-padding-top">
         <ion-row class="ion-no-margin ion-no-padding">
           <ion-col size="12" class="ion-no-margin ion-no-padding">
-            <app-elem-item label="Nombre(s)" value="{{member.names || 'No indicado'}}"></app-elem-item>
-            <app-elem-item label="Apellido(s)" value="{{member.lastNames || 'No indicado'}}"></app-elem-item>
-            <app-elem-item label="Documento" value="{{member.document || 'No indicado'}}"></app-elem-item>
-            <app-elem-item label="Roles" value="{{getRoleValue()}}" [show]="!!member.roles"></app-elem-item>
-            <app-elem-item label="Teléfono" value="{{member.phone || 'No indicado'}}"></app-elem-item>
-            <app-elem-item label="Correo elect." value="{{member.email || 'No indicado'}}"></app-elem-item>
-            <app-elem-item label="Cargo(s) o posición" value="{{member.position || 'No indicado'}}"></app-elem-item>
-            <app-elem-item label="Fecha de nac." value="{{member.birthday || 'No indicado'}}"></app-elem-item>
-            <app-elem-item label="Sexo" value="{{member.gender || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Nombre(s)" value="{{data.names || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Apellido(s)" value="{{data.lastNames || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Documento" value="{{data.document || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Roles" value="{{getRoleValue()}}" [show]="!!data.roles"></app-elem-item>
+            <app-elem-item label="Teléfono" value="{{data.phone || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Correo elect." value="{{data.email || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Cargo(s) o posición" value="{{data.position || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Fecha de nac." value="{{data.birthday || 'No indicado'}}"></app-elem-item>
+            <app-elem-item label="Sexo" value="{{data.gender || 'No indicado'}}"></app-elem-item>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -34,28 +34,29 @@
   <ion-col size="12" size-sm="6" class="ion-no-margin">
     <ion-row class="ion-no-margin ion-no-padding">
       <ion-col size="12" class="ion-no-margin ion-no-padding">
-        <app-elem-item label="Estado civil" value="{{member.civilStatus || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Iglesia" value="{{member.church || 'Sin asignar'}}"></app-elem-item>
-        <app-elem-item label="Nivel educativo" value="{{member.educationLevel || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Profesión" value="{{member.profession || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Tipo de sangre" value="{{member.bloodType || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Empresa" value="{{member.company ? 'Si' : 'No'}}"></app-elem-item>
-        <app-elem-item label="Tipo de empresa" value="{{member.educationLevel || 'No indicado'}}" [show]="member.company">
+        <app-elem-item label="Estado civil" value="{{data.civilStatus || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Iglesia" value="{{data.church || 'Sin asignar'}}"></app-elem-item>
+        <app-elem-item label="Nivel educativo" value="{{data.educationLevel || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Profesión" value="{{data.profession || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Tipo de sangre" value="{{data.bloodType || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Empresa" value="{{data.company ? 'Si' : 'No'}}"></app-elem-item>
+        <app-elem-item label="Tipo de empresa" value="{{data.educationLevel || 'No indicado'}}" [show]="data.company">
         </app-elem-item>
-        <app-elem-item label="Bautizado" value="{{member.baptized ? 'Si' : 'No'}}"></app-elem-item>
-        <app-elem-item label="Asistí al curso de nuevos" value="{{member.meetingNew ? 'Si' : 'No'}}"></app-elem-item>
-        <app-elem-item label="Departamento" value="{{ member.department || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Cuidad" value="{{ member.city || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Barrio" value="{{member.locality || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Dirección" value="{{member.direction || 'No indicado'}}"></app-elem-item>
-        <app-elem-item label="Mi petición" value="{{member.petition || 'No indicado'}}" [show]="member.petition"></app-elem-item>
+        <app-elem-item label="Bautizado" value="{{data.baptized ? 'Si' : 'No'}}"></app-elem-item>
+        <app-elem-item label="Asistí al curso de nuevos" value="{{data.meetingNew ? 'Si' : 'No'}}"></app-elem-item>
+        <app-elem-item label="Departamento" value="{{ data.department || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Cuidad" value="{{ data.city || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Barrio" value="{{data.locality || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Dirección" value="{{data.direction || 'No indicado'}}"></app-elem-item>
+        <app-elem-item label="Petición" value="{{data.petition || 'No indicado'}}" [show]="data.petition"></app-elem-item>
+        <app-elem-item label="Fecha de incorporación" value="{{data.created_at || 'No indicado'}}"></app-elem-item>
       </ion-col>
     </ion-row>
   </ion-col>
   <ion-col size="12" class="ion-text-center">
-    <ion-button color="{{member.consolidator ? 'danger' : 'primary'}}" (click)="confirmConsolidator()">
-      <ion-icon name="lock-{{member.consolidator ? 'closed' : 'open'}}-outline" slot="start"></ion-icon>
-      <ion-text>{{member.consolidator ? 'Quitar' : 'Asignar'}} como consolidador</ion-text>
+    <ion-button color="{{data.consolidator ? 'danger' : 'primary'}}" (click)="confirmConsolidator()">
+      <ion-icon name="lock-{{data.consolidator ? 'closed' : 'open'}}-outline" slot="start"></ion-icon>
+      <ion-text>{{data.consolidator ? 'Quitar' : 'Asignar'}} como consolidador</ion-text>
     </ion-button>
   </ion-col>
 </ion-row>
