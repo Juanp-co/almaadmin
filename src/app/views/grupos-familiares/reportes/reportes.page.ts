@@ -15,20 +15,11 @@ import {formatCurrency} from '@angular/common';
 export class ReportesPage implements OnInit {
 
   opts = ['Ninguno', 'Sub-sector', 'Sector'];
-  reports: any[]|null = null;
-  reportsAlt: any[]|null = null;
-  listGroups: any[]|null = null;
-  selected: any|null = null;
-  report: any|null = null;
-  observations: any[]|null = null;
-  observationsPreview: any[]|null = null;
-  dataToReport: any|null = null;
-
+  data: any = null;
+  dataAlt: any = null;
   totalityOpt = 0;
   sizeElems = 6;
   showFilter = false;
-  showTotals = true;
-  showObservations = true;
   minInitDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
   maxInitDate: string = dayjs().format('YYYY-MM-DD');
   minEndDate: string = dayjs('2021-01-01').format('YYYY-MM-DD');
@@ -54,53 +45,21 @@ export class ReportesPage implements OnInit {
   }
 
   async getData() {
-    await this.globalSer.presentLoading();
-    this.reports = null;
-    this.listGroups = null;
-    this.selected = null;
-    this.dataToReport = null;
-    this.observations = [];
-    this.observationsPreview = [];
+    this.data = null;
     const data = await this.gruposService.getFamiliesGroupsReports(this.queryParams);
+
     if (data && !data.error) {
-      this.reports = data;
-      await this.globalSer.dismissLoading();
-      await this.setTotalityData(true);
+      this.data = data;
+      this.dataAlt = null;
+      await this.setTotalityData();
     }
     else if (data && data.error) {
-      await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
-    else await this.globalSer.dismissLoading();
   }
 
   async back() {
     await this.navCtrl.back();
-  }
-
-  async showListResizeAlert() {
-    await this.globalSer.alertWithList({
-      header: 'Tamaños de las gráficas',
-      inputs: [
-        {
-          name: `resize`,
-          type: 'radio',
-          label: `Mediano`,
-          value: 6,
-          checked: this.sizeElems === 6,
-        },
-        {
-          name: `resize`,
-          type: 'radio',
-          label: `Grande`,
-          value: 12,
-          checked: this.sizeElems === 12,
-        },
-      ],
-      confirmAction: (value) => {
-        this.sizeElems = value;
-      }
-    });
   }
 
   setShowFilter() {
@@ -132,7 +91,7 @@ export class ReportesPage implements OnInit {
     if (/[0-9]{1,4}/.test(this.queryParams.number)) find = true;
 
     if (find) await this.getData();
-    else this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe indicar una fecha inicial');
+    else this.globalSer.presentAlert('Alerta', 'Disculpe, pero debe indicar una fecha inicial.');
   }
 
   // actions inputs
@@ -155,10 +114,10 @@ export class ReportesPage implements OnInit {
     await this.globalSer.alertWithList({
       header: 'Totalizar por',
       inputs,
-      confirmAction: async (value) => {
+      confirmAction: (value) => {
         this.totalityOpt = value;
-        this.reportsAlt = null;
-        await this.setTotalityData(true);
+        this.dataAlt = null;
+        this.setTotalityData(true);
       }
     });
   }
@@ -209,52 +168,49 @@ export class ReportesPage implements OnInit {
       return report;
     };
     let currentGroup: number|null = null;
-    this.reportsAlt = null;
-    const { length } = this.reports;
+    this.dataAlt = null;
 
-    if (length > 0) {
-      if (this.totalityOpt !== 0) {
-        let modelData: any = model();
-        this.reports.forEach((d: any, i: number) => {
-          if (d.group[this.totalityOpt === 1 ? 'subSector' : 'sector'] !== currentGroup) {
-            if (currentGroup !== null) data.push(modelData);
-            currentGroup = d.group[this.totalityOpt === 1 ? 'subSector' : 'sector'];
-            modelData = model();
-            modelData._id = i;
-            modelData.groupName = `Sector: ${d.group.sector}`;
-            if (this.totalityOpt === 1)
-              modelData.groupName += ` - SS: ${d.group.subSector}`;
-          }
-
-          // concat observations list
-          modelData.observations = modelData.observations?.concat(d.observations || []);
-          // set data reports
-          modelData.report = getReportCounter(modelData.report, d.report);
-        });
-
-        if (length > 0 && data.length === 0 && modelData) data.push(modelData);
-      }
-      else {
-        let modelData: any = model();
-        this.reports.forEach(d => {
+    if (this.totalityOpt > 0) {
+      let modelData: any = model();
+      this.data?.forEach((d: any, i: number) => {
+        if (d.group[this.totalityOpt === 1 ? 'subSector' : 'sector'] !== currentGroup) {
+          if (currentGroup !== null) data.push(modelData);
+          currentGroup = d.group[this.totalityOpt === 1 ? 'subSector' : 'sector'];
           modelData = model();
-          modelData._id = d.group._id;
-          modelData.groupName = `S: ${d.group.sector}`;
-          modelData.groupName += ` - SS: ${d.group.subSector}`;
-          modelData.groupName += ` - #: ${d.group.number}`;
+          modelData._id = i;
+          modelData.groupName = `Sector: ${d.group.sector}`;
+          if (this.totalityOpt === 1)
+            modelData.groupName += ` - SS: ${d.group.subSector}`;
+        }
 
-          // concat observations list
-          modelData.observations = modelData.observations?.concat(d.observations || []);
+        // concat observations list
+        modelData.observations = modelData.observations?.concat(d.observations || []);
+        // set data reports
+        modelData.report = getReportCounter(modelData.report, d.report);
+      });
 
-          // set data reports
-          modelData.report = getReportCounter(modelData.report, d.report);
-          data.push(modelData);
-        });
-      }
-      this.reportsAlt = data;
+      if (modelData) data.push(modelData);
     }
+    else {
+      let modelData: any = model();
+      this.data?.forEach(d => {
+        modelData = model();
+        modelData._id = d.group._id;
+        modelData.groupName = `S: ${d.group.sector}`;
+        modelData.groupName += ` - SS: ${d.group.subSector}`;
+        modelData.groupName += ` - #: ${d.group.number}`;
+
+        // concat observations list
+        modelData.observations = modelData.observations?.concat(d.observations || []);
+
+        // set data reports
+        modelData.report = getReportCounter(modelData.report, d.report);
+        data.push(modelData);
+      });
+    }
+
+    this.dataAlt = data;
 
     if (showLoader) await this.globalSer.dismissLoading();
   }
-
 }

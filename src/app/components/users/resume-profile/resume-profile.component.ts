@@ -22,6 +22,7 @@ import {CookiesService} from '../../../services/cookies.service';
 export class ResumeProfileComponent implements OnInit {
 
   @Input() member: any;
+  @Input() data: any;
   @Input() handleConsolidator: () => void;
 
   documentTypes: any[] = [];
@@ -49,33 +50,37 @@ export class ResumeProfileComponent implements OnInit {
   async ngOnInit() {
     this.churches = await this.cookiesService.getCookie('churches');
     if (this.member) {
-      this.member.birthday = this.member.birthday ?
-        dayjs(this.member.birthday, 'YYYY-MM-DD', true).locale('es').format('DD [de] MMMM [de] YYYY')
+      this.data = this.globalSer.copyObjectParse(this.member);
+      this.data.birthday = this.data.birthday ?
+        dayjs(this.data.birthday, 'YYYY-MM-DD', true).locale('es').format('DD [de] MMMM [de] YYYY')
         : null;
-      this.member.bloodType = bloodType[this.member.bloodType] || null;
-      this.member.profession = professions[this.member.profession] || null;
-      this.member.educationLevel = educationLevels[this.member.educationLevel] || null;
-      this.member.companyType = companyType[this.member.companyType] || null;
-      this.member.civilStatus = civilStatus[this.member.civilStatus] || null;
-      this.member.gender = gender[this.member.gender] || null;
-      if (this.member.department !== null) {
-        const depto = departments[this.member.department] || null;
+      this.data.bloodType = bloodType[this.data.bloodType] || null;
+      this.data.profession = professions[this.data.profession] || null;
+      this.data.educationLevel = educationLevels[this.data.educationLevel] || null;
+      this.data.companyType = companyType[this.data.companyType] || null;
+      this.data.civilStatus = civilStatus[this.data.civilStatus] || null;
+      this.data.gender = gender[this.data.gender] || null;
+      if (this.data.department !== null) {
+        const depto = departments[this.data.department] || null;
         if (depto) {
-          this.member.department = depto.department;
-          if (this.member.city !== null) this.member.city = depto.cities[this.member.city] || null;
+          this.data.department = depto.department;
+          if (this.data.city !== null) this.data.city = depto.cities[this.data.city] || null;
         }
       }
-      if (typeof this.member.church === 'string') {
-        const c = this.churches.find((church: any) => church._id === this.member.church) || null;
-        if (c) this.member.church = c.name;
+      if (this.data.created_at) {
+        this.data.created_at = dayjs.unix(this.data.created_at).locale('es').format('ddd, DD [de] MMM [de] YYYY');
+      }
+      if (typeof this.data.church === 'string') {
+        const c = this.churches.find((church: any) => church._id === this.data.church) || null;
+        if (c) this.data.church = c.name;
       }
     }
   }
 
   getRoleValue(): string {
     let ret = 'NO TIENE ASIGNADO NINGÚN ROL.';
-    if (this.member) {
-      const {roles} = this.member || {};
+    if (this.data) {
+      const {roles} = this.data || {};
       if (roles?.length > 0) {
         ret = '';
         for (const v of roles) {
@@ -90,7 +95,7 @@ export class ResumeProfileComponent implements OnInit {
   async confirmConsolidator() {
     await this.globalSer.alertConfirm({
       header: '¡Confirme!',
-      message: `¿Está seguro qué desea ${this.member.consolidator ? 'quitar' : 'asignar'} a este miembro como consolidador a anónimo?`,
+      message: `¿Está seguro qué desea ${this.data.consolidator ? 'quitar' : 'asignar'} a este miembro como consolidador a anónimo?`,
       confirmAction: () => this.handleConsolidator ? this.handleConsolidator() : null
     });
   }

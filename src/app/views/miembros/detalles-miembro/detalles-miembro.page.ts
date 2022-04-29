@@ -17,6 +17,7 @@ import {
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
 import {CookiesService} from '../../../services/cookies.service';
+import {MiembrosService} from '../miembros.service';
 
 @Component({
   selector: 'app-detalles-miembro',
@@ -54,6 +55,7 @@ export class DetallesMiembroPage implements OnInit {
   formDataRole: any = {
     roles: []
   };
+  churchForm: any = null;
 
   views: any = {
     data: {
@@ -121,7 +123,6 @@ export class DetallesMiembroPage implements OnInit {
       this.showDeleteButton = (this.isAdmin && !this.globalSer.checkRoles(data.roles, [0]));
       this.title = `Detalles: ${this.staticData.names} ${this.staticData.lastNames}`;
 
-      // this.setUserParams();
       this.getCourses();
       this.getReferrals();
       await this.globalSer.dismissLoading();
@@ -291,6 +292,7 @@ export class DetallesMiembroPage implements OnInit {
       this.formData.company = this.formData.company ? 'Si' : 'No';
       this.formData.baptized = this.formData.baptized ? 'Si' : 'No';
       this.formData.meetingNew = this.formData.meetingNew ? 'Si' : 'No';
+      this.churchForm = this.churches.find(c => c._id === this.formData.church);
       if (!this.cities) this.getCity();
 
       if (!edited) await this.globalSer.dismissLoading();
@@ -344,7 +346,7 @@ export class DetallesMiembroPage implements OnInit {
       header: 'Seleccione',
       inputs,
       confirmAction: (selectedValue) => {
-        this.church = this.churches.find(c => c._id === selectedValue);
+        this.churchForm = this.churches.find(c => c._id === selectedValue);
         this.formData.church = selectedValue;
       }
     });

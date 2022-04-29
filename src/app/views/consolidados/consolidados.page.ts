@@ -71,7 +71,6 @@ export class ConsolidadosPage implements OnInit {
 
     if (data && !data.error) {
       this.reports = data;
-      console.log('data', data);
       this.members = data.members || [];
       this.setConsolidatesValues(data.consolidates || []);
       this.setPendingMembers(data.pendingVisits || []);
