@@ -1,0 +1,54 @@
+<ion-card *ngIf="dataDoc">
+  <ion-card-content>
+    <ion-row>
+      <ion-col>
+        <div
+          class="img-rounded-icon"
+          [ngStyle]="{'background-image': 'url(/assets/icon/pdf.svg)'}"
+        ></div>
+      </ion-col>
+      <ion-col size="10">
+        <ion-row>
+          <ion-col size="12">
+            <ion-text color="primary">
+              <h2>{{ dataDoc.title || 'Documento' }}</h2>
+            </ion-text>
+          </ion-col>
+          <ion-col size="12">
+            <ion-text color="medium" *ngIf="dataDoc.member">
+              <i>Por: {{dataDoc.member.names || ''}} {{dataDoc.member.lastNames || ''}}</i>
+            </ion-text>
+            <br>
+            <ion-text color="medium">
+              <i>Para: {{dataDoc.roles || ''}}</i>
+            </ion-text>
+            <br>
+            <ion-text color="medium">
+              <i>Fecha: {{dataDoc.created_at}}</i>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col size="12" class="ion-text-center">
+        <ion-row>
+          <ion-col size="6" class="ion-text-center" *ngIf="showButtonsOwn">
+            <ion-button size="small" color="danger" (click)="confirmDelete(dataDoc._id)">
+              <ion-icon name="trash-outline" slot="start"></ion-icon>
+              <ion-text>
+                Borrar
+              </ion-text>
+            </ion-button>
+          </ion-col>
+          <ion-col size="{{ showButtonsOwn ? '6' : '12' }}" class="{{ !showButtonsOwn ? 'ion-text-end' : 'ion-text-center' }}">
+            <ion-button size="small" (click)="showPdf()">
+              <ion-icon name="eye-outline" slot="start"></ion-icon>
+              <ion-text>
+                Ver PDF
+              </ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
