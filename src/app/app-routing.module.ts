@@ -66,6 +66,10 @@ const routes: Routes = [
     path: 'iglesias',
     loadChildren: () => import('./views/iglesias/iglesias.module').then( m => m.IglesiasPageModule)
   },
+  {
+    path: 'documentos',
+    loadChildren: () => import('./views/documentos/documentos.module').then( m => m.DocumentosPageModule)
+  },
 
 ];
 

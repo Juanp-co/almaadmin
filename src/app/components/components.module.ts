@@ -9,6 +9,7 @@ import {ChartComponent} from './chart/chart.component';
 import {CursoscardComponent} from './cursos/cursoscard/cursoscard.component';
 import {DevocionalesCardComponent} from './devocionales/devocionales-card/devocionales-card.component';
 import {DevocionalesFormComponent} from './devocionales/devocionales-form/devocionales-form.component';
+import {DocumentosCardComponent} from './documentos/documentos-card/documentos-card.component';
 import {EditarInfoCursoComponent} from './cursos/editar-info-curso/editar-info-curso.component';
 import {ElemItemComponent} from './users/elem-item/elem-item.component';
 import {EventcardComponent} from './events/eventcard/eventcard.component';
@@ -38,6 +39,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     CursoscardComponent,
     DevocionalesFormComponent,
     DevocionalesCardComponent,
+    DocumentosCardComponent,
     EditarInfoCursoComponent,
     ElemItemComponent,
     EventcardComponent,
@@ -69,6 +71,7 @@ import {VideoPlayerComponent} from './video-player/video-player.component';
     CursoscardComponent,
     DevocionalesFormComponent,
     DevocionalesCardComponent,
+    DocumentosCardComponent,
     EditarInfoCursoComponent,
     ElemItemComponent,
     EventcardComponent,
