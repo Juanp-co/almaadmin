@@ -168,6 +168,7 @@ export class GlobalService {
   checkRoleIsSuperAdmin() {
     const limits = [0];
     const roles = this.getRoles();
+    console.log('roles', roles);
     return roles.some(r => limits.includes(r));
   }
 
