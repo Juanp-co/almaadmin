@@ -99,7 +99,6 @@ export class DetallesMiembroPage implements OnInit {
       this.gender = detallesMiembroService.genderList;
       this.departments = detallesMiembroService.departmentsList.map(d => d.department);
       this.maxDate = dayjs().format('YYYY-MM-DD');
-      this.enableActions = this.globalSer.checkRoleToEnableAddOrUpdate();
     }
   }
 
@@ -107,6 +106,7 @@ export class DetallesMiembroPage implements OnInit {
     await this.globalSer.presentLoading();
     this.isAdmin = this.globalSer.checkRoleIsSuperAdmin();
     this.showAdminButtons = this.globalSer.checkRoleToEnableAddOrUpdate();
+    this.enableActions = this.showAdminButtons;
     this.id = this.activateRoute.snapshot.paramMap.get('userid');
     this.churches = await this.cookiesService.getCookie('churches');
     if (!this.churches) {
@@ -120,8 +120,16 @@ export class DetallesMiembroPage implements OnInit {
       this.views.data.data = this.staticData;
       this.views.referrals.referred = this.staticData.referred;
       this.totals = this.staticData.totals;
-      this.showDeleteButton = (this.isAdmin && !this.globalSer.checkRoles(data.roles, [0]));
+      this.showDeleteButton = (this.isAdmin);
       this.title = `Detalles: ${this.staticData.names} ${this.staticData.lastNames}`;
+
+
+      console.log({
+        isAdmin: this.isAdmin,
+        showAdminButtons: this.showAdminButtons,
+        enableActions: this.enableActions,
+        showDeleteButton: this.showDeleteButton,
+      });
 
       this.getCourses();
       this.getReferrals();
@@ -473,7 +481,10 @@ export class DetallesMiembroPage implements OnInit {
   async confirmDelete() {
     await this.globalSer.alertConfirm({
       header: 'Confirme',
-      message: '¿Está seguro qué desea eliminar toda la información de este miembro?',
+      message: `¿Está seguro qué desea eliminar TODA la información de este miembro?
+            <br><br>
+            <b>NOTA:</b> <i>Una vez eliminado, no se podrá recuperar la información asociada al este miembro.</i>
+      `,
       confirmAction: () => this.deleteUser()
     });
   }
