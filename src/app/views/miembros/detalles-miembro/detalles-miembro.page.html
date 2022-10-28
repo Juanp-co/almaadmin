@@ -21,7 +21,7 @@
       <ion-card-header class="ion-no-padding ion-no-margin">
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
-            <ion-button (click)="setShowView('data')" *ngIf="!views.data.edit && !editRole">
+            <ion-button (click)="setShowView('data')" *ngIf="!views.data.edit && !editRole && !resetPassword">
               <ion-icon name="chevron-{{views.data.show ? 'up' : 'down' }}-outline"></ion-icon>
             </ion-button>
             <ion-button (click)="showFormEdit()" *ngIf="views.data.edit">
@@ -35,21 +35,42 @@
           <ion-title *ngIf="views.data.edit">Editar perfil del miembro</ion-title>
           <ion-title *ngIf="editRole">Cambiar rol del miembro</ion-title>
           <ion-buttons slot="end" *ngIf="views.data.show && showAdminButtons">
-            <ion-button color="light" expand="full" (click)="showFormEdit()" slot="end" *ngIf="!views.data.edit && !editRole">
+            <ion-button
+              color="light"
+              expand="full"
+              (click)="showFormEdit()"
+              slot="end"
+              *ngIf="!views.data.edit && !editRole && !resetPassword"
+            >
               <ion-icon name="create-outline" slot="start"></ion-icon>
               <ion-text>Editar</ion-text>
             </ion-button>
-            <ion-button color="light" expand="full" (click)="showFormEditRole()" slot="end" *ngIf="!views.data.edit && !editRole">
+            <ion-button
+              color="light"
+              expand="full"
+              (click)="showFormEditRole()"
+              slot="end"
+              *ngIf="!views.data.edit && !editRole && !resetPassword"
+            >
               <ion-icon name="key-outline" slot="start"></ion-icon>
               <ion-text>Cambiar rol</ion-text>
+            </ion-button>
+            <ion-button
+              color="light"
+              expand="full"
+              slot="end"
+              (click)="showFormPassword()"
+              *ngIf="!views.data.edit && !editRole && !resetPassword"
+            >
+              <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+              <ion-text>Reiniciar contraseña</ion-text>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-card-header>
       <ion-card-content class="{{ views.data.show ? '' : 'ion-hide' }} ion-no-padding">
         <ion-row>
-
-          <ion-col size="12" *ngIf="!views.data.edit && !editRole">
+          <ion-col size="12" *ngIf="!views.data.edit && !editRole && !resetPassword">
             <app-resume-profile
               [member]="staticData"
               [handleConsolidator]="handleSetAsConsolidator"
@@ -363,11 +384,41 @@
               </ion-col>
             </ion-row>
           </ion-col>
+
+          <ion-col class="ion-no-margin" size="12" *ngIf="resetPassword">
+            <ion-row>
+              <ion-col size="12" size-sm="6">
+                <ion-item>
+                  <ion-label position="floating" color="medium">Indique la nueva contraseña</ion-label>
+                  <ion-input [(ngModel)]="password" autocomplete="off"></ion-input>
+                </ion-item>
+                <ion-item lines="none">
+                  <ion-text color="medium"><i class="toSmall">(*) Campo requerido.</i></ion-text>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12" size-sm="6" class="ion-margin-top ion-margin-bottom">
+                <ion-button color="medium" (click)="generatePassword()">
+                  <ion-icon name="sync-outline" slot="start"></ion-icon>
+                  <ion-text>Generar contraseña</ion-text>
+                </ion-button>
+              </ion-col>
+              <ion-col size="12" class="ion-margin-top ion-margin-bottom ion-text-center">
+                <ion-button color="medium" (click)="showFormPassword()">
+                  <ion-icon name="close-outline" slot="start"></ion-icon>
+                  <ion-text>Cancelar</ion-text>
+                </ion-button>
+                <ion-button color="primary" (click)="confirmResetPassword()">
+                  <ion-icon name="save-outline" slot="start"></ion-icon>
+                  <ion-text>Asignar</ion-text>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
         </ion-row>
       </ion-card-content>
     </ion-card>
 
-    <ion-card class="{{ views.data.edit || editRole ? 'ion-hide' : '' }}">
+    <ion-card class="{{ views.data.edit || editRole || resetPassword ? 'ion-hide' : '' }}">
       <ion-card-header class="ion-no-padding ion-no-margin">
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
@@ -420,7 +471,7 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card class="{{ views.data.edit || editRole ? 'ion-hide' : '' }}">
+    <ion-card class="{{ views.data.edit || editRole || resetPassword ? 'ion-hide' : '' }}">
       <ion-card-header class="ion-no-padding ion-no-margin">
         <ion-toolbar color="primary">
           <ion-buttons slot="start">

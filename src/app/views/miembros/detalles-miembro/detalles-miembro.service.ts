@@ -50,6 +50,13 @@ export class DetallesMiembroService {
     return this.globalSer.altResponse(res);
   }
 
+  async resetPass(id: string, data: any): Promise<any | null> {
+    const res: any = await this.axios.putData(`/admin/users/${id}/reset-password`, data);
+
+    if (res && res.success) return res.data.msg || 'Se han cambiado la contraseña del miembro exitosamente.';
+    return this.globalSer.altResponse(res);
+  }
+
   async setAsConsolidator(id) {
     const res: any = await this.axios.putData(`admin/users/${id}/consolidator`);
 
