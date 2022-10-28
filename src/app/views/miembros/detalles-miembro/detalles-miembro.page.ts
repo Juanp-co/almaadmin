@@ -48,6 +48,7 @@ export class DetallesMiembroPage implements OnInit {
   totals: IDetallesMiembroTotals | null = null;
   enableActions = false;
   editRole = false;
+  resetPassword = false;
   isAdmin = false;
   showAdminButtons = false;
   showDeleteButton = false;
@@ -56,6 +57,7 @@ export class DetallesMiembroPage implements OnInit {
     roles: []
   };
   churchForm: any = null;
+  password = '';
 
   views: any = {
     data: {
@@ -123,14 +125,6 @@ export class DetallesMiembroPage implements OnInit {
       this.showDeleteButton = (this.isAdmin);
       this.title = `Detalles: ${this.staticData.names} ${this.staticData.lastNames}`;
 
-
-      console.log({
-        isAdmin: this.isAdmin,
-        showAdminButtons: this.showAdminButtons,
-        enableActions: this.enableActions,
-        showDeleteButton: this.showDeleteButton,
-      });
-
       this.getCourses();
       this.getReferrals();
       await this.globalSer.dismissLoading();
@@ -188,6 +182,23 @@ export class DetallesMiembroPage implements OnInit {
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
     }
     else if (updated && updated.error) {
+      await this.globalSer.dismissLoading();
+      await this.globalSer.errorSession();
+    }
+    else await this.globalSer.dismissLoading();
+  }
+
+  async resetPass() {
+    await this.globalSer.presentLoading('Asignando, por favor espere ...');
+    const data: any = {...this.formDataRole};
+    const res = await this.detallesMiembroService.resetPass(this.id, { password: this.password });
+
+    if (!res?.error) {
+      this.showFormPassword();
+      await this.globalSer.dismissLoading();
+      await this.globalSer.presentAlert('¡Éxito!', res);
+    }
+    else if (res && res.error) {
       await this.globalSer.dismissLoading();
       await this.globalSer.errorSession();
     }
@@ -314,6 +325,18 @@ export class DetallesMiembroPage implements OnInit {
   showFormEditRole() {
     this.formDataRole.roles = !this.editRole ? [...this.staticData.roles] : [];
     this.editRole = !this.editRole;
+  }
+
+  showFormPassword() {
+    this.resetPassword = !this.resetPassword;
+    if (this.resetPassword) this.password = '';
+  }
+
+  generatePassword() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789¿?¡!+*-#$%&.,';
+    let code = '';
+    for (let i = 0; i < 10; i += 1) code += chars[Math.floor(Math.random() * 36)];
+    this.password = code;
   }
 
   async showAlertList(input: string, nameArray: string, selected: any = null) {
@@ -474,6 +497,20 @@ export class DetallesMiembroPage implements OnInit {
         header: 'Confirme',
         message: '¿Está seguro qué desea cambiar el rol de este miembro?',
         confirmAction: () => this.updateRole()
+      });
+    }
+  }
+
+  async confirmResetPassword() {
+    const validated = this.validateRoleData();
+
+    if (this.password.length < 6)
+      await this.globalSer.presentAlert('Alerta', 'Debe indicar la nueva contraseña para el usuario.');
+    else {
+      await this.globalSer.alertConfirm({
+        header: 'Confirme',
+        message: '¿Está seguro qué desea asignar esta nueva contraseña a este miembro?',
+        confirmAction: () => this.resetPass()
       });
     }
   }
