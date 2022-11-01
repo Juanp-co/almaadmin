@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start" *ngIf="!views.data.edit">
+    <ion-buttons slot="start" *ngIf="!views.data.edit && !editRole && !resetPassword">
       <ion-button (click)="back()">
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>{{ title }}</ion-title>
     <ion-buttons slot="end" *ngIf="staticData && enableActions && showAdminButtons && showDeleteButton">
-      <ion-button expand="full" (click)="confirmDelete()" slot="end" *ngIf="!views.data.edit">
+      <ion-button expand="full" (click)="confirmDelete()" slot="end" *ngIf="!views.data.edit && !editRole && !resetPassword">
         <ion-icon name="trash-outline" slot="start"></ion-icon>
         <ion-text>Eliminar miembro</ion-text>
       </ion-button>
@@ -30,11 +30,14 @@
             <ion-button (click)="showFormEditRole()" *ngIf="editRole">
               <ion-icon name="close-outline"></ion-icon>
             </ion-button>
+            <ion-button (click)="showFormPassword()" *ngIf="resetPassword">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
           </ion-buttons>
           <ion-title *ngIf="!views.data.edit && !editRole && !resetPassword">{{ views.data.label }}</ion-title>
           <ion-title *ngIf="views.data.edit">Editar perfil del miembro</ion-title>
           <ion-title *ngIf="editRole">Cambiar rol del miembro</ion-title>
-          <ion-title *ngIf="resetPassword">Reiniciar contraseña del usuario</ion-title>
+          <ion-title *ngIf="resetPassword">Reiniciar contraseña</ion-title>
           <ion-buttons slot="end" *ngIf="views.data.show && showAdminButtons">
             <ion-button
               color="light"
