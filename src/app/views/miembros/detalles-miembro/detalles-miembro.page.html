@@ -34,6 +34,7 @@
           <ion-title *ngIf="!views.data.edit && !editRole">{{ views.data.label }}</ion-title>
           <ion-title *ngIf="views.data.edit">Editar perfil del miembro</ion-title>
           <ion-title *ngIf="editRole">Cambiar rol del miembro</ion-title>
+          <ion-title *ngIf="resetPassword">Reiniciar contraseña del usuario</ion-title>
           <ion-buttons slot="end" *ngIf="views.data.show && showAdminButtons">
             <ion-button
               color="light"
