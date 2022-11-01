@@ -17,7 +17,6 @@ import {
   onlyNumbersInputValidation
 } from '../../../../Utils/validations.functions';
 import {CookiesService} from '../../../services/cookies.service';
-import {MiembrosService} from '../miembros.service';
 
 @Component({
   selector: 'app-detalles-miembro',
@@ -175,8 +174,8 @@ export class DetallesMiembroPage implements OnInit {
     const updated = await this.detallesMiembroService.updateRoleUser(this.id, data);
 
     if (updated && !updated.error) {
-      this.user.roles = data.roles;
-      this.staticData.roles = data.roles;
+      this.staticData.roles = this.formDataRole.roles;
+      this.views.data.data = {...this.staticData};
       this.showFormEditRole();
       await this.globalSer.dismissLoading();
       await this.globalSer.presentAlert('¡Éxito!', 'Se ha actualizado su perfil exitosamente.');
@@ -190,7 +189,6 @@ export class DetallesMiembroPage implements OnInit {
 
   async resetPass() {
     await this.globalSer.presentLoading('Asignando, por favor espere ...');
-    const data: any = {...this.formDataRole};
     const res = await this.detallesMiembroService.resetPass(this.id, { password: this.password });
 
     if (!res?.error) {
@@ -335,7 +333,7 @@ export class DetallesMiembroPage implements OnInit {
   generatePassword() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789¿?¡!+*-#$%&.,';
     let code = '';
-    for (let i = 0; i < 10; i += 1) code += chars[Math.floor(Math.random() * 36)];
+    for (let i = 0; i < 10; i += 1) code += chars[Math.floor(Math.random() * 75)];
     this.password = code;
   }
 
@@ -391,6 +389,7 @@ export class DetallesMiembroPage implements OnInit {
       label: v,
       value: i,
       checked: selected.includes(i),
+      disabled: i === 0 && !this.isAdmin
     });
 
     for (const [i, value] of rolesListSingleText.entries()) {
@@ -404,8 +403,11 @@ export class DetallesMiembroPage implements OnInit {
       header: 'Seleccione',
       inputs,
       confirmAction: (selectedValues: number[] = []) => {
-        if (this.formDataRole.roles.includes(0)) this.formDataRole.roles = [0, ...selectedValues];
-        else this.formDataRole.roles = selectedValues || [];
+        if (this.formDataRole.roles.includes(0)) {
+          if (this.isAdmin) this.formDataRole.roles = [...new Set([...selectedValues])];
+          else this.formDataRole.roles = [...new Set([...selectedValues])];
+        }
+        else this.formDataRole.roles = [...new Set([...selectedValues])];
       }
     });
   }
