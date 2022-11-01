@@ -435,8 +435,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    urlApi: 'http://localhost:7000/api',
-    // urlApi: 'https://api.ccadv.co/api',
+    // urlApi: 'http://localhost:7000/api',
+    urlApi: 'https://api.ccadv.co/api',
     mapBoxToken: 'pk.eyJ1IjoianVhbm1pbGVjbyIsImEiOiJjanc5YzMxamowZHQzNDlxbXM4OXYxNGFoIn0.bcpNZZMOPprjnWeRu5v_vg',
 };
 /*
