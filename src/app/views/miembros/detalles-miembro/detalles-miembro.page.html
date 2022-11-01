@@ -31,7 +31,7 @@
               <ion-icon name="close-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
-          <ion-title *ngIf="!views.data.edit && !editRole">{{ views.data.label }}</ion-title>
+          <ion-title *ngIf="!views.data.edit && !editRole && !resetPassword">{{ views.data.label }}</ion-title>
           <ion-title *ngIf="views.data.edit">Editar perfil del miembro</ion-title>
           <ion-title *ngIf="editRole">Cambiar rol del miembro</ion-title>
           <ion-title *ngIf="resetPassword">Reiniciar contraseña del usuario</ion-title>
